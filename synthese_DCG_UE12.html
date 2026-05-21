@@ -1,0 +1,1695 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Méthodologie de la synthèse · DCG UE 12</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&display=swap');
+
+:root {
+  --navy: #1a2744;
+  --navy-mid: #243260;
+  --blue: #2d5fa6;
+  --blue-light: #4a7bc8;
+  --accent: #c8a84b;
+  --accent-soft: #f5eed8;
+  --red: #b83232;
+  --green: #2a7a4b;
+  --green-soft: #e0f2ea;
+  --red-soft: #fce8e8;
+  --bg: #f5f3ef;
+  --surface: #ffffff;
+  --border: #d6cfbe;
+  --text: #2a2520;
+  --muted: #7a7060;
+  --shadow: 0 2px 14px rgba(26,39,68,.10);
+  --radius: 8px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Source Serif 4', Georgia, serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  font-size: 15px;
+}
+
+/* HEADER */
+header {
+  background: linear-gradient(135deg, var(--navy) 0%, #0f1a33 100%);
+  color: #fff;
+  padding: 0;
+  border-bottom: 3px solid var(--accent);
+}
+.header-inner {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 24px 28px 18px;
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+}
+.header-badges { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
+.badge {
+  background: rgba(200,168,75,.2);
+  border: 1px solid rgba(200,168,75,.4);
+  color: var(--accent);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+.badge.session { background: var(--accent); color: var(--navy); border-color: var(--accent); }
+header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.55rem;
+  font-weight: 700;
+  line-height: 1.25;
+  margin-bottom: 4px;
+}
+header h1 em { font-style: italic; color: var(--accent); }
+header .sub {
+  font-size: 12.5px;
+  color: rgba(255,255,255,.55);
+  letter-spacing: .05em;
+}
+.header-warning {
+  background: rgba(184,50,50,.15);
+  border: 1px solid rgba(184,50,50,.35);
+  border-radius: 6px;
+  padding: 8px 14px;
+  font-size: 12px;
+  color: #ffbbbb;
+  margin-top: 10px;
+  max-width: 600px;
+}
+
+/* TAB BAR */
+#tab-bar {
+  background: var(--navy);
+  padding: 0 28px;
+  display: flex;
+  overflow-x: auto;
+  scrollbar-width: none;
+  border-bottom: 2px solid var(--accent);
+  max-width: 100%;
+}
+#tab-bar::-webkit-scrollbar { display: none; }
+.tab-btn {
+  background: transparent;
+  border: none;
+  color: rgba(255,255,255,.45);
+  font-family: 'Source Serif 4', serif;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  padding: 13px 14px 11px;
+  cursor: pointer;
+  white-space: nowrap;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
+  transition: color .2s, border-color .2s;
+}
+.tab-btn:hover { color: rgba(255,255,255,.8); }
+.tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+.tab-num {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 16px; height: 16px;
+  background: rgba(255,255,255,.1);
+  border-radius: 50%; font-size: 9px; margin-right: 5px;
+}
+.tab-btn.active .tab-num { background: var(--accent); color: var(--navy); }
+.tab-btn.done .tab-num { background: var(--green); color: #fff; }
+
+/* MAIN */
+main { max-width: 900px; margin: 0 auto; padding: 28px 22px 70px; }
+
+.tab-panel { display: none; }
+.tab-panel.active { display: block; animation: fadeIn .3s ease; }
+@keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+
+/* PANEL HEADER */
+.panel-header {
+  display: flex; align-items: flex-start; gap: 16px;
+  margin-bottom: 22px; padding-bottom: 14px;
+  border-bottom: 1px solid var(--border);
+}
+.panel-icon { font-size: 2rem; line-height: 1; flex-shrink: 0; margin-top: 3px; }
+.panel-title { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; color: var(--navy); }
+.panel-desc { font-size: 13.5px; color: var(--muted); margin-top: 4px; line-height: 1.5; }
+
+/* CARDS */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 22px;
+  margin-bottom: 18px;
+  box-shadow: var(--shadow);
+}
+.card-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem; font-weight: 500; color: var(--navy);
+  margin-bottom: 12px;
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+}
+.step-badge {
+  background: var(--navy); color: #fff;
+  font-family: 'Source Serif 4', serif;
+  font-size: 10px; font-weight: 700; letter-spacing: .1em;
+  padding: 2px 9px; border-radius: 20px; text-transform: uppercase;
+  flex-shrink: 0;
+}
+.step-badge.green { background: var(--green); }
+.step-badge.red { background: var(--red); }
+.step-badge.accent { background: var(--accent); color: var(--navy); }
+
+/* CONSIGNE */
+.consigne {
+  background: var(--accent-soft);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 5px 5px 0;
+  padding: 10px 14px; font-size: 13.5px; color: #5a4a20;
+  margin-bottom: 14px; line-height: 1.6;
+}
+.alerte {
+  background: var(--red-soft); border-left: 3px solid var(--red);
+  border-radius: 0 5px 5px 0;
+  padding: 10px 14px; font-size: 13px; color: #7a2020; margin-bottom: 12px;
+}
+.alerte strong { color: var(--red); }
+.bon-point {
+  background: var(--green-soft); border-left: 3px solid var(--green);
+  border-radius: 0 5px 5px 0;
+  padding: 10px 14px; font-size: 13px; color: #1a5030; margin-bottom: 12px;
+}
+.bon-point strong { color: var(--green); }
+.info-box {
+  background: #eef3fb; border-left: 3px solid var(--blue);
+  border-radius: 0 5px 5px 0;
+  padding: 10px 14px; font-size: 13px; color: #1a3060; margin-bottom: 12px;
+}
+
+/* DOC EXTRAITS */
+.doc-extrait {
+  background: #faf8f3;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 13px 15px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #3a3228;
+  margin-bottom: 10px;
+  position: relative;
+}
+.doc-extrait .doc-label {
+  display: inline-block;
+  background: var(--navy); color: #fff;
+  font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  padding: 2px 8px; border-radius: 20px; margin-bottom: 6px;
+}
+.doc-extrait .source { font-size: 11px; color: var(--muted); margin-top: 6px; font-style: italic; }
+
+/* TEXTAREA */
+textarea.input-field {
+  width: 100%;
+  background: #faf9f6;
+  border: 1.5px solid var(--border);
+  border-radius: 6px;
+  font-family: 'Source Serif 4', serif;
+  font-size: 14px; line-height: 1.65; color: var(--text);
+  padding: 11px 13px; resize: vertical;
+  transition: border-color .2s;
+}
+textarea.input-field:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(45,95,166,.08); }
+textarea.input-field::placeholder { color: #b0a898; font-style: italic; }
+
+input[type="text"].field-short {
+  width: 100%; background: #faf9f6;
+  border: 1.5px solid var(--border); border-radius: 6px;
+  font-family: 'Source Serif 4', serif; font-size: 14px;
+  color: var(--text); padding: 9px 12px; transition: border-color .2s;
+}
+input[type="text"].field-short:focus { outline: none; border-color: var(--blue); }
+
+/* WORD COUNT */
+.wc-bar {
+  display: flex; align-items: center; gap: 10px; margin-top: 8px;
+  font-size: 12.5px; color: var(--muted);
+}
+.wc-num { font-weight: 700; font-size: 14px; color: var(--navy); }
+.progress-bar-wrap { flex: 1; height: 5px; background: var(--border); border-radius: 10px; overflow: hidden; max-width: 200px; }
+.progress-bar-fill { height: 100%; border-radius: 10px; transition: width .3s, background .3s; }
+.wc-ok { color: var(--green); font-weight: 600; font-size: 12px; }
+.wc-warn { color: #c47a00; font-weight: 600; font-size: 12px; }
+.wc-over { color: var(--red); font-weight: 600; font-size: 12px; }
+
+/* BUTTONS */
+.btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 9px 20px; border: none; border-radius: 6px;
+  font-family: 'Source Serif 4', serif; font-size: 13px; font-weight: 600;
+  cursor: pointer; transition: all .2s; letter-spacing: .03em;
+}
+.btn-primary { background: var(--navy); color: #fff; }
+.btn-primary:hover { background: #0f1a33; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(26,39,68,.25); }
+.btn-secondary { background: transparent; color: var(--navy); border: 1.5px solid var(--border); }
+.btn-secondary:hover { border-color: var(--navy); background: rgba(26,39,68,.04); }
+.btn-accent { background: var(--accent); color: var(--navy); }
+.btn-accent:hover { background: #d4b055; transform: translateY(-1px); }
+.btn-green { background: var(--green); color: #fff; }
+.btn-green:hover { background: #1f5c38; transform: translateY(-1px); }
+.btn-group { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
+
+/* CHECKLIST */
+.checklist { list-style: none; }
+.checklist li {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 9px 0; border-bottom: 1px solid #f0ece4; font-size: 14px; line-height: 1.5;
+}
+.checklist li:last-child { border-bottom: none; }
+.checklist input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--navy); flex-shrink: 0; margin-top: 2px; cursor: pointer; }
+.checklist label { cursor: pointer; flex: 1; }
+
+/* FEEDBACK */
+.feedback-box {
+  border-radius: var(--radius); padding: 13px 16px; margin-top: 12px;
+  display: none; font-size: 13.5px; line-height: 1.6; animation: fadeIn .3s ease;
+}
+.feedback-box.show { display: block; }
+.feedback-box.ok { background: var(--green-soft); border: 1px solid #a0d0b0; color: #1a5030; }
+.feedback-box.warn { background: #fff8e6; border: 1px solid #e8c870; color: #7a5800; }
+.feedback-box.bad { background: var(--red-soft); border: 1px solid #e8a0a0; color: #7a1a1a; }
+
+/* TOOLBOX TAGS */
+.toolbox { background: #f0ede6; border: 1px solid var(--border); border-radius: var(--radius); padding: 12px 16px; margin-bottom: 12px; }
+.toolbox-title { font-size: 10.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+.toolbox-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.tag {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 20px;
+  font-size: 12px; padding: 3px 11px; cursor: pointer; transition: all .15s; color: var(--navy);
+}
+.tag:hover { background: var(--navy); color: #fff; border-color: var(--navy); }
+.tag.red { border-color: #e8a0a0; color: var(--red); }
+.tag.red:hover { background: var(--red); color: #fff; border-color: var(--red); }
+.tag.green { border-color: #a0d0b0; color: var(--green); }
+.tag.green:hover { background: var(--green); color: #fff; }
+.tag.blue { border-color: #a0b8e0; color: var(--blue); }
+.tag.blue:hover { background: var(--blue); color: #fff; }
+
+/* GRID */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 640px) { .grid-2 { grid-template-columns: 1fr; } }
+
+/* QCM */
+.qcm-item {
+  border: 1.5px solid var(--border); border-radius: 8px;
+  padding: 14px 16px; margin-bottom: 12px; transition: border-color .2s;
+}
+.qcm-item:hover { border-color: var(--blue-light); }
+.qcm-question { font-size: 14px; font-weight: 600; color: var(--navy); margin-bottom: 10px; line-height: 1.4; }
+.qcm-options { display: flex; flex-direction: column; gap: 7px; }
+.qcm-option {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border);
+  cursor: pointer; font-size: 13.5px; transition: all .15s; background: #faf9f6;
+}
+.qcm-option:hover { background: #eef3fb; border-color: var(--blue-light); }
+.qcm-option input[type="radio"] { accent-color: var(--navy); flex-shrink: 0; margin-top: 3px; }
+.qcm-option.correct { background: var(--green-soft); border-color: var(--green); color: #1a5030; }
+.qcm-option.wrong { background: var(--red-soft); border-color: var(--red); color: #7a1a1a; }
+
+/* PLAN AXIS */
+.plan-axis { border: 1.5px solid var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 14px; }
+.plan-axis-header { background: var(--navy); color: var(--accent); font-family: 'Playfair Display', serif; font-size: .95rem; padding: 10px 16px; display: flex; align-items: center; gap: 10px; }
+.plan-axis-body { padding: 14px 16px; background: var(--surface); }
+
+/* SCORE BOX */
+.score-box {
+  background: var(--navy); color: #fff; border-radius: var(--radius);
+  padding: 18px 22px; display: flex; align-items: center; gap: 16px; margin-top: 16px;
+}
+.score-circle {
+  width: 60px; height: 60px; border-radius: 50%; border: 3px solid var(--accent);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700; color: var(--accent); flex-shrink: 0;
+}
+
+/* COMPARE */
+.compare-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 14px; }
+@media (max-width: 640px) { .compare-row { grid-template-columns: 1fr; } }
+.compare-box { border: 1.5px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+.compare-box-header { font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; padding: 8px 14px; }
+.compare-box-header.student { background: var(--blue); color: #fff; }
+.compare-box-header.corrige { background: var(--navy); color: var(--accent); }
+.compare-box-body { padding: 12px 14px; }
+.compare-box-body textarea { width: 100%; border: none; background: transparent; font-family: 'Source Serif 4', serif; font-size: 13.5px; line-height: 1.65; resize: vertical; min-height: 100px; }
+.compare-box-body textarea:focus { outline: none; }
+
+/* RICH TABLE */
+.rich-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.rich-table th { background: #f0ede6; color: var(--navy); font-weight: 600; padding: 7px 10px; text-align: left; border-bottom: 2px solid var(--border); }
+.rich-table td { padding: 7px 10px; border-bottom: 1px solid #f0ece4; vertical-align: top; }
+.rich-table td:first-child { font-weight: 600; color: var(--navy); }
+.rich-table select { border: 1px solid var(--border); padding: 4px 6px; border-radius: 4px; font-size: 12px; background: #faf9f6; width: 100%; }
+.rich-table input[type="text"] { border: 1px solid var(--border); padding: 5px 8px; border-radius: 4px; font-size: 13px; width: 100%; background: #faf9f6; font-family: 'Source Serif 4', serif; }
+
+/* DOC PILLS */
+.doc-pill {
+  background: var(--navy); color: rgba(255,255,255,.85);
+  font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 20px;
+  cursor: pointer; transition: background .15s; user-select: none; display: inline-block; margin: 3px;
+}
+.doc-pill:hover { background: var(--blue); }
+
+/* NAV */
+.nav-arrows {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-top: 32px; padding-top: 18px; border-top: 1px solid var(--border);
+}
+.nav-arrow {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: transparent; border: 1.5px solid var(--border); color: var(--navy);
+  font-family: 'Source Serif 4', serif; font-size: 12px; font-weight: 700; letter-spacing: .04em;
+  padding: 8px 18px; border-radius: 6px; cursor: pointer; transition: all .2s;
+}
+.nav-arrow:hover { background: var(--navy); color: #fff; border-color: var(--navy); }
+.nav-arrow:disabled { opacity: .3; pointer-events: none; }
+
+/* MISC */
+hr.div { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
+.mt-12 { margin-top: 12px; }
+.mt-20 { margin-top: 20px; }
+.text-sm { font-size: 13px; }
+.text-muted { color: var(--muted); }
+.italic { font-style: italic; }
+.bold { font-weight: 700; }
+
+@media (max-width: 640px) {
+  .header-inner { padding: 16px; flex-direction: column; gap: 8px; }
+  main { padding: 16px 14px 60px; }
+  #tab-bar { padding: 0 14px; }
+  .tab-btn { padding: 11px 10px 9px; font-size: 10.5px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════ HEADER ═══════════════ -->
+<header>
+<div class="header-inner">
+  <div>
+    <div class="header-badges">
+      <span class="badge">DCG · UE 12</span>
+      <span class="badge">Anglais des affaires</span>
+    </div>
+    <h1>Méthodologie de la <em>synthèse</em></h1>
+    <p class="sub">Entraînement guidé à la synthèse de documents · 250 mots ±10 % · 8 étapes</p>
+    <div class="header-warning">⚠ Ce document est réservé à l'entraînement. Ne rédige pas la synthèse à la place de l'élève : guide-le vers sa propre production.</div>
+  </div>
+</div>
+</header>
+
+<!-- ═══════════════ TABS ═══════════════ -->
+<div id="tab-bar">
+  <button class="tab-btn active" onclick="switchTab(0)"><span class="tab-num">1</span>Idées fortes</button>
+  <button class="tab-btn" onclick="switchTab(1)"><span class="tab-num">2</span>Relations</button>
+  <button class="tab-btn" onclick="switchTab(2)"><span class="tab-num">3</span>Problématique</button>
+  <button class="tab-btn" onclick="switchTab(3)"><span class="tab-num">4</span>Plan</button>
+  <button class="tab-btn" onclick="switchTab(4)"><span class="tab-num">5</span>Introduction</button>
+  <button class="tab-btn" onclick="switchTab(5)"><span class="tab-num">6</span>Développement</button>
+  <button class="tab-btn" onclick="switchTab(6)"><span class="tab-num">7</span>Conclusion</button>
+  <button class="tab-btn" onclick="switchTab(7)"><span class="tab-num">8</span>Auto-évaluation</button>
+</div>
+
+<!-- ═══════════════ MAIN ═══════════════ -->
+<main>
+
+<!-- ═══════ ONGLET 1 : IDÉES FORTES ═══════ -->
+<section class="tab-panel active" id="tab0">
+<div class="panel-header">
+  <div class="panel-icon">🧩</div>
+  <div>
+    <div class="panel-title">Repérage des idées fortes</div>
+    <div class="panel-desc">Pour chaque document : lis l'extrait, reformule les idées essentielles avec tes propres mots, puis compare avec le corrigé modèle.</div>
+  </div>
+</div>
+
+<div class="alerte">
+  <strong>Règle fondamentale :</strong> une <em>idée</em> = une affirmation générale utilisable dans la synthèse. Un <em>exemple</em> = un chiffre précis, un nom propre, un cas particulier — à ne jamais recopier. Tu reformules toujours avec tes propres mots.
+</div>
+
+<!-- ═══ DOC 1 ═══ -->
+<div class="card">
+  <div class="card-title"><span class="step-badge">Doc 1</span> CNBC, sept. 2023 — La surveillance des salariés par l'IA</div>
+  <div class="doc-extrait">
+    <span class="doc-label">Extrait clé</span>
+    <p>« Almost one-third of employees who know their bosses are using technology to monitor them reported their mental health as fair or poor. [...] When employees feel they are not cared for or trusted by their employers, they are likely to have lower levels of commitment [...] and higher levels of stress. Some employees did see a few potentially positive outcomes to AI monitoring [...] Almost half say workplace security would improve. »</p>
+    <p class="source">— CNBC, Aditi Shrikant, 8 septembre 2023</p>
+  </div>
+  <div style="background:#f5f3ef;border-radius:var(--radius);padding:14px 16px;margin-bottom:14px;">
+    <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;">Reformule les idées essentielles du doc 1 avec tes propres mots</div>
+    <div class="consigne">📌 Pas de recopie, pas de chiffres, pas de noms propres. Une phrase par idée.</div>
+    <textarea class="input-field" id="refo-d1" rows="5" placeholder=""></textarea>
+  </div>
+  <div>
+    <div class="btn-group" style="margin-bottom:10px;">
+      <button class="btn btn-primary" style="font-size:12px;" onclick="verifierDoc(1)">✓ Vérifier ce document</button>
+    </div>
+    <div class="feedback-box" id="fb-verif1"></div>
+    <button id="btn-corrige-d1" class="btn btn-accent" style="font-size:12px;display:none;margin-top:10px;" onclick="toggleCorrige('corrige-d1',this)">📖 Voir le corrigé modèle</button>
+    <div id="corrige-d1" style="display:none;margin-top:12px;background:#faf7f0;border:1.5px solid #d4b055;border-radius:var(--radius);padding:14px 16px;font-size:13.5px;line-height:1.7;animation:fadeIn .3s ease;">
+      <div style="font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;">✅ Idées-modèles issues du corrigé</div>
+      <p>• <strong>Idée 1 (danger) :</strong> La surveillance des salariés par les outils d'IA génère du stress et dégrade leur santé mentale.</p>
+      <p style="margin-top:6px;">• <strong>Idée 2 (danger) :</strong> Ce contrôle numérique érode la confiance entre employeurs et salariés, fragilisant leur engagement et leur motivation.</p>
+      <p style="margin-top:6px;">• <strong>Idée 3 (nuance / opportunité) :</strong> Paradoxalement, une partie des travailleurs perçoit un sentiment accru de sécurité grâce à cette surveillance.</p>
+      <div class="alerte" style="margin-top:12px;"><strong>Ce qui est un exemple à exclure :</strong> les noms des logiciels (Traqq, Time Doctor), les chiffres précis (32 %, 51 %, 49 %), le nom de la professeure citée.</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:8px;">Compare avec ta reformulation : as-tu évité les exemples ? Tes phrases sont-elles impersonnelles et générales ?</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ DOC 2 ═══ -->
+<div class="card">
+  <div class="card-title"><span class="step-badge">Doc 2</span> The Guardian, nov. 2023 — L'IA et la semaine de 4 jours</div>
+  <div class="doc-extrait">
+    <span class="doc-label">Extrait clé</span>
+    <p>« AI could enable millions of workers to move to a four-day week by 2033 [...] reducing the working week from 40 to 32 hours [...] while maintaining pay and performance. [...] Such a policy could also help to avoid mass unemployment and reduce widespread mental and physical illnesses. [...] 'We're going to boost productivity, and this is also going to be something which delivers for the workers.' »</p>
+    <p class="source">— The Guardian, Philippa Kelly, 20 novembre 2023</p>
+  </div>
+  <div style="background:#f5f3ef;border-radius:var(--radius);padding:14px 16px;margin-bottom:14px;">
+    <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;">Reformule les idées essentielles du doc 2 avec tes propres mots</div>
+    <div class="consigne">📌 Pas de recopie, pas de chiffres, pas de noms propres. Une phrase par idée.</div>
+    <textarea class="input-field" id="refo-d2" rows="5" placeholder=""></textarea>
+  </div>
+  <div>
+    <div class="btn-group" style="margin-bottom:10px;">
+      <button class="btn btn-primary" style="font-size:12px;" onclick="verifierDoc(2)">✓ Vérifier ce document</button>
+    </div>
+    <div class="feedback-box" id="fb-verif2"></div>
+    <button id="btn-corrige-d2" class="btn btn-accent" style="font-size:12px;display:none;margin-top:10px;" onclick="toggleCorrige('corrige-d2',this)">📖 Voir le corrigé modèle</button>
+    <div id="corrige-d2" style="display:none;margin-top:12px;background:#faf7f0;border:1.5px solid #d4b055;border-radius:var(--radius);padding:14px 16px;font-size:13.5px;line-height:1.7;animation:fadeIn .3s ease;">
+      <div style="font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;">✅ Idées-modèles issues du corrigé</div>
+      <p>• <strong>Idée 1 :</strong> L'IA permettrait de réduire significativement le temps de travail hebdomadaire sans diminuer les salaires ni la performance.</p>
+      <p style="margin-top:6px;">• <strong>Idée 2 :</strong> Bien orientée, l'IA peut contribuer à éviter le chômage de masse et améliorer l'équilibre entre vie professionnelle et vie privée.</p>
+      <p style="margin-top:6px;">• <strong>Idée 3 :</strong> Cette transformation exige un cadre légal et une concertation entre syndicats, entreprises et pouvoirs publics pour que ses bénéfices soient partagés.</p>
+      <div class="alerte" style="margin-top:12px;"><strong>Ce qui est un exemple à exclure :</strong> les chiffres précis (28 %, 8,8 millions, 35 millions, 2033), les noms propres (Will Stronge, Mark Takano, thinktank Autonomy).</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ DOC 3 ═══ -->
+<div class="card">
+  <div class="card-title"><span class="step-badge">Doc 3</span> CBS MoneyWatch, sept. 2023 — Les cols blancs plus menacés</div>
+  <div class="doc-extrait">
+    <span class="doc-label">Extrait clé</span>
+    <p>« Knowledge workers are facing the highest level of exposure here, which is quite different from what we've seen with other revolutions. [...] In-person, often low-wage jobs that rely heavily on humans being physically present are likely to be the most resilient to encroaching AI. [...] The more suitable a job is to remote work, the higher its potential exposure is to generative AI-driven change. »</p>
+    <p class="source">— CBS MoneyWatch, Megan Cerullo, 21 septembre 2023</p>
+  </div>
+  <div style="background:#f5f3ef;border-radius:var(--radius);padding:14px 16px;margin-bottom:14px;">
+    <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;">Reformule les idées essentielles du doc 3 avec tes propres mots</div>
+    <div class="consigne">📌 Pas de recopie, pas de chiffres, pas de noms propres. Une phrase par idée.</div>
+    <textarea class="input-field" id="refo-d3" rows="5" placeholder=""></textarea>
+  </div>
+  <div>
+    <div class="btn-group" style="margin-bottom:10px;">
+      <button class="btn btn-primary" style="font-size:12px;" onclick="verifierDoc(3)">✓ Vérifier ce document</button>
+    </div>
+    <div class="feedback-box" id="fb-verif3"></div>
+    <button id="btn-corrige-d3" class="btn btn-accent" style="font-size:12px;display:none;margin-top:10px;" onclick="toggleCorrige('corrige-d3',this)">📖 Voir le corrigé modèle</button>
+    <div id="corrige-d3" style="display:none;margin-top:12px;background:#faf7f0;border:1.5px solid #d4b055;border-radius:var(--radius);padding:14px 16px;font-size:13.5px;line-height:1.7;animation:fadeIn .3s ease;">
+      <div style="font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;">✅ Idées-modèles issues du corrigé</div>
+      <p>• <strong>Idée 1 :</strong> Contrairement aux précédentes révolutions industrielles, l'IA menace en priorité les travailleurs qualifiés et les métiers intellectuels — les cols blancs — plutôt que les emplois manuels.</p>
+      <p style="margin-top:6px;">• <strong>Idée 2 :</strong> Les emplois nécessitant une présence physique et peu compatibles avec le télétravail restent pour l'instant moins exposés à l'automatisation.</p>
+      <p style="margin-top:6px;">• <strong>Idée 3 :</strong> Plus un poste est réalisable à distance, plus son exposition à l'IA générative est élevée — ce qui préoccupe particulièrement les secteurs de la comptabilité, du droit et de la finance.</p>
+      <div class="alerte" style="margin-top:12px;"><strong>Ce qui est un exemple à exclure :</strong> le chiffre de 95 %, les noms propres (Svenja Gudell, Indeed), la liste détaillée des métiers (chauffeurs, gardes d'enfants…).</div>
+      <div class="alerte" style="margin-top:8px;"><strong>⚠ Point DCG :</strong> Les métiers de la comptabilité-gestion sont explicitement mentionnés comme très exposés. C'est un argument particulièrement fort à mentionner dans ta synthèse.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ DOC 4 ═══ -->
+<div class="card">
+  <div class="card-title"><span class="step-badge accent">Doc 4</span> Cartoon "AI taking over?" — Thiago Lucas, avril 2023</div>
+  <div class="info-box">💡 <strong>Méthode cartoon :</strong> le doc 4 ne se <em>décrit</em> pas — il s'<em>interprète</em>. Ce qui compte dans la synthèse, c'est le message que véhicule le dessin, pas ce qu'on y voit.</div>
+  <div style="background:#f5f3ef;border-radius:var(--radius);padding:14px 16px;margin-bottom:14px;">
+    <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;">Formule les idées que tu peux tirer du cartoon pour ta synthèse</div>
+    <div class="consigne">📌 Commence chaque phrase par une idée interprétée — pas par une description de ce qu'on voit. Ne décris JAMAIS le cartoon dans l'introduction.</div>
+    <textarea class="input-field" id="refo-d4" rows="5" placeholder=""></textarea>
+  </div>
+  <div>
+    <div class="btn-group" style="margin-bottom:10px;">
+      <button class="btn btn-primary" style="font-size:12px;" onclick="verifierDoc(4)">✓ Vérifier ce document</button>
+    </div>
+    <div class="feedback-box" id="fb-verif4"></div>
+    <button id="btn-corrige-d4" class="btn btn-accent" style="font-size:12px;display:none;margin-top:10px;" onclick="toggleCorrige('corrige-d4',this)">📖 Voir le corrigé modèle</button>
+    <div id="corrige-d4" style="display:none;margin-top:12px;background:#faf7f0;border:1.5px solid #d4b055;border-radius:var(--radius);padding:14px 16px;font-size:13.5px;line-height:1.7;animation:fadeIn .3s ease;">
+      <div style="font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;">✅ Interprétations-modèles issues du corrigé</div>
+      <p>• <strong>Idée 1 :</strong> Le cartoon illustre la menace que représente l'IA pour les travailleurs qualifiés : le diplômé au sol symbolise la déqualification des cols blancs face à la machine.</p>
+      <p style="margin-top:6px;">• <strong>Idée 2 :</strong> L'emoji moqueur lancé par le robot souligne l'incapacité de la machine à agir avec humanité, signalant une déshumanisation croissante du monde du travail.</p>
+      <p style="margin-top:6px;">• <strong>Idée 3 :</strong> Ce dessin alerte sur le risque que les jeunes diplômés se retrouvent pris de court par la rapidité du changement technologique, leurs qualifications rendues obsolètes.</p>
+      <div class="alerte" style="margin-top:12px;"><strong>⚠ Rappel absolu :</strong> Ces idées s'intègrent dans le <em>développement</em>, citées sous la forme <strong>(doc 4)</strong>. Ne décris JAMAIS le cartoon dans l'introduction.</div>
+    </div>
+  </div>
+</div>
+
+<div class="nav-arrows">
+  <button class="nav-arrow" disabled>← Début</button>
+  <button class="nav-arrow btn-print-tab" onclick="printTab(0)">🖨 Imprimer</button>
+  <button class="nav-arrow" onclick="switchTab(1)">Suivant : Relations →</button>
+</div>
+</section>
+
+<!-- ═══════ ONGLET 2 : RELATIONS ═══════ -->
+<section class="tab-panel" id="tab1">
+<div class="panel-header">
+  <div class="panel-icon">🔗</div>
+  <div>
+    <div class="panel-title">Mise en relation des documents</div>
+    <div class="panel-desc">Les 4 documents ne sont pas indépendants. Repère ce qui les rapproche, les oppose ou les complète pour construire un plan cohérent.</div>
+  </div>
+</div>
+
+<div class="info-box">💡 Ces relations inter-documents sont le cœur du travail de synthèse. C'est ce qui distingue la synthèse du résumé : tu ne résumes pas chaque document — tu croises leurs idées.</div>
+
+<!-- QCM RELATIONS -->
+<div class="card">
+  <div class="card-title">🎯 Identifie le type de relation entre ces paires de documents</div>
+  <div class="consigne">Pour chaque paire de documents, sélectionne le type de relation qui les unit, puis vérifie.</div>
+
+  <div class="qcm-item" id="qcm-r1">
+    <div class="qcm-question">Doc 1 et Doc 2</div>
+    <div class="qcm-options">
+      <label class="qcm-option"><input type="radio" name="qr1" value="a"> Idées similaires (ils défendent la même thèse)</label>
+      <label class="qcm-option"><input type="radio" name="qr1" value="b"> Idées opposées / en tension</label>
+      <label class="qcm-option"><input type="radio" name="qr1" value="c"> Idées complémentaires (angles différents)</label>
+    </div>
+    <div class="btn-group"><button class="btn btn-secondary" style="font-size:12px;" onclick="checkQcmR(1,'b','✅ Relation en <strong>tension</strong> : doc 1 montre l\'IA comme source de stress et de méfiance, tandis que doc 2 l\'envisage comme levier de bien-être. Cette opposition peut structurer les deux parties de ton plan.')">Vérifier</button></div>
+    <div class="feedback-box" id="fb-qr1"></div>
+  </div>
+
+  <div class="qcm-item" id="qcm-r2">
+    <div class="qcm-question">Doc 2 et Doc 3</div>
+    <div class="qcm-options">
+      <label class="qcm-option"><input type="radio" name="qr2" value="a"> Idées similaires</label>
+      <label class="qcm-option"><input type="radio" name="qr2" value="b"> Idées opposées</label>
+      <label class="qcm-option"><input type="radio" name="qr2" value="c"> Idées complémentaires</label>
+    </div>
+    <div class="btn-group"><button class="btn btn-secondary" style="font-size:12px;" onclick="checkQcmR(2,'c','✅ Relation <strong>complémentaire</strong> : doc 2 propose des solutions pour éviter le chômage de masse (semaine 4 jours, cadre légal), tandis que doc 3 identifie précisément qui est le plus exposé (cols blancs). Les deux documents s\'enrichissent mutuellement.')">Vérifier</button></div>
+    <div class="feedback-box" id="fb-qr2"></div>
+  </div>
+
+  <div class="qcm-item" id="qcm-r3">
+    <div class="qcm-question">Doc 3 et Doc 4</div>
+    <div class="qcm-options">
+      <label class="qcm-option"><input type="radio" name="qr3" value="a"> Idées similaires (ils vont dans le même sens)</label>
+      <label class="qcm-option"><input type="radio" name="qr3" value="b"> Idées opposées</label>
+      <label class="qcm-option"><input type="radio" name="qr3" value="c"> Idées complémentaires</label>
+    </div>
+    <div class="btn-group"><button class="btn btn-secondary" style="font-size:12px;" onclick="checkQcmR(3,'a','✅ Idées <strong>similaires</strong> : doc 3 démontre statistiquement que les travailleurs qualifiés sont les plus exposés à l\'IA ; doc 4 l\'illustre visuellement (diplômé au sol, robot qui avance). Ces deux documents se renforcent mutuellement et peuvent être cités ensemble dans le même argument.')">Vérifier</button></div>
+    <div class="feedback-box" id="fb-qr3"></div>
+  </div>
+
+  <div class="qcm-item" id="qcm-r4">
+    <div class="qcm-question">Doc 1 et Doc 3</div>
+    <div class="qcm-options">
+      <label class="qcm-option"><input type="radio" name="qr4" value="a"> Idées similaires</label>
+      <label class="qcm-option"><input type="radio" name="qr4" value="b"> Idées opposées</label>
+      <label class="qcm-option"><input type="radio" name="qr4" value="c"> Idées complémentaires</label>
+    </div>
+    <div class="btn-group"><button class="btn btn-secondary" style="font-size:12px;" onclick="checkQcmR(4,'c','✅ Idées <strong>complémentaires</strong> : doc 1 parle de l\'IA comme outil de contrôle des salariés par les employeurs (surveillance), doc 3 parle de l\'IA comme outil de remplacement des salariés qualifiés. Deux formes de menace différentes mais convergentes.')">Vérifier</button></div>
+    <div class="feedback-box" id="fb-qr4"></div>
+  </div>
+</div>
+
+<!-- REGROUPEMENTS -->
+<div class="card">
+  <div class="card-title">📦 Construction des regroupements thématiques</div>
+  <div class="consigne">Sur la base des relations identifiées, propose 2 regroupements thématiques qui pourraient devenir les 2 parties de ta synthèse. Précise les documents concernés et les idées retenues.</div>
+
+  <div class="grid-2">
+    <div>
+      <label style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px;">Regroupement A</label>
+      <textarea class="input-field" id="reg-a" rows="5" placeholder=""></textarea>
+    </div>
+    <div>
+      <label style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px;">Regroupement B</label>
+      <textarea class="input-field" id="reg-b" rows="5" placeholder=""></textarea>
+    </div>
+  </div>
+
+  <div class="alerte mt-12">
+    <strong>❌ Plan à éviter absolument :</strong> « Partie I = résumé doc 1 + doc 2 / Partie II = résumé doc 3 + doc 4 ». Chaque partie doit croiser des documents différents autour d'un même thème.
+  </div>
+
+  <div class="btn-group mt-12">
+    <button class="btn btn-primary" onclick="checkRegroupements()">✓ Vérifier mes regroupements</button>
+  </div>
+  <div class="feedback-box" id="fb-reg"></div>
+
+  <ul class="checklist mt-12">
+    <li><input type="checkbox" id="chk-cross"><label for="chk-cross">Mes regroupements mélangent bien les documents (un même document peut figurer dans les deux parties)</label></li>
+    <li><input type="checkbox" id="chk-4docs"><label for="chk-4docs">Les 4 documents sont représentés dans au moins un regroupement</label></li>
+    <li><input type="checkbox" id="chk-doc4"><label for="chk-doc4">Le doc 4 (cartoon) est bien exploité pour ses <em>idées</em>, pas juste décrit</label></li>
+  </ul>
+</div>
+
+<div class="nav-arrows">
+  <button class="nav-arrow" onclick="switchTab(0)">← Idées fortes</button>
+  <button class="nav-arrow btn-print-tab" onclick="printTab(1)">🖨 Imprimer</button>
+  <button class="nav-arrow" onclick="switchTab(2)">Suivant : Problématique →</button>
+</div>
+</section>
+
+<!-- ═══════ ONGLET 3 : PROBLÉMATIQUE ═══════ -->
+<section class="tab-panel" id="tab2">
+<div class="panel-header">
+  <div class="panel-icon">❓</div>
+  <div>
+    <div class="panel-title">Construction de la problématique</div>
+    <div class="panel-desc">La problématique est la question centrale de ta synthèse. Elle doit être ouverte, neutre, et permettre d'organiser les 4 documents autour d'un même questionnement.</div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-title">✏️ Rédige ta problématique</div>
+  <div class="consigne">📌 Formule ta problématique. Elle doit prendre la forme d'une question ouverte et neutre, sans prise de position.</div>
+  <textarea class="input-field" id="my-pq" rows="3" placeholder=""></textarea>
+  <div class="btn-group">
+    <button class="btn btn-primary" onclick="checkMyPq()">🔍 Analyser ma problématique</button>
+  </div>
+  <div class="feedback-box" id="pq-feedback"></div>
+</div>
+
+<div class="nav-arrows">
+  <button class="nav-arrow" onclick="switchTab(1)">← Relations</button>
+  <button class="nav-arrow btn-print-tab" onclick="printTab(2)">🖨 Imprimer</button>
+  <button class="nav-arrow" onclick="switchTab(3)">Suivant : Plan →</button>
+</div>
+</section>
+
+<!-- ═══════ ONGLET 4 : PLAN ═══════ -->
+<section class="tab-panel" id="tab3">
+<div class="panel-header">
+  <div class="panel-icon">🗂️</div>
+  <div>
+    <div class="panel-title">Construction du plan</div>
+    <div class="panel-desc">Transforme tes regroupements thématiques en 2 parties structurées, équilibrées, et ancrées dans les 4 documents.</div>
+  </div>
+</div>
+
+<!-- TITRE DU PLAN -->
+<div class="card">
+  <div class="card-title">Formule ton plan en 2 ou 3 parties</div>
+  <div class="consigne">📌 Donne un intitulé à chaque partie. N'utilise pas « avantages » ni « inconvénients ».</div>
+  <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:14px;">
+    <div>
+      <label style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:5px;">Partie I</label>
+      <input type="text" class="field-short" id="plan-axe1" placeholder="" oninput="syncPlanLabels()">
+    </div>
+    <div>
+      <label style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:5px;">Partie II</label>
+      <input type="text" class="field-short" id="plan-axe2" placeholder="" oninput="syncPlanLabels()">
+    </div>
+    <div>
+      <label style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:5px;">Partie III <span style="font-weight:400;font-style:italic;">(facultatif)</span></label>
+      <input type="text" class="field-short" id="plan-axe3" placeholder="">
+    </div>
+  </div>
+  <div class="btn-group">
+    <button class="btn btn-primary" onclick="checkPlanTitles()">🔍 Analyser mon plan</button>
+  </div>
+  <div class="feedback-box" id="fb-plan-titles"></div>
+</div>
+
+<!-- ARGUMENTS PAR PARTIE -->
+<div class="plan-axis">
+  <div class="plan-axis-header">Partie I — <span id="lbl-p1-header">intitulé à compléter</span></div>
+  <div class="plan-axis-body">
+    <div class="consigne">Liste tes arguments et précise leurs sources. Vise 4 à 5 arguments.</div>
+    <textarea class="input-field" id="plan-args1" rows="6" placeholder=""></textarea>
+  </div>
+</div>
+
+<div class="plan-axis">
+  <div class="plan-axis-header">Partie II — <span id="lbl-p2-header">intitulé à compléter</span></div>
+  <div class="plan-axis-body">
+    <div class="consigne">Liste tes arguments et précise leurs sources. Vise 4 à 5 arguments.</div>
+    <textarea class="input-field" id="plan-args2" rows="6" placeholder=""></textarea>
+  </div>
+</div>
+
+<div class="btn-group" style="margin-bottom:6px;">
+  <button class="btn btn-primary" onclick="checkPlanBalance()">📊 Vérifier la validité du plan</button>
+</div>
+<div class="feedback-box" id="plan-feedback"></div>
+
+<div class="card mt-20">
+  <div class="card-title">✅ Vérification du plan</div>
+  <ul class="checklist">
+    <li><input type="checkbox" id="p1"><label for="p1">Mon plan est thématique, pas documentaire (je ne résume pas chaque doc séparément)</label></li>
+    <li><input type="checkbox" id="p2"><label for="p2">Les 4 documents figurent dans mon plan</label></li>
+    <li><input type="checkbox" id="p3"><label for="p3">J'ai au moins 4 arguments par partie (8 au minimum au total)</label></li>
+    <li><input type="checkbox" id="p4"><label for="p4">Les deux parties sont équilibrées</label></li>
+    <li><input type="checkbox" id="p5"><label for="p5">Mes intitulés n'utilisent pas « avantages » ni « inconvénients »</label></li>
+    <li><input type="checkbox" id="p6"><label for="p6">Le doc 4 est cité dans au moins une des deux parties</label></li>
+  </ul>
+</div>
+
+<div class="nav-arrows">
+  <button class="nav-arrow" onclick="switchTab(2)">← Problématique</button>
+  <button class="nav-arrow btn-print-tab" onclick="printTab(3)">🖨 Imprimer</button>
+  <button class="nav-arrow" onclick="switchTab(4)">Suivant : Introduction →</button>
+</div>
+</section>
+
+<!-- ═══════ ONGLET 5 : INTRODUCTION ═══════ -->
+<section class="tab-panel" id="tab4">
+<div class="panel-header">
+  <div class="panel-icon">🧠</div>
+  <div>
+    <div class="panel-title">Rédaction de l'introduction</div>
+    <div class="panel-desc">L'introduction = contexte + problématique + annonce du plan. Elle ne résume PAS les documents. Elle n'excède pas 40 à 50 mots.</div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-title"><span class="step-badge">Étape 1</span> Phrase de contextualisation</div>
+  <div class="consigne">📌 Situe le thème en 1 à 2 phrases. Ne cite pas les documents et ne donne pas de chiffres.</div>
+  <textarea class="input-field" id="intro-ctx" rows="3" placeholder=""></textarea>
+  <div class="btn-group">
+    <button class="btn btn-secondary" style="font-size:12px;" onclick="checkIntroCtx()">🔍 Vérifier ma contextualisation</button>
+  </div>
+  <div class="feedback-box" id="fb-ctx"></div>
+</div>
+
+<div class="card">
+  <div class="card-title"><span class="step-badge">Étape 2</span> Problématique</div>
+  <div class="consigne">📌 Rappelle ou affine ta problématique.</div>
+  <textarea class="input-field" id="intro-pq" rows="2" placeholder=""></textarea>
+  <div class="btn-group">
+    <button class="btn btn-secondary" style="font-size:12px;" onclick="syncPq()">🔄 Importer depuis l'onglet 3</button>
+    <button class="btn btn-secondary" style="font-size:12px;" onclick="checkIntroPq()">🔍 Vérifier ma problématique</button>
+  </div>
+  <div id="sync-ok" style="display:none;color:var(--green);font-size:12px;margin-top:6px;font-weight:700;">✓ Problématique importée.</div>
+  <div class="feedback-box" id="fb-intro-pq"></div>
+</div>
+
+<div class="card">
+  <div class="card-title"><span class="step-badge">Étape 3</span> Annonce du plan</div>
+  <div class="consigne">📌 Annonce tes 2 parties SANS utiliser « Dans une première partie, nous verrons… »</div>
+  <textarea class="input-field" id="intro-plan" rows="3" placeholder=""></textarea>
+  <div class="btn-group">
+    <button class="btn btn-secondary" style="font-size:12px;" onclick="checkIntroPlan()">🔍 Vérifier mon annonce de plan</button>
+  </div>
+  <div class="feedback-box" id="fb-intro-plan"></div>
+</div>
+
+<div class="card">
+  <div class="card-title">📝 Mon introduction complète</div>
+  <div class="consigne">📌 Assemble les 3 éléments en un paragraphe fluide. <strong>Vise 40 à 50 mots maximum.</strong></div>
+  <textarea class="input-field" id="intro-full" rows="5" placeholder="" oninput="updateWc('intro-full','wc-intro','pb-intro','ws-intro',50)"></textarea>
+  <div class="wc-bar">
+    <span>Mots :</span><span class="wc-num" id="wc-intro">0</span>
+    <div class="progress-bar-wrap"><div class="progress-bar-fill" id="pb-intro" style="width:0%;background:var(--blue);"></div></div>
+    <span id="ws-intro"></span>
+  </div>
+  <div class="btn-group">
+    <button class="btn btn-primary" onclick="checkIntro()">🔍 Vérifier mon introduction complète</button>
+  </div>
+  <div class="feedback-box" id="intro-fb"></div>
+  <hr class="div">
+  <div class="alerte">
+    <strong>❌ Formules absolument interdites dans l'introduction :</strong><br>
+    « Le document 1 montre que… » · « Dans une première partie, nous verrons… » · « Je pense que… » · « D'après le doc 2… » · « Les textes parlent de… »
+  </div>
+</div>
+
+<div class="nav-arrows">
+  <button class="nav-arrow" onclick="switchTab(3)">← Plan</button>
+  <button class="nav-arrow btn-print-tab" onclick="printTab(4)">🖨 Imprimer</button>
+  <button class="nav-arrow" onclick="switchTab(5)">Suivant : Développement →</button>
+</div>
+</section>
+
+<!-- ═══════ ONGLET 6 : DÉVELOPPEMENT ═══════ -->
+<section class="tab-panel" id="tab5">
+<div class="panel-header">
+  <div class="panel-icon">✍️</div>
+  <div>
+    <div class="panel-title">Rédaction du développement</div>
+    <div class="panel-desc">Le développement est le cœur de la synthèse. Minimum 10 arguments, tous issus des 4 documents, organisés en 2 parties équilibrées.</div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-title">🔁 Connecteurs logiques à utiliser</div>
+  <div class="grid-2">
+    <div class="toolbox">
+      <div class="toolbox-title">Pour structurer / ajouter</div>
+      <div class="toolbox-tags">
+        <span class="tag green" onclick="insertConn(this,'dev-p1')">D'abord,</span>
+        <span class="tag green" onclick="insertConn(this,'dev-p1')">En premier lieu,</span>
+        <span class="tag green" onclick="insertConn(this,'dev-p1')">De plus,</span>
+        <span class="tag green" onclick="insertConn(this,'dev-p1')">Par ailleurs,</span>
+        <span class="tag green" onclick="insertConn(this,'dev-p1')">En outre,</span>
+        <span class="tag green" onclick="insertConn(this,'dev-p1')">En effet,</span>
+        <span class="tag green" onclick="insertConn(this,'dev-p1')">Enfin,</span>
+      </div>
+    </div>
+    <div class="toolbox">
+      <div class="toolbox-title">Pour nuancer / contraster</div>
+      <div class="toolbox-tags">
+        <span class="tag red" onclick="insertConn(this,'dev-p1')">Cependant,</span>
+        <span class="tag red" onclick="insertConn(this,'dev-p1')">Toutefois,</span>
+        <span class="tag red" onclick="insertConn(this,'dev-p1')">En revanche,</span>
+        <span class="tag red" onclick="insertConn(this,'dev-p1')">Néanmoins,</span>
+        <span class="tag red" onclick="insertConn(this,'dev-p1')">À l'inverse,</span>
+        <span class="tag red" onclick="insertConn(this,'dev-p1')">A contrario,</span>
+      </div>
+    </div>
+  </div>
+  <div class="toolbox">
+    <div class="toolbox-title">Connecteurs de transition entre les deux parties</div>
+    <div class="toolbox-tags">
+      <span class="tag" onclick="copyTag(this)">Toutefois, si les menaces de l'IA sont réelles,</span>
+      <span class="tag" onclick="copyTag(this)">Ces risques indéniables ne doivent pas occulter</span>
+      <span class="tag" onclick="copyTag(this)">À rebours de ce tableau sombre,</span>
+      <span class="tag" onclick="copyTag(this)">Parallèlement à ces fragilités,</span>
+      <span class="tag" onclick="copyTag(this)">A contrario, le corpus met également en avant</span>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-title">📐 Règle de citation — Rappel</div>
+  <div class="doc-extrait" style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+    <span class="doc-pill" onclick="insertRef('dev-p1','(doc 1)')">(doc 1)</span>
+    <span class="doc-pill" onclick="insertRef('dev-p1','(doc 2)')">(doc 2)</span>
+    <span class="doc-pill" onclick="insertRef('dev-p1','(doc 3)')">(doc 3)</span>
+    <span class="doc-pill" onclick="insertRef('dev-p1','(doc 4)')">(doc 4)</span>
+    <span style="font-size:12px;color:var(--muted);">→ Clique pour insérer dans la Partie I</span>
+  </div>
+  <div class="alerte mt-12">
+    <strong>❌ Jamais :</strong> « Le document 1 dit que… » / « Selon le document 2… » / « Le doc 3 montre que… »<br>
+    <strong>✅ Toujours :</strong> « La surveillance génère un stress accru chez les salariés (doc 1). » ou « Cette mutation est d'autant plus préoccupante que… (doc 3, doc 4). »
+  </div>
+</div>
+
+<!-- PARTIE I -->
+<div class="card">
+  <div class="card-title"><span class="step-badge red">Partie I</span> <span id="lbl-p1"></span></div>
+  <div class="doc-extrait" style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:10px;">
+    <span class="doc-pill" onclick="insertRef('dev-p1','(doc 1)')">(doc 1)</span>
+    <span class="doc-pill" onclick="insertRef('dev-p1','(doc 2)')">(doc 2)</span>
+    <span class="doc-pill" onclick="insertRef('dev-p1','(doc 3)')">(doc 3)</span>
+    <span class="doc-pill" onclick="insertRef('dev-p1','(doc 4)')">(doc 4)</span>
+  </div>
+  <textarea class="input-field" id="dev-p1" rows="11" placeholder="" oninput="updateWc('dev-p1','wc-p1','pb-p1','ws-p1',110)"></textarea>
+  <div class="wc-bar">
+    <span>Mots :</span><span class="wc-num" id="wc-p1">0</span>
+    <div class="progress-bar-wrap"><div class="progress-bar-fill" id="pb-p1" style="width:0%;background:var(--blue);"></div></div>
+    <span id="ws-p1"></span>
+  </div>
+  <div class="btn-group">
+    <button class="btn btn-secondary" style="font-size:12px;" onclick="checkDevPart('dev-p1','fb-p1')">🔍 Analyser cette partie</button>
+  </div>
+  <div class="feedback-box" id="fb-p1"></div>
+</div>
+
+<!-- TRANSITION -->
+<div class="card">
+  <div class="card-title">🔁 Phrase de transition</div>
+  <div class="consigne">📌 Relie la Partie I à la Partie II avec un connecteur contrastif ou complémentaire.</div>
+  <textarea class="input-field" id="dev-trans" rows="2" placeholder=""></textarea>
+  <div class="btn-group">
+    <button class="btn btn-secondary" style="font-size:12px;" onclick="checkTransition()">🔍 Vérifier ma transition</button>
+  </div>
+  <div class="feedback-box" id="fb-trans"></div>
+</div>
+
+<!-- PARTIE II -->
+<div class="card">
+  <div class="card-title"><span class="step-badge green">Partie II</span> <span id="lbl-p2"></span></div>
+  <div class="doc-extrait" style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:10px;">
+    <span class="doc-pill" onclick="insertRef('dev-p2','(doc 1)')">(doc 1)</span>
+    <span class="doc-pill" onclick="insertRef('dev-p2','(doc 2)')">(doc 2)</span>
+    <span class="doc-pill" onclick="insertRef('dev-p2','(doc 3)')">(doc 3)</span>
+    <span class="doc-pill" onclick="insertRef('dev-p2','(doc 4)')">(doc 4)</span>
+    <span style="font-size:12px;color:var(--muted);">→ Insérer dans la Partie II</span>
+  </div>
+  <textarea class="input-field" id="dev-p2" rows="11" placeholder="" oninput="updateWc('dev-p2','wc-p2','pb-p2','ws-p2',110)"></textarea>
+  <div class="wc-bar">
+    <span>Mots :</span><span class="wc-num" id="wc-p2">0</span>
+    <div class="progress-bar-wrap"><div class="progress-bar-fill" id="pb-p2" style="width:0%;background:var(--blue);"></div></div>
+    <span id="ws-p2"></span>
+  </div>
+  <div class="btn-group">
+    <button class="btn btn-secondary" style="font-size:12px;" onclick="checkDevPart('dev-p2','fb-p2')">🔍 Analyser cette partie</button>
+  </div>
+  <div class="feedback-box" id="fb-p2"></div>
+</div>
+
+<div class="nav-arrows">
+  <button class="nav-arrow" onclick="switchTab(4)">← Introduction</button>
+  <button class="nav-arrow btn-print-tab" onclick="printTab(5)">🖨 Imprimer</button>
+  <button class="nav-arrow" onclick="switchTab(6)">Suivant : Conclusion →</button>
+</div>
+</section>
+
+<!-- ═══════ ONGLET 7 : CONCLUSION ═══════ -->
+<section class="tab-panel" id="tab6">
+<div class="panel-header">
+  <div class="panel-icon">🎯</div>
+  <div>
+    <div class="panel-title">Rédaction de la conclusion</div>
+    <div class="panel-desc">La conclusion est brève (2 à 3 phrases max), synthétique, et fait écho à la problématique. Elle n'exprime aucun avis personnel.</div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-title">Rédige ta conclusion</div>
+  <div class="consigne">📌 2 à 3 phrases, 25 à 40 mots. Fais écho à la problématique. N'exprime aucun avis personnel et n'introduis aucune idée nouvelle.</div>
+  <textarea class="input-field" id="concl" rows="5" placeholder="" oninput="updateWc('concl','wc-concl','pb-concl','ws-concl',40)"></textarea>
+  <div class="wc-bar">
+    <span>Mots :</span><span class="wc-num" id="wc-concl">0</span>
+    <div class="progress-bar-wrap"><div class="progress-bar-fill" id="pb-concl" style="width:0%;background:var(--blue);"></div></div>
+    <span id="ws-concl"></span>
+  </div>
+  <div class="btn-group">
+    <button class="btn btn-primary" onclick="checkConclusion()">🔍 Vérifier ma conclusion</button>
+  </div>
+  <div class="feedback-box" id="concl-fb"></div>
+  <div class="alerte mt-12">
+    <strong>❌ Formules interdites :</strong> « Je pense que… » · « Il serait souhaitable que… » · « À mon avis… » · « Nous devons… » · Toute nouvelle idée non présente dans le développement.
+  </div>
+</div>
+
+<!-- SYNTHÈSE FINALE -->
+<div class="card">
+  <div class="card-title">📄 Ma synthèse complète — Vérification finale du nombre de mots</div>
+  <div class="consigne">📌 Assemble introduction + développement + conclusion. La synthèse doit faire entre <strong>225 et 275 mots</strong> (250 ±10 %).</div>
+  <div class="btn-group" style="margin-bottom:12px;">
+    <button class="btn btn-accent" onclick="assembleFull()">📋 Assembler automatiquement</button>
+  </div>
+  <textarea class="input-field" id="synthese-full" rows="18" placeholder="Colle ou assemble ta synthèse complète ici…" oninput="updateWcFull()"></textarea>
+  <div class="wc-bar" style="flex-wrap:wrap;gap:12px;">
+    <span>Total :</span><span class="wc-num" id="wc-total">0</span><span>mots</span>
+    <div class="progress-bar-wrap" style="max-width:260px;"><div class="progress-bar-fill" id="pb-total" style="width:0%;background:var(--blue);"></div></div>
+    <span id="ws-total" style="font-size:13px;font-weight:700;"></span>
+  </div>
+  <div id="wc-detail" style="margin-top:8px;font-size:12px;color:var(--muted);"></div>
+</div>
+
+<div class="nav-arrows">
+  <button class="nav-arrow" onclick="switchTab(5)">← Développement</button>
+  <button class="nav-arrow btn-print-tab" onclick="printTab(6)">🖨 Imprimer</button>
+  <button class="nav-arrow" onclick="switchTab(7)">Suivant : Auto-évaluation →</button>
+</div>
+</section>
+
+<!-- ═══════ ONGLET 8 : AUTO-ÉVALUATION ═══════ -->
+<section class="tab-panel" id="tab7">
+<div class="panel-header">
+  <div class="panel-icon">📋</div>
+  <div>
+    <div class="panel-title">Auto-évaluation & Comparaison avec le corrigé</div>
+    <div class="panel-desc">Évalue ta synthèse avec la grille méthodologique, puis compare-la point par point avec les éléments du corrigé officiel 2024.</div>
+  </div>
+</div>
+
+<!-- GRILLE -->
+<div class="card">
+  <div class="card-title">🧠 1. Introduction</div>
+  <ul class="checklist">
+    <li><input type="checkbox" class="ae"><label>Mon introduction contextualise le thème (IA et monde du travail) sans résumer les documents</label></li>
+    <li><input type="checkbox" class="ae"><label>Ma problématique est formulée en question ouverte et neutre</label></li>
+    <li><input type="checkbox" class="ae"><label>Mon plan annonce 2 axes clairs sans formule scolaire</label></li>
+    <li><input type="checkbox" class="ae"><label>Je n'ai PAS donné mon opinion ni résumé les docs dans l'introduction</label></li>
+  </ul>
+</div>
+
+<div class="card">
+  <div class="card-title">✍️ 2. Développement — Contenu & structure</div>
+  <ul class="checklist">
+    <li><input type="checkbox" class="ae"><label>Mon développement comporte au moins 10 idées issues des documents</label></li>
+    <li><input type="checkbox" class="ae"><label>Les deux parties sont équilibrées en longueur et en contenu</label></li>
+    <li><input type="checkbox" class="ae"><label>Mon plan est thématique (pas documentaire)</label></li>
+    <li><input type="checkbox" class="ae"><label>Je n'ai PAS ajouté d'éléments extérieurs au corpus (pas d'informations inventées)</label></li>
+    <li><input type="checkbox" class="ae"><label>J'ai bien cité une idée tirée du <em>aspect positif</em> du doc 1 (sécurité perçue)</label></li>
+    <li><input type="checkbox" class="ae"><label>J'ai cité la menace sur les cols blancs / diplômés (doc 3 + doc 4)</label></li>
+    <li><input type="checkbox" class="ae"><label>J'ai mentionné le besoin d'un cadre légal (doc 2)</label></li>
+  </ul>
+</div>
+
+<div class="card">
+  <div class="card-title">✍️ 2. Développement — Citations & style</div>
+  <ul class="checklist">
+    <li><input type="checkbox" class="ae"><label>Les 4 documents sont cités dans mon développement</label></li>
+    <li><input type="checkbox" class="ae"><label>Le doc 4 (cartoon) est exploité pour ses idées, pas seulement décrit</label></li>
+    <li><input type="checkbox" class="ae"><label>Les sources sont citées sous la forme (doc 1), (doc 2), (doc 3), (doc 4)</label></li>
+    <li><input type="checkbox" class="ae"><label>Je N'AI JAMAIS écrit « Le document X montre que… »</label></li>
+    <li><input type="checkbox" class="ae"><label>J'utilise des connecteurs logiques variés</label></li>
+    <li><input type="checkbox" class="ae"><label>Je n'utilise PAS « avantages / inconvénients »</label></li>
+    <li><input type="checkbox" class="ae"><label>Je n'utilise PAS « je », « nous », « on », « les gens »</label></li>
+    <li><input type="checkbox" class="ae"><label>J'ai utilisé une phrase de transition entre mes deux parties</label></li>
+  </ul>
+</div>
+
+<div class="card">
+  <div class="card-title">🎯 3. Conclusion</div>
+  <ul class="checklist">
+    <li><input type="checkbox" class="ae"><label>Ma conclusion est brève (2–3 phrases max)</label></li>
+    <li><input type="checkbox" class="ae"><label>Elle fait écho à la problématique</label></li>
+    <li><input type="checkbox" class="ae"><label>Elle n'exprime aucun avis personnel</label></li>
+    <li><input type="checkbox" class="ae"><label>Elle n'introduit aucune idée nouvelle</label></li>
+  </ul>
+</div>
+
+<div class="card">
+  <div class="card-title">⚠️ 4. Consignes formelles</div>
+  <ul class="checklist">
+    <li><input type="checkbox" class="ae"><label>J'ai indiqué le nombre de mots sur ma copie</label></li>
+    <li><input type="checkbox" class="ae"><label>Mon total est compris entre 225 et 275 mots</label></li>
+  </ul>
+</div>
+
+<div class="btn-group">
+  <button class="btn btn-primary" onclick="computeScore()">📊 Calculer mon score</button>
+</div>
+<div id="score-result" style="display:none;margin-top:14px;"></div>
+
+<hr class="div">
+
+<!-- COMPARAISON CORRIGÉ -->
+<div class="card" style="margin-top:6px;">
+  <div class="card-title">🔎 Comparaison avec les éléments du corrigé officiel 2024</div>
+  <div class="consigne">📌 Compare ta synthèse avec les grandes idées du corrigé. Pour chaque critère, coche si tu l'as satisfait et note une réflexion personnelle.</div>
+
+  <div class="compare-row">
+    <div class="compare-box">
+      <div class="compare-box-header student">✏️ Ta synthèse</div>
+      <div class="compare-box-body"><textarea id="cmp-student" rows="14" placeholder="Ta synthèse apparaîtra ici automatiquement si tu cliques sur « Charger »…"></textarea></div>
+    </div>
+    <div class="compare-box">
+      <div class="compare-box-header corrige">📘 Éléments du corrigé officiel 2024</div>
+      <div class="compare-box-body" style="background:#faf7f0;">
+        <p style="font-size:12.5px;color:#5a4a20;line-height:1.6;">
+          <strong>Problématique :</strong> Dans quelle mesure l'IA menace-t-elle l'avenir des travailleurs ?<br><br>
+          <strong>Partie I — Dangers :</strong><br>
+          • Stress et santé mentale dégradée par la surveillance IA (doc 1)<br>
+          • Confiance érodée entre employeurs et salariés (doc 1)<br>
+          • Risque de chômage à grande échelle (doc 2, 3, 4)<br>
+          • Les cols blancs et métiers intellectuels plus exposés (doc 3, 4)<br>
+          • Jeunes diplômés pris de court par la rapidité du changement (doc 4)<br><br>
+          <strong>Partie II — Opportunités :</strong><br>
+          • Sentiment de sécurité au travail (doc 1)<br>
+          • Semaine de 4 jours, salaire maintenu (doc 2)<br>
+          • Amélioration de la santé mentale et équilibre vie-travail (doc 2)<br>
+          • Éviter le chômage de masse (doc 2)<br>
+          • Métiers manuels préservés ; émergence de nouveaux métiers (doc 3)<br>
+          • Dialogue social (syndicats, industrie, gouvernements) (doc 2, 4)<br><br>
+          <strong>Conclusion :</strong> Nécessité d'un cadre légal (doc 2)
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="btn-group" style="margin-bottom:16px;">
+    <button class="btn btn-accent" onclick="loadStudentSynthesis()">📋 Charger ma synthèse</button>
+  </div>
+
+  <table class="rich-table">
+    <thead><tr><th style="width:45%;">Critère de comparaison</th><th style="width:15%;">Résultat</th><th>Ta réflexion</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>Ma problématique couvre bien la menace de l'IA pour les travailleurs</td>
+        <td><select><option>—</option><option>✅ Oui</option><option>⚠ Partiel</option><option>❌ Non</option></select></td>
+        <td><input type="text" placeholder="Ce que j'aurais pu améliorer…"></td>
+      </tr>
+      <tr>
+        <td>J'ai mentionné la surveillance et ses effets sur la santé mentale (doc 1)</td>
+        <td><select><option>—</option><option>✅ Oui</option><option>⚠ Partiel</option><option>❌ Non</option></select></td>
+        <td><input type="text" placeholder=""></td>
+      </tr>
+      <tr>
+        <td>J'ai exploité l'idée positive du doc 1 (sécurité perçue)</td>
+        <td><select><option>—</option><option>✅ Oui</option><option>⚠ Partiel</option><option>❌ Non</option></select></td>
+        <td><input type="text" placeholder=""></td>
+      </tr>
+      <tr>
+        <td>J'ai mentionné la semaine de 4 jours et le maintien du salaire (doc 2)</td>
+        <td><select><option>—</option><option>✅ Oui</option><option>⚠ Partiel</option><option>❌ Non</option></select></td>
+        <td><input type="text" placeholder=""></td>
+      </tr>
+      <tr>
+        <td>J'ai souligné que les cols blancs sont plus menacés que les manuels (doc 3)</td>
+        <td><select><option>—</option><option>✅ Oui</option><option>⚠ Partiel</option><option>❌ Non</option></select></td>
+        <td><input type="text" placeholder=""></td>
+      </tr>
+      <tr>
+        <td>J'ai exploité le cartoon (diplômé désœuvré, indifférence de la machine) (doc 4)</td>
+        <td><select><option>—</option><option>✅ Oui</option><option>⚠ Partiel</option><option>❌ Non</option></select></td>
+        <td><input type="text" placeholder=""></td>
+      </tr>
+      <tr>
+        <td>J'ai mentionné le besoin de dialogue social et de cadre légal (doc 2)</td>
+        <td><select><option>—</option><option>✅ Oui</option><option>⚠ Partiel</option><option>❌ Non</option></select></td>
+        <td><input type="text" placeholder=""></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <hr class="div">
+  <div class="card" style="background:var(--accent-soft);border-color:#d4b055;margin-bottom:0;">
+    <div class="card-title" style="color:var(--navy);">📌 Mes 2 axes de progression prioritaires</div>
+    <textarea class="input-field" rows="4" placeholder="1. _______________________________________________&#10;2. _______________________________________________"></textarea>
+    <p class="text-sm text-muted" style="margin-top:10px;font-style:italic;">Cette grille est un outil de progression personnel — elle ne se substitue pas à l'évaluation de l'enseignant.</p>
+  </div>
+</div>
+
+<div class="nav-arrows">
+  <button class="nav-arrow" onclick="switchTab(6)">← Conclusion</button>
+  <button class="nav-arrow btn-print-tab" onclick="printTab(7)">🖨 Imprimer</button>
+  <button class="nav-arrow" disabled>✓ Terminé</button>
+</div>
+</section>
+
+</main>
+
+<!-- ═══════════════ JAVASCRIPT ═══════════════ -->
+<script>
+// ── TOGGLE CORRIGÉ ──
+function toggleCorrige(id, btn) {
+  const el = document.getElementById(id);
+  const hidden = el.style.display === 'none';
+  el.style.display = hidden ? 'block' : 'none';
+  btn.textContent = hidden ? '🔼 Masquer le corrigé' : '📖 Voir le corrigé modèle';
+}
+
+// ── QCM ONGLET 1 ──
+function evalQcm(name, fbId, successMsg, failMsg) {
+  const options = document.querySelectorAll(`input[name="${name}"]`);
+  let correctChecked = 0, wrongChecked = 0, correctTotal = 0;
+  const errors = [];
+  options.forEach(opt => {
+    const label = opt.closest('label');
+    label.style.background = '';
+    label.style.borderColor = '';
+    if (opt.value === 'correct') correctTotal++;
+    if (opt.checked && opt.value === 'correct') {
+      label.style.background = 'var(--green-soft)';
+      label.style.borderColor = 'var(--green)';
+      correctChecked++;
+    } else if (opt.checked && opt.value === 'wrong') {
+      label.style.background = 'var(--red-soft)';
+      label.style.borderColor = 'var(--red)';
+      wrongChecked++;
+      errors.push('❌ Une des cases cochées est un <strong>exemple ou détail factuel</strong> — pas une idée générale.');
+    } else if (!opt.checked && opt.value === 'correct') {
+      label.style.background = '#fff8e6';
+      label.style.borderColor = '#e8c870';
+    }
+  });
+  const fb = document.getElementById(fbId);
+  if (correctChecked === correctTotal && wrongChecked === 0) {
+    showFb(fb, 'ok', '✅ ' + successMsg);
+  } else if (wrongChecked === 0 && correctChecked >= correctTotal - 1) {
+    showFb(fb, 'warn', '⚠ Presque — une vraie idée n\'a pas été cochée (surlignée en jaune). ' + failMsg);
+  } else {
+    showFb(fb, 'bad', errors.join('<br>') + '<br>' + failMsg);
+  }
+}
+
+// ── TABS ──
+function switchTab(n) {
+  document.querySelectorAll('.tab-panel').forEach((p,i) => p.classList.toggle('active', i===n));
+  document.querySelectorAll('.tab-btn').forEach((b,i) => b.classList.toggle('active', i===n));
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+// ── WORD COUNT ──
+function countWords(txt) {
+  return txt.trim().split(/\s+/).filter(w=>w.length>0).length;
+}
+
+function updateWc(fid, wid, pbid, wsid, max) {
+  const n = countWords(document.getElementById(fid).value);
+  document.getElementById(wid).textContent = n;
+  const pb = document.getElementById(pbid);
+  const ws = document.getElementById(wsid);
+  const pct = Math.min(100,(n/max)*100);
+  if(pb) {
+    pb.style.width = pct+'%';
+    pb.style.background = n > max ? 'var(--red)' : n > max*0.8 ? '#c47a00' : 'var(--blue)';
+  }
+  if(ws) {
+    if(!n) { ws.textContent=''; ws.className=''; return; }
+    if(n > max) { ws.textContent=`⚠ +${n-max} mots`; ws.className='wc-over'; }
+    else if(n >= max*0.8) { ws.textContent='✓ Bien'; ws.className='wc-ok'; }
+    else { ws.textContent=`${max-n} mots restants`; ws.className='wc-warn'; }
+  }
+}
+
+function updateWcFull() {
+  const n = countWords(document.getElementById('synthese-full').value);
+  document.getElementById('wc-total').textContent = n;
+  const pb = document.getElementById('pb-total');
+  const ws = document.getElementById('ws-total');
+  const detail = document.getElementById('wc-detail');
+  const pct = Math.min(100,(n/275)*100);
+  pb.style.width = pct+'%';
+  if(n < 225) {
+    pb.style.background = '#c47a00';
+    ws.textContent = `⚠ Trop court — minimum 225 mots (${225-n} à ajouter)`;
+    ws.className = 'wc-warn';
+  } else if(n > 275) {
+    pb.style.background = 'var(--red)';
+    ws.textContent = `❌ Trop long — maximum 275 mots (${n-275} à supprimer)`;
+    ws.className = 'wc-over';
+  } else {
+    pb.style.background = 'var(--green)';
+    ws.textContent = `✅ Dans la limite — ${n} mots sur 275 max`;
+    ws.className = 'wc-ok';
+  }
+  if(detail) detail.textContent = `Limite autorisée : 225–275 mots (250 ±10%)`;
+}
+
+// ── ASSEMBLE FULL SYNTHESIS ──
+function assembleFull() {
+  const parts = [
+    document.getElementById('intro-full').value.trim(),
+    document.getElementById('dev-p1').value.trim(),
+    document.getElementById('dev-trans').value.trim(),
+    document.getElementById('dev-p2').value.trim(),
+    document.getElementById('concl').value.trim()
+  ].filter(s=>s);
+  document.getElementById('synthese-full').value = parts.join('\n\n');
+  updateWcFull();
+}
+
+// ── SYNC PQ ──
+function syncPq() {
+  const pq = document.getElementById('my-pq').value.trim();
+  if(pq) {
+    document.getElementById('intro-pq').value = pq;
+    const ok = document.getElementById('sync-ok');
+    ok.style.display = 'block';
+    setTimeout(()=>ok.style.display='none', 2000);
+  }
+}
+
+// ── CHECK PROBLÉMATIQUE ──
+function checkMyPq() {
+  const pq = document.getElementById('my-pq').value.trim();
+  const fb = document.getElementById('pq-feedback');
+  if(!pq) { showFb(fb,'warn','Écris d\'abord ta problématique.'); return; }
+  const lc = pq.toLowerCase();
+  const issues = [], goods = [];
+  if(!pq.includes('?')) issues.push('⚠ Pas de point d\'interrogation détecté.');
+  else goods.push('✅ Point d\'interrogation présent.');
+  const openers = ['comment','dans quelle mesure','en quoi','quels sont','quelles sont','à quel point','quel est','quelle est','dans quelle'];
+  if(!openers.some(o=>lc.startsWith(o))) issues.push('⚠ Ne commence pas par un mot interrogatif fort (Comment, Dans quelle mesure, En quoi…).');
+  else goods.push('✅ Bon mot interrogatif.');
+  const bad = ['avantages','inconvénients','je pense','à mon avis','il faut','nous allons'];
+  const found = bad.filter(b=>lc.includes(b));
+  if(found.length) issues.push(`❌ Expression(s) à éviter : <em>${found.join(', ')}</em>.`);
+  const keywords = ['intelligence artificielle','ia','travail','travailleurs','emploi'];
+  if(!keywords.some(k=>lc.includes(k))) issues.push('⚠ La problématique semble déconnectée du thème (IA et travail).');
+  else goods.push('✅ Thème du corpus présent.');
+  showFb(fb, issues.length===0?'ok':issues.length<=1?'warn':'bad', [...goods,...issues].join('<br>'));
+}
+
+// ── CHECK QCM RELATIONS ──
+function checkQcmR(n, correct, expl) {
+  const sel = document.querySelector(`input[name="qr${n}"]:checked`);
+  const fb = document.getElementById(`fb-qr${n}`);
+  if(!sel) { showFb(fb,'warn','Sélectionne une réponse.'); return; }
+  showFb(fb, sel.value===correct?'ok':'bad', expl);
+}
+
+// ── CHECK INTRO ──
+function checkIntro() {
+  const txt = document.getElementById('intro-full').value.trim();
+  const fb = document.getElementById('intro-fb');
+  if(!txt) { showFb(fb,'warn','Rédige ton introduction d\'abord.'); return; }
+  const lc = txt.toLowerCase();
+  const issues = [], goods = [];
+  const wc = countWords(txt);
+  if(wc > 70) issues.push(`⚠ Trop long : ${wc} mots. Vise 40–55 mots.`);
+  else goods.push(`✅ Longueur correcte : ${wc} mots.`);
+  if(!txt.includes('?')) issues.push('⚠ Pas de problématique (point d\'interrogation absent).');
+  else goods.push('✅ Problématique présente.');
+  const forbid = ['dans une première partie','nous allons voir','le document 1','le document 2','le document 3','le document 4','le doc 1','le doc 2','je pense','à mon avis','d\'après le document'];
+  const found = forbid.filter(f=>lc.includes(f));
+  if(found.length) issues.push(`❌ Formule(s) interdite(s) : <em>${found.join(' / ')}</em>`);
+  showFb(fb, issues.length===0?'ok':issues.length<=1?'warn':'bad', [...goods,...issues].join('<br>'));
+}
+
+// ── CHECK DÉVELOPPEMENT ──
+function checkDevPart(fid, fbId) {
+  const txt = document.getElementById(fid).value.trim();
+  const fb = document.getElementById(fbId);
+  if(!txt) { showFb(fb,'warn','Rédige cette partie d\'abord.'); return; }
+  const lc = txt.toLowerCase();
+  const issues = [], goods = [];
+  const refs = (txt.match(/\(doc\s*[1-4]\)/gi)||[]).length;
+  if(refs===0) issues.push('❌ Aucune référence (doc X) détectée. Cite tes sources obligatoirement.');
+  else if(refs<3) issues.push(`⚠ Seulement ${refs} référence(s). Essaie d'en avoir 3 minimum dans cette partie.`);
+  else goods.push(`✅ ${refs} référence(s) aux documents.`);
+  const forbid = ['le document dit','le document montre','le document affirme','selon le document','d\'après le document','le doc dit','le doc montre'];
+  const found = forbid.filter(f=>lc.includes(f));
+  if(found.length) issues.push(`❌ Formule(s) interdite(s) : <em>${found.join(' / ')}</em>`);
+  const conns = ['d\'abord','en premier lieu','de plus','par ailleurs','en outre','en effet','cependant','toutefois','en revanche','néanmoins','enfin','également','à l\'inverse','a contrario'];
+  const fc = conns.filter(c=>lc.includes(c));
+  if(fc.length<2) issues.push('⚠ Peu de connecteurs logiques. Utilise-en davantage (d\'abord, en outre, cependant…).');
+  else goods.push(`✅ Connecteurs variés : ${fc.length} type(s) détecté(s).`);
+  const badStyle = ['avantages','inconvénients'];
+  const fb2 = badStyle.filter(b=>lc.includes(b));
+  if(fb2.length) issues.push(`⚠ Formule(s) à éviter : <em>${fb2.join(', ')}</em>. Utilise des formulations plus riches.`);
+  const perso = [' je ',' j\'ai ',' j\'estime ','à mon avis','nous pensons'];
+  if(perso.some(p=>lc.includes(p))) issues.push('❌ Avis personnel détecté (je/nous). Reste impersonnel.');
+  showFb(fb, issues.length===0?'ok':issues.length<=2?'warn':'bad', [...goods,...issues].join('<br>'));
+}
+
+// ── CHECK CONCLUSION ──
+function checkConclusion() {
+  const txt = document.getElementById('concl').value.trim();
+  const fb = document.getElementById('concl-fb');
+  if(!txt) { showFb(fb,'warn','Rédige ta conclusion d\'abord.'); return; }
+  const lc = txt.toLowerCase();
+  const issues = [], goods = [];
+  const wc = countWords(txt);
+  if(wc > 60) issues.push(`⚠ Conclusion longue : ${wc} mots. Vise 25–40 mots max.`);
+  else goods.push(`✅ Longueur correcte : ${wc} mots.`);
+  const forbid = ['je pense','à mon avis','il faudrait','il serait souhaitable','j\'estime','nous devons'];
+  const found = forbid.filter(f=>lc.includes(f));
+  if(found.length) issues.push(`❌ Avis personnel : <em>${found.join(', ')}</em>. À retirer.`);
+  else goods.push('✅ Pas d\'avis personnel détecté.');
+  showFb(fb, issues.length===0?'ok':issues.length===1?'warn':'bad', [...goods,...issues].join('<br>'));
+}
+
+// ── CHECK PLAN ──
+function checkPlanBalance() {
+  const a1 = document.getElementById('plan-args1').value;
+  const a2 = document.getElementById('plan-args2').value;
+  const fb = document.getElementById('plan-feedback');
+  if(!a1||!a2) { showFb(fb,'warn','Remplis les deux parties du plan d\'abord.'); return; }
+  const issues = [], goods = [];
+  const w1 = countWords(a1), w2 = countWords(a2);
+  const ratio = Math.max(w1,w2)/Math.min(w1,w2);
+  if(ratio>2.2) issues.push('⚠ Les parties semblent déséquilibrées. Équilibre le nombre d\'arguments.');
+  else goods.push('✅ Les deux parties semblent équilibrées.');
+  const all = a1+a2;
+  const docs = ['1','2','3','4'].filter(d=>all.includes('doc '+d)||all.includes('doc'+d));
+  if(docs.length<4) issues.push(`⚠ Tous les documents ne semblent pas couverts. Documents repérés : doc ${docs.join(', doc ')}.`);
+  else goods.push('✅ Les 4 documents sont couverts dans le plan.');
+  showFb(fb, issues.length===0?'ok':'warn', [...goods,...issues].join('<br>'));
+}
+
+// ── SCORE ──
+function computeScore() {
+  const all = [...document.querySelectorAll('.ae')];
+  const checked = all.filter(c=>c.checked).length;
+  const total = all.length;
+  const pct = Math.round((checked/total)*100);
+  let level, color, msg;
+  if(pct>=90){level='Excellent';color='var(--green)';msg='Très bonne maîtrise. Peaufine les derniers points.';}
+  else if(pct>=75){level='Bien';color='var(--blue)';msg='Bonne maîtrise. Quelques points à consolider.';}
+  else if(pct>=55){level='À consolider';color='#c47a00';msg='Des lacunes identifiées. Relis la fiche méthode.';}
+  else{level='À retravailler';color='var(--red)';msg='Reviens sur les fondamentaux. Les cases non cochées sont tes priorités.';}
+  const div = document.getElementById('score-result');
+  div.style.display = 'block';
+  div.innerHTML = `<div class="score-box"><div class="score-circle">${pct}%</div><div><div style="font-size:12px;color:rgba(255,255,255,.6);">Score d'auto-évaluation</div><div style="font-size:15px;font-weight:700;color:${color};margin-top:2px;">${level} — ${checked}/${total} critères</div><div style="font-size:13px;color:rgba(255,255,255,.7);margin-top:3px;">${msg}</div></div></div>`;
+}
+
+// ── LOAD STUDENT SYNTHESIS ──
+function loadStudentSynthesis() {
+  const s = document.getElementById('synthese-full').value.trim();
+  if(s) document.getElementById('cmp-student').value = s;
+  else document.getElementById('cmp-student').placeholder = 'Retourne à l\'onglet 7 et assemble ta synthèse d\'abord.';
+}
+
+// ── VÉRIFIER DOCUMENT (onglet 1) ──
+// Vérifie que l'élève a rempli le QCM ET la reformulation avant de débloquer le corrigé
+function verifierDoc(n) {
+  const refoId = 'refo-d' + n;
+  const fbId = 'fb-verif' + n;
+  const btnId = 'btn-corrige-d' + n;
+  const fb = document.getElementById(fbId);
+  const refo = document.getElementById(refoId);
+  const btn = document.getElementById(btnId);
+
+  const refoTxt = refo ? refo.value.trim() : '';
+  const wcRefo = countWords(refoTxt);
+
+  // Vérification : reformulation non vide
+  if (wcRefo < 10) {
+    showFb(fb, 'warn',
+      '⚠ Complète d\'abord l\'étape B : reformule les idées essentielles du document avec tes propres mots (au moins 2 phrases).'
+    );
+    return;
+  }
+
+  // Vérification : au moins une case QCM cochée
+  const qcmChecked = document.querySelectorAll(`input[name="q${n}"]:checked`).length;
+  if (qcmChecked === 0) {
+    showFb(fb, 'warn',
+      '⚠ Complète d\'abord l\'étape A : coche les idées que tu as identifiées dans le document.'
+    );
+    return;
+  }
+
+  // Analyse rapide de la reformulation
+  const lc = refoTxt.toLowerCase();
+  const issues = [], goods = [];
+
+  // Chiffres et noms propres à éviter selon chaque doc
+  const badPatterns = {
+    1: [/\d+\s*%/, /traqq/i, /time doctor/i, /hammer/i, /leslie/i, /pew/i, /apa/i],
+    2: [/\d+\s*%/, /\d+\s*million/, /autonomy/i, /stronge/i, /takano/i, /2033/i, /chatgpt/i],
+    3: [/\d+\s*%/, /indeed/i, /gudell/i, /svenja/i, /cerullo/i],
+    4: [/robot/i, /mallette/i, /costume/i, /emoji/i, /assis par terre/i]
+  };
+
+  const forbidden = badPatterns[n] || [];
+  const foundForbidden = forbidden.filter(rx => rx.test(refoTxt));
+
+  if (foundForbidden.length) {
+    issues.push('⚠ Ta reformulation semble contenir des éléments trop factuels (chiffres précis, noms propres, ou description du cartoon). Essaie de rester sur les idées générales.');
+  } else {
+    goods.push('✅ Ta reformulation évite bien les exemples trop précis.');
+  }
+
+  // Vérifier personnalisation (pas de "je")
+  if (lc.includes(' je ') || lc.startsWith('je ')) {
+    issues.push('⚠ Évite la première personne (« je ») — formule de manière impersonnelle.');
+  } else {
+    goods.push('✅ Formulation impersonnelle respectée.');
+  }
+
+  const msgParts = [...goods, ...issues];
+  const type = issues.length === 0 ? 'ok' : 'warn';
+  const finalMsg = msgParts.join('<br>') + '<br><br>✅ <strong>Corrigé modèle débloqué.</strong> Compare maintenant tes idées avec les idées-modèles.';
+  showFb(fb, type, finalMsg);
+
+  // Débloquer le bouton corrigé
+  if (btn) {
+    btn.style.display = 'inline-flex';
+    btn.style.animation = 'fadeIn .4s ease';
+  }
+}
+
+// ── HELPERS ──
+function showFb(el, type, msg) {
+  el.className = 'feedback-box show ' + type;
+  el.innerHTML = msg;
+}
+
+function copyTag(el) {
+  const text = el.textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const orig = el.textContent;
+    el.textContent = '✓ Copié !';
+    el.style.background = 'var(--green)'; el.style.color = '#fff'; el.style.borderColor = 'var(--green)';
+    setTimeout(()=>{el.textContent=orig;el.style.background='';el.style.color='';el.style.borderColor='';},1400);
+  }).catch(()=>{});
+}
+
+function copyToField(fid, text) {
+  const f = document.getElementById(fid);
+  if(!f) return;
+  const s = f.selectionStart;
+  f.value = f.value.substring(0,s) + text + f.value.substring(f.selectionEnd);
+  f.selectionStart = f.selectionEnd = s + text.length;
+  f.focus();
+}
+
+function insertConn(el, fid) {
+  const f = document.getElementById(fid);
+  if(!f) return;
+  const s = f.selectionStart;
+  const t = el.textContent + ' ';
+  f.value = f.value.substring(0,s) + t + f.value.substring(f.selectionEnd);
+  f.selectionStart = f.selectionEnd = s + t.length;
+  f.focus();
+}
+
+function insertRef(fid, ref) {
+  const f = document.getElementById(fid);
+  if(!f) return;
+  const s = f.selectionStart;
+  f.value = f.value.substring(0,s) + ref + f.value.substring(f.selectionEnd);
+  f.selectionStart = f.selectionEnd = s + ref.length;
+  f.focus();
+  const wcMap = {'dev-p1':['wc-p1','pb-p1','ws-p1',110],'dev-p2':['wc-p2','pb-p2','ws-p2',110]};
+  if(wcMap[fid]) updateWc(fid,...wcMap[fid]);
+}
+
+// ── SYNC PLAN LABELS (updated) ──
+function syncPlanLabels() {
+  const a1 = document.getElementById('plan-axe1').value;
+  const a2 = document.getElementById('plan-axe2').value;
+  if(document.getElementById('lbl-p1')) document.getElementById('lbl-p1').textContent = a1;
+  if(document.getElementById('lbl-p2')) document.getElementById('lbl-p2').textContent = a2;
+  if(document.getElementById('lbl-p1-header')) document.getElementById('lbl-p1-header').textContent = a1 || 'intitulé à compléter';
+  if(document.getElementById('lbl-p2-header')) document.getElementById('lbl-p2-header').textContent = a2 || 'intitulé à compléter';
+}
+
+// ── CHECK REGROUPEMENTS ──
+function checkRegroupements() {
+  const a = document.getElementById('reg-a').value.trim();
+  const b = document.getElementById('reg-b').value.trim();
+  const fb = document.getElementById('fb-reg');
+  if(!a || !b) { showFb(fb,'warn','Complète les deux regroupements avant de vérifier.'); return; }
+  const all = a + b;
+  const issues = [], goods = [];
+  const docs = ['1','2','3','4'].filter(d => all.includes('doc '+d) || all.includes('doc'+d) || all.includes('Doc '+d));
+  if(docs.length < 4) issues.push(`⚠ Tous les documents ne semblent pas couverts. Repérés : doc ${docs.join(', doc ')}.`);
+  else goods.push('✅ Les 4 documents sont représentés.');
+  // Check doc4 (cartoon) isn't just described
+  if(!all.toLowerCase().includes('doc 4') && !all.toLowerCase().includes('doc4')) {
+    issues.push('⚠ Le doc 4 (cartoon) n\'apparaît dans aucun regroupement. Il doit être exploité pour ses idées.');
+  }
+  // Check that the two regroup. cover different angles
+  const wA = countWords(a), wB = countWords(b);
+  if(wA < 5 || wB < 5) issues.push('⚠ Tes regroupements sont trop courts. Précise les documents concernés et les idées retenues.');
+  else goods.push('✅ Regroupements suffisamment développés.');
+  showFb(fb, issues.length===0?'ok':'warn', [...goods,...issues].join('<br>'));
+}
+
+// ── CHECK PLAN TITLES ──
+function checkPlanTitles() {
+  const a1 = document.getElementById('plan-axe1').value.trim();
+  const a2 = document.getElementById('plan-axe2').value.trim();
+  const fb = document.getElementById('fb-plan-titles');
+  if(!a1 || !a2) { showFb(fb,'warn','Donne un intitulé à au moins les deux premières parties.'); return; }
+  const issues = [], goods = [];
+  const bad = ['avantages','inconvénients','positifs','négatifs'];
+  [a1,a2].forEach((t,i) => {
+    const lc = t.toLowerCase();
+    const found = bad.filter(b=>lc.includes(b));
+    if(found.length) issues.push(`⚠ Partie ${i+1} : évite le terme « ${found.join(', ')} ». Utilise des formulations plus riches (les atouts, les défis, les tensions, les perspectives…).`);
+  });
+  if(!issues.length) goods.push('✅ Intitulés corrects — pas de formulations scolaires détectées.');
+  showFb(fb, issues.length===0?'ok':'warn', [...goods,...issues].join('<br>'));
+}
+
+// ── CHECK INTRO CONTEXTUALISATION ──
+function checkIntroCtx() {
+  const txt = document.getElementById('intro-ctx').value.trim();
+  const fb = document.getElementById('fb-ctx');
+  if(!txt) { showFb(fb,'warn','Rédige ta phrase de contextualisation d\'abord.'); return; }
+  const lc = txt.toLowerCase();
+  const issues = [], goods = [];
+  const wc = countWords(txt);
+  if(wc > 50) issues.push(`⚠ Trop long : ${wc} mots. La contextualisation doit être courte (1 à 2 phrases, max 30 mots).`);
+  else goods.push(`✅ Longueur correcte : ${wc} mots.`);
+  if(/\d+\s*%/.test(txt)) issues.push('⚠ Évite les chiffres précis dans la contextualisation.');
+  const docRefs = ['doc 1','doc 2','doc 3','doc 4','le document','d\'après le doc'].filter(r=>lc.includes(r));
+  if(docRefs.length) issues.push('❌ Ne cite pas les documents dans l\'introduction. Contextualise le thème de manière générale.');
+  if(!issues.length) goods.push('✅ Aucune citation de document détectée.');
+  showFb(fb, issues.length===0?'ok':'warn', [...goods,...issues].join('<br>'));
+}
+
+// ── CHECK INTRO PROBLÉMATIQUE ──
+function checkIntroPq() {
+  const txt = document.getElementById('intro-pq').value.trim();
+  const fb = document.getElementById('fb-intro-pq');
+  if(!txt) { showFb(fb,'warn','Saisis ta problématique.'); return; }
+  const lc = txt.toLowerCase();
+  const issues = [], goods = [];
+  if(!txt.includes('?')) issues.push('⚠ La problématique doit se terminer par un point d\'interrogation.');
+  else goods.push('✅ Point d\'interrogation présent.');
+  const openers = ['comment','dans quelle mesure','en quoi','quels sont','quelles sont','à quel','quel est','quelle est'];
+  if(!openers.some(o=>lc.startsWith(o))) issues.push('⚠ La problématique ne commence pas par un mot interrogatif fort (Comment, Dans quelle mesure, En quoi…).');
+  else goods.push('✅ Bon mot interrogatif.');
+  showFb(fb, issues.length===0?'ok':'warn', [...goods,...issues].join('<br>'));
+}
+
+// ── CHECK INTRO PLAN ANNOUNCEMENT ──
+function checkIntroPlan() {
+  const txt = document.getElementById('intro-plan').value.trim();
+  const fb = document.getElementById('fb-intro-plan');
+  if(!txt) { showFb(fb,'warn','Rédige ton annonce de plan.'); return; }
+  const lc = txt.toLowerCase();
+  const issues = [], goods = [];
+  const forbidden = ['dans une première partie','dans un premier temps nous','nous allons voir','nous verrons','premièrement,'];
+  const found = forbidden.filter(f=>lc.includes(f));
+  if(found.length) issues.push(`❌ Formule(s) scolaire(s) interdite(s) : <em>${found.join(' / ')}</em>`);
+  else goods.push('✅ Aucune formule scolaire détectée.');
+  if(countWords(txt) < 8) issues.push('⚠ L\'annonce de plan semble trop courte. Elle doit mentionner les 2 axes de ta synthèse.');
+  showFb(fb, issues.length===0?'ok':'warn', [...goods,...issues].join('<br>'));
+}
+
+// ── CHECK TRANSITION ──
+function checkTransition() {
+  const txt = document.getElementById('dev-trans').value.trim();
+  const fb = document.getElementById('fb-trans');
+  if(!txt) { showFb(fb,'warn','Rédige ta phrase de transition.'); return; }
+  const lc = txt.toLowerCase();
+  const issues = [], goods = [];
+  const connectors = ['toutefois','cependant','en revanche','néanmoins','à l\'inverse','a contrario','parallèlement','a rebours','malgré','pour autant','si','bien que'];
+  const found = connectors.filter(c=>lc.includes(c));
+  if(!found.length) issues.push('⚠ Aucun connecteur contrastif ou complémentaire détecté. Utilise un connecteur logique (Toutefois, En revanche, Parallèlement…).');
+  else goods.push(`✅ Connecteur détecté : « ${found[0]} »`);
+  if(countWords(txt) < 6) issues.push('⚠ La transition est trop courte. Elle doit créer un lien clair entre les deux parties.');
+  showFb(fb, issues.length===0?'ok':'warn', [...goods,...issues].join('<br>'));
+}
+
+// ── PRINT TAB ──
+function printTab(n) {
+  const tabNames = ['Idées fortes','Relations','Problématique','Plan','Introduction','Développement','Conclusion','Auto-évaluation'];
+  const panel = document.getElementById('tab'+n);
+  if(!panel) return;
+  const w = window.open('','_blank','width=800,height=700');
+  w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Méthodologie de la synthèse · ${tabNames[n]}</title>
+  <style>
+    body { font-family: Georgia, serif; font-size: 13px; line-height: 1.6; color: #222; padding: 20px 30px; }
+    h2 { font-size: 1.1rem; border-bottom: 2px solid #1a2744; padding-bottom: 6px; margin-bottom: 14px; color: #1a2744; }
+    textarea, input[type="text"] { width: 100%; border: 1px solid #ccc; padding: 6px 8px; font-family: Georgia, serif; font-size: 12px; margin-bottom: 8px; resize: none; background: #fafaf8; }
+    .card { border: 1px solid #ccc; border-radius: 6px; padding: 12px 14px; margin-bottom: 14px; }
+    .consigne { background: #fef9ec; border-left: 3px solid #c8a84b; padding: 7px 10px; font-size: 12px; margin-bottom: 8px; }
+    .alerte { background: #fce8e8; border-left: 3px solid #b83232; padding: 7px 10px; font-size: 12px; margin-bottom: 8px; }
+    .btn, .nav-arrow, .feedback-box, .btn-group, .wc-bar, .doc-pill, .toolbox, .info-box { display: none !important; }
+    .step-badge { background: #1a2744; color: #fff; font-size: 10px; padding: 2px 7px; border-radius: 10px; }
+    @media print { @page { margin: 1.5cm; } }
+  </style></head><body>
+  <h2>Méthodologie de la synthèse · ${tabNames[n]}</h2>
+  ${panel.innerHTML}
+  <script>window.onload=function(){window.print();}<\/script>
+  </body></html>`);
+  w.document.close();
+}
+
+document.getElementById('plan-axe1').addEventListener('input', syncPlanLabels);
+document.getElementById('plan-axe2').addEventListener('input', syncPlanLabels);
+</script>
+</body>
+</html>
