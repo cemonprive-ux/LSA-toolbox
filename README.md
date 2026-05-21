@@ -1,2 +1,2 @@
-# LAS-toolbox
+# LSA-toolbox
 Outils pédagogiques LAS
