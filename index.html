@@ -251,9 +251,14 @@ footer{
 .foot-brand img{width:40px;height:40px;border-radius:9px;}
 .foot-brand strong{color:#fff;font-family:'Playfair Display',serif;font-weight:600;font-size:15px;display:block;}
 .foot-brand span{font-size:12px;}
-.foot-links{display:flex;gap:22px;flex-wrap:wrap;}
+.foot-links{display:flex;align-items:center;gap:22px;flex-wrap:wrap;}
 .foot-links a{transition:color .2s;border-bottom:1px solid transparent;padding-bottom:1px;}
 .foot-links a:hover{color:var(--accent);border-bottom-color:var(--accent);}
+.foot-links a.brandlink{display:inline-flex;align-items:center;gap:9px;border-bottom:none;}
+.foot-links a.brandlink img{width:28px;height:28px;border-radius:7px;background:#fff;padding:3px;object-fit:contain;flex-shrink:0;transition:box-shadow .2s;}
+.foot-links a.brandlink:hover img{box-shadow:0 0 0 2px var(--accent);}
+.foot-links a.brandlink span{border-bottom:1px solid transparent;transition:border-color .2s;}
+.foot-links a.brandlink:hover span{border-bottom-color:var(--accent);}
 
 /* ───────── RESPONSIVE ───────── */
 @media(max-width:900px){
@@ -411,9 +416,12 @@ footer{
       </div>
     </div>
     <nav class="foot-links">
-      <a href="useful-tips-sidoine.html">Conseils utiles</a>
       <a href="https://www.lycee-sidoine-apollinaire.fr" target="_blank" rel="noopener">Lycée Sidoine Apollinaire</a>
       <a href="https://www.lycee-sidoine-apollinaire.fr/contact/" target="_blank" rel="noopener">Contact</a>
+      <a class="brandlink" href="https://1cours1bot.fr" target="_blank" rel="noopener" title="1cours1bot">
+        <img src="assets/1cours1bot-logo.png" alt="Logo 1cours1bot">
+        <span>1cours1bot</span>
+      </a>
     </nav>
   </div>
 </footer>
