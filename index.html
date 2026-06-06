@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LSA Toolbox · Outils des étudiants de M. Blanchet — Lycée Sidoine Apollinaire</title>
+<link rel="icon" type="image/png" href="assets/lsa-logo.png">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&display=swap');
+
+:root{
+  --navy:#1a2744;
+  --navy-deep:#0f1a33;
+  --navy-mid:#243260;
+  --blue:#2d5fa6;
+  --blue-light:#4a7bc8;
+  --accent:#c8a84b;
+  --accent-deep:#a9883a;
+  --green:#2a7a4b;
+  --bg:#f5f3ef;
+  --surface:#ffffff;
+  --border:#ddd5c5;
+  --text:#2a2520;
+  --muted:#7a7060;
+  --shadow:0 2px 14px rgba(26,39,68,.10);
+  --shadow-lg:0 14px 40px rgba(26,39,68,.18);
+  --radius:10px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Source Serif 4',Georgia,serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.6;
+  font-size:16px;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit;text-decoration:none;}
+
+/* ───────── TOP UTILITY BAR ───────── */
+.topbar{
+  background:var(--navy-deep);
+  color:rgba(255,255,255,.7);
+  font-size:12.5px;
+  letter-spacing:.04em;
+}
+.topbar-inner{
+  max-width:1140px;margin:0 auto;padding:9px 28px;
+  display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;
+}
+.topbar .place{display:inline-flex;align-items:center;gap:8px;text-transform:uppercase;letter-spacing:.12em;font-size:11px;}
+.topbar .dot{width:5px;height:5px;border-radius:50%;background:var(--accent);}
+.topbar a.back{
+  display:inline-flex;align-items:center;gap:6px;color:rgba(255,255,255,.78);
+  border:1px solid rgba(255,255,255,.18);border-radius:20px;padding:4px 13px;
+  transition:all .2s;font-size:11.5px;
+}
+.topbar a.back:hover{background:rgba(255,255,255,.1);color:#fff;border-color:rgba(200,168,75,.6);}
+
+/* ───────── HERO ───────── */
+.hero{
+  display:grid;
+  grid-template-columns:1.15fr .85fr;
+  min-height:330px;
+  background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 55%,var(--blue) 130%);
+  position:relative;
+  overflow:hidden;
+  border-bottom:3px solid var(--accent);
+}
+.hero::before{
+  content:"";position:absolute;inset:0;
+  background:radial-gradient(circle at 88% 12%,rgba(74,123,200,.45),transparent 55%);
+  pointer-events:none;
+}
+.hero-text{
+  position:relative;z-index:2;
+  padding:42px 48px;
+  display:flex;flex-direction:column;justify-content:center;gap:18px;
+  max-width:640px;
+}
+.brand{display:flex;align-items:center;gap:16px;}
+.brand img{
+  width:64px;height:64px;border-radius:15px;flex-shrink:0;
+  box-shadow:0 6px 18px rgba(0,0,0,.32);
+}
+.brand .kicker{
+  color:var(--accent);
+  font-size:11.5px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;
+  line-height:1.5;
+}
+.brand .kicker small{display:block;color:rgba(255,255,255,.55);font-weight:400;letter-spacing:.1em;font-size:10.5px;margin-top:2px;}
+.hero h1{
+  font-family:'Playfair Display',serif;
+  color:#fff;font-weight:700;
+  font-size:clamp(1.7rem,2.6vw,2.4rem);
+  line-height:1.18;
+  text-wrap:balance;
+}
+.hero h1 em{font-style:italic;color:var(--accent);}
+.hero .lede{
+  color:rgba(255,255,255,.72);font-size:15px;max-width:480px;line-height:1.55;
+}
+/* SEARCH */
+.search{
+  position:relative;max-width:430px;margin-top:4px;
+}
+.search svg{position:absolute;left:15px;top:50%;transform:translateY(-50%);opacity:.5;}
+.search input{
+  width:100%;
+  font-family:'Source Serif 4',serif;font-size:15px;color:var(--text);
+  background:rgba(255,255,255,.96);
+  border:1px solid rgba(255,255,255,.4);
+  border-radius:30px;
+  padding:13px 18px 13px 44px;
+  transition:box-shadow .2s,background .2s;
+}
+.search input::placeholder{color:#9b937f;font-style:italic;}
+.search input:focus{outline:none;background:#fff;box-shadow:0 0 0 4px rgba(200,168,75,.35);}
+
+/* HERO PHOTO */
+.hero-photo{position:relative;z-index:1;}
+.hero-photo img{
+  position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;object-position:50% 60%;
+}
+.hero-photo::after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(90deg,var(--navy-mid) 0%,rgba(36,50,96,.55) 22%,rgba(36,50,96,0) 60%);
+}
+
+/* ───────── MAIN ───────── */
+main{max-width:1140px;margin:0 auto;padding:54px 28px 40px;}
+.section-head{text-align:center;margin-bottom:38px;}
+.section-head .eyebrow{
+  color:var(--accent-deep);font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+}
+.section-head h2{
+  font-family:'Playfair Display',serif;color:var(--navy);font-weight:600;
+  font-size:1.85rem;margin-top:8px;line-height:1.2;
+}
+.section-head p{color:var(--muted);font-size:15px;margin-top:8px;}
+
+/* CATEGORY GRID */
+.cats{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:22px;align-items:start;
+}
+.cat{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  overflow:hidden;
+  transition:box-shadow .25s,transform .25s,border-color .25s;
+  --c:var(--blue);
+}
+.cat[data-accent="gold"]{--c:var(--accent-deep);}
+.cat[data-accent="green"]{--c:var(--green);}
+.cat:hover{box-shadow:var(--shadow-lg);transform:translateY(-3px);}
+.cat.open{box-shadow:var(--shadow-lg);border-color:var(--c);}
+
+.cat-head{
+  width:100%;background:transparent;border:none;cursor:pointer;text-align:left;
+  font-family:inherit;color:inherit;
+  display:flex;flex-direction:column;align-items:flex-start;gap:11px;
+  padding:22px 22px 20px;
+  border-top:4px solid var(--c);
+}
+.head-top{display:flex;width:100%;justify-content:space-between;align-items:center;}
+.mono{
+  flex-shrink:0;
+  width:52px;height:52px;border-radius:12px;
+  background:var(--c);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Playfair Display',serif;font-weight:700;font-size:14px;letter-spacing:.01em;
+  box-shadow:0 4px 12px rgba(26,39,68,.18);
+}
+.cat[data-accent="gold"] .mono{color:var(--navy);}
+.cat-name{
+  font-family:'Playfair Display',serif;font-weight:600;color:var(--navy);
+  font-size:1.45rem;line-height:1.05;display:block;white-space:nowrap;
+}
+.cat-full{display:block;color:var(--muted);font-size:13px;line-height:1.4;}
+.count{
+  margin-top:2px;
+  font-size:10.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--c);background:color-mix(in srgb,var(--c) 12%,#fff);
+  border:1px solid color-mix(in srgb,var(--c) 28%,#fff);
+  padding:4px 11px;border-radius:20px;white-space:nowrap;
+}
+.cat[data-accent="gold"] .count{color:var(--accent-deep);}
+.chev{transition:transform .35s ease;color:var(--c);flex-shrink:0;}
+.cat.open .chev{transform:rotate(180deg);}
+
+/* PANEL (0fr→1fr accordion) */
+.cat-panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows .38s cubic-bezier(.4,0,.2,1);}
+.cat.open .cat-panel{grid-template-rows:1fr;}
+.cat-panel-inner{overflow:hidden;}
+.tool-list{padding:4px 18px 18px;display:flex;flex-direction:column;gap:9px;}
+
+.tool{
+  display:flex;align-items:flex-start;gap:13px;
+  padding:14px 15px;border-radius:8px;
+  border:1px solid var(--border);background:#fcfbf8;
+  transition:all .18s;position:relative;
+}
+.tool:hover{border-color:var(--c);background:#fff;box-shadow:0 4px 14px rgba(26,39,68,.09);transform:translateX(2px);}
+.tool-ico{
+  flex-shrink:0;width:34px;height:34px;border-radius:8px;margin-top:1px;
+  background:color-mix(in srgb,var(--c) 12%,#fff);
+  display:flex;align-items:center;justify-content:center;color:var(--c);
+}
+.cat[data-accent="gold"] .tool-ico{color:var(--accent-deep);}
+.tool-body{flex:1;min-width:0;}
+.tool-title{font-weight:600;color:var(--navy);font-size:15px;line-height:1.3;display:flex;align-items:center;gap:7px;flex-wrap:wrap;}
+.tool-title .ext{
+  font-size:9.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--muted);border:1px solid var(--border);border-radius:4px;padding:1px 5px;
+}
+.tool-desc{color:var(--muted);font-size:13px;margin-top:3px;line-height:1.4;}
+.tool-arrow{align-self:center;color:var(--c);opacity:0;transform:translateX(-4px);transition:all .18s;flex-shrink:0;}
+.tool:hover .tool-arrow{opacity:1;transform:translateX(0);}
+
+/* SOON */
+.tool.soon{background:#f6f4ef;border-style:dashed;cursor:default;}
+.tool.soon:hover{transform:none;box-shadow:none;border-color:var(--border);background:#f6f4ef;}
+.tool.soon .tool-ico{background:#ece8df;color:var(--muted);}
+.tool.soon .tool-title{color:var(--muted);}
+.soon-tag{
+  font-size:9.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  background:var(--muted);color:#fff;border-radius:4px;padding:1px 6px;
+}
+
+/* NO RESULT */
+.noresult{
+  display:none;grid-column:1/-1;text-align:center;color:var(--muted);
+  padding:50px 20px;font-style:italic;font-size:15px;
+}
+.cat.hidden{display:none;}
+
+/* ───────── FOOTER ───────── */
+footer{
+  background:var(--navy-deep);color:rgba(255,255,255,.62);margin-top:42px;
+  border-top:3px solid var(--accent);
+}
+.foot-inner{
+  max-width:1140px;margin:0 auto;padding:34px 28px;
+  display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;font-size:13.5px;
+}
+.foot-brand{display:flex;align-items:center;gap:13px;}
+.foot-brand img{width:40px;height:40px;border-radius:9px;}
+.foot-brand strong{color:#fff;font-family:'Playfair Display',serif;font-weight:600;font-size:15px;display:block;}
+.foot-brand span{font-size:12px;}
+.foot-links{display:flex;gap:22px;flex-wrap:wrap;}
+.foot-links a{transition:color .2s;border-bottom:1px solid transparent;padding-bottom:1px;}
+.foot-links a:hover{color:var(--accent);border-bottom-color:var(--accent);}
+
+/* ───────── RESPONSIVE ───────── */
+@media(max-width:900px){
+  .cats{grid-template-columns:1fr;max-width:600px;margin:0 auto;}
+  .hero{grid-template-columns:1fr;}
+  .hero-photo{min-height:180px;order:2;}
+  .hero-photo::after{background:linear-gradient(0deg,rgba(36,50,96,.15),transparent 50%);}
+  .hero-text{padding:34px 26px;order:1;}
+}
+@media(max-width:560px){
+  .topbar-inner{padding:9px 18px;}
+  main{padding:38px 18px 30px;}
+  .brand img{width:54px;height:54px;}
+  .cat-head{padding:18px 16px 18px 0;}
+  .foot-inner{flex-direction:column;align-items:flex-start;}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════ TOP BAR ═══════════ -->
+<div class="topbar">
+  <div class="topbar-inner">
+    <span class="place"><span class="dot"></span>Lycée Sidoine Apollinaire · Clermont-Ferrand</span>
+    <a class="back" href="https://www.lycee-sidoine-apollinaire.fr" target="_blank" rel="noopener">
+      Site du lycée
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>
+    </a>
+  </div>
+</div>
+
+<!-- ═══════════ HERO ═══════════ -->
+<header class="hero">
+  <div class="hero-text">
+    <div class="brand">
+      <img src="assets/lsa-logo.png" alt="Logo Lycée Sidoine Apollinaire">
+      <div class="kicker">Espace ressources<small>LSA Toolbox</small></div>
+    </div>
+    <h1>Outils mis à disposition pour les étudiants de <em>M. Blanchet</em></h1>
+    <p class="lede">Une sélection d'outils interactifs pour vous entraîner et progresser. Choisissez votre formation ci-dessous.</p>
+    <div class="search">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5a5346" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      <input type="search" id="search" placeholder="Rechercher un outil, une matière…" autocomplete="off" aria-label="Rechercher un outil">
+    </div>
+  </div>
+  <div class="hero-photo">
+    <img src="assets/lycee.png" alt="Le lycée Sidoine Apollinaire">
+  </div>
+</header>
+
+<!-- ═══════════ MAIN ═══════════ -->
+<main>
+  <div class="section-head">
+    <div class="eyebrow">Trois formations</div>
+    <h2>Sélectionnez votre filière</h2>
+    <p>Cliquez sur une rubrique pour découvrir les outils disponibles.</p>
+  </div>
+
+  <div class="cats" id="cats">
+
+    <!-- ───── BTS SIO ───── -->
+    <article class="cat" data-accent="blue">
+      <button class="cat-head" aria-expanded="false">
+        <span class="head-top">
+          <span class="mono">SIO</span>
+          <svg class="chev" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+        </span>
+        <span class="cat-name">BTS SIO</span>
+        <span class="cat-full">Services Informatiques aux Organisations</span>
+        <span class="count">À venir</span>
+      </button>
+      <div class="cat-panel"><div class="cat-panel-inner">
+        <div class="tool-list">
+          <div class="tool soon" data-text="bts sio services informatiques aux organisations outils en préparation à venir">
+            <span class="tool-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+            <div class="tool-body">
+              <div class="tool-title">Outils en préparation <span class="soon-tag">Bientôt</span></div>
+              <div class="tool-desc">Les ressources pour le BTS SIO seront ajoutées prochainement.</div>
+            </div>
+          </div>
+        </div>
+      </div></div>
+    </article>
+
+    <!-- ───── DCG ───── -->
+    <article class="cat" data-accent="gold">
+      <button class="cat-head" aria-expanded="false">
+        <span class="head-top">
+          <span class="mono">DCG</span>
+          <svg class="chev" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+        </span>
+        <span class="cat-name">DCG</span>
+        <span class="cat-full">Diplôme de Comptabilité et de Gestion</span>
+        <span class="count">1 outil</span>
+      </button>
+      <div class="cat-panel"><div class="cat-panel-inner">
+        <div class="tool-list">
+          <a class="tool" href="synthese_DCG_UE12.html" data-text="dcg ue12 ue 12 anglais des affaires méthodologie de la synthèse entraînement guidé documents 250 mots">
+            <span class="tool-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h11l5 5v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1Z"/><path d="M14 4v6h6M8 13h8M8 17h5"/></svg></span>
+            <div class="tool-body">
+              <div class="tool-title">UE 12 · Méthodologie de la synthèse</div>
+              <div class="tool-desc">Anglais des affaires — entraînement guidé en 8 étapes à la synthèse de documents.</div>
+            </div>
+            <svg class="tool-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+      </div></div>
+    </article>
+
+    <!-- ───── DSCG ───── -->
+    <article class="cat" data-accent="green">
+      <button class="cat-head" aria-expanded="false">
+        <span class="head-top">
+          <span class="mono">DSCG</span>
+          <svg class="chev" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+        </span>
+        <span class="cat-name">DSCG</span>
+        <span class="cat-full">Diplôme Supérieur de Comptabilité et de Gestion</span>
+        <span class="count">2 outils</span>
+      </button>
+      <div class="cat-panel"><div class="cat-panel-inner">
+        <div class="tool-list">
+          <a class="tool" href="https://dscg-createyoursummary.netlify.app" target="_blank" rel="noopener" data-text="dscg green revolution create your summary synthèse anglais résumé">
+            <span class="tool-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16M4 10h16M4 15h10M4 20h7"/></svg></span>
+            <div class="tool-body">
+              <div class="tool-title">Green Revolution · Create your summary <span class="ext">Externe ↗</span></div>
+              <div class="tool-desc">Entraînement à la rédaction de la synthèse en anglais.</div>
+            </div>
+            <svg class="tool-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <a class="tool" href="https://dscg-essaytrainer.netlify.app" target="_blank" rel="noopener" data-text="dscg green revolution essay trainer dissertation essai anglais entraînement">
+            <span class="tool-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></span>
+            <div class="tool-body">
+              <div class="tool-title">Green Revolution · Essay trainer <span class="ext">Externe ↗</span></div>
+              <div class="tool-desc">Entraînement guidé à la rédaction de l'essai en anglais.</div>
+            </div>
+            <svg class="tool-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+      </div></div>
+    </article>
+
+    <div class="noresult" id="noresult">Aucun outil ne correspond à votre recherche.</div>
+  </div>
+</main>
+
+<!-- ═══════════ FOOTER ═══════════ -->
+<footer>
+  <div class="foot-inner">
+    <div class="foot-brand">
+      <img src="assets/lsa-logo.png" alt="Logo LSA">
+      <div>
+        <strong>LSA Toolbox</strong>
+        <span>Outils pédagogiques · M. Blanchet</span>
+      </div>
+    </div>
+    <nav class="foot-links">
+      <a href="useful-tips-sidoine.html">Conseils utiles</a>
+      <a href="https://www.lycee-sidoine-apollinaire.fr" target="_blank" rel="noopener">Lycée Sidoine Apollinaire</a>
+      <a href="https://www.lycee-sidoine-apollinaire.fr/contact/" target="_blank" rel="noopener">Contact</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+(function(){
+  const cats = Array.from(document.querySelectorAll('.cat'));
+
+  // Toggle accordion on header click
+  cats.forEach(cat=>{
+    const head = cat.querySelector('.cat-head');
+    head.addEventListener('click', ()=>{
+      const open = cat.classList.toggle('open');
+      head.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  });
+
+  // ── Search / filter ──
+  const input = document.getElementById('search');
+  const noresult = document.getElementById('noresult');
+
+  function norm(s){
+    return (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+  }
+
+  input.addEventListener('input', ()=>{
+    const q = norm(input.value.trim());
+    let anyVisible = false;
+
+    cats.forEach(cat=>{
+      const head = cat.querySelector('.cat-head');
+      const name = norm(cat.querySelector('.cat-name').textContent + ' ' + cat.querySelector('.cat-full').textContent);
+      const tools = Array.from(cat.querySelectorAll('.tool'));
+      let matchInCat = false;
+
+      if(q === ''){
+        tools.forEach(t=>t.style.display='');
+        cat.classList.remove('hidden','open');
+        head.setAttribute('aria-expanded','false');
+        return;
+      }
+
+      const catMatches = name.includes(q);
+      tools.forEach(t=>{
+        const hit = catMatches || norm(t.dataset.text||'').includes(q);
+        t.style.display = hit ? '' : 'none';
+        if(hit) matchInCat = true;
+      });
+
+      if(matchInCat){
+        cat.classList.remove('hidden');
+        cat.classList.add('open');
+        head.setAttribute('aria-expanded','true');
+        anyVisible = true;
+      }else{
+        cat.classList.add('hidden');
+        cat.classList.remove('open');
+        head.setAttribute('aria-expanded','false');
+      }
+    });
+
+    noresult.style.display = (q !== '' && !anyVisible) ? 'block' : 'none';
+  });
+})();
+</script>
+</body>
+</html>
