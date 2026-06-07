@@ -22,14 +22,12 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body { background: var(--bg); color: var(--text); font-family: "DM Sans", sans-serif; font-weight: 300; line-height: 1.6; }
 
-    /* HEADER */
     header { background: var(--text); color: #F8F6F1; padding: 3rem 2rem 2.5rem; text-align: center; position: relative; overflow: hidden; }
     header::before { content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(-45deg, transparent, transparent 40px, rgba(255,255,255,0.03) 40px, rgba(255,255,255,0.03) 41px); }
     header h1 { font-family: "Cormorant Garamond", serif; font-size: clamp(1.6rem, 4vw, 2.8rem); font-weight: 600; line-height: 1.2; position: relative; }
     header h1 em { font-style: italic; color: #D9C99E; }
     .rule-line { width: 60px; height: 2px; background: #D9C99E; margin: 1.2rem auto 0; }
 
-    /* MAIN */
     main { max-width: 1100px; margin: 0 auto; padding: 3rem 1.5rem 5rem; display: flex; flex-direction: column; gap: 4rem; }
     .section { display: flex; flex-direction: column; gap: 2rem; }
     .section-header { display: flex; align-items: center; gap: 1rem; }
@@ -44,8 +42,8 @@
     .divider { height: 1px; background: var(--rule); }
     .content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; align-items: start; }
 
-    /* IMAGE CARD (zoomable) */
-    .image-card { border-radius: 4px; overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.10); background: #fff; position: relative; }
+    /* IMAGE CARDS */
+    .image-card { border-radius: 4px; overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.10); background: #fff; }
     .image-card img { width: 100%; display: block; cursor: zoom-in; transition: transform 0.4s ease; }
     .image-card:hover img { transform: scale(1.02); }
     .img-caption { display: flex; align-items: center; justify-content: space-between; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); padding: 0.6rem 0.8rem; border-top: 1px solid var(--rule); }
@@ -54,15 +52,17 @@
     .liberal .image-card { border-top: 3px solid var(--liberal-color); }
     .keynesian .image-card { border-top: 3px solid var(--keynesian-color); }
 
-    /* VIDEO CARD as thumbnail link (avoids embed errors) */
-    .video-card { display: block; text-decoration: none; color: inherit; border-radius: 4px; overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.10); background: #111; position: relative; transition: transform 0.3s ease, box-shadow 0.3s ease; }
-    .video-card:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,0,0,0.18); }
-    .video-thumb { position: relative; aspect-ratio: 16/9; background: #000; overflow: hidden; }
+    /* VIDEO – facade pattern (click-to-load) */
+    .video-card { border-radius: 4px; overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.10); background: #111; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+    .video-card:not(.loaded):hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,0,0,0.18); }
+    .video-thumb { position: relative; aspect-ratio: 16/9; background: #000; overflow: hidden; cursor: pointer; }
+    .video-thumb:focus-visible { outline: 3px solid #fff; outline-offset: -3px; }
     .video-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0.85; transition: opacity 0.3s, transform 0.5s ease; }
     .video-card:hover .video-thumb img { opacity: 1; transform: scale(1.04); }
-    .play-button { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 68px; height: 48px; background: rgba(0,0,0,0.7); border-radius: 12px; display: flex; align-items: center; justify-content: center; transition: background 0.2s, transform 0.2s; }
+    .play-button { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 68px; height: 48px; background: rgba(0,0,0,0.7); border: none; border-radius: 12px; display: flex; align-items: center; justify-content: center; transition: background 0.2s, transform 0.2s; cursor: pointer; padding: 0; }
     .video-card:hover .play-button { background: #CC0000; transform: translate(-50%, -50%) scale(1.08); }
     .play-button::before { content: ""; border-left: 16px solid #fff; border-top: 10px solid transparent; border-bottom: 10px solid transparent; margin-left: 4px; }
+    .video-iframe { width: 100%; aspect-ratio: 16/9; border: none; display: block; }
     .vid-label { display: flex; align-items: center; justify-content: space-between; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: #B0A898; padding: 0.6rem 0.8rem; background: #1A1714; }
     .youtube-tag { font-size: 0.6rem; color: #CC4444; letter-spacing: 0.15em; }
     .liberal .video-card { border-top: 3px solid var(--liberal-color); }
@@ -110,16 +110,16 @@
           </span>
         </div>
       </div>
-      <a href="https://www.youtube.com/watch?v=tyASbZ-dM3Q" target="_blank" rel="noopener noreferrer" class="video-card">
-        <div class="video-thumb">
-          <img src="https://i.ytimg.com/vi/tyASbZ-dM3Q/hqdefault.jpg" alt="Aperçu vidéo Liberals" loading="lazy">
-          <div class="play-button"></div>
+      <div class="video-card" data-video-id="tyASbZ-dM3Q" data-video-title="Vidéo Liberals">
+        <div class="video-thumb" role="button" tabindex="0" aria-label="Lire la vidéo Liberals">
+          <img src="https://i.ytimg.com/vi/tyASbZ-dM3Q/hqdefault.jpg" alt="" loading="lazy">
+          <span class="play-button" aria-hidden="true"></span>
         </div>
         <div class="vid-label">
           <span>Vidéo · Liberals</span>
           <span class="youtube-tag">▸ YouTube</span>
         </div>
-      </a>
+      </div>
     </div>
   </section>
 
@@ -142,16 +142,16 @@
           </span>
         </div>
       </div>
-      <a href="https://www.youtube.com/watch?v=wb49iogm20A" target="_blank" rel="noopener noreferrer" class="video-card">
-        <div class="video-thumb">
-          <img src="https://i.ytimg.com/vi/wb49iogm20A/hqdefault.jpg" alt="Aperçu vidéo Keynesians" loading="lazy">
-          <div class="play-button"></div>
+      <div class="video-card" data-video-id="wb49iogm20A" data-video-title="Vidéo Keynesians">
+        <div class="video-thumb" role="button" tabindex="0" aria-label="Lire la vidéo Keynesians">
+          <img src="https://i.ytimg.com/vi/wb49iogm20A/hqdefault.jpg" alt="" loading="lazy">
+          <span class="play-button" aria-hidden="true"></span>
         </div>
         <div class="vid-label">
           <span>Vidéo · Keynesians</span>
           <span class="youtube-tag">▸ YouTube</span>
         </div>
-      </a>
+      </div>
     </div>
   </section>
 
@@ -164,68 +164,87 @@
     </div>
     <div class="divider"></div>
     <div class="battle-wrapper">
-      <a href="https://www.youtube.com/watch?v=MLfyGHCsBS8" target="_blank" rel="noopener noreferrer" class="video-card">
-        <div class="video-thumb">
-          <img src="https://i.ytimg.com/vi/MLfyGHCsBS8/hqdefault.jpg" alt="Aperçu vidéo Keynesians vs Monetarists" loading="lazy">
-          <div class="play-button"></div>
+      <div class="video-card" data-video-id="MLfyGHCsBS8" data-video-title="Keynesians vs Monetarists">
+        <div class="video-thumb" role="button" tabindex="0" aria-label="Lire la vidéo Keynesians vs Monetarists">
+          <img src="https://i.ytimg.com/vi/MLfyGHCsBS8/hqdefault.jpg" alt="" loading="lazy">
+          <span class="play-button" aria-hidden="true"></span>
         </div>
         <div class="vid-label">
           <span>Vidéo · Keynesians vs Monetarists</span>
           <span class="youtube-tag">▸ YouTube</span>
         </div>
-      </a>
+      </div>
     </div>
   </section>
 
 </main>
 
 <script>
-  // Lightbox – clic sur image pour agrandir
+  // === LECTURE VIDÉO EMBARQUÉE (click-to-load facade) ===
+  // Au clic, la vignette est remplacée par l'iframe YouTube avec autoplay.
+  // Plein écran natif géré par le lecteur YouTube. Pas de redirection.
   (function() {
-    let currentLightbox = null;
+    function loadVideo(card) {
+      if (card.classList.contains('loaded')) return;
+      const id = card.dataset.videoId;
+      const title = card.dataset.videoTitle || 'Vidéo YouTube';
+      const thumb = card.querySelector('.video-thumb');
+      if (!id || !thumb) return;
 
-    function openLightbox(src, alt) {
+      const iframe = document.createElement('iframe');
+      iframe.className = 'video-iframe';
+      iframe.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0&modestbranding=1&playsinline=1';
+      iframe.title = title;
+      iframe.setAttribute('frameborder', '0');
+      iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen');
+      iframe.setAttribute('allowfullscreen', '');
+      iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+
+      thumb.replaceWith(iframe);
+      card.classList.add('loaded');
+    }
+
+    document.querySelectorAll('.video-card[data-video-id]').forEach(card => {
+      const thumb = card.querySelector('.video-thumb');
+      thumb.addEventListener('click', () => loadVideo(card));
+      thumb.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          loadVideo(card);
+        }
+      });
+    });
+  })();
+
+  // === LIGHTBOX IMAGE ===
+  (function() {
+    let current = null;
+    function open(src, alt) {
       const overlay = document.createElement('div');
       overlay.className = 'lightbox';
       overlay.setAttribute('role', 'dialog');
       overlay.setAttribute('aria-label', alt || 'Image agrandie');
-
       const img = document.createElement('img');
-      img.src = src;
-      img.alt = alt || '';
-
-      const closeBtn = document.createElement('button');
-      closeBtn.className = 'lightbox-close';
-      closeBtn.setAttribute('aria-label', 'Fermer');
-      closeBtn.innerHTML = '&times;';
-
-      overlay.appendChild(img);
-      overlay.appendChild(closeBtn);
+      img.src = src; img.alt = alt || '';
+      const btn = document.createElement('button');
+      btn.className = 'lightbox-close';
+      btn.setAttribute('aria-label', 'Fermer');
+      btn.innerHTML = '&times;';
+      overlay.append(img, btn);
       document.body.appendChild(overlay);
       document.body.style.overflow = 'hidden';
-      currentLightbox = overlay;
-
-      // Empêcher la fermeture quand on clique sur l'image elle-même
+      current = overlay;
       img.addEventListener('click', e => e.stopPropagation());
-      overlay.addEventListener('click', closeLightbox);
-      closeBtn.addEventListener('click', closeLightbox);
+      overlay.addEventListener('click', close);
+      btn.addEventListener('click', close);
     }
-
-    function closeLightbox() {
-      if (currentLightbox) {
-        currentLightbox.remove();
-        currentLightbox = null;
-        document.body.style.overflow = '';
-      }
+    function close() {
+      if (current) { current.remove(); current = null; document.body.style.overflow = ''; }
     }
-
     document.querySelectorAll('.zoomable').forEach(img => {
-      img.addEventListener('click', () => openLightbox(img.src, img.alt));
+      img.addEventListener('click', () => open(img.src, img.alt));
     });
-
-    document.addEventListener('keydown', e => {
-      if (e.key === 'Escape') closeLightbox();
-    });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
   })();
 </script>
 
