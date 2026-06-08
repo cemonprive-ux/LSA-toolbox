@@ -1,178 +1,352 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>General knowledge related to the curriculum</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --crypto-color: #B45309;
-      --crypto-dark: #78350F;
-      --crypto-light: #FEF3C7;
-      --uk-color: #1E3A8A;
-      --uk-dark: #1E2A6B;
-      --uk-light: #DBEAFE;
-      --bg: #F8F6F1;
-      --text: #1A1714;
-      --muted: #6B6560;
-      --rule: #D9D3C8;
-    }
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background: var(--bg); color: var(--text); font-family: "DM Sans", sans-serif; font-weight: 300; line-height: 1.6; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brexit in a few words · LSA Toolbox — DSCG General Knowledge</title>
+<link rel="icon" type="image/png" href="assets/lsa-logo.png">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&display=swap');
 
-    /* HEADER */
-    header { background: var(--text); color: #F8F6F1; padding: 3rem 2rem 2.5rem; text-align: center; position: relative; overflow: hidden; }
-    header::before { content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(-45deg, transparent, transparent 40px, rgba(255,255,255,0.03) 40px, rgba(255,255,255,0.03) 41px); }
-    header h1 { font-family: "Cormorant Garamond", serif; font-size: clamp(1.6rem, 4vw, 2.8rem); font-weight: 600; line-height: 1.2; position: relative; }
-    header h1 em { font-style: italic; color: #D9C99E; }
-    .rule-line { width: 60px; height: 2px; background: #D9C99E; margin: 1.2rem auto 0; }
+:root{
+  --navy:#1a2744;
+  --navy-deep:#0f1a33;
+  --navy-mid:#243260;
+  --blue:#2d5fa6;
+  --accent:#c8a84b;
+  --accent-deep:#a9883a;
+  --green:#2a7a4b;
+  --red:#b5302b;
+  --bg:#f5f3ef;
+  --surface:#ffffff;
+  --border:#ddd5c5;
+  --text:#2a2520;
+  --muted:#7a7060;
+  --shadow:0 2px 14px rgba(26,39,68,.10);
+  --shadow-lg:0 14px 40px rgba(26,39,68,.18);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Source Serif 4',Georgia,serif;
+  background:var(--bg);color:var(--text);line-height:1.72;font-size:17px;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit;}
 
-    /* MAIN */
-    main { max-width: 1100px; margin: 0 auto; padding: 3rem 1.5rem 5rem; display: flex; flex-direction: column; gap: 4rem; }
-    .section { display: flex; flex-direction: column; gap: 2rem; }
-    .section-header { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
-    .section-badge { font-size: 0.65rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; padding: 0.35em 0.9em; border-radius: 2px; color: #fff; }
-    .crypto .section-badge { background: var(--crypto-color); }
-    .uk .section-badge { background: var(--uk-color); }
-    .section-title { font-family: "Cormorant Garamond", serif; font-size: clamp(1.8rem, 3.5vw, 2.4rem); font-weight: 700; line-height: 1.1; }
-    .crypto .section-title { color: var(--crypto-dark); }
-    .uk .section-title { color: var(--uk-dark); }
-    .divider { height: 1px; background: var(--rule); }
+/* ── TOP BAR ── */
+.topbar{background:var(--navy-deep);color:rgba(255,255,255,.7);font-size:12.5px;}
+.topbar-inner{
+  max-width:1140px;margin:0 auto;padding:9px 28px;
+  display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;
+}
+.topbar .place{display:inline-flex;align-items:center;gap:8px;text-transform:uppercase;letter-spacing:.12em;font-size:11px;}
+.topbar .dot{width:5px;height:5px;border-radius:50%;background:var(--accent);}
+.topbar a.back{
+  display:inline-flex;align-items:center;gap:6px;color:rgba(255,255,255,.78);text-decoration:none;
+  border:1px solid rgba(255,255,255,.18);border-radius:20px;padding:4px 13px;transition:all .2s;font-size:11.5px;
+}
+.topbar a.back:hover{background:rgba(255,255,255,.1);color:#fff;border-color:rgba(200,168,75,.6);}
 
-    /* VIDEO – facade pattern (click-to-load) */
-    .video-card { border-radius: 4px; overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.10); background: #111; transition: transform 0.3s ease, box-shadow 0.3s ease; }
-    .video-card:not(.loaded):hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,0,0,0.18); }
-    .video-thumb { position: relative; background: #000; overflow: hidden; cursor: pointer; }
-    .video-thumb.landscape { aspect-ratio: 16/9; }
-    .video-thumb.portrait { aspect-ratio: 9/16; }
-    .video-thumb:focus-visible { outline: 3px solid #fff; outline-offset: -3px; }
-    .video-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0.85; transition: opacity 0.3s, transform 0.5s ease; }
-    .video-card:hover .video-thumb img { opacity: 1; transform: scale(1.04); }
-    .play-button { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 68px; height: 48px; background: rgba(0,0,0,0.7); border: none; border-radius: 12px; display: flex; align-items: center; justify-content: center; transition: background 0.2s, transform 0.2s; cursor: pointer; padding: 0; }
-    .video-card:hover .play-button { background: #CC0000; transform: translate(-50%, -50%) scale(1.08); }
-    .play-button::before { content: ""; border-left: 16px solid #fff; border-top: 10px solid transparent; border-bottom: 10px solid transparent; margin-left: 4px; }
-    .video-iframe { width: 100%; border: none; display: block; }
-    .video-iframe.landscape { aspect-ratio: 16/9; }
-    .video-iframe.portrait { aspect-ratio: 9/16; }
-    .vid-label { display: flex; align-items: center; justify-content: space-between; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: #B0A898; padding: 0.6rem 0.8rem; background: #1A1714; }
-    .youtube-tag { font-size: 0.6rem; color: #CC4444; letter-spacing: 0.15em; }
-    .crypto .video-card { border-top: 3px solid var(--crypto-color); }
-    .uk .video-card { border-top: 3px solid var(--uk-color); }
+/* ── HERO ── */
+.hero{position:relative;overflow:hidden;background:var(--navy);border-bottom:3px solid var(--accent);}
+.hero-img{position:relative;height:clamp(320px,46vh,520px);}
+.hero-img img{width:100%;height:100%;object-fit:cover;object-position:50% 58%;display:block;}
+.hero-img::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(15,26,51,.34) 0%,rgba(15,26,51,.12) 32%,rgba(15,26,51,.55) 66%,rgba(15,26,51,.92) 100%);
+}
+.hero-cap{
+  position:absolute;left:0;right:0;bottom:0;z-index:2;
+  max-width:1040px;margin:0 auto;padding:0 28px 34px;
+  width:100%;
+}
+.breadcrumb{
+  display:flex;align-items:center;gap:9px;flex-wrap:wrap;
+  font-size:12px;letter-spacing:.04em;color:rgba(255,255,255,.92);margin-bottom:16px;
+  text-shadow:0 1px 6px rgba(15,26,51,.7);
+}
+.breadcrumb a{color:rgba(255,255,255,.78);text-decoration:none;border-bottom:1px solid transparent;transition:.2s;}
+.breadcrumb a:hover{color:#fff;border-bottom-color:var(--accent);}
+.breadcrumb .sep{opacity:.5;}
+.breadcrumb .tag{
+  background:var(--green);color:#fff;border-radius:5px;padding:2px 9px;
+  font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+}
+.hero h1{
+  font-family:'Playfair Display',serif;color:#fff;font-weight:700;
+  font-size:clamp(2.1rem,5vw,3.4rem);line-height:1.04;text-wrap:balance;
+  text-shadow:0 2px 24px rgba(0,0,0,.4);
+}
+.hero .sub{color:rgba(255,255,255,.82);font-size:clamp(15px,2vw,18px);font-style:italic;margin-top:12px;max-width:640px;}
+.credit{
+  position:absolute;right:14px;bottom:10px;z-index:3;
+  font-size:10px;color:rgba(255,255,255,.55);letter-spacing:.03em;
+  background:rgba(15,26,51,.4);padding:3px 9px;border-radius:5px;
+}
 
-    /* Layout wrappers */
-    .video-wrapper-wide { max-width: 820px; margin: 0 auto; width: 100%; }
-    .video-wrapper-tall { max-width: 380px; margin: 0 auto; width: 100%; }
-    .crypto-bg { background: var(--crypto-light); border-radius: 6px; padding: 2rem; border: 1px solid rgba(180,83,9,0.15); }
-    .uk-bg { background: var(--uk-light); border-radius: 6px; padding: 2rem; border: 1px solid rgba(30,58,138,0.15); }
+/* ── ARTICLE ── */
+.wrap{max-width:760px;margin:0 auto;padding:54px 28px 30px;}
 
-    .section-sep { display: flex; align-items: center; gap: 1rem; color: var(--muted); font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; }
-    .section-sep::before, .section-sep::after { content: ""; flex: 1; height: 1px; background: var(--rule); }
+.lead{
+  font-size:20px;line-height:1.7;color:var(--navy);
+  border-left:3px solid var(--accent);padding-left:22px;margin-bottom:40px;
+}
+.lead strong{font-weight:600;}
 
-    .video-caption { text-align: center; font-size: 0.75rem; color: var(--muted); margin-top: 1rem; font-style: italic; }
+h2{
+  font-family:'Playfair Display',serif;color:var(--navy);font-weight:600;
+  font-size:1.9rem;line-height:1.12;margin:52px 0 6px;
+  display:flex;align-items:baseline;gap:14px;
+}
+h2 .num{
+  font-size:1rem;font-weight:700;color:#fff;background:var(--blue);
+  width:38px;height:38px;flex-shrink:0;border-radius:9px;
+  display:inline-flex;align-items:center;justify-content:center;
+  transform:translateY(-3px);font-family:'Source Serif 4',serif;
+}
+.h2-rule{height:2px;background:linear-gradient(90deg,var(--accent),transparent);margin:14px 0 26px;}
 
-    @media (max-width: 700px) { header { padding: 2.5rem 1.5rem 2rem; } .crypto-bg, .uk-bg { padding: 1.25rem; } }
-  </style>
+h3{
+  font-family:'Playfair Display',serif;color:var(--navy);font-weight:600;font-style:italic;
+  font-size:1.32rem;margin:36px 0 4px;
+}
+h3 .kicker{
+  display:block;font-style:normal;font-family:'Source Serif 4',serif;
+  font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--accent-deep);margin-bottom:5px;
+}
+p{margin:16px 0;text-wrap:pretty;}
+p .em{font-style:italic;}
+strong{color:var(--navy);font-weight:600;}
+
+/* drop cap on first intro paragraph */
+.lead::first-letter{
+  font-family:'Playfair Display',serif;font-weight:700;color:var(--accent-deep);
+  font-size:3.2em;line-height:.8;float:left;margin:6px 10px 0 0;
+}
+
+/* ── STAT STRIP ── */
+.stats{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:1px;
+  background:var(--border);border:1px solid var(--border);border-radius:10px;overflow:hidden;
+  margin:34px 0 6px;box-shadow:var(--shadow);
+}
+.stat{background:var(--surface);padding:20px 16px;text-align:center;}
+.stat .n{font-family:'Playfair Display',serif;font-weight:700;color:var(--navy);font-size:1.85rem;line-height:1;}
+.stat .n small{font-size:.6em;color:var(--accent-deep);}
+.stat .l{font-size:11.5px;color:var(--muted);margin-top:7px;line-height:1.35;letter-spacing:.02em;}
+
+/* ── PULL QUOTE / SLOGAN ── */
+.slogan{
+  margin:34px 0;padding:26px 30px;border-radius:10px;
+  background:var(--navy);color:#fff;position:relative;overflow:hidden;
+  box-shadow:var(--shadow-lg);
+}
+.slogan::before{
+  content:"\201C";position:absolute;top:-18px;left:14px;
+  font-family:'Playfair Display',serif;font-size:7rem;color:rgba(200,168,75,.32);line-height:1;
+}
+.slogan q{font-family:'Playfair Display',serif;font-style:italic;font-size:1.7rem;line-height:1.2;display:block;quotes:none;position:relative;}
+.slogan q::before,.slogan q::after{content:none;}
+.slogan .by{display:block;margin-top:12px;font-size:13px;color:var(--accent);letter-spacing:.04em;text-transform:uppercase;font-weight:700;}
+
+/* ── CALLOUTS ── */
+.callout{
+  margin:28px 0;padding:18px 22px;border-radius:10px;
+  background:#fcfbf8;border:1px solid var(--border);border-left:4px solid var(--blue);
+  font-size:16px;
+}
+.callout .ttl{
+  display:flex;align-items:center;gap:8px;
+  font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--blue);margin-bottom:6px;
+}
+.callout.fun{border-left-color:var(--accent-deep);background:#faf6ec;}
+.callout.fun .ttl{color:var(--accent-deep);}
+.callout.eco{border-left-color:var(--green);background:#f3f8f4;}
+.callout.eco .ttl{color:var(--green);}
+.callout p{margin:0;}
+
+/* ── INLINE PHOTO ── */
+.inline-photo{
+  margin:48px 0 8px;border-radius:12px;overflow:hidden;
+  border:1px solid var(--border);box-shadow:var(--shadow-lg);background:var(--surface);
+}
+.inline-photo img{display:block;width:100%;height:auto;}
+.inline-photo figcaption{
+  padding:13px 20px;font-size:13px;font-style:italic;color:var(--muted);
+  background:#fcfbf8;border-top:1px solid var(--border);line-height:1.5;
+}
+
+/* ── CONCLUSION ── */
+.conclusion{
+  margin:48px 0 10px;padding:30px 32px;border-radius:12px;
+  background:linear-gradient(135deg,#fcfbf8,#f6f2e8);
+  border:1px solid var(--border);box-shadow:var(--shadow);
+}
+.conclusion .ttl{
+  font-family:'Playfair Display',serif;color:var(--navy);font-weight:600;font-size:1.5rem;
+  display:flex;align-items:center;gap:12px;margin-bottom:6px;
+}
+.conclusion .ttl::before{content:"";width:26px;height:3px;background:var(--accent);border-radius:2px;}
+.conclusion p:last-child{margin-bottom:0;}
+
+/* ── BACK LINK ── */
+.tofoot{text-align:center;margin:46px 0 10px;}
+.tofoot a{
+  display:inline-flex;align-items:center;gap:9px;text-decoration:none;
+  color:var(--navy);font-weight:600;font-size:15px;
+  border:1px solid var(--border);background:var(--surface);border-radius:30px;padding:11px 24px;
+  transition:all .2s;box-shadow:var(--shadow);
+}
+.tofoot a:hover{border-color:var(--accent);color:var(--accent-deep);transform:translateY(-2px);box-shadow:var(--shadow-lg);}
+
+/* ── FOOTER ── */
+footer{background:var(--navy-deep);color:rgba(255,255,255,.62);margin-top:42px;border-top:3px solid var(--accent);}
+.foot-inner{
+  max-width:1040px;margin:0 auto;padding:30px 28px;
+  display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;font-size:13px;
+}
+.foot-brand{display:flex;align-items:center;gap:13px;}
+.foot-brand img{width:38px;height:38px;border-radius:9px;}
+.foot-brand strong{color:#fff;font-family:'Playfair Display',serif;font-weight:600;font-size:15px;display:block;}
+.foot-brand span{font-size:12px;}
+
+@media(max-width:640px){
+  body{font-size:16px;}
+  .stats{grid-template-columns:repeat(2,1fr);}
+  .wrap{padding:38px 22px 24px;}
+  h2{font-size:1.6rem;}
+  .slogan q{font-size:1.35rem;}
+  .lead{font-size:18px;}
+}
+</style>
 </head>
 <body>
 
-<header>
-  <h1>General knowledge<br><em>related to the curriculum</em></h1>
-  <div class="rule-line"></div>
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="topbar-inner">
+    <span class="place"><span class="dot"></span>Lycée Sidoine Apollinaire · Clermont-Ferrand</span>
+    <a class="back" href="index.html">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+      Retour à l'accueil
+    </a>
+  </div>
+</div>
+
+<!-- HERO -->
+<header class="hero" data-screen-label="Brexit · hero">
+  <div class="hero-img">
+    <img src="assets/brexit-bus.png" alt="Le bus de campagne « Vote Leave » : « We send the EU £350 million a week, let's fund our NHS instead »">
+    <span class="credit">Vote Leave campaign bus, 2016</span>
+  </div>
+  <div class="hero-cap">
+    <div class="breadcrumb">
+      <a href="index.html">Accueil</a>
+      <span class="sep">›</span>
+      <span>DSCG</span>
+      <span class="sep">›</span>
+      <span>General knowledge</span>
+      <span class="tag">DSCG</span>
+    </div>
+    <h1>Brexit in a few words</h1>
+    <p class="sub">Le retrait du Royaume-Uni de l'Union européenne : causes profondes et conséquences durables.</p>
+  </div>
 </header>
 
-<main>
+<!-- ARTICLE -->
+<article class="wrap">
 
-  <!-- ══════════════ CRYPTOCURRENCIES ══════════════ -->
-  <section class="section crypto">
-    <div class="section-header">
-      <span class="section-badge">Topic 1</span>
-      <h2 class="section-title">Cryptocurrencies</h2>
+  <p class="lead">Le <strong>Brexit</strong> désigne le retrait du Royaume-Uni de l'Union européenne, officiellement effectif le <strong>31 janvier 2020</strong>, après le référendum du 23 juin 2016 qui avait vu 51,9 % des Britanniques voter en faveur de la sortie. Il est important de garder à l'esprit qu'avec un taux de participation de 72,2 %, cela représente seulement 27 % de la population britannique totale qui a voté en faveur du Brexit. Cet événement constitue une rupture historique majeure dans la construction européenne, mais il s'inscrit en réalité dans une ambivalence britannique vis-à-vis de l'Europe qui remonte aux origines mêmes de la construction communautaire.</p>
+
+  <div class="stats">
+    <div class="stat"><div class="n">51,9<small>%</small></div><div class="l">en faveur du « Leave »</div></div>
+    <div class="stat"><div class="n">72,2<small>%</small></div><div class="l">de participation</div></div>
+    <div class="stat"><div class="n">2020</div><div class="l">retrait effectif (31 janv.)</div></div>
+    <div class="stat"><div class="n">1973</div><div class="l">année de l'adhésion</div></div>
+  </div>
+
+  <!-- PARTIE I -->
+  <h2><span class="num">I</span>Les causes du Brexit</h2>
+  <div class="h2-rule"></div>
+
+  <h3><span class="kicker">1 · Un héritage historique</span>Une adhésion toujours contrariée</h3>
+  <p>Le Royaume-Uni n'a pas participé à la fondation de la Communauté économique européenne en 1957. Puissance atlantiste, tournée vers le Commonwealth et l'alliance privilégiée avec les États-Unis, la Grande-Bretagne se percevait davantage comme une puissance mondiale que comme une nation européenne parmi d'autres. Sa première demande d'adhésion, en 1961, fut bloquée à deux reprises par le général de Gaulle, qui jugeait le Royaume-Uni trop lié à Washington pour s'intégrer sincèrement au projet continental. Le général de Gaulle considérait le Royaume-Uni comme un possible <span class="em">cheval de Troie</span> américain au sein de l'Union européenne. L'adhésion ne fut effective qu'en 1973, et immédiatement contestée : dès 1975, un premier référendum fut organisé sur le maintien dans la CEE.</p>
+
+  <p>Ce rapport ambigu s'explique aussi par la psychologie collective d'un ancien empire en déclin. Après avoir dominé une grande partie du monde, le Royaume-Uni a vécu la décolonisation et l'effacement progressif de sa puissance comme un traumatisme national. L'appartenance à une Europe fédérale perçue comme contraignante heurtait une identité nationale fondée sur la singularité, la <strong>souveraineté parlementaire</strong> — principe cardinal du droit britannique — et la nostalgie d'une grandeur révolue. L'euroscepticisme britannique n'est donc pas une réaction conjoncturelle : il est <strong>structurel</strong>, nourri par des siècles d'histoire insulaire et impériale.</p>
+
+  <div class="callout fun">
+    <div class="ttl">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8"/></svg>
+      Fun fact
     </div>
-    <div class="divider"></div>
+    <p>La série la plus populaire au Royaume-Uni est <span class="em">Downton Abbey</span>, ce qui révèle l'attachement des Britanniques à la grandeur passée du royaume.</p>
+  </div>
 
-    <div class="crypto-bg">
-      <div class="video-wrapper-wide">
-        <div class="video-card" data-video-id="uY5FTf7CsPw" data-video-title="Cryptocurrencies explained" data-format="landscape">
-          <div class="video-thumb landscape" role="button" tabindex="0" aria-label="Play cryptocurrencies video">
-            <img src="https://i.ytimg.com/vi/uY5FTf7CsPw/hqdefault.jpg" alt="" loading="lazy">
-            <span class="play-button" aria-hidden="true"></span>
-          </div>
-          <div class="vid-label">
-            <span>Video · Cryptocurrencies</span>
-            <span class="youtube-tag">▸ YouTube</span>
-          </div>
-        </div>
+  <h3><span class="kicker">2 · Sur le plan politique</span>« Take back control »</h3>
+  <p>La montée d'un euroscepticisme profond au sein de la société britannique constitue la toile de fond du vote. Le Royaume-Uni n'a jamais pleinement adhéré au projet d'intégration européenne : il n'a pas adopté l'euro, ni l'espace Schengen. Le sentiment de perte de souveraineté face aux institutions de Bruxelles, perçues comme lointaines et non élues, a alimenté un discours souverainiste puissant, porté notamment par le parti UKIP et une frange du Parti conservateur.</p>
+
+  <div class="slogan">
+    <q>Take back control</q>
+    <span class="by">Slogan de la campagne « Leave » — lois, frontières, argent</span>
+  </div>
+
+  <h3><span class="kicker">3 · Sur le plan économique</span>Immigration, budget et défiance</h3>
+  <p>La question de l'<strong>immigration économique intra-européenne</strong> a joué un rôle déterminant : une partie de l'électorat populaire percevait la libre circulation des travailleurs comme une pression sur les salaires et les services publics. Par ailleurs, la contribution nette du Royaume-Uni au budget de l'UE était régulièrement présentée comme un coût injustifié — le célèbre chiffre de <strong>350 millions de livres par semaine</strong> mis en avant par les partisans du Leave, bien que contesté, a fortement marqué les esprits. La crise financière de 2008 et ses effets durables sur les classes moyennes ont également nourri un rejet des élites et des institutions internationales.</p>
+
+  <!-- PARTIE II -->
+  <figure class="inline-photo">
+    <img src="assets/brexit-bus.png" alt="Le bus de campagne « Vote Leave » : « We send the EU £350 million a week, let's fund our NHS instead »">
+    <figcaption>Le bus de la campagne « Vote Leave » (2016) : « We send the EU £350 million a week — let's fund our NHS instead ».</figcaption>
+  </figure>
+
+  <h2><span class="num">II</span>Les conséquences du Brexit</h2>
+  <div class="h2-rule"></div>
+
+  <h3><span class="kicker">1 · Sur le plan politique</span>Une cohésion intérieure fragilisée</h3>
+  <p>Le Brexit a profondément fragilisé la cohésion interne du Royaume-Uni : l'Écosse, majoritairement pro-européenne (<strong>62 % de Remain</strong>), a relancé le débat sur l'indépendance. En Irlande du Nord, la question de la frontière avec la République d'Irlande (membre de l'UE) a ravivé des tensions historiques et conduit au <strong>protocole nord-irlandais</strong>, source de friction persistante. Sur la scène européenne, le Brexit a paradoxalement renforcé la cohésion des 27 États membres face aux négociations, tout en servant d'avertissement contre les tendances centrifuges dans d'autres pays.</p>
+
+  <h3><span class="kicker">2 · Sur le plan économique</span>Un bilan négatif à court et moyen terme</h3>
+  <p>L'accord de commerce et de coopération signé le <strong>24 décembre 2020</strong> a évité un « no deal » mais n'a pas préservé l'accès au marché unique. Les échanges commerciaux avec l'UE se sont complexifiés : nouvelles formalités douanières, contrôles phytosanitaires, augmentation des coûts logistiques. Le secteur financier a particulièrement souffert : Londres a perdu une partie de son rôle de hub financier européen au profit d'Amsterdam, Paris et Dublin.</p>
+
+  <div class="callout eco">
+    <div class="ttl">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 6l-9.5 9.5-5-5L1 18"/><path d="M17 6h6v6"/></svg>
+      L'impact chiffré
+    </div>
+    <p>Le PIB britannique aurait été amputé de <strong>4 à 5 %</strong> à long terme selon les estimations du gouvernement lui-même. L'inflation et les difficultés de recrutement dans certains secteurs (santé, agriculture, hôtellerie) ont également été imputées en partie au Brexit.</p>
+  </div>
+
+  <!-- CONCLUSION -->
+  <div class="conclusion">
+    <div class="ttl">Conclusion</div>
+    <p>Le Brexit illustre la tension croissante entre intégration supranationale et revendications souverainistes qui traverse les démocraties occidentales. Produit d'une ambivalence historique profonde autant que de griefs contemporains, il s'inscrit dans le long récit d'un pays qui n'a jamais totalement renoncé à l'idée de sa propre exceptionnalité.</p>
+    <p>S'il a permis au Royaume-Uni de regagner une autonomie législative formelle, son bilan économique reste négatif à court et moyen terme. Il constitue, pour les étudiants en gestion, un <strong>cas d'école</strong> sur les interactions entre décisions politiques, dynamiques commerciales et stratégies d'entreprise dans un contexte de reconfiguration des blocs économiques.</p>
+  </div>
+
+  <div class="tofoot">
+    <a href="index.html">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+      Retour aux outils DSCG
+    </a>
+  </div>
+
+</article>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-inner">
+    <div class="foot-brand">
+      <img src="assets/lsa-logo.png" alt="Logo LSA">
+      <div>
+        <strong>LSA Toolbox</strong>
+        <span>DSCG · General knowledge · M. Blanchet</span>
       </div>
     </div>
-  </section>
-
-  <div class="section-sep">·</div>
-
-  <!-- ══════════════ UK VS GB ══════════════ -->
-  <section class="section uk">
-    <div class="section-header">
-      <span class="section-badge">Topic 2</span>
-      <h2 class="section-title">UK vs GB</h2>
-    </div>
-    <div class="divider"></div>
-
-    <div class="uk-bg">
-      <div class="video-wrapper-tall">
-        <div class="video-card" data-video-id="xoP0HYz5oUE" data-video-title="UK vs GB short" data-format="portrait">
-          <div class="video-thumb portrait" role="button" tabindex="0" aria-label="Play UK vs GB short video">
-            <img src="https://i.ytimg.com/vi/xoP0HYz5oUE/hqdefault.jpg" alt="" loading="lazy">
-            <span class="play-button" aria-hidden="true"></span>
-          </div>
-          <div class="vid-label">
-            <span>Short · UK vs GB</span>
-            <span class="youtube-tag">▸ YouTube</span>
-          </div>
-        </div>
-        <p class="video-caption">YouTube Short – vertical format</p>
-      </div>
-    </div>
-  </section>
-
-</main>
-
-<script>
-  // === LECTURE VIDÉO EMBARQUÉE (click-to-load facade) ===
-  (function() {
-    function loadVideo(card) {
-      if (card.classList.contains('loaded')) return;
-      const id = card.dataset.videoId;
-      const title = card.dataset.videoTitle || 'YouTube video';
-      const format = card.dataset.format || 'landscape';
-      const thumb = card.querySelector('.video-thumb');
-      if (!id || !thumb) return;
-
-      const iframe = document.createElement('iframe');
-      iframe.className = 'video-iframe ' + format;
-      iframe.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0&modestbranding=1&playsinline=1';
-      iframe.title = title;
-      iframe.setAttribute('frameborder', '0');
-      iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen');
-      iframe.setAttribute('allowfullscreen', '');
-      iframe.referrerPolicy = 'strict-origin-when-cross-origin';
-
-      thumb.replaceWith(iframe);
-      card.classList.add('loaded');
-    }
-
-    document.querySelectorAll('.video-card[data-video-id]').forEach(card => {
-      const thumb = card.querySelector('.video-thumb');
-      thumb.addEventListener('click', () => loadVideo(card));
-      thumb.addEventListener('keydown', e => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          loadVideo(card);
-        }
-      });
-    });
-  })();
-</script>
+    <div>Lycée Sidoine Apollinaire — Clermont-Ferrand</div>
+  </div>
+</footer>
 
 </body>
 </html>
