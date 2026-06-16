@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DSCG UE6 — Summary Trainer · The Digital Pound</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --navy: #0d1b2a;
+  --navy-mid: #1a2f45;
+  --gold: #c9a355;
+  --gold-light: #e8c87a;
+  --ice: #e8f0f5;
+  --white: #f9f7f4;
+  --text: #1c2b3a;
+  --muted: #6b7f90;
+  --correct: #2e7d5e;
+  --correct-bg: #e8f5ef;
+  --wrong: #9b2335;
+  --wrong-bg: #fce8eb;
+  --warn: #7a5c00;
+  --warn-bg: #fdf3d6;
+  --border: #d4dde5;
+}
+
+html { scroll-behavior: smooth; }
+body { background: var(--white); color: var(--text); font-family: 'DM Sans', sans-serif; font-weight: 400; line-height: 1.65; min-height: 100vh; }
+
+/* ── HEADER ── */
+.site-header { background: var(--navy); color: white; padding: 2.5rem 2rem 2rem; position: relative; overflow: hidden; }
+.site-header::before { content: ''; position: absolute; top: -40px; right: -40px; width: 260px; height: 260px; border-radius: 50%; background: radial-gradient(circle, rgba(201,163,85,.18) 0%, transparent 70%); pointer-events: none; }
+.header-inner { max-width: 860px; margin: 0 auto; position: relative; }
+.badge { display: inline-block; font-family: 'DM Mono', monospace; font-size: .68rem; letter-spacing: .15em; text-transform: uppercase; color: var(--gold); border: 1px solid rgba(201,163,85,.4); padding: .2rem .7rem; border-radius: 2px; margin-bottom: .9rem; }
+.site-header h1 { font-family: 'Playfair Display', serif; font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 700; line-height: 1.2; margin-bottom: .5rem; }
+.site-header h1 em { color: var(--gold-light); font-style: italic; }
+.site-header p { font-size: .9rem; color: rgba(255,255,255,.65); max-width: 600px; }
+
+/* ── PROGRESS ── */
+.progress-wrap { background: var(--navy-mid); padding: 1rem 2rem; border-bottom: 1px solid rgba(255,255,255,.08); position: sticky; top: 0; z-index: 50; }
+.progress-inner { max-width: 860px; margin: 0 auto; }
+.progress-label { display: flex; justify-content: space-between; font-family: 'DM Mono', monospace; font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: rgba(255,255,255,.7); margin-bottom: .45rem; }
+.progress-bar { height: 6px; background: rgba(255,255,255,.12); border-radius: 99px; overflow: hidden; }
+.progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--gold), var(--gold-light)); border-radius: 99px; transition: width .5s cubic-bezier(.4,0,.2,1); }
+
+/* ── MAIN ── */
+.main { max-width: 860px; margin: 0 auto; padding: 2.2rem 2rem 4rem; }
+
+/* ── SOURCE TEXT ── */
+.text-panel { background: white; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 2.6rem; box-shadow: 0 4px 24px rgba(13,27,42,.05); }
+.text-panel-header { background: var(--navy); color: white; padding: .9rem 1.4rem; display: flex; align-items: center; gap: .6rem; font-family: 'DM Mono', monospace; font-size: .76rem; letter-spacing: .05em; }
+.text-panel-header .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
+.text-body { padding: 1.6rem 1.8rem; font-size: .92rem; }
+.text-body p { margin-bottom: .9rem; }
+.text-body p.lede { font-weight: 600; color: var(--navy); font-size: .98rem; }
+.text-body .src { font-size: .76rem; color: var(--muted); font-style: italic; border-top: 1px solid var(--border); padding-top: .8rem; margin-top: .4rem; }
+.highlight { background: linear-gradient(transparent 55%, rgba(201,163,85,.35) 55%); padding: 0 .1rem; font-weight: 500; }
+
+/* ── SECTION TITLES ── */
+.section-title { display: flex; align-items: center; gap: .9rem; font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--navy); margin: 2.8rem 0 .4rem; }
+.section-num { font-family: 'DM Mono', monospace; font-size: .85rem; color: var(--gold); background: var(--navy); width: 2.1rem; height: 2.1rem; display: flex; align-items: center; justify-content: center; border-radius: 6px; flex-shrink: 0; }
+.section-sub { color: var(--muted); font-size: .88rem; margin-bottom: 1.4rem; max-width: 640px; }
+
+/* ── EXERCISE CARDS ── */
+.ex-card { background: white; border: 1px solid var(--border); border-radius: 10px; padding: 1.4rem 1.5rem; margin-bottom: 1.1rem; box-shadow: 0 2px 12px rgba(13,27,42,.04); }
+.ex-q { font-weight: 600; color: var(--navy); margin-bottom: 1rem; font-size: .98rem; }
+.ex-q em { font-style: italic; color: var(--gold); font-weight: 600; }
+.ex-q .sub { display: block; font-weight: 400; color: var(--muted); font-size: .82rem; margin-top: .25rem; }
+
+/* MCQ */
+.mcq-options { display: flex; flex-direction: column; gap: .55rem; }
+.mcq-btn { text-align: left; background: var(--white); border: 1.5px solid var(--border); border-radius: 7px; padding: .75rem .9rem; font-family: inherit; font-size: .89rem; color: var(--text); cursor: pointer; transition: all .18s; display: flex; gap: .65rem; align-items: flex-start; line-height: 1.45; }
+.mcq-btn:hover:not(:disabled) { border-color: var(--gold); background: #fff; }
+.mcq-btn .letter { font-family: 'DM Mono', monospace; font-weight: 500; color: var(--gold); flex-shrink: 0; }
+.mcq-btn:disabled { cursor: default; }
+.mcq-btn.correct { border-color: var(--correct); background: var(--correct-bg); }
+.mcq-btn.correct .letter { color: var(--correct); }
+.mcq-btn.wrong { border-color: var(--wrong); background: var(--wrong-bg); }
+.mcq-btn.wrong .letter { color: var(--wrong); }
+
+/* Feedback */
+.feedback { margin-top: .9rem; padding: .85rem 1rem; border-radius: 7px; font-size: .85rem; line-height: 1.55; display: none; }
+.feedback.show { display: block; }
+.feedback.ok { background: var(--correct-bg); border-left: 3px solid var(--correct); color: #1d5340; }
+.feedback.no { background: var(--wrong-bg); border-left: 3px solid var(--wrong); color: #6e1826; }
+.feedback strong { font-weight: 600; }
+
+/* Fill / paraphrase */
+.field-label { font-size: .82rem; color: var(--muted); margin-bottom: .4rem; }
+.orig-quote { background: var(--ice); border-left: 3px solid var(--navy-mid); padding: .7rem .9rem; border-radius: 0 6px 6px 0; font-style: italic; font-size: .9rem; margin-bottom: .9rem; color: var(--navy); }
+textarea, input.fill-input { width: 100%; font-family: inherit; font-size: .9rem; border: 1.5px solid var(--border); border-radius: 7px; padding: .7rem .85rem; color: var(--text); background: #fff; resize: vertical; }
+textarea:focus, input.fill-input:focus { outline: none; border-color: var(--gold); }
+textarea { min-height: 90px; }
+.btn { font-family: 'DM Mono', monospace; font-size: .8rem; letter-spacing: .03em; background: var(--navy); color: white; border: none; border-radius: 7px; padding: .65rem 1.3rem; cursor: pointer; transition: all .18s; margin-top: .9rem; }
+.btn:hover { background: var(--navy-mid); }
+.btn.gold { background: var(--gold); color: var(--navy); font-weight: 500; }
+.btn.gold:hover { background: var(--gold-light); }
+.btn.ghost { background: transparent; color: var(--navy); border: 1.5px solid var(--border); }
+.btn.ghost:hover { border-color: var(--gold); }
+
+/* Ordering */
+.order-item { display: flex; align-items: center; gap: .8rem; background: white; border: 1.5px solid var(--border); border-radius: 7px; padding: .65rem .85rem; margin-bottom: .55rem; font-size: .88rem; }
+.order-item select { font-family: 'DM Mono', monospace; font-size: .85rem; border: 1.5px solid var(--border); border-radius: 5px; padding: .3rem .4rem; background: var(--white); color: var(--navy); cursor: pointer; flex-shrink: 0; }
+.order-item.correct { border-color: var(--correct); background: var(--correct-bg); }
+.order-item.wrong { border-color: var(--wrong); background: var(--wrong-bg); }
+
+/* Model reveal */
+.reveal { display: none; margin-top: 1rem; }
+.reveal.show { display: block; }
+.model-box { background: var(--navy); color: #eef3f7; border-radius: 10px; padding: 1.5rem 1.7rem; margin-top: 1.2rem; }
+.model-box h4 { font-family: 'Playfair Display', serif; color: var(--gold-light); font-size: 1.05rem; margin-bottom: .8rem; }
+.model-box p { font-size: .9rem; line-height: 1.7; color: rgba(255,255,255,.88); }
+.model-box .meta { font-family: 'DM Mono', monospace; font-size: .72rem; color: var(--gold); margin-top: .9rem; letter-spacing: .05em; }
+
+/* Heuristic feedback panels */
+.fb-grid { display: grid; gap: .9rem; margin-top: 1.2rem; }
+.fb-panel { border: 1px solid var(--border); border-radius: 9px; background: white; overflow: hidden; }
+.fb-panel-head { padding: .7rem 1rem; font-family: 'DM Mono', monospace; font-size: .76rem; letter-spacing: .04em; text-transform: uppercase; display: flex; align-items: center; gap: .55rem; border-bottom: 1px solid var(--border); }
+.fb-panel-head .ic { width: 1.4rem; height: 1.4rem; border-radius: 5px; display: flex; align-items: center; justify-content: center; font-size: .85rem; flex-shrink: 0; }
+.fb-panel-body { padding: .85rem 1rem; font-size: .85rem; line-height: 1.6; }
+.fb-panel-body ul { list-style: none; }
+.fb-panel-body li { padding-left: 1.2rem; position: relative; margin-bottom: .35rem; }
+.fb-panel-body li::before { position: absolute; left: 0; top: -.05rem; }
+.fb-panel-body li.good::before { content: '✓'; color: var(--correct); }
+.fb-panel-body li.bad::before { content: '!'; color: var(--wrong); font-weight: 700; }
+.fb-panel-body li.tip::before { content: '→'; color: var(--gold); }
+.lvl-ok .fb-panel-head { background: var(--correct-bg); color: #1d5340; } .lvl-ok .ic { background: var(--correct); color: white; }
+.lvl-warn .fb-panel-head { background: var(--warn-bg); color: var(--warn); } .lvl-warn .ic { background: var(--warn); color: white; }
+.lvl-bad .fb-panel-head { background: var(--wrong-bg); color: #6e1826; } .lvl-bad .ic { background: var(--wrong); color: white; }
+
+.coverage-track { height: 8px; background: var(--ice); border-radius: 99px; overflow: hidden; margin: .5rem 0 .7rem; }
+.coverage-fill { height: 100%; background: linear-gradient(90deg, var(--gold), var(--correct)); border-radius: 99px; transition: width .6s; }
+
+/* Print correction */
+.print-only { display: none; }
+.tip-inline { display: inline-block; background: var(--ice); border: 1px solid var(--border); border-radius: 4px; font-family: 'DM Mono', monospace; font-size: .72rem; padding: .1rem .45rem; color: var(--muted); margin-left: .3rem; }
+
+.toolbar { display: flex; gap: .7rem; flex-wrap: wrap; margin-top: 1.4rem; }
+
+@media (max-width: 600px) {
+  .main { padding: 1.4rem 1.1rem 3rem; }
+  .ex-card { padding: 1.1rem; }
+  .text-body { padding: 1.2rem 1.1rem; }
+}
+
+@media print {
+  .site-header, .progress-wrap, .text-panel, .section-title, .section-sub,
+  .ex-card, .btn, .toolbar, .no-print { display: none !important; }
+  .print-only { display: block !important; }
+  body { background: white; }
+  .main { padding: 0; max-width: 100%; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="badge">DSCG — UE6 Business English</div>
+    <h1>Document Synthesis Trainer<br><em>Part I — Summary Skills</em></h1>
+    <p>A guided sequence to identify, reformulate and structure a concise English summary of an opinion article on the digital pound.</p>
+  </div>
+</header>
+
+<!-- PROGRESS -->
+<div class="progress-wrap">
+  <div class="progress-inner">
+    <div class="progress-label">
+      <span>Progression</span>
+      <span id="progressLabel">0 / 8 exercices</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  </div>
+</div>
+
+<main class="main">
+
+  <!-- SOURCE TEXT -->
+  <div class="text-panel">
+    <div class="text-panel-header">
+      <div class="dot"></div>
+      <span>Source Document — Read carefully before attempting the exercises</span>
+    </div>
+    <div class="text-body">
+      <p class="lede">The Guardian view on the digital pound: an impetuous idea with a risky momentum of its own</p>
+      <p>Two years ago, the House of Lords looked into whether the Bank of England should issue digital pounds to be held in electronic wallets. Peers were unconvinced, asking if this wasn't <span class="highlight">"a solution in search of a problem"</span>. Last December, MPs on the Treasury select committee said the same thing. The government's response, however, was to tell the public to prepare for a <span class="highlight">"Britcoin"</span> to be in use by the end of the decade.</p>
+      <p>Physical money has been around for thousands of years for good reason. Cash is <span class="highlight">convenient, reliable and anonymous</span>. It seems unlikely that these advantages could be replicated online. State-backed e-cash might look inevitable to officials who say money is already digital, pointing to cryptocurrencies and smartphone payments. But central bank digital currencies (CBDCs) are different. A Britcoin would <span class="highlight">shift the management burden from commercial banks to Threadneedle Street</span>.</p>
+      <p>Paul Tucker, a former deputy Bank governor, argued in his book Global Discord that the West is responding to China's <span class="highlight">digital renminbi</span>, which potentially gives the state social control through direct access to banking transactions. Yet the UK government can already spy on commercial bank accounts. It doesn't do so without good reason. Brett Scott, a former broker and the author of Cloudmoney, accepts that there is a geopolitical rivalry. The difference, he says, is that private corporations can push their agendas harder in the West than in Beijing.</p>
+      <p>During the pandemic, finance and technology firms accelerated moves towards a <span class="highlight">cashless society</span>, which saw hitherto unimaginable levels of surveillance and data extraction. A world without notes and coins would hurt those least able to afford it. Poor and elderly people often prefer to budget with cash. A million UK adults don't have a bank account. The Royal Society of Arts calculated that going cash-free risked 10 million Britons losing control of their finances. The prospect of a cashless society also unnerved central banks. They worried about being dominated by commercial banks. Their answer: central banks should have their own digital currencies.</p>
+      <p>However, if central banks pushed CBDCs, they risked <span class="highlight">destabilising the financial institutions</span> they oversaw. Central banks can't go bankrupt. People would vote with their feet if they could effectively open accounts at the Bank of England. According to a 2019 survey of 23 central banks, 82% of respondents worried that digital currencies could cause <span class="highlight">runs on banks</span>. To address concerns, caps on CBDC holdings have been suggested. But limits may put off many from using digital pounds.</p>
+      <p>Mr Scott rightly compares the digitalisation of money to Uberisation — a process where convenience is traded for societal threats that older behaviours kept in check. That's why we need a <span class="highlight">debate</span> rather than passively accepting state-backed digital money. Facebook's global cryptocurrency, Diem, was killed off by money-laundering concerns. But pervasive monitoring of spending changes society's psychology for the worse.</p>
+      <p>Right-wing conspiracy theories have been launched by excitable talk about the potential to place conditions on who can use digital money, for what, and with whom. Technically feasible? Eventually. Politically realisable? Gradually. Desirable? Well, that depends on your perspective. Maybe in developing countries, a digital central bank currency could be used — as was attempted briefly in Ecuador — to stymie an overly powerful, and US-aligned, domestic finance sector. But for the UK, it is an idea whose time has yet to come.</p>
+      <p class="src">Source: The Guardian, "The Guardian view on the digital pound" — Editorial, 12 February 2024.</p>
+    </div>
+  </div>
+
+  <!-- ═══ STEP 1 — COMPREHENSION ═══ -->
+  <div class="section-title"><span class="section-num">01</span> Identify the Main Ideas</div>
+  <p class="section-sub">Avant de rédiger un résumé, il faut localiser et comprendre les arguments clés. Répondez aux questions de compréhension.</p>
+
+  <div class="ex-card" id="ex1">
+    <div class="ex-q">What is the <em>central subject</em> of the article?<span class="sub">Choose the most accurate option.</span></div>
+    <div class="mcq-options">
+      <button class="mcq-btn" onclick="checkMCQ(this,false,'ex1','La Banque d\'Angleterre n\'est pas l\'objet du texte en soi : c\'est le projet de monnaie numérique et ses risques.')"><span class="letter">A</span> A detailed history of physical cash over thousands of years and why it spread worldwide.</button>
+      <button class="mcq-btn" onclick="checkMCQ(this,true,'ex1','Le texte porte bien sur le projet de \u00ab Britcoin \u00bb et ses risques (surveillance, exclusion, contr\u00f4le social).')"><span class="letter">B</span> Whether the Bank of England should issue a digital pound, and the risks this would involve.</button>
+      <button class="mcq-btn" onclick="checkMCQ(this,false,'ex1','Le texte mentionne les cryptomonnaies, mais ne porte pas sur leur fonctionnement technique.')"><span class="letter">C</span> How cryptocurrencies such as Bitcoin work at a technical level, including mining and blockchain.</button>
+      <button class="mcq-btn" onclick="checkMCQ(this,false,'ex1','La Chine est citée en comparaison, mais ce n\'est pas le sujet principal.')"><span class="letter">D</span> China's overall economic and monetary policy and how it competes with Western finance.</button>
+    </div>
+    <div class="feedback" id="ex1-fb"></div>
+  </div>
+
+  <div class="ex-card" id="ex2">
+    <div class="ex-q">When peers called the digital pound <em>"a solution in search of a problem"</em>, they meant that…</div>
+    <div class="mcq-options">
+      <button class="mcq-btn" onclick="checkMCQ(this,false,'ex2','Au contraire : l\'expression sous-entend que le besoin n\'est pas démontré.')"><span class="letter">A</span> the project is urgently needed and is in fact long overdue for the British economy.</button>
+      <button class="mcq-btn" onclick="checkMCQ(this,true,'ex2','Exact : l\'innovation est propos\u00e9e sans qu\'un besoin clair ne la justifie.')"><span class="letter">B</span> the project is being created without a clear need to justify it.</button>
+      <button class="mcq-btn" onclick="checkMCQ(this,false,'ex2','L\'expression ne désigne pas un problème insoluble, mais une solution sans problème réel.')"><span class="letter">C</span> the problem it is meant to address is so complex that it can never really be solved.</button>
+      <button class="mcq-btn" onclick="checkMCQ(this,false,'ex2','Il ne s\'agit pas d\'un défaut technique du système bancaire.')"><span class="letter">D</span> there is a serious technical fault in the banking system that the project would repair.</button>
+    </div>
+    <div class="feedback" id="ex2-fb"></div>
+  </div>
+
+  <div class="ex-card" id="ex3">
+    <div class="ex-q">Why might a <em>cashless society</em> harm certain groups, according to the article?</div>
+    <div class="mcq-options">
+      <button class="mcq-btn" onclick="checkMCQ(this,false,'ex3','Le coût de production du cash n\'est pas l\'argument avancé.')"><span class="letter">A</span> Because producing physical cash is far more expensive than running a digital payment system.</button>
+      <button class="mcq-btn" onclick="checkMCQ(this,true,'ex3','Exact : les personnes pauvres, \u00e2g\u00e9es et sans compte bancaire d\u00e9pendent souvent du cash.')"><span class="letter">B</span> Because poor people, elderly people and adults without a bank account often rely on cash.</button>
+      <button class="mcq-btn" onclick="checkMCQ(this,false,'ex3','Le texte ne dit pas que les paiements numériques sont toujours plus lents.')"><span class="letter">C</span> Because digital payments are always slower and less convenient than paying with cash.</button>
+      <button class="mcq-btn" onclick="checkMCQ(this,false,'ex3','La fermeture des agences n\'est pas l\'argument du texte.')"><span class="letter">D</span> Because banks would be forced to close all of their local branches and lay off staff.</button>
+    </div>
+    <div class="feedback" id="ex3-fb"></div>
+  </div>
+
+  <div class="ex-card" id="ex4">
+    <div class="ex-q">Why do <em>central banks themselves</em> worry about issuing a CBDC?</div>
+    <div class="mcq-options">
+      <button class="mcq-btn" onclick="checkMCQ(this,false,'ex4','Le texte ne dit pas qu\'elles craignent de devenir trop puissantes.')"><span class="letter">A</span> It would make central banks far too powerful and place them above any democratic oversight.</button>
+      <button class="mcq-btn" onclick="checkMCQ(this,true,'ex4','Exact : les gens pourraient transf\u00e9rer leur argent vers la banque centrale, provoquant des \u00ab runs \u00bb sur les banques commerciales (82% des banques interrog\u00e9es en 2019).')"><span class="letter">B</span> People might move their money to the central bank, causing runs on commercial banks.</button>
+      <button class="mcq-btn" onclick="checkMCQ(this,false,'ex4','Aucune question de légalité européenne n\'est évoquée.')"><span class="letter">C</span> It would be illegal under current European law and would have to be approved in Brussels.</button>
+      <button class="mcq-btn" onclick="checkMCQ(this,false,'ex4','Le texte ne prédit pas la disparition des cryptomonnaies.')"><span class="letter">D</span> Private cryptocurrencies such as Bitcoin would immediately disappear from the market.</button>
+    </div>
+    <div class="feedback" id="ex4-fb"></div>
+  </div>
+
+  <div class="ex-card" id="ex5">
+    <div class="ex-q">What is the article's <em>overall stance</em> on the digital pound for the UK?</div>
+    <div class="mcq-options">
+      <button class="mcq-btn" onclick="checkMCQ(this,false,'ex5','Le texte est nettement plus prudent : il ne réclame pas une adoption immédiate.')"><span class="letter">A</span> It is urgently needed and should be adopted immediately, before the end of the decade.</button>
+      <button class="mcq-btn" onclick="checkMCQ(this,true,'ex5','Exact : \u00ab an idea whose time has yet to come \u00bb \u2014 il faut un v\u00e9ritable d\u00e9bat public.')"><span class="letter">B</span> It is an idea whose time has not yet come, and it needs a real public debate.</button>
+      <button class="mcq-btn" onclick="checkMCQ(this,false,'ex5','Le texte dit que c\'est techniquement faisable « eventually », pas impossible.')"><span class="letter">C</span> It is technically impossible to build with the tools and infrastructure available today.</button>
+      <button class="mcq-btn" onclick="checkMCQ(this,false,'ex5','Le texte met justement en garde contre le modèle de contrôle social chinois.')"><span class="letter">D</span> It should be copied exactly from the Chinese model of state-controlled digital currency.</button>
+    </div>
+    <div class="feedback" id="ex5-fb"></div>
+  </div>
+
+  <!-- ═══ STEP 2 — REFORMULATE & ORDER ═══ -->
+  <div class="section-title"><span class="section-num">02</span> Reformulate &amp; Order</div>
+  <p class="section-sub">Un résumé reformule sans recopier. Reformulez deux phrases, puis remettez les idées clés dans l'ordre logique d'un résumé.</p>
+
+  <div class="ex-card" id="ex6">
+    <div class="ex-q">Reformulate the following sentence in your own words.</div>
+    <div class="orig-quote">"A Britcoin would shift the management burden from commercial banks to Threadneedle Street."<span class="tip-inline">Threadneedle Street = the Bank of England</span></div>
+    <div class="field-label">Votre reformulation (en anglais) :</div>
+    <textarea id="para1" placeholder="Write your paraphrase here…"></textarea>
+    <button class="btn" onclick="checkParaphrase('para1','ex6',['shift','burden','threadneedle'],['move','responsibility','managing','central bank','away'])">Vérifier ma reformulation</button>
+    <div class="feedback" id="ex6-fb"></div>
+    <div class="reveal" id="ex6-model">
+      <div class="orig-quote" style="border-left-color:var(--gold);background:var(--warn-bg)"><strong>Modèle :</strong> A digital pound would move the responsibility for managing money away from private banks and towards the central bank.</div>
+    </div>
+  </div>
+
+  <div class="ex-card" id="ex7">
+    <div class="ex-q">Reformulate the following sentence in your own words.</div>
+    <div class="orig-quote">"If central banks pushed CBDCs, they risked destabilising the financial institutions they oversaw."</div>
+    <div class="field-label">Votre reformulation (en anglais) :</div>
+    <textarea id="para2" placeholder="Write your paraphrase here…"></textarea>
+    <button class="btn" onclick="checkParaphrase('para2','ex7',['pushed','destabilising','oversaw'],['promoting','undermine','regulate','supposed','weaken'])">Vérifier ma reformulation</button>
+    <div class="feedback" id="ex7-fb"></div>
+    <div class="reveal" id="ex7-model">
+      <div class="orig-quote" style="border-left-color:var(--gold);background:var(--warn-bg)"><strong>Modèle :</strong> By promoting digital currencies, central banks could undermine the very banks they are supposed to supervise.</div>
+    </div>
+  </div>
+
+  <div class="ex-card" id="ex8">
+    <div class="ex-q">Put these key ideas in the <em>logical order</em> of a summary.<span class="sub">Utilisez les menus pour numéroter de 1 à 5.</span></div>
+    <div id="orderList">
+      <div class="order-item" data-correct="2"><select onchange="markOrderChanged()"><option value="">–</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select><span>Cash has real advantages: it is convenient, reliable and anonymous.</span></div>
+      <div class="order-item" data-correct="1"><select onchange="markOrderChanged()"><option value="">–</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select><span>Despite official doubts, the government is pushing for a digital pound.</span></div>
+      <div class="order-item" data-correct="4"><select onchange="markOrderChanged()"><option value="">–</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select><span>A cashless society could exclude vulnerable groups and increase surveillance.</span></div>
+      <div class="order-item" data-correct="3"><select onchange="markOrderChanged()"><option value="">–</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select><span>A CBDC differs from ordinary digital payments: it shifts power to the central bank.</span></div>
+      <div class="order-item" data-correct="5"><select onchange="markOrderChanged()"><option value="">–</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select><span>The UK therefore needs a genuine public debate before adopting it.</span></div>
+    </div>
+    <button class="btn" onclick="checkOrder()">Vérifier l'ordre</button>
+    <div class="feedback" id="ex8-fb"></div>
+  </div>
+
+  <!-- ═══ STEP 3 — SUMMARY CONVENTIONS ═══ -->
+  <div class="section-title"><span class="section-num">03</span> Summary Conventions</div>
+  <p class="section-sub">Quelques règles à respecter avant de rédiger. Vérifiez votre compréhension des conventions du résumé.</p>
+
+  <div class="ex-card" id="ex9">
+    <div class="ex-q">In a DSCG summary, you should…</div>
+    <div class="mcq-options">
+      <button class="mcq-btn" onclick="checkMCQ(this,false,'ex9','Un résumé n\'ajoute jamais l\'opinion ou les exemples personnels du candidat.')"><span class="letter">A</span> add your own personal opinion and develop several examples drawn from your experience.</button>
+      <button class="mcq-btn" onclick="checkMCQ(this,true,'ex9','Exact : reformuler les id\u00e9es de l\'auteur, respecter l\'ordre logique et tenir la limite de mots.')"><span class="letter">B</span> reformulate the author's ideas in your own words, keep the logical order and respect the word limit.</button>
+      <button class="mcq-btn" onclick="checkMCQ(this,false,'ex9','Recopier les phrases telles quelles est sanctionné : il faut reformuler.')"><span class="letter">C</span> copy the most important sentences of the text word for word in the order they appear.</button>
+      <button class="mcq-btn" onclick="checkMCQ(this,false,'ex9','Un résumé en anglais ne se traduit pas en français.')"><span class="letter">D</span> translate the whole article into French as faithfully and completely as possible.</button>
+    </div>
+    <div class="feedback" id="ex9-fb"></div>
+  </div>
+
+  <div class="ex-card" id="ex10">
+    <div class="ex-q">Which register is appropriate for a summary?</div>
+    <div class="mcq-options">
+      <button class="mcq-btn" onclick="checkMCQ(this,false,'ex10','Le « I think », « in my opinion » relève du commentaire, pas du résumé.')"><span class="letter">A</span> A first-person style that openly expresses the writer's personal opinion ("I think that…").</button>
+      <button class="mcq-btn" onclick="checkMCQ(this,true,'ex10','Exact : neutre, objectif, \u00e0 la 3e personne, sans citation longue.')"><span class="letter">B</span> A neutral, objective tone in the third person, with no long direct quotations.</button>
+      <button class="mcq-btn" onclick="checkMCQ(this,false,'ex10','Le résumé n\'est pas un florilège de citations entre guillemets.')"><span class="letter">C</span> A series of direct quotations taken from the text and linked together with connectors.</button>
+      <button class="mcq-btn" onclick="checkMCQ(this,false,'ex10','Le registre familier est à proscrire dans un écrit d\'examen.')"><span class="letter">D</span> An informal, conversational tone, as if you were speaking to a friend or a colleague.</button>
+    </div>
+    <div class="feedback" id="ex10-fb"></div>
+  </div>
+
+  <!-- ═══ STEP 4 — FREE WRITING ═══ -->
+  <div class="section-title"><span class="section-num">04</span> Write Your Summary</div>
+  <p class="section-sub">Rédigez un résumé du texte en anglais (environ 130–180 mots). Votre texte recevra un retour automatique sur quatre dimensions, puis vous pourrez comparer au corrigé.</p>
+
+  <div class="ex-card" id="ex11">
+    <div class="field-label">Votre résumé (en anglais) :</div>
+    <textarea id="summaryText" style="min-height:200px" placeholder="Write your summary of the article here, in your own words…"></textarea>
+    <div class="toolbar">
+      <button class="btn gold" onclick="analyzeSummary()">Analyser mon résumé</button>
+      <button class="btn ghost" onclick="revealModel()">Voir le corrigé</button>
+    </div>
+    <div class="fb-grid" id="summaryFeedback"></div>
+
+    <div class="reveal" id="modelReveal">
+      <div class="model-box">
+        <h4>Corrigé — Résumé modèle</h4>
+        <p>The article discusses the possible creation of a digital pound by the Bank of England. Two years ago, the House of Lords questioned the usefulness of such a project and suggested it might be "a solution in search of a problem". The Treasury select committee later expressed similar doubts, but the government still asked the public to prepare for a "Britcoin" by the end of the decade. The text explains that cash has important advantages because it is convenient, reliable and anonymous. A central bank digital currency would be different from ordinary digital payments because it would transfer part of the money-management role from commercial banks to the Bank of England. Some experts argue that Western countries are reacting to China's digital renminbi and to geopolitical competition. The article also stresses that a cashless society could harm poor people, elderly people and adults without bank accounts. Central banks are interested in digital currencies because they fear losing influence to commercial banks and technology firms. However, digital currencies could destabilise banks, especially if people moved their money to central bank accounts during crises. The article concludes that the UK needs a real public debate because digital money may create serious risks of surveillance, exclusion and social control.</p>
+        <div class="meta">≈ 215 mots · structure : sujet → doutes officiels → atouts du cash → spécificité de la CBDC → enjeux géopolitiques → exclusion → motivation des banques centrales → risque de déstabilisation → conclusion</div>
+      </div>
+
+      <div class="model-box" style="background:var(--navy-mid)">
+        <h4>Support oral — Résumé en points clés</h4>
+        <p style="font-size:.88rem">Pour vous entraîner à la restitution orale, voici le résumé condensé en bullet points :</p>
+        <ul style="list-style:none;margin-top:.6rem">
+          <li style="padding:.3rem 0;border-bottom:1px solid rgba(255,255,255,.1)">• <strong>Subject</strong> — the Bank of England may issue a digital pound ("Britcoin").</li>
+          <li style="padding:.3rem 0;border-bottom:1px solid rgba(255,255,255,.1)">• <strong>Official doubts</strong> — Lords &amp; MPs see "a solution in search of a problem", yet the government pushes ahead.</li>
+          <li style="padding:.3rem 0;border-bottom:1px solid rgba(255,255,255,.1)">• <strong>Cash matters</strong> — convenient, reliable, anonymous; hard to replicate online.</li>
+          <li style="padding:.3rem 0;border-bottom:1px solid rgba(255,255,255,.1)">• <strong>A CBDC is different</strong> — it shifts power from commercial banks to the central bank.</li>
+          <li style="padding:.3rem 0;border-bottom:1px solid rgba(255,255,255,.1)">• <strong>Geopolitics</strong> — a Western response to China's digital renminbi.</li>
+          <li style="padding:.3rem 0;border-bottom:1px solid rgba(255,255,255,.1)">• <strong>Social cost</strong> — a cashless society would hurt the poor, the elderly, the unbanked.</li>
+          <li style="padding:.3rem 0;border-bottom:1px solid rgba(255,255,255,.1)">• <strong>Bank risk</strong> — money could flow to the central bank → runs on commercial banks.</li>
+          <li style="padding:.3rem 0">• <strong>Conclusion</strong> — the UK needs a real debate; surveillance, exclusion and social control are at stake.</li>
+        </ul>
+      </div>
+
+      <button class="btn ghost no-print" onclick="window.print()" style="margin-top:1rem">🖨 Imprimer le corrigé</button>
+    </div>
+  </div>
+
+</main>
+
+<!-- PRINT-ONLY CORRECTION SHEET -->
+<div class="print-only">
+  <h2 style="font-family:'Playfair Display',serif;color:#0d1b2a">DSCG UE6 — Corrigé : Résumé · The Digital Pound</h2>
+  <p style="font-style:italic;color:#555;margin-bottom:1rem">Lycée Sidoine Apollinaire — Corrigé type</p>
+  <h3>Résumé modèle</h3>
+  <p>The article discusses the possible creation of a digital pound by the Bank of England. Two years ago, the House of Lords questioned the usefulness of such a project and suggested it might be "a solution in search of a problem". The Treasury select committee later expressed similar doubts, but the government still asked the public to prepare for a "Britcoin" by the end of the decade. The text explains that cash has important advantages because it is convenient, reliable and anonymous. A central bank digital currency would be different from ordinary digital payments because it would transfer part of the money-management role from commercial banks to the Bank of England. Some experts argue that Western countries are reacting to China's digital renminbi and to geopolitical competition. The article also stresses that a cashless society could harm poor people, elderly people and adults without bank accounts. Central banks are interested in digital currencies because they fear losing influence to commercial banks and technology firms. However, digital currencies could destabilise banks, especially if people moved their money to central bank accounts during crises. The article concludes that the UK needs a real public debate because digital money may create serious risks of surveillance, exclusion and social control.</p>
+  <h3>Points clés (support oral)</h3>
+  <ul>
+    <li>Subject — the Bank of England may issue a digital pound ("Britcoin").</li>
+    <li>Official doubts — Lords &amp; MPs: "a solution in search of a problem"; the government pushes ahead.</li>
+    <li>Cash matters — convenient, reliable, anonymous.</li>
+    <li>A CBDC is different — it shifts power from commercial banks to the central bank.</li>
+    <li>Geopolitics — a Western response to China's digital renminbi.</li>
+    <li>Social cost — a cashless society would hurt the poor, the elderly, the unbanked.</li>
+    <li>Bank risk — runs on commercial banks (82% of central banks worried, 2019 survey).</li>
+    <li>Conclusion — the UK needs a real debate: surveillance, exclusion, social control.</li>
+  </ul>
+</div>
+
+<script>
+/* ── PROGRESS ── */
+const TOTAL = 8; // gradable steps
+const done = new Set();
+function mark(id){ done.add(id); updateProgress(); }
+function updateProgress(){
+  const n = done.size;
+  document.getElementById('progressLabel').textContent = n + ' / ' + TOTAL + ' exercices';
+  document.getElementById('progressFill').style.width = Math.min(100,(n/TOTAL)*100) + '%';
+}
+
+/* ── MCQ ── */
+function checkMCQ(btn, ok, exId, explain){
+  const card = document.getElementById(exId);
+  card.querySelectorAll('.mcq-btn').forEach(b=>b.disabled=true);
+  const fb = document.getElementById(exId+'-fb');
+  if(ok){
+    btn.classList.add('correct');
+    fb.className = 'feedback show ok';
+    fb.innerHTML = '<strong>Correct.</strong> ' + (explain||'');
+  } else {
+    btn.classList.add('wrong');
+    card.querySelectorAll('.mcq-btn').forEach(b=>{ if(b.getAttribute('onclick').includes('true')) b.classList.add('correct'); });
+    fb.className = 'feedback show no';
+    fb.innerHTML = '<strong>Pas tout à fait.</strong> ' + (explain||'') + ' La bonne réponse est surlignée en vert.';
+  }
+  mark(exId);
+}
+
+/* ── PARAPHRASE ── */
+function checkParaphrase(taId, exId, copied, goodWords){
+  const txt = document.getElementById(taId).value.trim().toLowerCase();
+  const fb = document.getElementById(exId+'-fb');
+  if(txt.split(/\s+/).filter(Boolean).length < 6){
+    fb.className='feedback show no';
+    fb.innerHTML='<strong>Trop court.</strong> Reformulez la phrase complète avec vos propres mots (au moins une phrase entière).';
+    return;
+  }
+  const copiedHits = copied.filter(w=>txt.includes(w)).length;
+  const goodHits = goodWords.filter(w=>txt.includes(w)).length;
+  let msg='', cls='';
+  if(copiedHits>=2){
+    cls='no';
+    msg='<strong>Attention au recopiage.</strong> Vous réutilisez plusieurs mots de l\'original. Cherchez des synonymes et changez la construction de la phrase.';
+  } else if(goodHits>=2){
+    cls='ok';
+    msg='<strong>Bonne reformulation.</strong> L\'idée est conservée et la formulation est personnelle. Comparez avec le modèle ci-dessous.';
+  } else {
+    cls='ok';
+    msg='<strong>Reformulation acceptable.</strong> Vérifiez que toute l\'idée est bien rendue, puis comparez au modèle.';
+  }
+  fb.className='feedback show '+cls;
+  fb.innerHTML=msg;
+  document.getElementById(exId+'-model').classList.add('show');
+  mark(exId);
+}
+
+/* ── ORDERING ── */
+let orderTouched=false;
+function markOrderChanged(){ orderTouched=true; }
+function checkOrder(){
+  const items=[...document.querySelectorAll('#orderList .order-item')];
+  const fb=document.getElementById('ex8-fb');
+  let allFilled=true, correct=0;
+  items.forEach(it=>{
+    const sel=it.querySelector('select');
+    const val=sel.value;
+    it.classList.remove('correct','wrong');
+    if(!val){ allFilled=false; return; }
+    if(val===it.dataset.correct){ it.classList.add('correct'); correct++; }
+    else it.classList.add('wrong');
+  });
+  if(!allFilled){
+    fb.className='feedback show no';
+    fb.innerHTML='<strong>Numérotez toutes les idées</strong> de 1 à 5 avant de vérifier.';
+    return;
+  }
+  if(correct===items.length){
+    fb.className='feedback show ok';
+    fb.innerHTML='<strong>Parfait.</strong> L\'ordre logique d\'un résumé suit le fil du texte : sujet → doutes → atouts du cash → spécificité de la CBDC → risques → conclusion.';
+  } else {
+    fb.className='feedback show no';
+    fb.innerHTML='<strong>'+correct+' / 5 bien placées.</strong> Les idées mal placées sont en rouge. Ordre attendu : 1) le projet est poussé malgré les doutes, 2) le cash a des atouts, 3) la CBDC diffère des paiements numériques, 4) risques d\'exclusion et de surveillance, 5) besoin d\'un débat public.';
+  }
+  mark('ex8');
+}
+
+/* ── SUMMARY HEURISTIC ── */
+const THEMES = [
+  {label:'Sujet : projet de monnaie numérique (digital pound / Britcoin)', kw:['digital pound','britcoin','digital currency','cbdc','digital money']},
+  {label:'Acteur : Bank of England / banque centrale', kw:['bank of england','central bank','threadneedle']},
+  {label:'Doutes officiels (Lords, MPs, gouvernement)', kw:['doubt','question','solution in search','lords','mps','treasury','government','sceptic','unconvinced']},
+  {label:'Atouts du cash (pratique, fiable, anonyme)', kw:['cash','convenient','reliable','anonymous','physical money','notes and coins']},
+  {label:'CBDC ≠ paiements numériques ordinaires', kw:['different','shift','commercial bank','management','transfer']},
+  {label:'Dimension géopolitique (Chine / renminbi)', kw:['china','renminbi','geopolitical','west','rivalry']},
+  {label:'Exclusion des publics vulnérables', kw:['poor','elderly','vulnerable','bank account','unbanked','exclu','cashless']},
+  {label:'Risque de déstabilisation / runs sur les banques', kw:['run','destabil','vote with their feet','collapse','crisis','crises']},
+  {label:'Surveillance / contrôle social', kw:['surveillance','monitor','control','data','spy','social control']},
+  {label:'Conclusion : besoin d\'un débat public', kw:['debate','time has yet','not yet','public']}
+];
+function analyzeSummary(){
+  const raw=document.getElementById('summaryText').value.trim();
+  const low=raw.toLowerCase();
+  const words=raw.split(/\s+/).filter(Boolean);
+  const wc=words.length;
+  const grid=document.getElementById('summaryFeedback');
+  if(wc<20){
+    grid.innerHTML='<div class="fb-panel lvl-bad"><div class="fb-panel-head"><span class="ic">!</span>Texte trop court</div><div class="fb-panel-body">Rédigez d\'abord un résumé d\'environ 130 à 180 mots, puis relancez l\'analyse.</div></div>';
+    return;
+  }
+
+  /* Panel 1 — length / format */
+  let p1lvl, p1=[];
+  if(wc<110){ p1lvl='warn'; p1.push(['bad','Résumé un peu court ('+wc+' mots). Visez 130–180 mots pour couvrir toutes les idées.']); }
+  else if(wc>200){ p1lvl='warn'; p1.push(['bad','Résumé un peu long ('+wc+' mots). Condensez : un résumé fait environ un tiers du texte source.']); }
+  else { p1lvl='ok'; p1.push(['good','Longueur adaptée ('+wc+' mots), dans la fourchette attendue.']); }
+  const sentences=raw.split(/[.!?]+/).filter(s=>s.trim().length>0).length;
+  p1.push(['tip', sentences+' phrases détectées — variez les connecteurs (however, because, although…).']);
+
+  /* Panel 2 — content coverage */
+  let covered=0; const covList=[];
+  THEMES.forEach(t=>{
+    const hit=t.kw.some(k=>low.includes(k));
+    if(hit) covered++;
+    covList.push([hit?'good':'tip', t.label]);
+  });
+  const pct=Math.round((covered/THEMES.length)*100);
+  let p2lvl = covered>=7?'ok':covered>=4?'warn':'bad';
+
+  /* Panel 3 — paraphrase / register */
+  let p3lvl='ok', p3=[];
+  const firstPerson=/\b(i |we |my |our |i'm|i think|in my opinion)\b/i.test(raw);
+  const quotes=(raw.match(/"/g)||[]).length;
+  const verbatim=['shift the management burden','vote with their feet','a solution in search of a problem','convenient, reliable and anonymous','idea whose time has yet to come'];
+  const copied=verbatim.filter(v=>low.includes(v));
+  if(firstPerson){ p3lvl='warn'; p3.push(['bad','Évitez la 1re personne et l\'opinion ("I think", "we"). Le résumé reste neutre et objectif (3e personne).']); }
+  else p3.push(['good','Registre neutre respecté (pas de 1re personne détectée).']);
+  if(quotes>=4){ p3lvl='warn'; p3.push(['bad','Plusieurs citations entre guillemets : reformulez plutôt que de citer.']); }
+  else p3.push(['good','Peu ou pas de citations directes — bonne reformulation.']);
+  if(copied.length>0){ p3lvl='bad'; p3.push(['bad','Passage(s) recopié(s) tel(s) quel(s) : « '+copied[0]+' ». Reformulez avec vos propres mots.']); }
+  else p3.push(['good','Aucune phrase recopiée mot pour mot détectée.']);
+
+  /* Panel 4 — overall */
+  let score = (p1lvl==='ok'?2:1) + (covered>=7?3:covered>=4?2:1) + (p3lvl==='ok'?2:p3lvl==='warn'?1:0);
+  let p4lvl = score>=6?'ok':score>=4?'warn':'bad';
+  let p4msg;
+  if(p4lvl==='ok') p4msg='Résumé solide : longueur, couverture et reformulation sont au rendez-vous. Relisez pour la fluidité et la précision lexicale.';
+  else if(p4lvl==='warn') p4msg='Bonne base. Renforcez les points signalés ci-dessus (couverture des idées et/ou reformulation) puis comparez au corrigé.';
+  else p4msg='Le résumé doit être retravaillé : couvrez davantage d\'idées clés et reformulez sans recopier. Appuyez-vous sur le corrigé.';
+
+  const iconFor = l => l==='ok'?'✓':l==='warn'?'~':'!';
+  function panel(lvl,title,bodyHtml){
+    return '<div class="fb-panel lvl-'+lvl+'"><div class="fb-panel-head"><span class="ic">'+iconFor(lvl)+'</span>'+title+'</div><div class="fb-panel-body">'+bodyHtml+'</div></div>';
+  }
+  const liList = arr => '<ul>'+arr.map(([c,t])=>'<li class="'+c+'">'+t+'</li>').join('')+'</ul>';
+
+  grid.innerHTML =
+    panel(p1lvl,'1 · Longueur &amp; format', liList(p1)) +
+    panel(p2lvl,'2 · Couverture du contenu',
+      '<div class="coverage-track"><div class="coverage-fill" style="width:'+pct+'%"></div></div>'+
+      '<p style="margin-bottom:.5rem"><strong>'+covered+' / '+THEMES.length+'</strong> idées clés couvertes ('+pct+'%).</p>'+liList(covList)) +
+    panel(p3lvl,'3 · Reformulation &amp; registre', liList(p3)) +
+    panel(p4lvl,'4 · Évaluation globale', '<p>'+p4msg+'</p>');
+
+  grid.scrollIntoView({behavior:'smooth',block:'nearest'});
+  mark('ex11');
+}
+function revealModel(){
+  document.getElementById('modelReveal').classList.add('show');
+  document.getElementById('modelReveal').scrollIntoView({behavior:'smooth',block:'nearest'});
+  mark('ex11');
+}
+updateProgress();
+</script>
+</body>
+</html>

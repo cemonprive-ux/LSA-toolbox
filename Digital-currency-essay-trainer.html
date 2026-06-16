@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DSCG UE6 — Essay Trainer · Digital Currency</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Mono:wght@400;500&family=Karla:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --navy: #0d1b2a;
+  --navy-mid: #1a2f45;
+  --navy-light: #2a4a65;
+  --gold: #c9a355;
+  --gold-light: #e8c87a;
+  --gold-pale: rgba(201,163,85,.1);
+  --ice: #e8f0f5;
+  --white: #f9f7f4;
+  --paper: #fdfcfa;
+  --text: #1c2b3a;
+  --muted: #6b7f90;
+  --border: #d4dde5;
+  --correct: #2e7d5e;
+  --correct-bg: #e8f5ef;
+  --wrong: #9b2335;
+  --wrong-bg: #fce8eb;
+  --warn: #7a5c00;
+  --warn-bg: #fdf3d6;
+  --part1: #1a5c4a;     /* synthèse green-teal: innovation */
+  --part1-bg: #e7f3ef;
+  --part2: #8a2f1d;     /* antithèse rust: danger */
+  --part2-bg: #f8eae5;
+  --part3: #3a3a6b;     /* synthèse indigo: compromise */
+  --part3-bg: #eceaf4;
+}
+
+html { scroll-behavior: smooth; }
+body { background: var(--paper); color: var(--text); font-family: 'Karla', sans-serif; font-weight: 400; line-height: 1.65; min-height: 100vh; }
+
+/* ── HEADER ── */
+.site-header { background: var(--navy); color: white; padding: 2.8rem 2rem 2.2rem; position: relative; overflow: hidden; }
+.site-header::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+.site-header::before { content: ''; position: absolute; top: -60px; right: -60px; width: 300px; height: 300px; border-radius: 50%; background: radial-gradient(circle, rgba(201,163,85,.12) 0%, transparent 65%); pointer-events: none; }
+.header-inner { max-width: 900px; margin: 0 auto; position: relative; }
+.badge { display: inline-block; font-family: 'DM Mono', monospace; font-size: .68rem; letter-spacing: .18em; text-transform: uppercase; color: var(--gold); border: 1px solid rgba(201,163,85,.35); padding: .2rem .75rem; border-radius: 2px; margin-bottom: 1rem; }
+.site-header h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.7rem, 4.5vw, 2.7rem); font-weight: 700; line-height: 1.15; margin-bottom: .6rem; }
+.site-header h1 em { color: var(--gold-light); font-style: italic; }
+.question-box { background: rgba(255,255,255,.06); border-left: 3px solid var(--gold); padding: .9rem 1.2rem; border-radius: 0 6px 6px 0; margin-top: 1.2rem; }
+.question-box .q-label { font-family: 'DM Mono', monospace; font-size: .68rem; letter-spacing: .12em; text-transform: uppercase; color: var(--gold); margin-bottom: .3rem; }
+.question-box .q-text { font-family: 'Cormorant Garamond', serif; font-size: 1.35rem; font-style: italic; color: #fff; }
+
+/* ── PROGRESS ── */
+.progress-wrap { background: var(--navy-mid); padding: 1rem 2rem; border-bottom: 1px solid rgba(255,255,255,.08); position: sticky; top: 0; z-index: 50; }
+.progress-inner { max-width: 900px; margin: 0 auto; }
+.progress-label { display: flex; justify-content: space-between; font-family: 'DM Mono', monospace; font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: rgba(255,255,255,.7); margin-bottom: .45rem; }
+.progress-bar { height: 6px; background: rgba(255,255,255,.12); border-radius: 99px; overflow: hidden; }
+.progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--gold), var(--gold-light)); border-radius: 99px; transition: width .5s cubic-bezier(.4,0,.2,1); }
+
+/* ── MAIN ── */
+.main { max-width: 900px; margin: 0 auto; padding: 2.2rem 2rem 4rem; }
+
+.section-title { display: flex; align-items: center; gap: .9rem; font-family: 'Cormorant Garamond', serif; font-size: 1.75rem; font-weight: 700; color: var(--navy); margin: 2.8rem 0 .4rem; }
+.section-num { font-family: 'DM Mono', monospace; font-size: .85rem; color: var(--gold); background: var(--navy); width: 2.2rem; height: 2.2rem; display: flex; align-items: center; justify-content: center; border-radius: 6px; flex-shrink: 0; }
+.section-sub { color: var(--muted); font-size: .9rem; margin-bottom: 1.4rem; max-width: 680px; }
+
+.part-tag { display:inline-block; font-family:'DM Mono',monospace; font-size:.66rem; letter-spacing:.12em; text-transform:uppercase; padding:.2rem .6rem; border-radius:3px; margin-left:.6rem; vertical-align:middle; }
+.tag-1 { background: var(--part1-bg); color: var(--part1); }
+.tag-2 { background: var(--part2-bg); color: var(--part2); }
+.tag-3 { background: var(--part3-bg); color: var(--part3); }
+
+.ex-card { background: white; border: 1px solid var(--border); border-radius: 10px; padding: 1.4rem 1.5rem; margin-bottom: 1.1rem; box-shadow: 0 2px 12px rgba(13,27,42,.04); }
+.ex-q { font-weight: 600; color: var(--navy); margin-bottom: 1rem; font-size: 1rem; }
+.ex-q em { font-style: italic; color: var(--gold); }
+.ex-q .sub { display: block; font-weight: 400; color: var(--muted); font-size: .84rem; margin-top: .25rem; }
+
+/* MCQ */
+.mcq-options { display: flex; flex-direction: column; gap: .55rem; }
+.mcq-btn { text-align: left; background: var(--white); border: 1.5px solid var(--border); border-radius: 7px; padding: .75rem .9rem; font-family: inherit; font-size: .9rem; color: var(--text); cursor: pointer; transition: all .18s; display: flex; gap: .65rem; align-items: flex-start; line-height: 1.45; }
+.mcq-btn:hover:not(:disabled) { border-color: var(--gold); }
+.mcq-btn .letter { font-family: 'DM Mono', monospace; font-weight: 500; color: var(--gold); flex-shrink: 0; }
+.mcq-btn:disabled { cursor: default; }
+.mcq-btn.correct { border-color: var(--correct); background: var(--correct-bg); } .mcq-btn.correct .letter { color: var(--correct); }
+.mcq-btn.wrong { border-color: var(--wrong); background: var(--wrong-bg); } .mcq-btn.wrong .letter { color: var(--wrong); }
+
+.feedback { margin-top: .9rem; padding: .85rem 1rem; border-radius: 7px; font-size: .86rem; line-height: 1.55; display: none; }
+.feedback.show { display: block; }
+.feedback.ok { background: var(--correct-bg); border-left: 3px solid var(--correct); color: #1d5340; }
+.feedback.no { background: var(--wrong-bg); border-left: 3px solid var(--wrong); color: #6e1826; }
+.feedback strong { font-weight: 700; }
+
+/* Idea sorting */
+.idea-card { background: white; border: 1.5px solid var(--border); border-radius: 8px; padding: .8rem 1rem; margin-bottom: .7rem; }
+.idea-text { font-size: .9rem; margin-bottom: .6rem; }
+.idea-btns { display: flex; gap: .5rem; flex-wrap: wrap; }
+.sort-btn { font-family: 'DM Mono', monospace; font-size: .78rem; border: 1.5px solid var(--border); background: var(--white); color: var(--navy); border-radius: 5px; padding: .35rem .8rem; cursor: pointer; transition: all .15s; }
+.sort-btn:hover:not(:disabled) { border-color: var(--gold); }
+.sort-btn:disabled { cursor: default; opacity: .55; }
+.sort-btn.chosen-correct { background: var(--correct); color: white; border-color: var(--correct); opacity: 1; }
+.sort-btn.chosen-wrong { background: var(--wrong); color: white; border-color: var(--wrong); opacity: 1; }
+.idea-fb { font-size: .8rem; margin-top: .5rem; display: none; }
+.idea-fb.show { display: block; }
+.idea-fb.ok { color: var(--correct); } .idea-fb.no { color: var(--wrong); }
+
+/* Fields */
+.field-label { font-size: .84rem; color: var(--muted); margin-bottom: .4rem; }
+textarea { width: 100%; font-family: inherit; font-size: .92rem; border: 1.5px solid var(--border); border-radius: 7px; padding: .75rem .9rem; color: var(--text); background: #fff; resize: vertical; min-height: 120px; line-height: 1.6; }
+textarea:focus { outline: none; border-color: var(--gold); }
+.btn { font-family: 'DM Mono', monospace; font-size: .8rem; letter-spacing: .03em; background: var(--navy); color: white; border: none; border-radius: 7px; padding: .68rem 1.3rem; cursor: pointer; transition: all .18s; margin-top: .9rem; }
+.btn:hover { background: var(--navy-mid); }
+.btn.gold { background: var(--gold); color: var(--navy); font-weight: 600; }
+.btn.gold:hover { background: var(--gold-light); }
+.btn.ghost { background: transparent; color: var(--navy); border: 1.5px solid var(--border); }
+.btn.ghost:hover { border-color: var(--gold); }
+.toolbar { display: flex; gap: .7rem; flex-wrap: wrap; margin-top: 1rem; }
+
+/* Heuristic panels */
+.fb-grid { display: grid; gap: .9rem; margin-top: 1.2rem; }
+.fb-panel { border: 1px solid var(--border); border-radius: 9px; background: white; overflow: hidden; }
+.fb-panel-head { padding: .7rem 1rem; font-family: 'DM Mono', monospace; font-size: .76rem; letter-spacing: .04em; text-transform: uppercase; display: flex; align-items: center; gap: .55rem; border-bottom: 1px solid var(--border); }
+.fb-panel-head .ic { width: 1.4rem; height: 1.4rem; border-radius: 5px; display: flex; align-items: center; justify-content: center; font-size: .85rem; flex-shrink: 0; font-weight: 700; }
+.fb-panel-body { padding: .85rem 1rem; font-size: .86rem; line-height: 1.6; }
+.fb-panel-body ul { list-style: none; }
+.fb-panel-body li { padding-left: 1.25rem; position: relative; margin-bottom: .35rem; }
+.fb-panel-body li::before { position: absolute; left: 0; top: -.05rem; }
+.fb-panel-body li.good::before { content: '✓'; color: var(--correct); }
+.fb-panel-body li.bad::before { content: '!'; color: var(--wrong); font-weight: 700; }
+.fb-panel-body li.tip::before { content: '→'; color: var(--gold); }
+.lvl-ok .fb-panel-head { background: var(--correct-bg); color: #1d5340; } .lvl-ok .ic { background: var(--correct); color: white; }
+.lvl-warn .fb-panel-head { background: var(--warn-bg); color: var(--warn); } .lvl-warn .ic { background: var(--warn); color: white; }
+.lvl-bad .fb-panel-head { background: var(--wrong-bg); color: #6e1826; } .lvl-bad .ic { background: var(--wrong); color: white; }
+.coverage-track { height: 8px; background: var(--ice); border-radius: 99px; overflow: hidden; margin: .5rem 0 .7rem; }
+.coverage-fill { height: 100%; background: linear-gradient(90deg, var(--gold), var(--correct)); border-radius: 99px; transition: width .6s; }
+
+/* Model reveal */
+.reveal { display: none; margin-top: 1rem; }
+.reveal.show { display: block; }
+.model-box { background: var(--navy); color: #eef3f7; border-radius: 10px; padding: 1.4rem 1.6rem; margin-top: 1rem; }
+.model-box.t1 { border-top: 4px solid var(--part1); }
+.model-box.t2 { border-top: 4px solid var(--part2); }
+.model-box.t3 { border-top: 4px solid var(--part3); }
+.model-box h4 { font-family: 'Cormorant Garamond', serif; color: var(--gold-light); font-size: 1.2rem; margin-bottom: .7rem; }
+.model-box p { font-size: .9rem; line-height: 1.7; color: rgba(255,255,255,.88); margin-bottom: .6rem; }
+.model-box em { color: var(--gold-light); font-style: italic; }
+.model-box ul { list-style: none; }
+.model-box li { padding: .35rem 0; border-bottom: 1px solid rgba(255,255,255,.1); font-size: .88rem; color: rgba(255,255,255,.9); }
+.model-box li:last-child { border-bottom: none; }
+.model-box .en { display:block; color: var(--gold-light); font-style: italic; font-size: .85rem; margin-top: .15rem; }
+.model-box .meta { font-family: 'DM Mono', monospace; font-size: .72rem; color: var(--gold); margin-top: .6rem; letter-spacing: .05em; }
+
+/* Full correction */
+.correction-block { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 1rem; }
+.cb-head { padding: .8rem 1.1rem; font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; font-weight: 600; color: white; }
+.cb-head.h1 { background: var(--part1); } .cb-head.h2 { background: var(--part2); } .cb-head.h3 { background: var(--part3); } .cb-head.hn { background: var(--navy); }
+.cb-body { padding: 1rem 1.2rem; background: white; }
+.cb-body p { font-size: .9rem; margin-bottom: .7rem; }
+.cb-body ul { list-style: none; }
+.cb-body li { padding: .45rem 0 .45rem 1.3rem; position: relative; border-bottom: 1px solid var(--ice); font-size: .9rem; }
+.cb-body li:last-child { border-bottom: none; }
+.cb-body li::before { content: '◆'; position: absolute; left: 0; color: var(--gold); font-size: .7rem; top: .55rem; }
+.cb-body li .en { display: block; font-style: italic; color: var(--navy-light); font-size: .86rem; margin-top: .2rem; }
+.cb-body li .src { font-family: 'DM Mono', monospace; font-size: .68rem; color: var(--muted); }
+.trans-box { background: var(--gold-pale); border: 1px dashed var(--gold); border-radius: 8px; padding: .9rem 1.1rem; margin-bottom: 1rem; font-style: italic; font-size: .9rem; color: var(--navy); }
+.trans-box .lbl { font-family: 'DM Mono', monospace; font-style: normal; font-size: .68rem; letter-spacing: .1em; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: .35rem; }
+
+.print-only { display: none; }
+
+@media (max-width: 600px) {
+  .main { padding: 1.4rem 1.1rem 3rem; }
+  .ex-card { padding: 1.1rem; }
+  .question-box .q-text { font-size: 1.15rem; }
+}
+@media print {
+  .site-header, .progress-wrap, .section-title, .section-sub, .ex-card, .btn, .toolbar, .no-print { display: none !important; }
+  .print-only { display: block !important; }
+  body { background: white; }
+  .main { padding: 0; max-width: 100%; }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="badge">DSCG — UE6 Business English</div>
+    <h1>Structured Response Trainer<br><em>Part II — The Essay</em></h1>
+    <div class="question-box">
+      <div class="q-label">Essay question</div>
+      <div class="q-text">To what extent is digital currency the future of society?</div>
+    </div>
+  </div>
+</header>
+
+<div class="progress-wrap">
+  <div class="progress-inner">
+    <div class="progress-label"><span>Progression</span><span id="progressLabel">0 / 9 étapes</span></div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  </div>
+</div>
+
+<main class="main">
+
+  <!-- ═══ STEP 1 — BRAINSTORM / SORT ═══ -->
+  <div class="section-title"><span class="section-num">01</span> Brainstorm &amp; Sort</div>
+  <p class="section-sub">Plan dialectique en trois temps : <strong>I.</strong> innovation prometteuse (thèse) — <strong>II.</strong> accélération dangereuse (antithèse) — <strong>III.</strong> compromis nécessaire (synthèse). Classez chaque idée dans la bonne partie.</p>
+
+  <div id="ideaList"></div>
+  <div class="feedback" id="sortSummary"></div>
+
+  <!-- ═══ STEP 2 — INTRODUCTION ═══ -->
+  <div class="section-title"><span class="section-num">02</span> Build the Introduction</div>
+  <p class="section-sub">Une introduction efficace amène le sujet, pose la problématique, puis annonce le plan.</p>
+
+  <div class="ex-card" id="exIntroMcq">
+    <div class="ex-q">Which sentence is the best <em>opening line (amorce)</em> for this introduction?</div>
+    <div class="mcq-options">
+      <button class="mcq-btn" onclick="checkMCQ(this,false,'exIntroMcq','Trop pr\u00e9cis : on entre directement dans le document. Une amorce part d\'une id\u00e9e plus g\u00e9n\u00e9rale avant d\'arriver au sujet.')"><span class="letter">A</span> In 2024, a Guardian editorial warned that the Bank of England was preparing a digital pound for use before the end of the decade.</button>
+      <button class="mcq-btn" onclick="checkMCQ(this,false,'exIntroMcq','C\'est l\'annonce du plan : elle se place \u00e0 la fin de l\'introduction, apr\u00e8s la probl\u00e9matique, et non en ouverture.')"><span class="letter">B</span> This essay will first present the advantages of digital currency, then weigh its dangers, and finally propose a balanced compromise.</button>
+      <button class="mcq-btn" onclick="checkMCQ(this,true,'exIntroMcq','Exact : une bonne amorce part d\'une id\u00e9e g\u00e9n\u00e9rale (l\'\u00e9volution de la monnaie) pour amener progressivement le sujet.')"><span class="letter">C</span> Money has always evolved with economic and technological progress, and today digital tools are transforming the way people pay and save.</button>
+      <button class="mcq-btn" onclick="checkMCQ(this,false,'exIntroMcq','Une amorce reste neutre : on n\'y livre pas son opinion ni un jugement tranch\u00e9 d\u00e8s la premi\u00e8re phrase.')"><span class="letter">D</span> In my opinion, digital currency is clearly a dangerous threat to freedom and should never replace the cash we rely on every day.</button>
+    </div>
+    <div class="feedback" id="exIntroMcq-fb"></div>
+  </div>
+
+  <div class="ex-card" id="exIntro">
+    <div class="ex-q">Now write your own introduction.<span class="sub">Amorce (contexte) → problématique → annonce du plan en trois parties. ≈ 70–110 mots.</span></div>
+    <textarea id="introText" placeholder="Money has always changed with economic and technological progress…"></textarea>
+    <div class="toolbar">
+      <button class="btn gold" onclick="analyzeIntro()">Analyser mon introduction</button>
+      <button class="btn ghost" onclick="reveal('exIntro-model')">Voir un modèle</button>
+    </div>
+    <div class="fb-grid" id="exIntro-fb"></div>
+    <div class="reveal" id="exIntro-model">
+      <div class="model-box"><h4>Modèle — Introduction</h4>
+      <p>Money has always changed with economic and technological progress. Today, digital payments, online banking and smartphone applications are already transforming the way people buy, save and transfer money. Central banks are now considering digital currencies because they want to remain important in a financial system increasingly dominated by private banks and technology firms. However, this raises a major question: <em>to what extent can digital currency become the future of society without threatening freedom, equality and financial stability?</em> This essay will first examine digital currency as a promising innovation, then analyse the social and political risks it creates, before showing that the best solution may be a balanced compromise.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ STEP 3 — PART I ═══ -->
+  <div class="section-title"><span class="section-num">03</span> Develop Part I <span class="part-tag tag-1">Thèse · Innovation</span></div>
+  <p class="section-sub">Présentez la monnaie numérique comme une réponse prometteuse à une économie qui change. Rédigez un paragraphe argumenté avec une phrase d'amorce, des arguments et des exemples (≈ 120–180 mots).</p>
+
+  <div class="ex-card" id="exPart1">
+    <div class="field-label">Partie I — votre développement (en anglais) :</div>
+    <textarea id="part1Text" placeholder="Digital currency first appears as a promising innovation…"></textarea>
+    <div class="toolbar">
+      <button class="btn gold" onclick="analyzeDev('part1Text','exPart1',THEMES1,'I',1)">Analyser la Partie I</button>
+      <button class="btn ghost" onclick="reveal('exPart1-model')">Voir le corrigé</button>
+    </div>
+    <div class="fb-grid" id="exPart1-fb"></div>
+    <div class="reveal" id="exPart1-model">
+      <div class="model-box t1"><h4>Corrigé — Partie I : une innovation prometteuse</h4>
+      <ul>
+        <li>L'usage est déjà numérique au quotidien (sans contact, banque en ligne, smartphone).<span class="en">Citizens already rely on contactless payments, online banking and smartphone apps.</span></li>
+        <li>Une CBDC aide les banques centrales à rester puissantes face aux banques privées et aux GAFAM.<span class="en">A CBDC could help central banks stay relevant in a system dominated by private firms. (doc, §4)</span></li>
+        <li>Paiements plus rapides et moins chers, notamment pour les transferts internationaux.<span class="en">Digital money can make payments faster and cheaper, especially across borders.</span></li>
+        <li>Levier de modernisation — la « destruction créatrice » de Schumpeter.<span class="en">It supports modernisation; this echoes Schumpeter's theory of "creative destruction".</span></li>
+        <li>Inclusion financière dans les pays en développement (ex. Ecuador).<span class="en">In developing countries it could improve financial inclusion where banks are weak.</span></li>
+      </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ STEP 4 — TRANSITION I→II ═══ -->
+  <div class="section-title"><span class="section-num">04</span> Transition I → II</div>
+  <p class="section-sub">Une transition rappelle la partie qui s'achève et annonce la suivante par un contraste. Rédigez la vôtre, puis comparez.</p>
+
+  <div class="ex-card" id="exTrans1">
+    <div class="field-label">Votre transition (en anglais) :</div>
+    <textarea id="trans1Text" style="min-height:80px" placeholder="However, if digital currency seems efficient…"></textarea>
+    <div class="toolbar">
+      <button class="btn gold" onclick="analyzeTransition('trans1Text','exTrans1')">Analyser ma transition</button>
+      <button class="btn ghost" onclick="reveal('exTrans1-model')">Voir le modèle</button>
+    </div>
+    <div class="fb-grid" id="exTrans1-fb"></div>
+    <div class="reveal" id="exTrans1-model">
+      <div class="model-box"><h4>Modèle — Transition I → II</h4>
+      <p><em>However, if digital currency appears to be a modern and efficient solution, it also raises serious concerns about freedom, equality and privacy.</em></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ STEP 5 — PART II ═══ -->
+  <div class="section-title"><span class="section-num">05</span> Develop Part II <span class="part-tag tag-2">Antithèse · Danger</span></div>
+  <p class="section-sub">Montrez que la monnaie numérique peut affaiblir la liberté et l'égalité. Paragraphe argumenté (≈ 120–180 mots).</p>
+
+  <div class="ex-card" id="exPart2">
+    <div class="field-label">Partie II — votre développement (en anglais) :</div>
+    <textarea id="part2Text" placeholder="Nevertheless, a fully digital currency could threaten freedom and equality…"></textarea>
+    <div class="toolbar">
+      <button class="btn gold" onclick="analyzeDev('part2Text','exPart2',THEMES2,'II',2)">Analyser la Partie II</button>
+      <button class="btn ghost" onclick="reveal('exPart2-model')">Voir le corrigé</button>
+    </div>
+    <div class="fb-grid" id="exPart2-fb"></div>
+    <div class="reveal" id="exPart2-model">
+      <div class="model-box t2"><h4>Corrigé — Partie II : une accélération dangereuse</h4>
+      <ul>
+        <li>Le cash reste pratique, fiable et anonyme ; le numérique n'offre pas la même confidentialité.<span class="en">Cash remains convenient, reliable and anonymous, unlike digital money. (doc, §2)</span></li>
+        <li>Une société sans cash exclut les publics vulnérables (pauvres, personnes âgées, sans compte).<span class="en">A cashless society could exclude poor and elderly people and the unbanked. (doc, §4)</span></li>
+        <li>Surveillance accrue : les dépenses peuvent être suivies par États ou entreprises.<span class="en">Digital money increases surveillance: spending can be monitored. (doc, §3 &amp; §6)</span></li>
+        <li>Monnaie programmable → peur du contrôle social (qui peut payer, quoi, à qui).<span class="en">Programmable money raises fears of social control. (doc, §7)</span></li>
+        <li>Le progrès technique peut creuser les inégalités si les institutions ne protègent pas — Stiglitz.<span class="en">As Stiglitz argues, progress can deepen exclusion without protective institutions.</span></li>
+      </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ STEP 6 — TRANSITION II→III ═══ -->
+  <div class="section-title"><span class="section-num">06</span> Transition II → III</div>
+  <p class="section-sub">Cette transition doit reconnaître les dangers de la Partie II tout en ouvrant vers une solution équilibrée (synthèse). Rédigez la vôtre, puis comparez au modèle.</p>
+
+  <div class="ex-card" id="exTrans2">
+    <div class="field-label">Votre transition (en anglais) :</div>
+    <textarea id="trans2Text" style="min-height:80px" placeholder="Yet these dangers do not mean digital currency should be rejected…"></textarea>
+    <div class="toolbar">
+      <button class="btn gold" onclick="analyzeTransition('trans2Text','exTrans2')">Analyser ma transition</button>
+      <button class="btn ghost" onclick="reveal('exTrans2-model')">Voir le modèle</button>
+    </div>
+    <div class="fb-grid" id="exTrans2-fb"></div>
+    <div class="reveal" id="exTrans2-model">
+      <div class="model-box"><h4>Modèle — Transition II → III</h4>
+      <p><em>Yet acknowledging these dangers does not mean that digital currency should be rejected altogether; it means designing it carefully. The real question is therefore not whether to digitalise money, but under what democratic conditions it should be done.</em></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ STEP 7 — PART III ═══ -->
+  <div class="section-title"><span class="section-num">07</span> Develop Part III <span class="part-tag tag-3">Synthèse · Compromis</span></div>
+  <p class="section-sub">Proposez un compromis : la monnaie numérique comme une partie du futur, pas tout le futur. Paragraphe argumenté (≈ 120–180 mots).</p>
+
+  <div class="ex-card" id="exPart3">
+    <div class="field-label">Partie III — votre développement (en anglais) :</div>
+    <textarea id="part3Text" placeholder="The best solution is therefore a balanced model…"></textarea>
+    <div class="toolbar">
+      <button class="btn gold" onclick="analyzeDev('part3Text','exPart3',THEMES3,'III',3)">Analyser la Partie III</button>
+      <button class="btn ghost" onclick="reveal('exPart3-model')">Voir le corrigé</button>
+    </div>
+    <div class="fb-grid" id="exPart3-fb"></div>
+    <div class="reveal" id="exPart3-model">
+      <div class="model-box t3"><h4>Corrigé — Partie III : un compromis nécessaire</h4>
+      <ul>
+        <li>La monnaie numérique doit coexister avec le cash : les citoyens ont besoin des deux.<span class="en">Digital currency should coexist with cash, which remains accessible to all.</span></li>
+        <li>Un débat public s'impose avant d'adopter une monnaie d'État (vie privée, confiance, démocratie).<span class="en">A public debate is needed before adopting state-backed money. (doc, §6)</span></li>
+        <li>Des règles juridiques fortes doivent protéger contre la surveillance et l'usage commercial des données.<span class="en">Strong legal rules should protect citizens against surveillance and data misuse.</span></li>
+        <li>Des plafonds sur les avoirs en CBDC réduisent le risque de « bank runs » (mais peuvent dissuader).<span class="en">Caps on CBDC holdings could limit bank runs, but may discourage use. (doc, §5)</span></li>
+        <li>La confiance est centrale (Keynes) : le numérique doit rassurer, non inquiéter.<span class="en">As Keynes showed, confidence is central; digital money must build trust.</span></li>
+      </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ STEP 8 — CONCLUSION ═══ -->
+  <div class="section-title"><span class="section-num">08</span> Write the Conclusion</div>
+  <p class="section-sub">Reprenez le bilan des deux thèses, répondez à la problématique, puis ouvrez sur une perspective plus large.</p>
+
+  <div class="ex-card" id="exConcl">
+    <div class="field-label">Votre conclusion (en anglais) :</div>
+    <textarea id="conclText" placeholder="Digital currency is likely to become an important part of society…"></textarea>
+    <div class="toolbar">
+      <button class="btn gold" onclick="analyzeConclusion()">Analyser ma conclusion</button>
+      <button class="btn ghost" onclick="reveal('exConcl-model')">Voir le corrigé</button>
+    </div>
+    <div class="fb-grid" id="exConcl-fb"></div>
+    <div class="reveal" id="exConcl-model">
+      <div class="model-box"><h4>Corrigé — Conclusion</h4>
+      <p>Digital currency is likely to become an important part of society because economic life is already highly digital. It can make payments faster, help central banks remain relevant and support financial innovation. However, the text shows that it also creates serious risks, especially surveillance, exclusion of vulnerable people and instability for commercial banks. Cash still has an essential role because it protects privacy and remains accessible to many citizens. <em>Therefore, digital currency is not the whole future of society, but only one possible part of it.</em> The best solution is a balanced model where digital money coexists with cash and is controlled by strong democratic rules. More broadly, the future of money should not only depend on technological progress, but also on social justice, trust and freedom.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ FULL CORRECTION ═══ -->
+  <div class="section-title"><span class="section-num">★</span> Corrigé complet</div>
+  <p class="section-sub">Le corrigé intégral, structuré en bullet points pour servir de support à une restitution orale. Bouton d'impression en bas.</p>
+
+  <div class="toolbar" style="margin-bottom:1rem">
+    <button class="btn gold" onclick="reveal('fullCorrection')">Afficher le corrigé complet</button>
+    <button class="btn ghost no-print" onclick="reveal('fullCorrection');setTimeout(function(){window.print();},200);">🖨 Imprimer le corrigé</button>
+  </div>
+
+  <div class="reveal" id="fullCorrection">
+    <div class="correction-block">
+      <div class="cb-head hn">Introduction</div>
+      <div class="cb-body"><p>Money has always changed with economic and technological progress. Today, digital payments, online banking and smartphone applications are already transforming the way people buy, save and transfer money. Central banks are now considering digital currencies because they want to remain important in a financial system increasingly dominated by private banks and technology firms. However, this raises a major question: <em>to what extent can digital currency become the future of society without threatening freedom, equality and financial stability?</em> This essay will first examine digital currency as a promising innovation, then analyse the social and political risks it creates, before showing that the best solution may be a balanced compromise.</p></div>
+    </div>
+
+    <div class="correction-block">
+      <div class="cb-head h1">I. A promising innovation</div>
+      <div class="cb-body"><ul>
+        <li>Les usages quotidiens sont déjà numériques.<span class="en">Citizens already use contactless payments, online banking and smartphone payments.</span><span class="src">Source : economic world</span></li>
+        <li>Une CBDC aide la banque centrale à rester puissante.<span class="en">A CBDC could help central banks remain powerful as private firms control payments.</span><span class="src">Source : doc, §4</span></li>
+        <li>Paiements plus rapides et moins chers (transferts internationaux).<span class="en">Digital currency could make payments faster and cheaper.</span><span class="src">Source : economic world</span></li>
+        <li>Modernisation économique — « creative destruction » (Schumpeter).<span class="en">It supports innovation, echoing Schumpeter's "creative destruction".</span><span class="src">Source : economic world</span></li>
+        <li>Inclusion financière dans les pays en développement.<span class="en">In developing countries it could improve financial inclusion.</span><span class="src">Source : economic world</span></li>
+      </ul></div>
+    </div>
+
+    <div class="trans-box"><span class="lbl">Transition I → II</span>However, if digital currency appears to be a modern and efficient solution, it also raises serious concerns about freedom, equality and privacy.</div>
+
+    <div class="correction-block">
+      <div class="cb-head h2">II. A dangerous acceleration</div>
+      <div class="cb-body"><ul>
+        <li>Le cash reste pratique, fiable et anonyme.<span class="en">Cash remains convenient, reliable and anonymous; digital money may not offer the same privacy.</span><span class="src">Source : doc, §2</span></li>
+        <li>Exclusion des publics vulnérables.<span class="en">A cashless society could exclude poor and elderly people and the unbanked.</span><span class="src">Source : doc, §4</span></li>
+        <li>Surveillance accrue (États / entreprises).<span class="en">Spending can be monitored by governments or private companies.</span><span class="src">Source : doc, §3 &amp; §6</span></li>
+        <li>Monnaie programmable → peur du contrôle social.<span class="en">Programmable money could let authorities decide who can use money, where and for what.</span><span class="src">Source : doc, §7</span></li>
+        <li>Risque d'aggravation des inégalités (Stiglitz).<span class="en">Progress can increase exclusion if institutions do not protect the vulnerable.</span><span class="src">Source : economic world</span></li>
+      </ul></div>
+    </div>
+
+    <div class="trans-box"><span class="lbl">Transition II → III</span>Yet acknowledging these dangers does not mean that digital currency should be rejected altogether; it means designing it carefully. The real question is therefore not whether to digitalise money, but under what democratic conditions it should be done.</div>
+
+    <div class="correction-block">
+      <div class="cb-head h3">III. A necessary compromise</div>
+      <div class="cb-body"><ul>
+        <li>Coexistence monnaie numérique + cash.<span class="en">Digital currency should coexist with cash; citizens need both.</span><span class="src">Source : economic world</span></li>
+        <li>Débat public nécessaire (vie privée, confiance, démocratie).<span class="en">A public debate is necessary before adopting state-backed digital money.</span><span class="src">Source : doc, §6</span></li>
+        <li>Règles juridiques fortes contre la surveillance.<span class="en">Strong legal rules should protect citizens against surveillance and data misuse.</span><span class="src">Source : economic world</span></li>
+        <li>Plafonds sur les avoirs en CBDC (mais effet dissuasif possible).<span class="en">Limits on CBDC holdings could reduce bank runs, but may discourage use.</span><span class="src">Source : doc, §5</span></li>
+        <li>La confiance est centrale (Keynes).<span class="en">Digital currency must strengthen trust instead of creating fear.</span><span class="src">Source : economic world</span></li>
+      </ul></div>
+    </div>
+
+    <div class="correction-block">
+      <div class="cb-head hn">Conclusion</div>
+      <div class="cb-body"><p>Digital currency is likely to become an important part of society because economic life is already highly digital. It can make payments faster, help central banks remain relevant and support financial innovation. However, it also creates serious risks: surveillance, exclusion of vulnerable people and instability for commercial banks. Cash still protects privacy and remains accessible. <em>Therefore, digital currency is not the whole future of society, but only one possible part of it.</em> The best solution is a balanced model where digital money coexists with cash and is controlled by strong democratic rules. More broadly, the future of money should depend not only on technological progress, but also on social justice, trust and freedom.</p></div>
+    </div>
+  </div>
+
+</main>
+
+<!-- PRINT-ONLY HEADER (the full correction below it prints once revealed) -->
+<div class="print-only">
+  <h2 style="font-family:'Cormorant Garamond',serif;color:#0d1b2a;font-size:1.6rem">DSCG UE6 — Corrigé : Essay · Digital Currency</h2>
+  <p style="font-style:italic;color:#555">Lycée Sidoine Apollinaire — Corrigé type</p>
+  <p style="font-weight:600;margin:.6rem 0">Question : To what extent is digital currency the future of society?</p>
+</div>
+
+<script>
+/* ── DATA ── */
+const IDEAS = [
+  {t:"Citizens already use contactless payments, online banking and smartphone apps.", a:'I'},
+  {t:"A CBDC could help central banks remain powerful as private firms control payments.", a:'I'},
+  {t:"In developing countries, digital money could improve financial inclusion.", a:'I'},
+  {t:"Cash remains convenient, reliable and anonymous.", a:'II'},
+  {t:"A cashless society would exclude poor, elderly and unbanked people.", a:'II'},
+  {t:"Spending could be monitored, raising surveillance and social-control fears.", a:'II'},
+  {t:"Digital money and cash should coexist so everyone keeps access.", a:'III'},
+  {t:"A public debate and strong democratic rules should frame any adoption.", a:'III'},
+  {t:"Caps on holdings and a focus on trust (Keynes) could ensure stability.", a:'III'}
+];
+const LABELS = {I:'Partie I',II:'Partie II',III:'Partie III'};
+
+/* ── PROGRESS ── */
+const TOTAL = 9;
+const done = new Set();
+function mark(id){ done.add(id); updateProgress(); }
+function updateProgress(){
+  const n = done.size;
+  document.getElementById('progressLabel').textContent = n + ' / ' + TOTAL + ' étapes';
+  document.getElementById('progressFill').style.width = Math.min(100,(n/TOTAL)*100) + '%';
+}
+
+/* ── IDEA SORTING ── */
+const ideaState = {};
+function shuffleInPlace(arr){
+  for(let i=arr.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]]=[arr[j],arr[i]];
+  }
+}
+function buildIdeas(){
+  shuffleInPlace(IDEAS); // mélange l'ordre à chaque chargement
+  const list = document.getElementById('ideaList');
+  IDEAS.forEach((idea,i)=>{
+    const div=document.createElement('div');
+    div.className='idea-card';
+    div.innerHTML =
+      '<div class="idea-text">'+idea.t+'</div>'+
+      '<div class="idea-btns">'+
+        ['I','II','III'].map(p=>'<button class="sort-btn" data-p="'+p+'" onclick="sortIdea('+i+',\''+p+'\',this)">'+p+'</button>').join('')+
+      '</div><div class="idea-fb" id="idea-fb-'+i+'"></div>';
+    list.appendChild(div);
+  });
+}
+function sortIdea(i,choice,btn){
+  if(ideaState[i]) return;
+  ideaState[i]=choice;
+  const ok = choice===IDEAS[i].a;
+  const fb=document.getElementById('idea-fb-'+i);
+  btn.parentElement.querySelectorAll('.sort-btn').forEach(b=>b.disabled=true);
+  if(ok){ btn.classList.add('chosen-correct'); fb.className='idea-fb show ok'; fb.textContent='✓ Bien classé dans la '+LABELS[choice]+'.'; }
+  else {
+    btn.classList.add('chosen-wrong');
+    btn.parentElement.querySelector('[data-p="'+IDEAS[i].a+'"]').classList.add('chosen-correct');
+    fb.className='idea-fb show no'; fb.textContent='Cette idée relève plutôt de la '+LABELS[IDEAS[i].a]+'.';
+  }
+  if(Object.keys(ideaState).length===IDEAS.length){
+    const right=IDEAS.filter((id,k)=>ideaState[k]===id.a).length;
+    const s=document.getElementById('sortSummary');
+    s.className='feedback show '+(right===IDEAS.length?'ok':'no');
+    s.innerHTML='<strong>'+right+' / '+IDEAS.length+' idées bien classées.</strong> Vous avez votre matière première : trois arguments par partie, prêts à être développés.';
+    mark('sort');
+  }
+}
+
+/* ── MCQ ── */
+function checkMCQ(btn, ok, exId, explain){
+  const card=document.getElementById(exId);
+  card.querySelectorAll('.mcq-btn').forEach(b=>b.disabled=true);
+  const fb=document.getElementById(exId+'-fb');
+  if(ok){ btn.classList.add('correct'); fb.className='feedback show ok'; fb.innerHTML='<strong>Correct.</strong> '+(explain||''); }
+  else {
+    btn.classList.add('wrong');
+    card.querySelectorAll('.mcq-btn').forEach(b=>{ if(b.getAttribute('onclick').includes('true')) b.classList.add('correct'); });
+    fb.className='feedback show no'; fb.innerHTML='<strong>Pas tout à fait.</strong> '+(explain||'')+' La bonne réponse est en vert.';
+  }
+  mark(exId);
+}
+
+function reveal(id){ const e=document.getElementById(id); e.classList.add('show'); e.scrollIntoView({behavior:'smooth',block:'nearest'}); }
+
+/* ── GENERIC HELPERS ── */
+function iconFor(l){ return l==='ok'?'✓':l==='warn'?'~':'!'; }
+function panel(lvl,title,bodyHtml){ return '<div class="fb-panel lvl-'+lvl+'"><div class="fb-panel-head"><span class="ic">'+iconFor(lvl)+'</span>'+title+'</div><div class="fb-panel-body">'+bodyHtml+'</div></div>'; }
+function liList(arr){ return '<ul>'+arr.map(([c,t])=>'<li class="'+c+'">'+t+'</li>').join('')+'</ul>'; }
+function wordCount(s){ return s.trim().split(/\s+/).filter(Boolean).length; }
+function hasFirstPerson(s){ return /\b(i |we |my |our |i'm|i think|in my opinion)\b/i.test(s); }
+
+/* ── DEV THEMES ── */
+const THEMES1 = [
+  {label:'Usages déjà numériques au quotidien', kw:['contactless','online banking','smartphone','already','everyday','app','daily']},
+  {label:'Banques centrales restent pertinentes/puissantes', kw:['central bank','relevant','powerful','remain','influence','dominat']},
+  {label:'Paiements plus rapides / moins chers / internationaux', kw:['faster','cheaper','cost','international','transfer','efficient','instant','quick']},
+  {label:'Innovation / modernisation (Schumpeter)', kw:['innovation','schumpeter','creative destruction','modernis','progress','technolog']},
+  {label:'Inclusion financière (pays en développement)', kw:['inclusion','developing','unbanked','access','ecuador']}
+];
+const THEMES2 = [
+  {label:'Atouts du cash (pratique, fiable, anonyme, vie privée)', kw:['cash','convenient','reliable','anonymous','privacy','physical']},
+  {label:'Exclusion des publics vulnérables', kw:['poor','elderly','vulnerable','exclu','bank account','unbanked']},
+  {label:'Surveillance', kw:['surveillance','monitor','track','data','spy','watch']},
+  {label:'Monnaie programmable / contrôle social', kw:['programmable','condition','control','social control','restrict','who can']},
+  {label:'Inégalités (Stiglitz)', kw:['stiglitz','inequalit','unequal','exclusion','protect','institution']}
+];
+const THEMES3 = [
+  {label:'Coexistence cash + numérique', kw:['coexist','alongside','both','cash','complement','keep cash']},
+  {label:'Débat public / démocratie', kw:['debate','public','democra','discussion','citizen']},
+  {label:'Règles juridiques / protection des données', kw:['law','legal','rule','regulation','safeguard','protect','data']},
+  {label:'Plafonds CBDC / risque de runs', kw:['cap','limit','holding','run','threshold']},
+  {label:'Confiance / stabilité (Keynes)', kw:['keynes','trust','confidence','stability','reassure']}
+];
+
+function analyzeDev(taId, exId, themes, romanNum, partNo){
+  const raw=document.getElementById(taId).value.trim();
+  const low=raw.toLowerCase();
+  const wc=wordCount(raw);
+  const grid=document.getElementById(exId+'-fb');
+  if(wc<25){ grid.innerHTML=panel('bad','Texte trop court','Rédigez un paragraphe argumenté (≈ 120–180 mots) avant de relancer l\'analyse.'); return; }
+
+  /* coverage */
+  let covered=0; const cov=[];
+  themes.forEach(t=>{ const hit=t.kw.some(k=>low.includes(k)); if(hit)covered++; cov.push([hit?'good':'tip',t.label]); });
+  const pct=Math.round((covered/themes.length)*100);
+  const covLvl = covered>=3?'ok':covered>=2?'warn':'bad';
+
+  /* structure / register */
+  let stLvl='ok', st=[];
+  if(wc<100){ stLvl='warn'; st.push(['bad','Développement un peu court ('+wc+' mots). Visez 120–180 mots avec 2–3 arguments.']); }
+  else if(wc>220){ stLvl='warn'; st.push(['bad','Un peu long ('+wc+' mots) : resserrez l\'argumentation.']); }
+  else st.push(['good','Longueur adaptée ('+wc+' mots).']);
+  const connectors=['first','second','moreover','furthermore','because','indeed','for example','for instance','in addition','also','therefore'];
+  const connHits=connectors.filter(c=>low.includes(c)).length;
+  if(connHits>=2) st.push(['good','Bon usage des connecteurs logiques.']);
+  else { if(stLvl==='ok')stLvl='warn'; st.push(['tip','Ajoutez des connecteurs (first, moreover, for example, therefore…) pour articuler les arguments.']); }
+  if(hasFirstPerson(raw)){ if(stLvl==='ok')stLvl='warn'; st.push(['tip','La 1re personne est possible en dissertation, mais privilégiez un ton analytique et impersonnel.']); }
+  else st.push(['good','Registre analytique et objectif.']);
+
+  /* overall */
+  const score=(covered>=3?3:covered>=2?2:1)+(stLvl==='ok'?2:1);
+  const ovLvl = score>=4?'ok':score>=3?'warn':'bad';
+  let ovMsg;
+  if(ovLvl==='ok') ovMsg='Partie '+romanNum+' solide : arguments couverts et bien articulés. Comparez au corrigé pour enrichir le vocabulaire et les exemples.';
+  else if(ovLvl==='warn') ovMsg='Bonne base pour la Partie '+romanNum+'. Couvrez davantage d\'arguments et renforcez l\'articulation, puis comparez au corrigé.';
+  else ovMsg='Partie '+romanNum+' à retravailler : développez plus d\'arguments distincts et appuyez-les sur des exemples. Voir le corrigé.';
+
+  grid.innerHTML =
+    panel(covLvl,'Couverture des arguments',
+      '<div class="coverage-track"><div class="coverage-fill" style="width:'+pct+'%"></div></div>'+
+      '<p style="margin-bottom:.5rem"><strong>'+covered+' / '+themes.length+'</strong> arguments attendus détectés.</p>'+liList(cov)) +
+    panel(stLvl,'Structure &amp; registre', liList(st)) +
+    panel(ovLvl,'Évaluation globale','<p>'+ovMsg+'</p>');
+  grid.scrollIntoView({behavior:'smooth',block:'nearest'});
+  mark(exId);
+}
+
+/* ── TRANSITION ── */
+function analyzeTransition(taId, exId){
+  const raw=document.getElementById(taId).value.trim();
+  const low=raw.toLowerCase();
+  const wc=wordCount(raw);
+  const grid=document.getElementById(exId+'-fb');
+  if(wc<8){ grid.innerHTML=panel('bad','Trop court','Une transition fait en général 1 à 2 phrases qui relient les deux parties.'); return; }
+  const contrast=['however','yet','nevertheless','but','although','despite','while','on the other hand','still','rather','therefore','thus'];
+  const hasContrast=contrast.some(c=>low.includes(c));
+  const items=[];
+  let lvl='ok';
+  if(hasContrast) items.push(['good','Connecteur de transition présent : le lien logique est marqué.']);
+  else { lvl='warn'; items.push(['bad','Aucun connecteur de transition repéré. Utilisez however, yet, nevertheless, therefore…']); }
+  if(wc>=12 && wc<=45) items.push(['good','Longueur idéale pour une transition ('+wc+' mots).']);
+  else if(wc>45){ if(lvl==='ok')lvl='warn'; items.push(['tip','Transition un peu longue : une transition reste brève (1–2 phrases).']); }
+  else items.push(['tip','Transition un peu courte : rappelez l\'idée précédente ET annoncez la suivante.']);
+  items.push(['tip','Une bonne transition fait deux choses : elle clôt la partie qui précède et ouvre la suivante.']);
+  grid.innerHTML = panel(lvl,'Transition', liList(items));
+  grid.scrollIntoView({behavior:'smooth',block:'nearest'});
+  mark(exId);
+}
+
+/* ── INTRO ── */
+function analyzeIntro(){
+  const raw=document.getElementById('introText').value.trim();
+  const low=raw.toLowerCase();
+  const wc=wordCount(raw);
+  const grid=document.getElementById('exIntro-fb');
+  if(wc<25){ grid.innerHTML=panel('bad','Texte trop court','Rédigez une introduction complète (amorce → problématique → plan).'); return; }
+  const comp=[];
+  const hasHook=['money','technolog','digital','progress','economy','today','payment'].some(k=>low.includes(k));
+  const hasProblem=['to what extent','question','whether','can digital','dans quelle mesure'].some(k=>low.includes(k));
+  const hasPlan=['first','then','this essay','will examine','will analyse','will analyze','before','part','finally'].some(k=>low.includes(k));
+  comp.push([hasHook?'good':'bad', hasHook?'Amorce / mise en contexte présente.':'Amorce manquante : situez le sujet (évolution de la monnaie, économie déjà numérique…).']);
+  comp.push([hasProblem?'good':'bad', hasProblem?'Problématique formulée (« to what extent… »).':'Problématique peu visible : reprenez la question avec « to what extent… ».']);
+  comp.push([hasPlan?'good':'bad', hasPlan?'Annonce du plan présente.':'Annonce du plan manquante : « This essay will first… then… before… ».']);
+  const got=[hasHook,hasProblem,hasPlan].filter(Boolean).length;
+  const lvl = got===3?'ok':got===2?'warn':'bad';
+  grid.innerHTML = panel(lvl,'Composantes de l\'introduction', liList(comp)) +
+    panel(wc>=60&&wc<=130?'ok':'warn','Longueur', '<p>'+wc+' mots — visez 70–110 mots pour une introduction équilibrée.</p>');
+  grid.scrollIntoView({behavior:'smooth',block:'nearest'});
+  mark('exIntro');
+}
+
+/* ── CONCLUSION ── */
+function analyzeConclusion(){
+  const raw=document.getElementById('conclText').value.trim();
+  const low=raw.toLowerCase();
+  const wc=wordCount(raw);
+  const grid=document.getElementById('exConcl-fb');
+  if(wc<25){ grid.innerHTML=panel('bad','Texte trop court','Rédigez une conclusion complète (bilan → réponse → ouverture).'); return; }
+  const comp=[];
+  const recap=['risk','surveillance','exclusion','cash','innovation','faster','important part'].some(k=>low.includes(k));
+  const answer=['not the whole','part of','only one','balanced','coexist','compromise'].some(k=>low.includes(k));
+  const opening=['social justice','trust','freedom','more broadly','future of money','democra'].some(k=>low.includes(k));
+  comp.push([recap?'good':'bad', recap?'Bilan des deux thèses présent.':'Bilan manquant : rappelez atouts ET risques avant de trancher.']);
+  comp.push([answer?'good':'bad', answer?'Réponse claire à la problématique.':'Réponse à la problématique peu nette : « digital currency is not the whole future, but one part of it ».']);
+  comp.push([opening?'good':'bad', opening?'Ouverture présente.':'Ajoutez une ouverture (justice sociale, confiance, liberté…).']);
+  const got=[recap,answer,opening].filter(Boolean).length;
+  const lvl = got===3?'ok':got===2?'warn':'bad';
+  grid.innerHTML = panel(lvl,'Composantes de la conclusion', liList(comp)) +
+    panel(wc>=70&&wc<=160?'ok':'warn','Longueur','<p>'+wc+' mots — une conclusion fait en général 70–150 mots.</p>');
+  grid.scrollIntoView({behavior:'smooth',block:'nearest'});
+  mark('exConcl');
+}
+
+buildIdeas();
+updateProgress();
+</script>
+</body>
+</html>
