@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Le compte rendu pas à pas · BTS — LSA Toolbox</title>
+<link rel="icon" type="image/png" href="assets/lsa-logo.png">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&display=swap');
+
+:root{
+  --navy:#1a2744;--navy-deep:#0f1a33;--navy-mid:#243260;
+  --blue:#2d5fa6;--blue-deep:#21477d;--blue-light:#4a7bc8;
+  --accent:#c8a84b;--accent-deep:#a9883a;
+  --green:#2a7a4b;--red:#b5302b;--purple:#6b4ea0;
+  --bg:#f5f3ef;--surface:#ffffff;--border:#ddd5c5;
+  --text:#2a2520;--muted:#7a7060;
+  --shadow:0 2px 14px rgba(26,39,68,.10);
+  --shadow-lg:0 14px 40px rgba(26,39,68,.18);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Source Serif 4',Georgia,serif;background:var(--bg);color:var(--text);
+  line-height:1.7;font-size:17px;-webkit-font-smoothing:antialiased;
+}
+a{color:inherit;}
+
+/* ── TOP BAR ── */
+.topbar{background:var(--navy-deep);color:rgba(255,255,255,.7);font-size:12.5px;}
+.topbar-inner{max-width:1080px;margin:0 auto;padding:9px 28px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;}
+.topbar .place{display:inline-flex;align-items:center;gap:8px;text-transform:uppercase;letter-spacing:.12em;font-size:11px;}
+.topbar .dot{width:5px;height:5px;border-radius:50%;background:var(--accent);}
+.topbar a.back{display:inline-flex;align-items:center;gap:6px;color:rgba(255,255,255,.78);text-decoration:none;border:1px solid rgba(255,255,255,.18);border-radius:20px;padding:4px 13px;transition:all .2s;font-size:11.5px;}
+.topbar a.back:hover{background:rgba(255,255,255,.1);color:#fff;border-color:rgba(200,168,75,.6);}
+
+/* ── HEADER ── */
+.head{position:relative;overflow:hidden;background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 60%,var(--blue) 135%);border-bottom:3px solid var(--accent);}
+.head::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 88% -10%,rgba(74,123,200,.4),transparent 55%);}
+.head-inner{position:relative;z-index:2;max-width:1080px;margin:0 auto;padding:40px 28px 36px;}
+.breadcrumb{display:flex;align-items:center;gap:9px;flex-wrap:wrap;font-size:12px;letter-spacing:.04em;color:rgba(255,255,255,.9);margin-bottom:18px;}
+.breadcrumb a{color:rgba(255,255,255,.8);text-decoration:none;border-bottom:1px solid transparent;transition:.2s;}
+.breadcrumb a:hover{color:#fff;border-bottom-color:var(--accent);}
+.breadcrumb .sep{opacity:.5;}
+.breadcrumb .tag{background:var(--blue);color:#fff;border-radius:5px;padding:2px 9px;white-space:nowrap;font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;}
+.head .eyebrow{color:var(--accent);font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;display:block;margin-bottom:10px;}
+.head h1{font-family:'Playfair Display',serif;color:#fff;font-weight:700;font-size:clamp(2rem,4.4vw,3rem);line-height:1.06;text-wrap:balance;}
+.head h1 em{font-style:italic;color:var(--accent);}
+.head .sub{color:rgba(255,255,255,.82);font-size:clamp(15px,2vw,18px);font-style:italic;margin-top:14px;max-width:640px;}
+
+/* ── LAYOUT ── */
+.wrap{max-width:1080px;margin:0 auto;padding:40px 28px 30px;}
+
+/* ── STEP NAV ── */
+.stepnav{position:sticky;top:0;z-index:30;background:rgba(245,243,239,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--border);}
+.stepnav-inner{max-width:1080px;margin:0 auto;padding:11px 28px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+.stepnav .lbl{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-right:4px;}
+.stepnav a{text-decoration:none;font-size:13px;font-weight:600;color:var(--navy);background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:5px 13px;transition:all .18s;display:inline-flex;align-items:center;gap:7px;}
+.stepnav a:hover{border-color:var(--blue);color:var(--blue-deep);}
+.stepnav a .n{font-variant-numeric:tabular-nums;color:var(--blue);font-weight:700;}
+.stepnav a.done{border-color:var(--green);}
+.stepnav a.done .n{color:var(--green);}
+
+/* ── INTRO ── */
+.intro{background:var(--surface);border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:12px;box-shadow:var(--shadow);padding:24px 28px;margin-bottom:14px;}
+.intro h2{font-family:'Playfair Display',serif;color:var(--navy);font-weight:600;font-size:1.35rem;margin-bottom:6px;}
+.intro p{margin:8px 0;color:var(--text);}
+.intro .consigne{margin-top:14px;background:#faf6ec;border:1px solid var(--accent);border-radius:10px;padding:14px 18px;font-size:16px;}
+.intro .consigne b{color:var(--navy);}
+.meta-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:16px;}
+.meta-chip{display:inline-flex;align-items:center;gap:9px;background:#fcfbf8;border:1px solid var(--border);border-radius:10px;padding:9px 15px;font-size:14px;}
+.meta-chip b{color:var(--navy);font-variant-numeric:tabular-nums;font-size:18px;font-family:'Playfair Display',serif;}
+.meta-chip span{color:var(--muted);font-size:12px;line-height:1.25;}
+
+/* ── SOURCE TEXT PANEL ── */
+.source{background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);margin-bottom:26px;overflow:hidden;}
+.source-head{background:var(--navy);color:#fff;padding:14px 22px;display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;}
+.source-head .t{font-weight:700;letter-spacing:.04em;font-size:14px;display:flex;align-items:center;gap:10px;}
+.source-head .t svg{color:var(--accent);}
+.source-head .src{font-size:11.5px;color:rgba(255,255,255,.6);font-style:italic;}
+.legend{display:flex;flex-wrap:wrap;gap:8px;padding:14px 22px 6px;border-bottom:1px dashed var(--border);}
+.legend .lgl{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);width:100%;margin-bottom:2px;}
+.hl-btn{cursor:pointer;font-family:inherit;font-size:12.5px;font-weight:600;border:1px solid var(--border);background:#fcfbf8;color:var(--navy);border-radius:18px;padding:5px 13px;display:inline-flex;align-items:center;gap:7px;transition:all .15s;}
+.hl-btn .sw{width:12px;height:12px;border-radius:3px;}
+.hl-btn[aria-pressed="true"]{border-color:currentColor;}
+.hl-btn[data-k="be"]{--cc:var(--accent-deep);}.hl-btn[data-k="num"]{--cc:var(--blue-deep);}
+.hl-btn[data-k="prop"]{--cc:var(--green);}.hl-btn[data-k="conn"]{--cc:var(--purple);}
+.hl-btn[aria-pressed="true"]{color:var(--cc);background:color-mix(in srgb,var(--cc) 9%,#fff);}
+.hl-btn .sw{background:var(--cc);}
+.article{padding:8px 26px 24px;font-size:16.5px;line-height:1.78;}
+.article .title{font-family:'Playfair Display',serif;color:var(--navy);font-weight:700;font-size:1.5rem;line-height:1.2;margin:18px 0 4px;}
+.article .standfirst{font-style:italic;color:var(--muted);margin-bottom:14px;}
+.article p{margin:12px 0;text-wrap:pretty;}
+/* highlight marks — invisible until toggled */
+.article mark{background:transparent;color:inherit;padding:0 1px;border-radius:3px;transition:background .15s;}
+.article.show-be .be{background:color-mix(in srgb,var(--accent) 32%,#fff);box-shadow:0 0 0 1px var(--accent-deep) inset;}
+.article.show-num .num{background:color-mix(in srgb,var(--blue) 24%,#fff);box-shadow:0 0 0 1px var(--blue-deep) inset;}
+.article.show-prop .prop{background:color-mix(in srgb,var(--green) 24%,#fff);box-shadow:0 0 0 1px var(--green) inset;}
+.article.show-conn .conn{background:color-mix(in srgb,var(--purple) 22%,#fff);box-shadow:0 0 0 1px var(--purple) inset;font-weight:600;}
+
+/* ── STEP CARD ── */
+.step{background:var(--surface);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow);margin-bottom:24px;overflow:hidden;scroll-margin-top:64px;}
+.step-head{display:flex;align-items:flex-start;gap:16px;padding:22px 26px 6px;}
+.step-num{flex-shrink:0;width:46px;height:46px;border-radius:12px;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:700;font-size:20px;box-shadow:0 4px 12px rgba(45,95,166,.3);}
+.step-head .ht{flex:1;min-width:0;}
+.step-head h2{font-family:'Playfair Display',serif;color:var(--navy);font-weight:600;font-size:1.5rem;line-height:1.12;}
+.step-head .obj{color:var(--muted);font-size:14.5px;margin-top:4px;}
+.step-body{padding:6px 26px 24px;}
+
+/* ── HELP / METHOD ── */
+details.aide{margin:6px 0 18px;border:1px solid var(--border);border-radius:10px;background:#fcfbf8;overflow:hidden;}
+details.aide>summary{cursor:pointer;list-style:none;padding:11px 18px;font-size:13.5px;font-weight:700;letter-spacing:.02em;color:var(--blue-deep);display:flex;align-items:center;gap:10px;}
+details.aide>summary::-webkit-details-marker{display:none;}
+details.aide>summary .ic{transition:transform .25s;}
+details.aide[open]>summary .ic{transform:rotate(90deg);}
+details.aide .ai{padding:2px 18px 16px;font-size:15px;color:var(--text);border-top:1px solid var(--border);margin-top:0;padding-top:14px;}
+details.aide .ai ul{margin:8px 0 4px 4px;padding-left:18px;}
+details.aide .ai li{margin:5px 0;}
+details.aide .ai code{background:#efe9da;border-radius:4px;padding:1px 6px;font-size:13px;font-family:ui-monospace,Menlo,monospace;color:var(--navy);}
+
+details.corr{margin:14px 0 4px;border:1px solid var(--green);border-radius:10px;background:#f1f7f2;overflow:hidden;}
+details.corr>summary{cursor:pointer;list-style:none;padding:11px 18px;font-size:13.5px;font-weight:700;color:var(--green);display:flex;align-items:center;gap:10px;}
+details.corr>summary::-webkit-details-marker{display:none;}
+details.corr>summary .ic{transition:transform .25s;}
+details.corr[open]>summary .ic{transform:rotate(90deg);}
+details.corr .ci{padding:4px 18px 16px;font-size:15px;border-top:1px solid color-mix(in srgb,var(--green) 35%,#fff);padding-top:14px;}
+details.corr .ci ul{margin:6px 0 4px 4px;padding-left:18px;}
+details.corr .ci li{margin:6px 0;}
+.corr-note{font-size:12.5px;color:var(--muted);font-style:italic;margin-top:10px;}
+
+/* ── FIELDS ── */
+.field{margin:16px 0;}
+.field>label{display:block;font-weight:600;color:var(--navy);font-size:15px;margin-bottom:7px;}
+.field .hint{font-weight:400;color:var(--muted);font-size:13px;font-style:italic;}
+textarea,input.line{width:100%;font-family:inherit;font-size:15.5px;color:var(--text);background:#fcfbf8;border:1px solid var(--border);border-radius:9px;padding:12px 14px;line-height:1.6;resize:vertical;transition:border-color .15s,box-shadow .15s;}
+textarea:focus,input.line:focus{outline:none;border-color:var(--blue);background:#fff;box-shadow:0 0 0 3px rgba(45,95,166,.13);}
+textarea.sm{min-height:64px;}
+textarea.md{min-height:120px;}
+textarea.lg{min-height:300px;}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+
+/* ── PARA NOTES (step 3) ── */
+.para{border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin:12px 0;background:#fcfbf8;}
+.para .pl{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);margin-bottom:8px;display:flex;align-items:center;gap:8px;}
+.para .pl .ex{font-weight:400;letter-spacing:0;text-transform:none;color:var(--muted);font-size:12.5px;font-style:italic;}
+
+/* ── TABLE (step 4) ── */
+.cuts{width:100%;border-collapse:collapse;margin-top:10px;font-size:14.5px;}
+.cuts th{background:var(--navy);color:#fff;font-weight:600;font-size:12.5px;letter-spacing:.04em;padding:10px 12px;text-align:left;}
+.cuts th:last-child{width:120px;text-align:center;}
+.cuts td{border:1px solid var(--border);padding:6px;vertical-align:top;}
+.cuts textarea{border:none;background:transparent;border-radius:0;padding:6px 8px;min-height:46px;}
+.cuts textarea:focus{box-shadow:none;background:#fff;}
+.cuts input.line{border:none;background:transparent;text-align:center;padding:6px;}
+
+/* ── COUNTER ── */
+.counter{display:inline-flex;align-items:center;gap:9px;font-size:13.5px;color:var(--muted);background:#fcfbf8;border:1px solid var(--border);border-radius:20px;padding:6px 14px;margin-top:10px;}
+.counter b{font-family:'Playfair Display',serif;font-size:17px;font-variant-numeric:tabular-nums;color:var(--navy);}
+.counter.ok{border-color:var(--green);color:var(--green);}
+.counter.ok b{color:var(--green);}
+.counter.over{border-color:var(--red);color:var(--red);}
+.counter.over b{color:var(--red);}
+
+/* ── CHECKLIST (step 6) ── */
+.check{list-style:none;display:flex;flex-direction:column;gap:2px;margin-top:6px;}
+.check li{display:flex;align-items:flex-start;gap:12px;padding:11px 14px;border:1px solid var(--border);border-radius:9px;background:#fcfbf8;transition:all .15s;}
+.check li:has(input:checked){border-color:var(--green);background:#f1f7f2;}
+.check input{flex-shrink:0;width:21px;height:21px;margin-top:2px;accent-color:var(--green);cursor:pointer;}
+.check label{flex:1;cursor:pointer;font-size:15px;color:var(--text);}
+.check li:has(input:checked) label{color:var(--green);}
+.check-foot{margin-top:14px;font-size:14px;color:var(--muted);}
+.check-foot b{color:var(--navy);font-variant-numeric:tabular-nums;}
+
+/* ── ACTIONS ── */
+.toolbar{display:flex;flex-wrap:wrap;gap:11px;align-items:center;margin:6px 0 22px;}
+.btn{font-family:inherit;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:9px;font-weight:600;font-size:14.5px;border-radius:26px;padding:10px 20px;transition:all .18s;border:1px solid var(--border);background:var(--surface);color:var(--navy);box-shadow:var(--shadow);}
+.btn:hover{border-color:var(--accent);color:var(--accent-deep);transform:translateY(-2px);box-shadow:var(--shadow-lg);}
+.btn.primary{background:var(--navy);color:#fff;border-color:var(--navy);}
+.btn.primary:hover{background:var(--navy-deep);color:#fff;border-color:var(--navy-deep);}
+.btn.ghost{box-shadow:none;}
+.btn.danger:hover{border-color:var(--red);color:var(--red);}
+.save-note{font-size:12.5px;color:var(--muted);font-style:italic;display:inline-flex;align-items:center;gap:7px;}
+.save-note .pulse{width:8px;height:8px;border-radius:50%;background:var(--green);}
+
+.actions{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin:40px 0 6px;}
+
+/* ── FOOTER ── */
+footer{background:var(--navy-deep);color:rgba(255,255,255,.62);margin-top:42px;border-top:3px solid var(--accent);}
+.foot-inner{max-width:1080px;margin:0 auto;padding:30px 28px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;font-size:13px;}
+.foot-brand{display:flex;align-items:center;gap:13px;}
+.foot-brand img{width:38px;height:38px;border-radius:9px;}
+.foot-brand strong{color:#fff;font-family:'Playfair Display',serif;font-weight:600;font-size:15px;display:block;}
+.foot-brand span{font-size:12px;}
+.foot-links{display:flex;align-items:center;gap:20px;flex-wrap:wrap;}
+.foot-links a{transition:color .2s;border-bottom:1px solid transparent;text-decoration:none;}
+.foot-links a:hover{color:var(--accent);border-bottom-color:var(--accent);}
+
+/* ── RESPONSIVE ── */
+@media(max-width:720px){
+  body{font-size:16px;}
+  .wrap{padding:30px 18px 24px;}
+  .grid2,.grid3{grid-template-columns:1fr;}
+  .step-head{padding:18px 18px 4px;}
+  .step-body{padding:6px 18px 20px;}
+  .source-head,.legend,.article{padding-left:18px;padding-right:18px;}
+  .stepnav-inner{padding:10px 18px;overflow-x:auto;flex-wrap:nowrap;}
+  .foot-inner{flex-direction:column;align-items:flex-start;}
+}
+
+/* ── PRINT ── */
+@media print{
+  .topbar,.stepnav,.toolbar,.actions,footer,.legend,.save-note{display:none !important;}
+  body{background:#fff;color:#000;font-size:11pt;line-height:1.45;}
+  .head{background:#fff !important;border-bottom:2px solid #000;}
+  .head::before{display:none;}
+  .head .eyebrow{color:#8a6d1f;}
+  .head h1,.head h1 em{color:#000;}
+  .head .sub,.breadcrumb{color:#333;}
+  .head-inner{padding:6px 0;}
+  .wrap{padding:6px 0;max-width:none;}
+  .step,.source,.intro{box-shadow:none;border:1px solid #999;break-inside:avoid;page-break-inside:avoid;}
+  .step-num{background:#000 !important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .source-head,.cuts th{background:#000 !important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  details.aide,details.corr{border:1px solid #999;}
+  details.aide,details.corr{break-inside:avoid;}
+  textarea,input.line{border:1px solid #aaa;background:#fff;min-height:auto;}
+  .article mark{background:transparent !important;box-shadow:none !important;}
+  a{color:#000;text-decoration:none;}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════ TOP BAR ═══════════ -->
+<div class="topbar">
+  <div class="topbar-inner">
+    <span class="place"><span class="dot"></span>Lycée Sidoine Apollinaire · Clermont-Ferrand</span>
+    <a class="back" href="index.html">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+      Retour à l'accueil
+    </a>
+  </div>
+</div>
+
+<!-- ═══════════ HEADER ═══════════ -->
+<header class="head">
+  <div class="head-inner">
+    <nav class="breadcrumb">
+      <a href="index.html">Accueil</a><span class="sep">›</span>
+      <span class="tag">BTS</span>
+      <span class="sep">›</span><span>Méthodologie</span>
+      <span class="sep">›</span><span>Le compte rendu</span>
+    </nav>
+    <span class="eyebrow">Méthode M3 · Anglais — épreuve de compte rendu</span>
+    <h1>Le compte rendu <em>pas à pas</em></h1>
+    <p class="sub">Entraînez-vous en autonomie à rédiger, en français, le compte rendu d'un article anglais. Six étapes, des aides à déplier et une correction à comparer à la fin.</p>
+  </div>
+</header>
+
+<!-- ═══════════ STEP NAV ═══════════ -->
+<nav class="stepnav" id="stepnav">
+  <div class="stepnav-inner">
+    <span class="lbl">Parcours</span>
+    <a href="#etape1"><span class="n">1</span> Titre</a>
+    <a href="#etape2"><span class="n">2</span> Repérage</a>
+    <a href="#etape3"><span class="n">3</span> Brouillon</a>
+    <a href="#etape4"><span class="n">4</span> Alléger</a>
+    <a href="#etape5"><span class="n">5</span> Rédiger</a>
+    <a href="#etape6"><span class="n">6</span> Relecture</a>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <!-- ── TOOLBAR ── -->
+  <div class="toolbar">
+    <button class="btn primary" onclick="window.print()">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2M6 14h12v8H6z"/></svg>
+      Imprimer la fiche
+    </button>
+    <button class="btn danger ghost" id="resetBtn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
+      Tout effacer
+    </button>
+    <span class="save-note"><span class="pulse"></span> Vos réponses sont enregistrées automatiquement dans ce navigateur.</span>
+  </div>
+
+  <!-- ── INTRO ── -->
+  <section class="intro">
+    <h2>Comment ça marche&nbsp;?</h2>
+    <p>Le <b>compte rendu</b> consiste à restituer fidèlement, <b>en français</b> et de façon condensée, les idées essentielles d'un texte en anglais — sans donner votre avis. Avancez étape par étape&nbsp;: chaque étape propose une <b>aide méthode</b> à déplier et des zones de réponse. Une fois votre travail rédigé, comparez-le à la <b>correction</b> proposée à chaque étape.</p>
+    <div class="consigne">
+      <b>Consigne&nbsp;:</b> Rédigez en français, en <b>environ 200 mots (± 10&nbsp;%)</b>, le compte rendu de l'article ci-dessous <i>«&nbsp;Less stress, more energy: what four-day weeks are really like&nbsp;»</i>. Restituez les idées principales de façon neutre et organisée.
+    </div>
+    <div class="meta-row">
+      <span class="meta-chip"><b id="srcWords">—</b><span>mots dans<br>le texte source</span></span>
+      <span class="meta-chip"><b>200</b><span>mots visés<br>(± 10&nbsp;% → 180–220)</span></span>
+      <span class="meta-chip"><b>6</b><span>étapes<br>de méthode</span></span>
+    </div>
+  </section>
+
+  <!-- ── SOURCE TEXT ── -->
+  <section class="source">
+    <div class="source-head">
+      <span class="t">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        Le texte à comprendre
+      </span>
+      <span class="src">The Sunday Times — adapté (article de presse)</span>
+    </div>
+    <div class="legend" id="legend">
+      <span class="lgl">Code de repérage — cliquez pour surligner dans le texte</span>
+      <button class="hl-btn" data-k="be" aria-pressed="false"><span class="sw"></span>Business English</button>
+      <button class="hl-btn" data-k="num" aria-pressed="false"><span class="sw"></span>Chiffres &amp; dates</button>
+      <button class="hl-btn" data-k="prop" aria-pressed="false"><span class="sw"></span>Noms propres</button>
+      <button class="hl-btn" data-k="conn" aria-pressed="false"><span class="sw"></span>Connecteurs logiques</button>
+    </div>
+    <article class="article" id="article">
+      <p class="title">“Less stress, more energy”: what four-day weeks are really like</p>
+      <p class="standfirst">As Labour mulls giving employees more flexibility, how would productivity, and stress levels, be affected by the end of the traditional working week?</p>
+
+      <p>It was <mark class="num">11am on Friday</mark> when <mark class="prop">The Sunday Times</mark> phoned <mark class="prop">Mark Mullen</mark>, <mark class="be">chief executive</mark> of <mark class="prop">Atom Bank</mark>. “Hello?” he answered, sounding flustered, a loud cacophony in the background. “Sorry, I'm just in the supermarket, I can't hear you.”</p>
+
+      <p><mark class="num">Three years ago</mark>, on his orders, Atom Bank's <mark class="num">550 staff</mark> went from <mark class="num">five days a week to four</mark>. So, having worked his Monday to Thursday, Mullen was doing the grocery shop. The change, he said, has been a success. “We're <mark class="be">profitable</mark>, still growing — but we do it with a four-day week.”</p>
+
+      <p>As part of the new government's <mark class="be">working rights package</mark>, <mark class="be">employees</mark> in the <mark class="prop">UK</mark> may soon all be given the right to work the Atom way. Under a plan due to go out for consultation in <mark class="num">October</mark>, the <mark class="prop">Department for Business &amp; Trade</mark> will propose a system of <mark class="be">“compressed hours”</mark>, where <mark class="be">full-time staff</mark> can squeeze their <mark class="be">contracted hours</mark> into four days. <mark class="be">Employers</mark> would be legally obliged to allow it.</p>
+
+      <p>The idea is to give employees <mark class="be">flexibility</mark>. That could involve doing fewer days, or working different hours — possibly involving evening work after putting children to bed.</p>
+
+      <p><mark class="conn">But</mark> <mark class="prop">Britain</mark> isn't alone in looking at such a move. <mark class="prop">Belgium</mark> passed similar <mark class="be">legislation</mark> in <mark class="num">2022</mark>, and trials have been running in several other <mark class="prop">European</mark> countries. <mark class="conn">But</mark> how practical is it? And what impact will it have on companies and the economy?</p>
+
+      <p>A wide-ranging <mark class="be">trial</mark> last year — in which <mark class="num">61 companies</mark> went to four days — suggested it was good for employees, who had lower levels of <mark class="be">stress and burnout</mark> and took fewer <mark class="be">sick days</mark>.</p>
+
+      <p><mark class="conn">However</mark>, Mullen stressed that while it worked for a business like Atom, it would not be right for every organisation. “We're kind of <mark class="be">self-service, digitally enabled</mark>, so we don't have a physical distribution service to maintain. That made it easier than if we were running something like a restaurant.”</p>
+
+      <p>And as for the <mark class="be">productivity</mark> of his <mark class="be">workforce</mark>? Atom cut the total contracted hours from <mark class="num">37 to 34 a week</mark>, meaning staff worked slightly longer on those four days. He kept <mark class="be">wages</mark> as they were. “It had no impact on [total] productivity at all.”</p>
+
+      <p><mark class="conn">On a per-hour-worked basis, though</mark>, Atom staff did become more productive. <mark class="prop">Professor Bart van Ark</mark>, managing director of the <mark class="prop">Productivity Institute</mark> at <mark class="prop">Manchester University</mark>, said there was not always the same positive outcome when employees were asked to work longer hours over fewer days, with a risk of <mark class="be">fatigue and concentration lapses</mark>. “After <mark class="num">seven or eight working hours</mark> a day, your productivity is very likely to decline,” he said.</p>
+
+      <p><mark class="prop">Richard Fox</mark>, a partner at <mark class="prop">Keystone Law</mark> specialising in <mark class="be">employment issues</mark>, agreed: “It's not quite as simple as saying a four-day week with compressed hours is less stressful and adds to <mark class="be">work-life balance</mark>… If you work <mark class="num">ten hours four days a week</mark>, you can find yourself being exhausted. For some people, it's better to work more steady hours.”</p>
+
+      <p>“I'm definitely not saying it's right for everyone,” Mullen added. “Some people like a five-day week.”</p>
+
+      <p><mark class="conn">On the other hand</mark>, though, he pointed out that once employees have made the switch to four working days and rearranged their lives around that schedule, they can find it hard to shift back up again to five, perhaps making them unwilling to move to new jobs — good for Atom, but perhaps not for rivals trying to hire new staff.</p>
+
+      <p>After the four-days trial last year, <mark class="num">92 per cent</mark> of the participants decided to make it <mark class="be">permanent</mark>.</p>
+    </article>
+  </section>
+
+  <!-- ══════ ÉTAPE 1 ══════ -->
+  <section class="step" id="etape1">
+    <div class="step-head">
+      <div class="step-num">1</div>
+      <div class="ht">
+        <h2>Anticiper à partir du titre</h2>
+        <p class="obj">Avant même de lire l'article, le titre vous renseigne déjà beaucoup.</p>
+      </div>
+    </div>
+    <div class="step-body">
+      <details class="aide">
+        <summary><svg class="ic" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg> Aide méthode</summary>
+        <div class="ai">
+          <p>Repérez dans le titre les <b>mots transparents</b> (proches du français) et les <b>mots connus</b>, puis devinez le thème et le <i>Business English</i> probable.</p>
+          <ul>
+            <li><b>Mots transparents&nbsp;:</b> <code>stress</code>, <code>energy</code>, <code>productivity</code>…</li>
+            <li><b>Le thème&nbsp;:</b> de quoi va parler l'article&nbsp;? (ici&nbsp;: l'organisation du temps de travail)</li>
+            <li><b>Business English attendu&nbsp;:</b> du vocabulaire de l'entreprise et du travail (<code>employees</code>, <code>working week</code>…).</li>
+          </ul>
+        </div>
+      </details>
+      <div class="field">
+        <label>a) Quels mots importants du titre comprenez-vous&nbsp;? <span class="hint">(mots transparents ou déjà connus)</span></label>
+        <textarea class="sm" data-save="e1a" placeholder="Ex. : less, stress, more energy, four-day weeks…"></textarea>
+      </div>
+      <div class="field">
+        <label>b) Quel est le thème probable de l'article&nbsp;?</label>
+        <textarea class="sm" data-save="e1b" placeholder="En une phrase…"></textarea>
+      </div>
+      <div class="field">
+        <label>c) Quel Business English vous attendez-vous à trouver&nbsp;?</label>
+        <textarea class="sm" data-save="e1c" placeholder="Listez quelques mots de l'entreprise et du travail que vous pensez rencontrer…"></textarea>
+      </div>
+      <details class="corr">
+        <summary><svg class="ic" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg> Voir une proposition de correction</summary>
+        <div class="ci">
+          <ul>
+            <li><b>Mots compris&nbsp;:</b> <i>less stress</i> (moins de stress), <i>more energy</i> (plus d'énergie), <i>four-day weeks</i> (les semaines de quatre jours), <i>really like</i> (à quoi cela ressemble vraiment).</li>
+            <li><b>Thème probable&nbsp;:</b> les effets réels de la semaine de quatre jours sur le bien-être et le travail.</li>
+            <li><b>Business English attendu&nbsp;:</b> <i>employees, employers, working week, productivity, work-life balance, company…</i></li>
+          </ul>
+          <p class="corr-note">Il n'y a pas une seule bonne réponse&nbsp;: l'important est d'avoir anticipé le bon thème.</p>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- ══════ ÉTAPE 2 ══════ -->
+  <section class="step" id="etape2">
+    <div class="step-head">
+      <div class="step-num">2</div>
+      <div class="ht">
+        <h2>Lecture globale, puis repérage</h2>
+        <p class="obj">Lire une première fois sans bloquer sur les mots inconnus, puis appliquer le code de repérage.</p>
+      </div>
+    </div>
+    <div class="step-body">
+      <details class="aide">
+        <summary><svg class="ic" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg> Aide méthode</summary>
+        <div class="ai">
+          <p>Première lecture&nbsp;: ne vous arrêtez pas sur chaque mot inconnu. Cherchez seulement le <b>sujet</b>, les <b>acteurs</b> et l'<b>idée générale</b>. Relisez ensuite en appliquant le <b>code de repérage</b> (boutons de couleur sur le texte plus haut)&nbsp;:</p>
+          <ul>
+            <li><b>BE</b> — le <i>Business English</i> (vocabulaire de l'entreprise et du travail)&nbsp;;</li>
+            <li><b>Chiffres</b> — dates, données chiffrées, évolutions, comparaisons&nbsp;;</li>
+            <li><b>Noms propres</b> — personnes, entreprises, lieux, institutions&nbsp;;</li>
+            <li><b>Connecteurs logiques</b> — <i>but, however, on the other hand…</i> qui signalent l'organisation des idées.</li>
+          </ul>
+          <p>Astuce&nbsp;: faites défiler jusqu'au texte plus haut et activez les surlignages pour vérifier vos repérages.</p>
+        </div>
+      </details>
+      <div class="field">
+        <label>a) Type de document, source et date</label>
+        <textarea class="sm" data-save="e2a" placeholder="Nature du document, d'où il vient, quand il a été publié…"></textarea>
+      </div>
+      <div class="field">
+        <label>b) Sujet général du document <span class="hint">(en une ou deux phrases)</span></label>
+        <textarea class="sm" data-save="e2b" placeholder="De quoi parle l'article dans son ensemble&nbsp;?"></textarea>
+      </div>
+      <div class="field">
+        <label>c) Acteurs principaux <span class="hint">(qui parle, qui est cité&nbsp;?)</span></label>
+        <textarea class="sm" data-save="e2c" placeholder="Personnes, entreprises, institutions citées…"></textarea>
+      </div>
+      <details class="corr">
+        <summary><svg class="ic" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg> Voir une proposition de correction</summary>
+        <div class="ci">
+          <ul>
+            <li><b>Type / source&nbsp;:</b> un article de presse du <i>Sunday Times</i> (journal britannique) consacré à un fait de société économique.</li>
+            <li><b>Sujet général&nbsp;:</b> la semaine de quatre jours au Royaume-Uni — ses effets sur le stress, la productivité et l'organisation du travail, et le projet de loi qui pourrait la généraliser.</li>
+            <li><b>Acteurs&nbsp;:</b> Mark Mullen (DG d'Atom Bank), le gouvernement britannique et le ministère (<i>Department for Business &amp; Trade</i>), le professeur Bart van Ark (Productivity Institute, Manchester), l'avocat Richard Fox (Keystone Law).</li>
+          </ul>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- ══════ ÉTAPE 3 ══════ -->
+  <section class="step" id="etape3">
+    <div class="step-head">
+      <div class="step-num">3</div>
+      <div class="ht">
+        <h2>Préparer le brouillon, paragraphe par paragraphe</h2>
+        <p class="obj">Reformuler en français les idées clés, sous forme de notes — sans traduire mot à mot.</p>
+      </div>
+    </div>
+    <div class="step-body">
+      <details class="aide">
+        <summary><svg class="ic" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg> Aide méthode</summary>
+        <div class="ai">
+          <p>Pour chaque grande partie du texte, notez <b>l'idée essentielle en français</b>, sous forme de phrase courte ou de note — pas de traduction. Gardez les <b>chiffres utiles</b>. Vous compterez vos mots à la fin.</p>
+          <p>Pensez à une <b>introduction type</b>&nbsp;: <i>«&nbsp;Cet article de presse, paru dans le Sunday Times, traite de… &nbsp;»</i></p>
+        </div>
+      </details>
+      <div class="field">
+        <label>Introduction (phrase d'amorce)</label>
+        <textarea class="sm" data-save="e3intro" placeholder="Cet article du Sunday Times traite de…"></textarea>
+      </div>
+
+      <div class="para">
+        <div class="pl">Idée 1 <span class="ex">· le témoignage de départ (Atom Bank)</span></div>
+        <textarea class="sm" data-save="e3p1" placeholder="Reformulez en français l'idée principale…"></textarea>
+      </div>
+      <div class="para">
+        <div class="pl">Idée 2 <span class="ex">· le projet de loi / la flexibilité voulue</span></div>
+        <textarea class="sm" data-save="e3p2" placeholder="…"></textarea>
+      </div>
+      <div class="para">
+        <div class="pl">Idée 3 <span class="ex">· les autres pays + l'essai sur 61 entreprises</span></div>
+        <textarea class="sm" data-save="e3p3" placeholder="…"></textarea>
+      </div>
+      <div class="para">
+        <div class="pl">Idée 4 <span class="ex">· productivité, heures, salaires chez Atom</span></div>
+        <textarea class="sm" data-save="e3p4" placeholder="…"></textarea>
+      </div>
+      <div class="para">
+        <div class="pl">Idée 5 <span class="ex">· les limites et avis nuancés (experts, fatigue)</span></div>
+        <textarea class="sm" data-save="e3p5" placeholder="…"></textarea>
+      </div>
+      <div class="para">
+        <div class="pl">Idée 6 <span class="ex">· conclusion du texte (retour difficile, 92 %)</span></div>
+        <textarea class="sm" data-save="e3p6" placeholder="…"></textarea>
+      </div>
+
+      <div class="counter" id="cnt3"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7V4h16v3M9 20h6M12 4v16"/></svg> Brouillon provisoire&nbsp;: <b>0</b> mots</div>
+
+      <details class="corr">
+        <summary><svg class="ic" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg> Voir les idées clés à retenir</summary>
+        <div class="ci">
+          <ul>
+            <li>Témoignage de Mark Mullen, DG d'Atom Bank&nbsp;: lui et ses 550 salariés sont passés à la semaine de quatre jours — entreprise restée rentable et en expansion.</li>
+            <li>Le ministère britannique de l'Économie prépare une réforme obligeant les employeurs à accorder la semaine de quatre jours si les salariés la demandent.</li>
+            <li>L'idée&nbsp;: laisser les salariés organiser leur temps de travail (flexibilité).</li>
+            <li>Le Royaume-Uni n'est pas seul&nbsp;: la Belgique l'a fait dès 2022 et d'autres pays européens l'expérimentent. Une étude (61 entreprises) montre des salariés moins stressés et moins absents.</li>
+            <li>Chez Atom, la productivité a augmenté malgré la réduction des heures (de 37 à 34/semaine, salaires maintenus).</li>
+            <li>Le sujet ne fait pas consensus&nbsp;: longues journées = risque de fatigue et de baisse de productivité&nbsp;; certains préfèrent la semaine de cinq jours.</li>
+            <li>Une fois passé à quatre jours, le retour en arrière est difficile (et donc le changement d'entreprise aussi). 92&nbsp;% des participants à l'essai ont choisi de continuer.</li>
+          </ul>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- ══════ ÉTAPE 4 ══════ -->
+  <section class="step" id="etape4">
+    <div class="step-head">
+      <div class="step-num">4</div>
+      <div class="ht">
+        <h2>Organiser et alléger le brouillon</h2>
+        <p class="obj">Obtenir un compte rendu cohérent et respecter le nombre de mots demandé.</p>
+      </div>
+    </div>
+    <div class="step-body">
+      <details class="aide">
+        <summary><svg class="ic" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg> Aide méthode</summary>
+        <div class="ai">
+          <p>Relisez votre brouillon et <b>éliminez</b>&nbsp;: les répétitions, les exemples accessoires, les détails secondaires. <b>Gardez</b> les arguments forts et les chiffres utiles. Pensez à ajouter des <b>connecteurs logiques</b> (<i>de plus, cependant, en revanche, par conséquent…</i>) pour relier les idées.</p>
+        </div>
+      </details>
+      <table class="cuts">
+        <thead><tr><th>Idée(s) éliminée(s)</th><th>Pourquoi&nbsp;?</th><th>Mots gagnés</th></tr></thead>
+        <tbody>
+          <tr><td><textarea data-save="e4i1" placeholder="Ex. : l'anecdote du supermarché…"></textarea></td><td><textarea data-save="e4w1" placeholder="détail anecdotique"></textarea></td><td><input class="line" data-save="e4n1" inputmode="numeric" placeholder="—"></td></tr>
+          <tr><td><textarea data-save="e4i2"></textarea></td><td><textarea data-save="e4w2"></textarea></td><td><input class="line" data-save="e4n2" inputmode="numeric" placeholder="—"></td></tr>
+          <tr><td><textarea data-save="e4i3"></textarea></td><td><textarea data-save="e4w3"></textarea></td><td><input class="line" data-save="e4n3" inputmode="numeric" placeholder="—"></td></tr>
+          <tr><td><textarea data-save="e4i4"></textarea></td><td><textarea data-save="e4w4"></textarea></td><td><input class="line" data-save="e4n4" inputmode="numeric" placeholder="—"></td></tr>
+        </tbody>
+      </table>
+      <details class="corr">
+        <summary><svg class="ic" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg> Voir des pistes</summary>
+        <div class="ci">
+          <ul>
+            <li><b>À supprimer&nbsp;:</b> l'anecdote du coup de fil au supermarché&nbsp;; le détail «&nbsp;travail le soir après avoir couché les enfants&nbsp;»&nbsp;; les citations mot à mot (à reformuler en synthèse).</li>
+            <li><b>À garder&nbsp;:</b> les chiffres parlants (550 salariés, 37→34 h, 92&nbsp;%, 2022), l'opposition réussite / limites, le projet de loi.</li>
+            <li><b>Connecteurs utiles&nbsp;:</b> <i>en effet, de plus, cependant, en revanche, par conséquent, enfin.</i></li>
+          </ul>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- ══════ ÉTAPE 5 ══════ -->
+  <section class="step" id="etape5">
+    <div class="step-head">
+      <div class="step-num">5</div>
+      <div class="ht">
+        <h2>Rédiger le compte rendu</h2>
+        <p class="obj">Un texte cohérent, structuré, neutre, dans un français de qualité — et au bon nombre de mots.</p>
+      </div>
+    </div>
+    <div class="step-body">
+      <details class="aide">
+        <summary><svg class="ic" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg> Aide méthode</summary>
+        <div class="ai">
+          <p>Rédigez à partir de votre brouillon organisé. <b>Aérez</b> le compte rendu&nbsp;: alinéas, paragraphes, sauts de ligne. Restez <b>neutre</b> (pas de «&nbsp;je pense que&nbsp;»). Indiquez le <b>nombre de mots</b> à la fin.</p>
+        </div>
+      </details>
+      <div class="field">
+        <label>Introduction</label>
+        <textarea class="md" data-save="e5intro" placeholder="Cet article de presse, paru dans le Sunday Times, traite de…"></textarea>
+      </div>
+      <div class="field">
+        <label>Développement du compte rendu</label>
+        <textarea class="lg" data-save="e5body" placeholder="Rédigez ici votre compte rendu, en paragraphes aérés…"></textarea>
+      </div>
+      <div class="counter" id="cnt5"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7V4h16v3M9 20h6M12 4v16"/></svg> Compte rendu&nbsp;: <b>0</b> mots <span id="cnt5msg" style="margin-left:4px;"></span></div>
+      <details class="corr">
+        <summary><svg class="ic" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg> Voir un exemple de compte rendu rédigé</summary>
+        <div class="ci">
+          <p>Cet article de presse, paru dans le <i>Sunday Times</i>, porte sur la semaine de quatre jours au Royaume-Uni et sur ses effets réels. Mark Mullen, directeur général d'Atom Bank, en témoigne&nbsp;: depuis trois ans, ses 550 salariés travaillent quatre jours par semaine, sans que l'entreprise, restée rentable et en croissance, en pâtisse.</p>
+          <p>Le gouvernement britannique prépare une réforme qui obligerait les employeurs à accorder cette organisation, dite «&nbsp;heures compressées&nbsp;», aux salariés qui la demandent, afin de leur offrir davantage de souplesse. Le Royaume-Uni n'est pas isolé&nbsp;: la Belgique a légiféré dès 2022 et plusieurs pays européens mènent des essais. Une étude portant sur 61 entreprises conclut à des salariés moins stressés, moins épuisés et moins souvent absents.</p>
+          <p>Chez Atom, la productivité a même progressé malgré la réduction des heures (de 37 à 34 par semaine, à salaire inchangé). Le sujet ne fait toutefois pas l'unanimité&nbsp;: des journées plus longues risquent d'engendrer fatigue et baisse de concentration, et certains préfèrent conserver la semaine de cinq jours&nbsp;; Mullen précise d'ailleurs que ce modèle ne convient pas à toutes les activités. Enfin, une fois ce rythme adopté, le retour en arrière devient difficile, ce qui freine les changements d'employeur&nbsp;; 92&nbsp;% des participants à l'essai ont choisi de le pérenniser. <i>(≈ 205 mots)</i></p>
+          <p class="corr-note">Ce n'est qu'un exemple parmi d'autres&nbsp;: votre formulation peut différer tant que les idées essentielles y sont, dans un français neutre et clair.</p>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- ══════ ÉTAPE 6 ══════ -->
+  <section class="step" id="etape6">
+    <div class="step-head">
+      <div class="step-num">6</div>
+      <div class="ht">
+        <h2>Relire — les 10 vérifications</h2>
+        <p class="obj">Cochez chaque point une fois vérifié dans votre compte rendu.</p>
+      </div>
+    </div>
+    <div class="step-body">
+      <ul class="check" id="checklist">
+        <li><input type="checkbox" id="c1" data-save="c1"><label for="c1">J'ai indiqué le nombre exact de mots à la fin.</label></li>
+        <li><input type="checkbox" id="c2" data-save="c2"><label for="c2">J'ai respecté la longueur demandée.</label></li>
+        <li><input type="checkbox" id="c3" data-save="c3"><label for="c3">J'ai rédigé une introduction type recevable.</label></li>
+        <li><input type="checkbox" id="c4" data-save="c4"><label for="c4">J'ai sélectionné les idées essentielles, sans tout raconter.</label></li>
+        <li><input type="checkbox" id="c5" data-save="c5"><label for="c5">J'ai supprimé les exemples inutiles ou redondants.</label></li>
+        <li><input type="checkbox" id="c6" data-save="c6"><label for="c6">J'ai utilisé des connecteurs logiques sans en abuser.</label></li>
+        <li><input type="checkbox" id="c7" data-save="c7"><label for="c7">J'ai aéré mon compte rendu&nbsp;: alinéas, paragraphes, sauts de ligne.</label></li>
+        <li><input type="checkbox" id="c8" data-save="c8"><label for="c8">J'ai adopté un registre de langue adapté&nbsp;: clair, neutre et professionnel.</label></li>
+        <li><input type="checkbox" id="c9" data-save="c9"><label for="c9">Je me suis relu(e) en fonction de mes faiblesses en français.</label></li>
+        <li><input type="checkbox" id="c10" data-save="c10"><label for="c10">Je n'ai pas donné mon avis personnel.</label></li>
+      </ul>
+      <p class="check-foot"><b id="checkcount">0</b>&nbsp;/&nbsp;10 vérifications effectuées.</p>
+    </div>
+  </section>
+
+  <!-- ── ACTIONS ── -->
+  <div class="actions">
+    <button class="btn primary" onclick="window.print()">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2M6 14h12v8H6z"/></svg>
+      Imprimer ma fiche
+    </button>
+    <a class="btn" href="index.html">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg>
+      Revenir à l'accueil
+    </a>
+  </div>
+
+</div>
+
+<!-- ═══════════ FOOTER ═══════════ -->
+<footer>
+  <div class="foot-inner">
+    <div class="foot-brand">
+      <img src="assets/lsa-logo.png" alt="Logo LSA">
+      <div>
+        <strong>LSA Toolbox</strong>
+        <span>Outils pédagogiques · M. Blanchet</span>
+      </div>
+    </div>
+    <nav class="foot-links">
+      <a href="https://www.lycee-sidoine-apollinaire.fr" target="_blank" rel="noopener">Lycée Sidoine Apollinaire</a>
+      <a href="https://www.lycee-sidoine-apollinaire.fr/contact/" target="_blank" rel="noopener">Contact</a>
+      <a href="index.html">Accueil</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+(function(){
+  const STORE = 'lsa-cr-4days-v1';
+
+  // ── load saved state ──
+  let state = {};
+  try{ state = JSON.parse(localStorage.getItem(STORE) || '{}'); }catch(e){ state = {}; }
+
+  const fields = Array.from(document.querySelectorAll('[data-save]'));
+  fields.forEach(el=>{
+    const k = el.dataset.save;
+    if(state[k] !== undefined){
+      if(el.type === 'checkbox') el.checked = !!state[k];
+      else el.value = state[k];
+    }
+  });
+
+  let saveTimer = null;
+  function persist(){
+    const o = {};
+    fields.forEach(el=>{ o[el.dataset.save] = (el.type==='checkbox') ? el.checked : el.value; });
+    localStorage.setItem(STORE, JSON.stringify(o));
+  }
+  function scheduleSave(){ clearTimeout(saveTimer); saveTimer = setTimeout(persist, 250); }
+
+  fields.forEach(el=>{
+    el.addEventListener('input', ()=>{ scheduleSave(); updateAll(); });
+    el.addEventListener('change', ()=>{ scheduleSave(); updateAll(); });
+  });
+
+  // ── word counter helper ──
+  function countWords(str){
+    const t = (str||'').trim();
+    if(!t) return 0;
+    return t.split(/\s+/).filter(Boolean).length;
+  }
+
+  // ── source text word count ──
+  const artText = document.getElementById('article').innerText.replace(/\u201c|\u201d|\u2014|\u2026/g,' ');
+  document.getElementById('srcWords').textContent = '≈ ' + Math.round(countWords(artText)/10)*10;
+
+  // ── step 3 counter ──
+  const cnt3 = document.querySelector('#cnt3 b');
+  // ── step 5 counter ──
+  const cnt5 = document.querySelector('#cnt5 b');
+  const cnt5msg = document.getElementById('cnt5msg');
+  const cnt5box = document.getElementById('cnt5');
+  // ── checklist ──
+  const checkcount = document.getElementById('checkcount');
+
+  function updateAll(){
+    // step 3 : sum of all e3 fields
+    let w3 = 0;
+    ['e3intro','e3p1','e3p2','e3p3','e3p4','e3p5','e3p6'].forEach(k=>{
+      const el = document.querySelector('[data-save="'+k+'"]'); if(el) w3 += countWords(el.value);
+    });
+    cnt3.textContent = w3;
+
+    // step 5 : intro + body
+    const w5 = countWords((document.querySelector('[data-save="e5intro"]')||{}).value) + countWords((document.querySelector('[data-save="e5body"]')||{}).value);
+    cnt5.textContent = w5;
+    cnt5box.classList.remove('ok','over');
+    cnt5msg.textContent = '';
+    if(w5 === 0){ /* nothing */ }
+    else if(w5 < 180){ cnt5msg.textContent = '· encore ' + (180 - w5) + ' mot' + ((180-w5)>1?'s':'') + ' (cible 180–220)'; }
+    else if(w5 <= 220){ cnt5box.classList.add('ok'); cnt5msg.textContent = '· bonne longueur ✓'; }
+    else { cnt5box.classList.add('over'); cnt5msg.textContent = '· ' + (w5 - 220) + ' mot' + ((w5-220)>1?'s':'') + ' de trop'; }
+
+    // checklist
+    const checks = Array.from(document.querySelectorAll('#checklist input'));
+    const n = checks.filter(c=>c.checked).length;
+    checkcount.textContent = n;
+
+    // step nav done state
+    markNavDone();
+  }
+
+  function stepFilled(ids){ return ids.some(k=>{ const el=document.querySelector('[data-save="'+k+'"]'); return el && countWords(el.value)>0; }); }
+  function markNavDone(){
+    const map = {
+      etape1:['e1a','e1b','e1c'],
+      etape2:['e2a','e2b','e2c'],
+      etape3:['e3intro','e3p1','e3p2','e3p3','e3p4','e3p5','e3p6'],
+      etape4:['e4i1','e4i2','e4i3','e4i4'],
+      etape5:['e5intro','e5body']
+    };
+    document.querySelectorAll('.stepnav a').forEach(a=>{
+      const id = a.getAttribute('href').slice(1);
+      if(id==='etape6'){
+        const n = Array.from(document.querySelectorAll('#checklist input')).filter(c=>c.checked).length;
+        a.classList.toggle('done', n===10);
+      } else if(map[id]){
+        a.classList.toggle('done', stepFilled(map[id]));
+      }
+    });
+  }
+
+  // ── code de repérage toggles ──
+  const article = document.getElementById('article');
+  document.querySelectorAll('.hl-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const k = btn.dataset.k;
+      const on = btn.getAttribute('aria-pressed') !== 'true';
+      btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+      article.classList.toggle('show-'+k, on);
+    });
+  });
+
+  // ── reset ──
+  document.getElementById('resetBtn').addEventListener('click', ()=>{
+    if(!confirm('Effacer toutes vos réponses sur cette fiche ? Cette action est définitive.')) return;
+    localStorage.removeItem(STORE);
+    fields.forEach(el=>{ if(el.type==='checkbox') el.checked=false; else el.value=''; });
+    updateAll();
+  });
+
+  updateAll();
+})();
+</script>
+</body>
+</html>
