@@ -78,12 +78,12 @@ a{color:inherit;}
 .source-head .t{font-weight:700;letter-spacing:.04em;font-size:14px;display:flex;align-items:center;gap:10px;}
 .source-head .t svg{color:var(--accent);}
 .source-head .src{font-size:11.5px;color:rgba(255,255,255,.6);font-style:italic;}
-.legend{display:flex;flex-wrap:wrap;gap:8px;padding:14px 22px 6px;border-bottom:1px dashed var(--border);}
+.legend{display:flex;flex-wrap:wrap;gap:8px;padding:12px 16px 14px;border:1px solid var(--border);border-radius:10px;background:#fcfbf8;margin-top:18px;}
 .legend .lgl{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);width:100%;margin-bottom:2px;}
 .hl-btn{cursor:pointer;font-family:inherit;font-size:12.5px;font-weight:600;border:1px solid var(--border);background:#fcfbf8;color:var(--navy);border-radius:18px;padding:5px 13px;display:inline-flex;align-items:center;gap:7px;transition:all .15s;}
 .hl-btn .sw{width:12px;height:12px;border-radius:3px;}
 .hl-btn[aria-pressed="true"]{border-color:currentColor;}
-.hl-btn[data-k="be"]{--cc:var(--accent-deep);}.hl-btn[data-k="num"]{--cc:var(--blue-deep);}
+.hl-btn[data-k="be"]{--cc:#c8a800;}.hl-btn[data-k="num"]{--cc:#c8507a;}
 .hl-btn[data-k="prop"]{--cc:var(--green);}.hl-btn[data-k="conn"]{--cc:var(--purple);}
 .hl-btn[aria-pressed="true"]{color:var(--cc);background:color-mix(in srgb,var(--cc) 9%,#fff);}
 .hl-btn .sw{background:var(--cc);}
@@ -93,8 +93,8 @@ a{color:inherit;}
 .article p{margin:12px 0;text-wrap:pretty;}
 /* highlight marks — invisible until toggled */
 .article mark{background:transparent;color:inherit;padding:0 1px;border-radius:3px;transition:background .15s;}
-.article.show-be .be{background:color-mix(in srgb,var(--accent) 32%,#fff);box-shadow:0 0 0 1px var(--accent-deep) inset;}
-.article.show-num .num{background:color-mix(in srgb,var(--blue) 24%,#fff);box-shadow:0 0 0 1px var(--blue-deep) inset;}
+.article.show-be .be{background:color-mix(in srgb,#c8a800 28%,#fff);box-shadow:0 0 0 1px #b89600 inset;}
+.article.show-num .num{background:color-mix(in srgb,#c8507a 22%,#fff);box-shadow:0 0 0 1px #c8507a inset;}
 .article.show-prop .prop{background:color-mix(in srgb,var(--green) 24%,#fff);box-shadow:0 0 0 1px var(--green) inset;}
 .article.show-conn .conn{background:color-mix(in srgb,var(--purple) 22%,#fff);box-shadow:0 0 0 1px var(--purple) inset;font-weight:600;}
 
@@ -143,7 +143,8 @@ textarea.lg{min-height:300px;}
 /* ── PARA NOTES (step 3) ── */
 .para{border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin:12px 0;background:#fcfbf8;}
 .para .pl{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);margin-bottom:8px;display:flex;align-items:center;gap:8px;}
-.para .pl .ex{font-weight:400;letter-spacing:0;text-transform:none;color:var(--muted);font-size:12.5px;font-style:italic;}
+.para-wc{display:inline-flex;align-items:center;gap:5px;font-size:12px;color:var(--muted);margin-top:5px;}
+.para-wc b{font-variant-numeric:tabular-nums;color:var(--navy);}
 
 /* ── TABLE (step 4) ── */
 .cuts{width:100%;border-collapse:collapse;margin-top:10px;font-size:14.5px;}
@@ -268,7 +269,7 @@ footer{background:var(--navy-deep);color:rgba(255,255,255,.62);margin-top:42px;b
     <a href="#etape3"><span class="n">3</span> Brouillon</a>
     <a href="#etape4"><span class="n">4</span> Alléger</a>
     <a href="#etape5"><span class="n">5</span> Rédiger</a>
-    <a href="#etape6"><span class="n">6</span> Relecture</a>
+
   </div>
 </nav>
 
@@ -309,13 +310,6 @@ footer{background:var(--navy-deep);color:rgba(255,255,255,.62);margin-top:42px;b
         Le texte à comprendre
       </span>
       <span class="src">The Sunday Times — adapté (article de presse)</span>
-    </div>
-    <div class="legend" id="legend">
-      <span class="lgl">Code de repérage — cliquez pour surligner dans le texte</span>
-      <button class="hl-btn" data-k="be" aria-pressed="false"><span class="sw"></span>Business English</button>
-      <button class="hl-btn" data-k="num" aria-pressed="false"><span class="sw"></span>Chiffres &amp; dates</button>
-      <button class="hl-btn" data-k="prop" aria-pressed="false"><span class="sw"></span>Noms propres</button>
-      <button class="hl-btn" data-k="conn" aria-pressed="false"><span class="sw"></span>Connecteurs logiques</button>
     </div>
     <article class="article" id="article">
       <p class="title">“Less stress, more energy”: what four-day weeks are really like</p>
@@ -372,7 +366,7 @@ footer{background:var(--navy-deep);color:rgba(255,255,255,.62);margin-top:42px;b
       </details>
       <div class="field">
         <label>a) Quels mots importants du titre comprenez-vous&nbsp;? <span class="hint">(mots transparents ou déjà connus)</span></label>
-        <textarea class="sm" data-save="e1a" placeholder="Ex. : less, stress, more energy, four-day weeks…"></textarea>
+        <textarea class="sm" data-save="e1a" placeholder=""></textarea>
       </div>
       <div class="field">
         <label>b) Quel est le thème probable de l'article&nbsp;?</label>
@@ -441,6 +435,13 @@ footer{background:var(--navy-deep);color:rgba(255,255,255,.62);margin-top:42px;b
           </ul>
         </div>
       </details>
+      <div class="legend" id="legend">
+        <span class="lgl">Code de repérage — cliquez pour surligner dans le texte ci-dessus</span>
+        <button class="hl-btn" data-k="be" aria-pressed="false"><span class="sw"></span>Business English</button>
+        <button class="hl-btn" data-k="num" aria-pressed="false"><span class="sw"></span>Chiffres &amp; dates</button>
+        <button class="hl-btn" data-k="prop" aria-pressed="false"><span class="sw"></span>Noms propres</button>
+        <button class="hl-btn" data-k="conn" aria-pressed="false"><span class="sw"></span>Connecteurs logiques</button>
+      </div>
     </div>
   </section>
 
@@ -463,32 +464,84 @@ footer{background:var(--navy-deep);color:rgba(255,255,255,.62);margin-top:42px;b
       </details>
       <div class="field">
         <label>Introduction (phrase d'amorce)</label>
-        <textarea class="sm" data-save="e3intro" placeholder="Cet article du Sunday Times traite de…"></textarea>
+        <textarea class="sm" data-save="e3intro" placeholder=""></textarea>
+        <div class="para-wc"><b data-wc="e3intro">0</b> mot(s)</div>
       </div>
 
       <div class="para">
-        <div class="pl">Idée 1 <span class="ex">· le témoignage de départ (Atom Bank)</span></div>
+        <div class="pl">Idée 1</div>
         <textarea class="sm" data-save="e3p1" placeholder="Reformulez en français l'idée principale…"></textarea>
+        <div class="para-wc"><b data-wc="e3p1">0</b> mot(s)</div>
       </div>
       <div class="para">
-        <div class="pl">Idée 2 <span class="ex">· le projet de loi / la flexibilité voulue</span></div>
+        <div class="pl">Idée 2</div>
         <textarea class="sm" data-save="e3p2" placeholder="…"></textarea>
+        <div class="para-wc"><b data-wc="e3p2">0</b> mot(s)</div>
       </div>
       <div class="para">
-        <div class="pl">Idée 3 <span class="ex">· les autres pays + l'essai sur 61 entreprises</span></div>
+        <div class="pl">Idée 3</div>
         <textarea class="sm" data-save="e3p3" placeholder="…"></textarea>
+        <div class="para-wc"><b data-wc="e3p3">0</b> mot(s)</div>
       </div>
       <div class="para">
-        <div class="pl">Idée 4 <span class="ex">· productivité, heures, salaires chez Atom</span></div>
+        <div class="pl">Idée 4</div>
         <textarea class="sm" data-save="e3p4" placeholder="…"></textarea>
+        <div class="para-wc"><b data-wc="e3p4">0</b> mot(s)</div>
       </div>
       <div class="para">
-        <div class="pl">Idée 5 <span class="ex">· les limites et avis nuancés (experts, fatigue)</span></div>
+        <div class="pl">Idée 5</div>
         <textarea class="sm" data-save="e3p5" placeholder="…"></textarea>
+        <div class="para-wc"><b data-wc="e3p5">0</b> mot(s)</div>
       </div>
       <div class="para">
-        <div class="pl">Idée 6 <span class="ex">· conclusion du texte (retour difficile, 92 %)</span></div>
+        <div class="pl">Idée 6</div>
         <textarea class="sm" data-save="e3p6" placeholder="…"></textarea>
+        <div class="para-wc"><b data-wc="e3p6">0</b> mot(s)</div>
+      </div>
+      <div class="para">
+        <div class="pl">Idée 7</div>
+        <textarea class="sm" data-save="e3p7" placeholder="…"></textarea>
+        <div class="para-wc"><b data-wc="e3p7">0</b> mot(s)</div>
+      </div>
+      <div class="para">
+        <div class="pl">Idée 8</div>
+        <textarea class="sm" data-save="e3p8" placeholder="…"></textarea>
+        <div class="para-wc"><b data-wc="e3p8">0</b> mot(s)</div>
+      </div>
+      <div class="para">
+        <div class="pl">Idée 9</div>
+        <textarea class="sm" data-save="e3p9" placeholder="…"></textarea>
+        <div class="para-wc"><b data-wc="e3p9">0</b> mot(s)</div>
+      </div>
+      <div class="para">
+        <div class="pl">Idée 10</div>
+        <textarea class="sm" data-save="e3p10" placeholder="…"></textarea>
+        <div class="para-wc"><b data-wc="e3p10">0</b> mot(s)</div>
+      </div>
+      <div class="para">
+        <div class="pl">Idée 11</div>
+        <textarea class="sm" data-save="e3p11" placeholder="…"></textarea>
+        <div class="para-wc"><b data-wc="e3p11">0</b> mot(s)</div>
+      </div>
+      <div class="para">
+        <div class="pl">Idée 12</div>
+        <textarea class="sm" data-save="e3p12" placeholder="…"></textarea>
+        <div class="para-wc"><b data-wc="e3p12">0</b> mot(s)</div>
+      </div>
+      <div class="para">
+        <div class="pl">Idée 13</div>
+        <textarea class="sm" data-save="e3p13" placeholder="…"></textarea>
+        <div class="para-wc"><b data-wc="e3p13">0</b> mot(s)</div>
+      </div>
+      <div class="para">
+        <div class="pl">Idée 14</div>
+        <textarea class="sm" data-save="e3p14" placeholder="…"></textarea>
+        <div class="para-wc"><b data-wc="e3p14">0</b> mot(s)</div>
+      </div>
+      <div class="para">
+        <div class="pl">Idée 15</div>
+        <textarea class="sm" data-save="e3p15" placeholder="…"></textarea>
+        <div class="para-wc"><b data-wc="e3p15">0</b> mot(s)</div>
       </div>
 
       <div class="counter" id="cnt3"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7V4h16v3M9 20h6M12 4v16"/></svg> Brouillon provisoire&nbsp;: <b>0</b> mots</div>
@@ -566,36 +619,14 @@ footer{background:var(--navy-deep);color:rgba(255,255,255,.62);margin-top:42px;b
       </details>
       <div class="field">
         <label>Introduction</label>
-        <textarea class="md" data-save="e5intro" placeholder="Cet article de presse, paru dans le Sunday Times, traite de…"></textarea>
+        <textarea class="md" data-save="e5intro" placeholder=""></textarea>
       </div>
       <div class="field">
         <label>Développement du compte rendu</label>
         <textarea class="lg" data-save="e5body" placeholder="Rédigez ici votre compte rendu, en paragraphes aérés…"></textarea>
       </div>
       <div class="counter" id="cnt5"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7V4h16v3M9 20h6M12 4v16"/></svg> Compte rendu&nbsp;: <b>0</b> mots <span id="cnt5msg" style="margin-left:4px;"></span></div>
-      <details class="corr">
-        <summary><svg class="ic" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg> Voir un exemple de compte rendu rédigé</summary>
-        <div class="ci">
-          <p>Cet article de presse, paru dans le <i>Sunday Times</i>, porte sur la semaine de quatre jours au Royaume-Uni et sur ses effets réels. Mark Mullen, directeur général d'Atom Bank, en témoigne&nbsp;: depuis trois ans, ses 550 salariés travaillent quatre jours par semaine, sans que l'entreprise, restée rentable et en croissance, en pâtisse.</p>
-          <p>Le gouvernement britannique prépare une réforme qui obligerait les employeurs à accorder cette organisation, dite «&nbsp;heures compressées&nbsp;», aux salariés qui la demandent, afin de leur offrir davantage de souplesse. Le Royaume-Uni n'est pas isolé&nbsp;: la Belgique a légiféré dès 2022 et plusieurs pays européens mènent des essais. Une étude portant sur 61 entreprises conclut à des salariés moins stressés, moins épuisés et moins souvent absents.</p>
-          <p>Chez Atom, la productivité a même progressé malgré la réduction des heures (de 37 à 34 par semaine, à salaire inchangé). Le sujet ne fait toutefois pas l'unanimité&nbsp;: des journées plus longues risquent d'engendrer fatigue et baisse de concentration, et certains préfèrent conserver la semaine de cinq jours&nbsp;; Mullen précise d'ailleurs que ce modèle ne convient pas à toutes les activités. Enfin, une fois ce rythme adopté, le retour en arrière devient difficile, ce qui freine les changements d'employeur&nbsp;; 92&nbsp;% des participants à l'essai ont choisi de le pérenniser. <i>(≈ 205 mots)</i></p>
-          <p class="corr-note">Ce n'est qu'un exemple parmi d'autres&nbsp;: votre formulation peut différer tant que les idées essentielles y sont, dans un français neutre et clair.</p>
-        </div>
-      </details>
-    </div>
-  </section>
-
-  <!-- ══════ ÉTAPE 6 ══════ -->
-  <section class="step" id="etape6">
-    <div class="step-head">
-      <div class="step-num">6</div>
-      <div class="ht">
-        <h2>Relire — les 10 vérifications</h2>
-        <p class="obj">Cochez chaque point une fois vérifié dans votre compte rendu.</p>
-      </div>
-    </div>
-    <div class="step-body">
-      <ul class="check" id="checklist">
+      <ul class="check" id="checklist" style="margin-top:20px;">
         <li><input type="checkbox" id="c1" data-save="c1"><label for="c1">J'ai indiqué le nombre exact de mots à la fin.</label></li>
         <li><input type="checkbox" id="c2" data-save="c2"><label for="c2">J'ai respecté la longueur demandée.</label></li>
         <li><input type="checkbox" id="c3" data-save="c3"><label for="c3">J'ai rédigé une introduction type recevable.</label></li>
@@ -608,6 +639,15 @@ footer{background:var(--navy-deep);color:rgba(255,255,255,.62);margin-top:42px;b
         <li><input type="checkbox" id="c10" data-save="c10"><label for="c10">Je n'ai pas donné mon avis personnel.</label></li>
       </ul>
       <p class="check-foot"><b id="checkcount">0</b>&nbsp;/&nbsp;10 vérifications effectuées.</p>
+      <details class="corr">
+        <summary><svg class="ic" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg> Voir un exemple de compte rendu rédigé</summary>
+        <div class="ci">
+          <p>Cet article de presse, paru dans le <i>Sunday Times</i>, porte sur la semaine de quatre jours au Royaume-Uni et sur ses effets réels. Mark Mullen, directeur général d'Atom Bank, en témoigne&nbsp;: depuis trois ans, ses 550 salariés travaillent quatre jours par semaine, sans que l'entreprise, restée rentable et en croissance, en pâtisse.</p>
+          <p>Le gouvernement britannique prépare une réforme qui obligerait les employeurs à accorder cette organisation, dite «&nbsp;heures compressées&nbsp;», aux salariés qui la demandent, afin de leur offrir davantage de souplesse. Le Royaume-Uni n'est pas isolé&nbsp;: la Belgique a légiféré dès 2022 et plusieurs pays européens mènent des essais. Une étude portant sur 61 entreprises conclut à des salariés moins stressés, moins épuisés et moins souvent absents.</p>
+          <p>Chez Atom, la productivité a même progressé malgré la réduction des heures (de 37 à 34 par semaine, à salaire inchangé). Le sujet ne fait toutefois pas l'unanimité&nbsp;: des journées plus longues risquent d'engendrer fatigue et baisse de concentration, et certains préfèrent conserver la semaine de cinq jours&nbsp;; Mullen précise d'ailleurs que ce modèle ne convient pas à toutes les activités. Enfin, une fois ce rythme adopté, le retour en arrière devient difficile, ce qui freine les changements d'employeur&nbsp;; 92&nbsp;% des participants à l'essai ont choisi de le pérenniser. <i>(≈ 205 mots)</i></p>
+          <p class="corr-note">Ce n'est qu'un exemple parmi d'autres&nbsp;: votre formulation peut différer tant que les idées essentielles y sont, dans un français neutre et clair.</p>
+        </div>
+      </details>
     </div>
   </section>
 
@@ -694,10 +734,13 @@ footer{background:var(--navy-deep);color:rgba(255,255,255,.62);margin-top:42px;b
   const checkcount = document.getElementById('checkcount');
 
   function updateAll(){
-    // step 3 : sum of all e3 fields
+    // step 3 : sum of all e3 fields + per-idea word counts
+    const e3keys = ['e3intro','e3p1','e3p2','e3p3','e3p4','e3p5','e3p6','e3p7','e3p8','e3p9','e3p10','e3p11','e3p12','e3p13','e3p14','e3p15'];
     let w3 = 0;
-    ['e3intro','e3p1','e3p2','e3p3','e3p4','e3p5','e3p6'].forEach(k=>{
-      const el = document.querySelector('[data-save="'+k+'"]'); if(el) w3 += countWords(el.value);
+    e3keys.forEach(k=>{
+      const el = document.querySelector('[data-save="'+k+'"]');
+      const wc = document.querySelector('[data-wc="'+k+'"]');
+      if(el){ const n=countWords(el.value); w3+=n; if(wc) wc.textContent=n; }
     });
     cnt3.textContent = w3;
 
@@ -725,7 +768,7 @@ footer{background:var(--navy-deep);color:rgba(255,255,255,.62);margin-top:42px;b
     const map = {
       etape1:['e1a','e1b','e1c'],
       etape2:['e2a','e2b','e2c'],
-      etape3:['e3intro','e3p1','e3p2','e3p3','e3p4','e3p5','e3p6'],
+      etape3:['e3intro','e3p1','e3p2','e3p3','e3p4','e3p5','e3p6','e3p7','e3p8','e3p9','e3p10','e3p11','e3p12','e3p13','e3p14','e3p15'],
       etape4:['e4i1','e4i2','e4i3','e4i4'],
       etape5:['e5intro','e5body']
     };
