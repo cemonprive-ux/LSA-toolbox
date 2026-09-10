@@ -30,12 +30,12 @@ let sayTimer=null,noticeShown=false;
 function notice(){if(noticeShown)return;noticeShown=true;
 const d=document.createElement('div');
 d.setAttribute('role','status');
-d.style.cssText='position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:9999;max-width:min(680px,92vw);background:#1a2744;color:#fff;border:2px solid #c8a84b;border-radius:14px;padding:14px 20px;font:16px/1.4 Georgia,serif;box-shadow:0 6px 24px rgba(0,0,0,.3);display:flex;gap:14px;align-items:center';
+d.style.cssText='position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:9999;max-width:min(680px,92vw);background:#1a2744;color:#fff;border:2px solid #f5b60f;border-radius:14px;padding:14px 20px;font:16px/1.4 Georgia,serif;box-shadow:0 6px 24px rgba(0,0,0,.3);display:flex;gap:14px;align-items:center';
 const t=document.createElement('span');
 t.textContent="La lecture des mots est bloquée dans cet aperçu. Ouvrez la page dans un navigateur (Chrome, Edge, Safari) pour entendre les mots ; les sons voyelles, eux, fonctionnent partout.";
 const b=document.createElement('button');
 b.textContent='Fermer';
-b.style.cssText='flex:0 0 auto;background:#c8a84b;color:#0f1a33;border:0;border-radius:8px;padding:8px 14px;font:600 15px Georgia,serif;cursor:pointer';
+b.style.cssText='flex:0 0 auto;background:#f5b60f;color:#0f1a33;border:0;border-radius:8px;padding:8px 14px;font:600 15px Georgia,serif;cursor:pointer';
 b.onclick=function(){d.remove()};
 d.appendChild(t);d.appendChild(b);document.body.appendChild(d);
 setTimeout(function(){d.remove()},12000)}

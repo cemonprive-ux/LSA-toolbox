@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>M2 : Phonologie Code Couleur — diaporama</title>
+<link rel="icon" href="assets/lsa-logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#1a2744;--navy-deep:#0f1a33;--blue:#2d5fa6;--gold:#f5b60f;--cream:#f5f3ef;--ink:#16233a;--muted:#5a687e;--border:#e3ded4;--short:#d6003f;--long:#12793e;--diph:#5b2d8e;
+--type-title:68px;--type-subtitle:44px;--type-body:34px;--type-small:28px;--type-mega:150px;--pad-top:96px;--pad-bottom:80px;--pad-x:104px;--gap-title:48px;--gap-item:26px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0b1122;font-family:'Quicksand',Georgia,serif;color:var(--ink)}
+deck-stage{color:var(--ink);font-family:'Quicksand',Georgia,serif}
+section{color:var(--ink)}
+deck-stage:not(:defined){visibility:hidden}
+a{color:var(--blue)}a:hover{color:var(--gold)}
+section{background:var(--cream);display:flex;flex-direction:column;padding:var(--pad-top) var(--pad-x) var(--pad-bottom);overflow:hidden}
+.kicker{font-size:var(--type-small);letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-weight:700}
+h1{font-family:'Quicksand',serif;font-size:96px;font-weight:600;line-height:1.02;letter-spacing:-.01em}
+h2{font-family:'Quicksand',serif;font-size:var(--type-title);font-weight:600;line-height:1.08;color:var(--navy)}
+.lead{font-size:var(--type-subtitle);line-height:1.28;color:var(--muted);max-width:1360px}
+.body{font-size:var(--type-body);line-height:1.4}
+.rule{height:4px;background:var(--gold);width:150px;margin:34px 0}
+.head{margin-bottom:var(--gap-title)}
+.dark{background:linear-gradient(140deg,var(--navy-deep) 0%,var(--navy) 55%,var(--blue) 100%);color:#fff}
+.dark h1,.dark h2,.dark .body{color:#fff}.dark .lead{color:#cdd6e6}
+.mark{position:absolute;right:var(--pad-x);bottom:52px;font-size:24px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.dark .mark{color:#8fa2c4}
+/* slide 2 : trois mots, trois sons */
+.trio{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;margin-top:14px}
+.wcard{background:#fff;border:2px solid var(--border);border-radius:20px;padding:44px 38px;display:flex;flex-direction:column;gap:18px;align-items:flex-start}
+.wword{font-family:'Quicksand',serif;font-size:76px;line-height:1}
+.wipa{font-size:var(--type-subtitle);color:var(--muted)}
+.wtag{font-size:var(--type-small);font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:10px 18px;border-radius:999px;color:#fff}
+/* slide 3 : principe */
+.principle{display:grid;grid-template-columns:1.05fr .95fr;gap:70px;align-items:center;flex:1}
+.pnote{background:#fff;border-radius:22px;border:2px solid var(--border);padding:48px;display:flex;flex-direction:column;gap:24px}
+.pline{font-size:var(--type-body);line-height:1.35}
+.pbig{font-family:'Quicksand',serif;font-size:58px;line-height:1.12;color:var(--navy)}
+/* familles */
+.fams{display:flex;flex-direction:column;gap:34px;flex:1;justify-content:center}
+.fam{display:grid;grid-template-columns:130px 1fr;align-items:center;gap:44px;background:#fff;border:2px solid var(--border);border-radius:20px;overflow:hidden}
+.famnum{align-self:stretch;display:flex;align-items:center;justify-content:center;color:#fff;font-family:'Quicksand',serif;font-size:66px}
+.famtxt{padding:34px 40px 34px 0;display:flex;flex-direction:column;gap:12px}
+.famname{font-family:'Quicksand',serif;font-size:46px}
+.famex{font-size:var(--type-small);color:var(--muted);letter-spacing:.02em}
+/* grille 18 */
+.gridslide{padding:60px 64px 56px}
+.gwrap{display:flex;flex-direction:column;gap:20px;flex:1}
+.band{display:flex;align-items:center;gap:20px;color:#fff;border-radius:12px;padding:12px 26px;font-size:var(--type-small);font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+.cards{display:grid;grid-template-columns:repeat(7,1fr);gap:14px}
+.card{background:#fff;border:2px solid var(--border);border-radius:14px;padding:14px 12px 16px;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center}
+.cipa{font-size:32px;color:var(--muted)}
+.ccol{font-family:'Quicksand',serif;font-size:34px;line-height:1}
+.cex{font-size:24px;color:var(--muted);line-height:1.25}
+/* étapes */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;flex:1;align-items:stretch}
+.step{background:#fff;border:2px solid var(--border);border-radius:22px;padding:46px 40px;display:flex;flex-direction:column;gap:22px}
+.snum{width:82px;height:82px;border-radius:50%;background:var(--navy);color:#fff;font-family:'Quicksand',serif;font-size:44px;display:flex;align-items:center;justify-content:center}
+.stitle{font-family:'Quicksand',serif;font-size:42px;line-height:1.14}
+.stxt{font-size:var(--type-small);color:var(--muted);line-height:1.4}
+/* outil */
+.tool{display:grid;grid-template-columns:1fr 1fr;gap:56px;flex:1;align-items:center}
+.tlist{display:flex;flex-direction:column;gap:30px}
+.titem{display:grid;grid-template-columns:56px 1fr;gap:24px;align-items:start}
+.tdot{width:56px;height:56px;border-radius:50%;background:var(--gold);color:var(--navy-deep);font-weight:700;font-size:26px;display:flex;align-items:center;justify-content:center}
+.tstrong{font-size:var(--type-body);line-height:1.3;font-weight:600}
+.tsub{font-size:var(--type-small);color:#cdd6e6;line-height:1.35;margin-top:8px}
+.demo{background:#fff;border-radius:22px;padding:38px;display:flex;flex-direction:column;gap:22px;color:var(--ink)}
+.demotop{display:flex;align-items:center;gap:18px}
+.demochip{border-radius:14px;padding:14px 20px;font-family:'Quicksand',serif;font-size:38px;color:#fff;background:#2c7fb4}
+.demoipa{font-size:34px;color:var(--muted)}
+.demorow{display:flex;align-items:baseline;gap:16px;font-size:32px}
+.demolab{font-size:24px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+/* activités */
+.acts{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;flex:1;align-content:center}
+.act{background:#fff;border:2px solid var(--border);border-radius:18px;padding:34px 32px;display:flex;flex-direction:column;gap:14px}
+.actname{font-family:'Quicksand',serif;font-size:40px;line-height:1.1}
+.acttxt{font-size:26px;color:var(--muted);line-height:1.38}
+.actwide{grid-column:span 3;background:var(--navy);border-color:var(--navy);color:#fff;flex-direction:row;align-items:center;gap:34px}
+.actwide .acttxt{color:#cdd6e6}
+/* final */
+.final{display:grid;grid-template-columns:1.1fr .9fr;gap:70px;align-items:center;flex:1}
+.url{font-family:'Quicksand',serif;font-size:46px;color:#fff;line-height:1.25;word-break:break-word}
+.path{display:flex;flex-direction:column;gap:16px;font-size:var(--type-body)}
+.pstep{display:flex;align-items:center;gap:18px;color:#cdd6e6}
+.pk{color:var(--gold);font-weight:700}
+@media (prefers-reduced-motion:no-preference){[data-deck-active] .head,[data-deck-active] .gwrap,[data-deck-active] .steps,[data-deck-active] .trio,[data-deck-active] .fams,[data-deck-active] .acts,[data-deck-active] .tool,[data-deck-active] .final,[data-deck-active] .principle{animation:rise .45s ease both}}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<deck-stage width="1920" height="1080">
+
+<section class="dark" data-label="Titre">
+  <div class="head">
+    <div class="kicker">Anglais · Prononciation</div>
+    <h1>M2 : Phonologie Code Couleur</h1>
+    <div class="rule"></div>
+    <p class="lead">Une couleur pour chaque son voyelle accentué de l'anglais. Dix-huit couleurs, et le vocabulaire de l'entreprise pour s'entraîner.</p>
+  </div>
+  <div class="mark">Lycée Sidoine Apollinaire</div>
+</section>
+
+<section data-label="Une lettre, plusieurs sons">
+  <div class="head">
+    <h2>Une même lettre, plusieurs sons</h2>
+    <p class="lead">Trois mots écrits avec un « a ». Trois prononciations différentes.</p>
+  </div>
+  <div class="trio">
+    <div class="wcard">
+      <div class="wword">manager</div>
+      <div class="wipa">/ˈmænɪdʒə/</div>
+      <div class="wtag" style="background:#16233a">Black · /æ/</div>
+    </div>
+    <div class="wcard">
+      <div class="wword">market</div>
+      <div class="wipa">/ˈmɑːkɪt/</div>
+      <div class="wtag" style="background:#2f6f66">Dark · /ɑː/</div>
+    </div>
+    <div class="wcard">
+      <div class="wword">sales</div>
+      <div class="wipa">/seɪlz/</div>
+      <div class="wtag" style="background:#6e757c">Grey · /eɪ/</div>
+    </div>
+  </div>
+  <div class="mark">M2 · Code couleur</div>
+</section>
+
+<section data-label="Le principe">
+  <div class="head">
+    <h2>Le principe : une couleur = un son</h2>
+  </div>
+  <div class="principle">
+    <div>
+      <p class="pbig">La couleur correspond au son de la voyelle accentuée, pas à l'orthographe.</p>
+      <p class="body" style="margin-top:34px;color:var(--muted)">Deux mots écrits différemment peuvent partager la même couleur, parce qu'ils partagent le même son.</p>
+    </div>
+    <div class="pnote">
+      <div class="pline"><strong>team</strong> · <strong>degree</strong> · <strong>fee</strong></div>
+      <div class="wtag" style="background:#12693c;align-self:flex-start">Green · /iː/</div>
+      <div class="pline" style="color:var(--muted)">Trois orthographes, un seul son : une seule couleur.</div>
+    </div>
+  </div>
+  <div class="mark">M2 · Code couleur</div>
+</section>
+
+<section data-label="Trois familles">
+  <div class="head">
+    <h2>Trois familles de sons</h2>
+  </div>
+  <div class="fams">
+    <div class="fam">
+      <div class="famnum" style="background:var(--short)">1</div>
+      <div class="famtxt">
+        <div class="famname">Voyelles courtes</div>
+        <div class="famex">six sons · business, sell, applicant, shop, good, customer</div>
+      </div>
+    </div>
+    <div class="fam">
+      <div class="famnum" style="background:var(--long)">2</div>
+      <div class="famtxt">
+        <div class="famname">Voyelles longues</div>
+        <div class="famex">cinq sons · team, market, call, recruit, work</div>
+      </div>
+    </div>
+    <div class="fam">
+      <div class="famnum" style="background:var(--diph)">3</div>
+      <div class="famtxt">
+        <div class="famname">Diphtongues</div>
+        <div class="famex">sept sons · sales, price, employer, share, diploma, discount, career</div>
+      </div>
+    </div>
+  </div>
+  <div class="mark">M2 · Code couleur</div>
+</section>
+
+<section class="gridslide" data-label="Les 18 couleurs">
+  <div class="head" style="margin-bottom:26px">
+    <h2 style="font-size:58px">Les 18 couleurs</h2>
+  </div>
+  <div class="gwrap">
+    <div class="band" style="background:var(--short)">1 · Voyelles courtes</div>
+    <div class="cards">
+      <div class="card" style="border-color:#e5004e">
+        <div class="cipa">/ɪ/</div>
+        <div class="ccol" style="color:#c4003f">PINK</div>
+        <div class="cex">business, skill</div>
+      </div>
+      <div class="card" style="border-color:#e23b2e">
+        <div class="cipa">/e/</div>
+        <div class="ccol" style="color:#c4271b">RED</div>
+        <div class="cex">sell, networking</div>
+      </div>
+      <div class="card" style="border-color:#16233a">
+        <div class="cipa">/æ/</div>
+        <div class="ccol" style="color:#16233a">BLACK</div>
+        <div class="cex">applicant, manager</div>
+      </div>
+      <div class="card" style="border-color:#ef8a17">
+        <div class="cipa">/ɒ/</div>
+        <div class="ccol" style="color:#c97400">ORANGE</div>
+        <div class="cex">shop, product</div>
+      </div>
+      <div class="card" style="border-color:#8b5a2b">
+        <div class="cipa">/ʊ/</div>
+        <div class="ccol" style="color:#7a4e24">WOOD</div>
+        <div class="cex">good, full-time</div>
+      </div>
+      <div class="card" style="border-color:#22a05a">
+        <div class="cipa">/ʌ/</div>
+        <div class="ccol" style="color:#1b7a44">FUN</div>
+        <div class="cex">customer, run</div>
+      </div>
+      <div class="card" style="border-style:dashed;background:#fbf8f2">
+        <div class="cipa">/ə/</div>
+        <div class="ccol" style="color:var(--muted);font-size:28px">schwa</div>
+        <div class="cex">jamais accentué : sans couleur</div>
+      </div>
+    </div>
+    <div class="band" style="background:var(--long)">2 · Voyelles longues</div>
+    <div class="cards">
+      <div class="card" style="border-color:#12693c">
+        <div class="cipa">/iː/</div>
+        <div class="ccol" style="color:#12693c">GREEN</div>
+        <div class="cex">team, degree</div>
+      </div>
+      <div class="card" style="border-color:#2f6f66">
+        <div class="cipa">/ɑː/</div>
+        <div class="ccol" style="color:#2f6f66">DARK</div>
+        <div class="cex">market, target</div>
+      </div>
+      <div class="card" style="border-color:#2e9b96">
+        <div class="cipa">/ɔː/</div>
+        <div class="ccol" style="color:#22807c">DRAW</div>
+        <div class="cex">call, order</div>
+      </div>
+      <div class="card" style="border-color:#1266c8">
+        <div class="cipa">/uː/</div>
+        <div class="ccol" style="color:#1259b0">BLUE</div>
+        <div class="cex">recruit, tool</div>
+      </div>
+      <div class="card" style="border-color:#7b52c4">
+        <div class="cipa">/ɜː/</div>
+        <div class="ccol" style="color:#6b45b0">PURPLE</div>
+        <div class="cex">work, firm</div>
+      </div>
+    </div>
+    <div class="band" style="background:var(--diph)">3 · Diphtongues</div>
+    <div class="cards">
+      <div class="card" style="border-color:#9aa0a6">
+        <div class="cipa">/eɪ/</div>
+        <div class="ccol" style="color:#6e757c">GREY</div>
+        <div class="cex">sales, application</div>
+      </div>
+      <div class="card" style="border-color:#16233a">
+        <div class="cipa">/aɪ/</div>
+        <div class="ccol" style="color:#16233a">WHITE</div>
+        <div class="cex">price, buy</div>
+      </div>
+      <div class="card" style="border-color:#1b6e6a">
+        <div class="cipa">/ɔɪ/</div>
+        <div class="ccol" style="color:#1b6e6a">OIL</div>
+        <div class="cex">employer, appointment</div>
+      </div>
+      <div class="card" style="border-color:#e5127d">
+        <div class="cipa">/eə/</div>
+        <div class="ccol" style="color:#c4116c">HAIR</div>
+        <div class="cex">share, job fair</div>
+      </div>
+      <div class="card" style="border-color:#e8b400">
+        <div class="cipa">/əʊ/</div>
+        <div class="ccol" style="color:#a87c00">YELLOW</div>
+        <div class="cex">diploma, promote</div>
+      </div>
+      <div class="card" style="border-color:#8b5a2b">
+        <div class="cipa">/aʊ/</div>
+        <div class="ccol" style="color:#7a4e24">BROWN</div>
+        <div class="cex">discount, outsource</div>
+      </div>
+      <div class="card" style="border-color:#3e9bd8">
+        <div class="cipa">/ɪə/</div>
+        <div class="ccol" style="color:#2c7fb4">CLEAR</div>
+        <div class="cex">career, experience</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section data-label="Classer un mot">
+  <div class="head">
+    <h2>Classer un mot en trois gestes</h2>
+  </div>
+  <div class="steps">
+    <div class="step">
+      <div class="snum">1</div>
+      <div class="stitle">Repérer la syllabe accentuée</div>
+      <div class="stxt">apPOINTment : l'accent tombe sur POINT.</div>
+    </div>
+    <div class="step">
+      <div class="snum">2</div>
+      <div class="stitle">Écouter la voyelle de cette syllabe</div>
+      <div class="stxt">On entend /ɔɪ/, comme dans oil.</div>
+    </div>
+    <div class="step">
+      <div class="snum">3</div>
+      <div class="stitle">Choisir la couleur</div>
+      <div class="stxt">/ɔɪ/ correspond à la carte OIL : le mot est rangé.</div>
+    </div>
+  </div>
+  <div class="mark">M2 · Code couleur</div>
+</section>
+
+<section class="dark" data-label="L'outil en ligne">
+  <div class="head">
+    <h2>L'outil en ligne</h2>
+  </div>
+  <div class="tool">
+    <div class="tlist">
+      <div class="titem">
+        <div class="tdot">1</div>
+        <div>
+          <div class="tstrong">Cliquer sur une case</div>
+          <div class="tsub">Le mot-repère est prononcé par la voix anglaise du navigateur.</div>
+        </div>
+      </div>
+      <div class="titem">
+        <div class="tdot">2</div>
+        <div>
+          <div class="tstrong">Lire la fiche du son</div>
+          <div class="tsub">Transcription, syllabe accentuée, exemples du monde du travail.</div>
+        </div>
+      </div>
+      <div class="titem">
+        <div class="tdot">3</div>
+        <div>
+          <div class="tstrong">Écouter le son seul</div>
+          <div class="tsub">La voyelle isolée, pour la comparer aux sons voisins.</div>
+        </div>
+      </div>
+    </div>
+    <div class="demo">
+      <div class="demotop">
+        <div class="demochip">CLEAR</div>
+        <div class="demoipa">/ɪə/</div>
+      </div>
+      <div class="demorow">
+        <div class="demolab">Mot</div>
+        <div>career</div>
+      </div>
+      <div class="demorow">
+        <div class="demolab">Accent</div>
+        <div>ca<strong>REER</strong> · /kəˈrɪə/</div>
+      </div>
+      <div class="demorow">
+        <div class="demolab">Aussi</div>
+        <div>experience, engineer, cashier</div>
+      </div>
+    </div>
+  </div>
+  <div class="mark">M2 · Code couleur</div>
+</section>
+
+<section data-label="Cinq activités">
+  <div class="head">
+    <h2>Cinq activités pour s'entraîner</h2>
+  </div>
+  <div class="acts">
+    <div class="act">
+      <div class="actname">Listen and choose</div>
+      <div class="acttxt">On entend un mot, on désigne sa couleur.</div>
+    </div>
+    <div class="act">
+      <div class="actname">Which colour?</div>
+      <div class="acttxt">On lit un mot, on annonce la couleur avant de vérifier.</div>
+    </div>
+    <div class="act">
+      <div class="actname">Odd one out</div>
+      <div class="acttxt">Quatre mots, une intruse : celle qui change de son.</div>
+    </div>
+    <div class="act">
+      <div class="actname">Same or different?</div>
+      <div class="acttxt">Deux mots : même voyelle accentuée, ou non.</div>
+    </div>
+    <div class="act">
+      <div class="actname">Série mixte</div>
+      <div class="acttxt">Les quatre types enchaînés au hasard.</div>
+    </div>
+    <div class="act">
+      <div class="actname">Choisir sa cible</div>
+      <div class="acttxt">Les 18 sons, ou une seule famille à la fois.</div>
+    </div>
+    <div class="act actwide">
+      <div class="actname" style="color:var(--gold)">Score suivi</div>
+      <div class="acttxt">Le score et la série de bonnes réponses s'affichent au fil de l'entraînement, et se réinitialisent quand vous voulez.</div>
+    </div>
+  </div>
+  <div class="mark">M2 · Code couleur</div>
+</section>
+
+<section class="dark" data-label="À vous">
+  <div class="head">
+    <h2>À vous</h2>
+    <p class="lead">Trois minutes par jour suffisent : une famille de sons, cinq mots, une activité.</p>
+  </div>
+  <div class="final">
+    <div class="path">
+      <div class="pstep"><span class="pk">1</span><span>LSA Toolbox, page d'accueil</span></div>
+      <div class="pstep"><span class="pk">2</span><span>Rubrique BTS</span></div>
+      <div class="pstep"><span class="pk">3</span><span>M2 : Phonologie Code Couleur</span></div>
+    </div>
+    <div>
+      <div class="kicker">Adresse</div>
+      <div class="url">cemonprive-ux.github.io/LSA-toolbox/</div>
+    </div>
+  </div>
+  <div class="mark">Lycée Sidoine Apollinaire</div>
+</section>
+
+</deck-stage>
+<script src="deck-stage.js"></script>
+</body>
+</html>

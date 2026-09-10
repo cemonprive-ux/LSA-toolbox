@@ -6,7 +6,7 @@
 <title>LSA Toolbox · Outils des étudiants de M. Blanchet — Lycée Sidoine Apollinaire</title>
 <link rel="icon" type="image/png" href="assets/lsa-logo.png">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap');
 
 :root{
   --navy:#1a2744;
@@ -14,8 +14,8 @@
   --navy-mid:#243260;
   --blue:#2d5fa6;
   --blue-light:#4a7bc8;
-  --accent:#c8a84b;
-  --accent-deep:#a9883a;
+  --accent:#f5b60f;
+  --accent-deep:#c98f00;
   --green:#2a7a4b;
   --bg:#f5f3ef;
   --surface:#ffffff;
@@ -29,7 +29,7 @@
 *{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
 body{
-  font-family:'Source Serif 4',Georgia,serif;
+  font-family:'Quicksand',sans-serif;
   background:var(--bg);
   color:var(--text);
   line-height:1.6;
@@ -91,15 +91,15 @@ a{color:inherit;text-decoration:none;}
 }
 .brand .kicker small{display:block;color:rgba(255,255,255,.55);font-weight:400;letter-spacing:.1em;font-size:10.5px;margin-top:2px;}
 .hero h1{
-  font-family:'Playfair Display',serif;
+  font-family:'Quicksand',sans-serif;
   color:#fff;font-weight:700;
   font-size:clamp(1.7rem,2.6vw,2.4rem);
   line-height:1.18;
   text-wrap:balance;
 }
-.hero h1 em{font-style:italic;color:var(--accent);}
+.hero h1 em{font-style:normal;color:var(--accent);}
 .hero .tagline{color:#fff;font-size:clamp(15px,1.7vw,17px);font-weight:600;max-width:520px;line-height:1.5;}
-.hero .tagline em{font-style:italic;color:var(--accent);}
+.hero .tagline em{font-style:normal;color:var(--accent);}
 .hero .lede{
   color:rgba(255,255,255,.72);font-size:15px;max-width:480px;line-height:1.55;
 }
@@ -110,14 +110,14 @@ a{color:inherit;text-decoration:none;}
 .search svg{position:absolute;left:15px;top:50%;transform:translateY(-50%);opacity:.5;}
 .search input{
   width:100%;
-  font-family:'Source Serif 4',serif;font-size:15px;color:var(--text);
+  font-family:'Quicksand',sans-serif;font-size:15px;color:var(--text);
   background:rgba(255,255,255,.96);
   border:1px solid rgba(255,255,255,.4);
   border-radius:30px;
   padding:13px 18px 13px 44px;
   transition:box-shadow .2s,background .2s;
 }
-.search input::placeholder{color:#9b937f;font-style:italic;}
+.search input::placeholder{color:#9b937f;font-style:normal;}
 .search input:focus{outline:none;background:#fff;box-shadow:0 0 0 4px rgba(200,168,75,.35);}
 
 /* HERO PHOTO */
@@ -138,7 +138,7 @@ main{max-width:1140px;margin:0 auto;padding:54px 28px 40px;}
   color:var(--accent-deep);font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
 }
 .section-head h2{
-  font-family:'Playfair Display',serif;color:var(--navy);font-weight:600;
+  font-family:'Quicksand',sans-serif;color:var(--navy);font-weight:700;
   font-size:1.85rem;margin-top:8px;line-height:1.2;
 }
 .section-head p{color:var(--muted);font-size:15px;margin-top:8px;}
@@ -175,12 +175,12 @@ main{max-width:1140px;margin:0 auto;padding:54px 28px 40px;}
   width:52px;height:52px;border-radius:12px;
   background:var(--c);color:#fff;
   display:flex;align-items:center;justify-content:center;
-  font-family:'Playfair Display',serif;font-weight:700;font-size:14px;letter-spacing:.01em;
+  font-family:'Quicksand',sans-serif;font-weight:700;font-size:14px;letter-spacing:.01em;
   box-shadow:0 4px 12px rgba(26,39,68,.18);
 }
 .cat[data-accent="gold"] .mono{color:var(--navy);}
 .cat-name{
-  font-family:'Playfair Display',serif;font-weight:600;color:var(--navy);
+  font-family:'Quicksand',sans-serif;font-weight:700;color:var(--navy);
   font-size:1.45rem;line-height:1.05;display:block;white-space:nowrap;
 }
 .cat-full{display:block;color:var(--muted);font-size:13px;line-height:1.4;}
@@ -264,7 +264,7 @@ footer{
 }
 .foot-brand{display:flex;align-items:center;gap:13px;}
 .foot-brand img{width:40px;height:40px;border-radius:9px;}
-.foot-brand strong{color:#fff;font-family:'Playfair Display',serif;font-weight:600;font-size:15px;display:block;}
+.foot-brand strong{color:#fff;font-family:'Quicksand',sans-serif;font-weight:700;font-size:15px;display:block;}
 .foot-brand span{font-size:12px;}
 .foot-links{display:flex;align-items:center;gap:22px;flex-wrap:wrap;}
 .foot-links a{transition:color .2s;border-bottom:1px solid transparent;padding-bottom:1px;}

@@ -6,10 +6,10 @@
 <title>Grammar Assistant — B2 · LSA Toolbox</title>
 <link rel="icon" type="image/png" href="assets/lsa-logo.png">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&display=swap');
-:root{--navy:#1a2744;--navy-deep:#0f1a33;--navy-mid:#243260;--blue:#2d5fa6;--blue-deep:#21477d;--accent:#c8a84b;--accent-deep:#a9883a;--green:#2a7a4b;--red:#b5302b;--bg:#f5f3ef;--surface:#fff;--border:#ddd5c5;--text:#2a2520;--muted:#7a7060;--shadow:0 2px 14px rgba(26,39,68,.10);--shadow-lg:0 14px 40px rgba(26,39,68,.18);--radius:10px}
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap');
+:root{--navy:#1a2744;--navy-deep:#0f1a33;--navy-mid:#243260;--blue:#2d5fa6;--blue-deep:#21477d;--accent:#f5b60f;--accent-deep:#c98f00;--green:#2a7a4b;--red:#b5302b;--bg:#f5f3ef;--surface:#fff;--border:#ddd5c5;--text:#2a2520;--muted:#7a7060;--shadow:0 2px 14px rgba(26,39,68,.10);--shadow-lg:0 14px 40px rgba(26,39,68,.18);--radius:10px}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Source Serif 4',Georgia,serif;background:var(--bg);color:var(--text);line-height:1.65;font-size:17px;-webkit-font-smoothing:antialiased}
+body{font-family:'Quicksand',Georgia,serif;background:var(--bg);color:var(--text);line-height:1.65;font-size:17px;-webkit-font-smoothing:antialiased}
 a{color:var(--blue-deep);text-decoration:none}
 a:hover{color:var(--accent-deep)}
 /* topbar */
@@ -25,7 +25,7 @@ a:hover{color:var(--accent-deep)}
 .head-inner{position:relative;z-index:2;max-width:1040px;margin:0 auto;padding:30px 24px 26px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
 .head img{width:52px;height:52px;border-radius:13px;box-shadow:0 6px 18px rgba(0,0,0,.3)}
 .head .kicker{color:var(--accent);font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase}
-.head h1{font-family:'Playfair Display',serif;color:#fff;font-weight:700;font-size:clamp(1.5rem,3.6vw,2.1rem);line-height:1.1}
+.head h1{font-family:'Quicksand',serif;color:#fff;font-weight:700;font-size:clamp(1.5rem,3.6vw,2.1rem);line-height:1.1}
 /* nav bar */
 .navbar{background:var(--surface);border-bottom:1px solid var(--border)}
 .navbar-inner{max-width:1040px;margin:0 auto;padding:10px 24px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
@@ -44,20 +44,20 @@ main{max-width:1040px;margin:0 auto;padding:34px 24px 70px}
 .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
 /* home */
 .home{max-width:640px;margin:36px auto;text-align:center;padding:46px 34px}
-.home h2{font-family:'Playfair Display',serif;font-size:clamp(1.7rem,4.4vw,2.4rem);color:var(--navy);line-height:1.15;letter-spacing:.01em}
+.home h2{font-family:'Quicksand',serif;font-size:clamp(1.7rem,4.4vw,2.4rem);color:var(--navy);line-height:1.15;letter-spacing:.01em}
 .home .rule{width:64px;height:3px;background:var(--accent);margin:20px auto 22px}
 .home p{color:var(--text);font-size:17px;max-width:460px;margin:0 auto 28px;text-wrap:pretty}
 .home .stats{margin-top:26px;font-size:13px;color:var(--muted);letter-spacing:.04em}
 /* menu */
 .secttitle{display:flex;align-items:baseline;gap:12px;margin:34px 0 14px;flex-wrap:wrap}
 .secttitle:first-child{margin-top:0}
-.secttitle h3{font-family:'Playfair Display',serif;font-size:1.18rem;letter-spacing:.06em;text-transform:uppercase;color:var(--navy)}
+.secttitle h3{font-family:'Quicksand',serif;font-size:1.18rem;letter-spacing:.06em;text-transform:uppercase;color:var(--navy)}
 .secttitle .bar{flex:1;height:1px;background:var(--border);min-width:20px}
 .secttitle .n{font-size:11.5px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(268px,1fr));gap:11px}
 .topic{display:flex;align-items:center;gap:12px;text-align:left;font-family:inherit;font-size:16px;cursor:pointer;background:var(--surface);border:1px solid var(--border);border-left:4px solid var(--c);border-radius:9px;padding:12px 14px;transition:.18s;color:var(--text);line-height:1.35;width:100%}
 .topic:hover{box-shadow:var(--shadow);transform:translateY(-1px);border-color:var(--c)}
-.topic .let{flex-shrink:0;width:28px;height:28px;border-radius:7px;background:color-mix(in srgb,var(--c) 12%,#fff);color:var(--c);display:grid;place-items:center;font-size:12.5px;font-weight:700;letter-spacing:.02em;font-family:'Source Serif 4',serif}
+.topic .let{flex-shrink:0;width:28px;height:28px;border-radius:7px;background:color-mix(in srgb,var(--c) 12%,#fff);color:var(--c);display:grid;place-items:center;font-size:12.5px;font-weight:700;letter-spacing:.02em;font-family:'Quicksand',serif}
 .topic .lbl{flex:1}
 .topic .badge{flex-shrink:0;display:flex;flex-direction:column;align-items:flex-end;gap:2px;font-size:11px;color:var(--muted);letter-spacing:.03em}
 .topic .badge .ok{color:var(--green);font-weight:700}
@@ -65,7 +65,7 @@ main{max-width:1040px;margin:0 auto;padding:34px 24px 70px}
 /* panel */
 .panel{max-width:760px;margin:0 auto;padding:30px 34px 34px}
 .chosen{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
-.panel h2{font-family:'Playfair Display',serif;font-size:clamp(1.4rem,3.4vw,1.9rem);color:var(--navy);line-height:1.15;margin:6px 0 4px}
+.panel h2{font-family:'Quicksand',serif;font-size:clamp(1.4rem,3.4vw,1.9rem);color:var(--navy);line-height:1.15;margin:6px 0 4px}
 .catline{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--c);font-weight:700;margin-bottom:22px}
 .choices{display:grid;gap:10px;margin-top:8px}
 .choice{display:flex;align-items:center;gap:13px;text-align:left;font-family:inherit;font-size:16.5px;cursor:pointer;background:#fbfaf7;border:1px solid var(--border);border-radius:9px;padding:15px 17px;transition:.18s;color:var(--text);width:100%}
@@ -74,8 +74,8 @@ main{max-width:1040px;margin:0 auto;padding:34px 24px 70px}
 /* fiche */
 .fiche{max-width:800px;margin:0 auto;padding:30px 34px 30px}
 .fiche .tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;background:var(--navy);color:#fff;border-radius:5px;padding:3px 10px;margin-bottom:14px}
-.fiche h2{font-family:'Playfair Display',serif;font-size:clamp(1.35rem,3.2vw,1.8rem);color:var(--navy);line-height:1.15;margin-bottom:18px}
-.fiche h4{font-family:'Playfair Display',serif;font-size:1.02rem;color:var(--navy);margin:22px 0 7px;letter-spacing:.02em}
+.fiche h2{font-family:'Quicksand',serif;font-size:clamp(1.35rem,3.2vw,1.8rem);color:var(--navy);line-height:1.15;margin-bottom:18px}
+.fiche h4{font-family:'Quicksand',serif;font-size:1.02rem;color:var(--navy);margin:22px 0 7px;letter-spacing:.02em}
 .fiche h4:first-of-type{margin-top:4px}
 .fiche p{margin:0 0 10px;text-wrap:pretty}
 .fiche ul{margin:0 0 10px 20px}
@@ -130,7 +130,7 @@ input[type=text]:focus{outline:none;border-color:var(--blue);background:#fff;box
 .fb .why{font-size:15.5px;color:var(--text)}
 /* résultat */
 .res{max-width:600px;margin:0 auto;text-align:center;padding:40px 34px}
-.res .score{font-family:'Playfair Display',serif;font-size:3.4rem;line-height:1;color:var(--navy)}
+.res .score{font-family:'Quicksand',serif;font-size:3.4rem;line-height:1;color:var(--navy)}
 .res .score span{font-size:1.6rem;color:var(--muted)}
 .res .msg{margin:14px auto 6px;max-width:400px}
 .res .best{font-size:13px;color:var(--muted);letter-spacing:.05em;margin-top:8px}
@@ -158,7 +158,7 @@ footer a{color:rgba(255,255,255,.8)}
 </style>
 <style>.visit-count{margin-top:8px}.visit-count img{height:16px;vertical-align:middle}</style></head>
 <body>
-<template id="__bundler_thumbnail"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect width="200" height="200" fill="#1a2744"/><rect x="60" y="72" width="80" height="3" fill="#c8a84b"/><text x="100" y="62" font-family="Georgia,serif" font-size="46" font-weight="700" fill="#ffffff" text-anchor="middle">GA</text><text x="100" y="108" font-family="Georgia,serif" font-size="17" fill="#c8a84b" text-anchor="middle" letter-spacing="3">B2</text></svg></template>
+<template id="__bundler_thumbnail"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect width="200" height="200" fill="#1a2744"/><rect x="60" y="72" width="80" height="3" fill="#f5b60f"/><text x="100" y="62" font-family="Georgia,serif" font-size="46" font-weight="700" fill="#ffffff" text-anchor="middle">GA</text><text x="100" y="108" font-family="Georgia,serif" font-size="17" fill="#f5b60f" text-anchor="middle" letter-spacing="3">B2</text></svg></template>
 <div class="topbar"><div class="topbar-inner"><span class="place"><span class="dot"></span>Lycée Sidoine Apollinaire · Clermont-Ferrand</span><a class="back" href="index.html">← Retour à l'accueil</a></div></div>
 <header class="head"><div class="head-inner"><img src="assets/lsa-logo.png" alt="Logo LSA"><div><div class="kicker">Anglais · Boîte à outils</div><h1>Grammar Assistant — B2</h1></div></div></header>
 <nav class="navbar"><div class="navbar-inner"><div class="crumb" id="crumb"></div><div id="navbtns" style="display:flex;gap:8px;flex-wrap:wrap"></div></div></nav>
@@ -174,7 +174,7 @@ footer a{color:rgba(255,255,255,.8)}
 const CATS=[
  {id:'verbe',name:'Autour du verbe',c:'#2d5fa6',topics:window.GRAM_VERBE},
  {id:'nom',name:'Autour du nom',c:'#2a7a4b',topics:window.GRAM_NOM},
- {id:'syntaxe',name:'Autour de la syntaxe',c:'#a9883a',topics:window.GRAM_SYNTAXE}
+ {id:'syntaxe',name:'Autour de la syntaxe',c:'#c98f00',topics:window.GRAM_SYNTAXE}
 ];
 const ALL={};CATS.forEach(c=>c.topics.forEach(t=>{t.cat=c;ALL[t.id]=t}));
 Object.keys(window.GRAM_GEN||{}).forEach(k=>{if(ALL[k])ALL[k].gen=window.GRAM_GEN[k]});

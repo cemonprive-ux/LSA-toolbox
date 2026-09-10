@@ -2,7 +2,7 @@
    LSA Toolbox — feuille de style partagée DSCG
    (pages chapitre + articles « Fil rouge »)
    ============================================================ */
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap');
 
 :root{
   --navy:#1a2744;
@@ -10,8 +10,8 @@
   --navy-mid:#243260;
   --blue:#2d5fa6;
   --blue-deep:#21477d;
-  --accent:#c8a84b;
-  --accent-deep:#a9883a;
+  --accent:#f5b60f;
+  --accent-deep:#c98f00;
   --green:#2a7a4b;
   --red:#b5302b;
   --bg:#f5f3ef;
@@ -25,7 +25,7 @@
 *{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
 body{
-  font-family:'Source Serif 4',Georgia,serif;
+  font-family:'Quicksand',Georgia,serif;
   background:var(--bg);color:var(--text);line-height:1.72;font-size:17px;
   -webkit-font-smoothing:antialiased;
 }
@@ -58,7 +58,7 @@ a{color:inherit;}
   max-width:920px;margin:0 auto;padding:0 28px 34px;width:100%;
 }
 .hero h1{
-  font-family:'Playfair Display',serif;color:#fff;font-weight:700;
+  font-family:'Quicksand',serif;color:#fff;font-weight:700;
   font-size:clamp(2rem,4.8vw,3.2rem);line-height:1.05;text-wrap:balance;
   text-shadow:0 2px 24px rgba(0,0,0,.45);
 }
@@ -80,8 +80,8 @@ a{color:inherit;}
   background:radial-gradient(circle at 88% -10%,rgba(74,123,200,.4),transparent 55%);
 }
 .head-inner{position:relative;z-index:2;max-width:1040px;margin:0 auto;padding:46px 28px 40px;}
-.head h1{font-family:'Playfair Display',serif;color:#fff;font-weight:700;font-size:clamp(2.1rem,4.6vw,3.1rem);line-height:1.05;}
-.head h1 em{font-style:italic;color:var(--accent);}
+.head h1{font-family:'Quicksand',serif;color:#fff;font-weight:700;font-size:clamp(2.1rem,4.6vw,3.1rem);line-height:1.05;}
+.head h1 em{font-style:normal;color:var(--accent);}
 .head .sub{color:rgba(255,255,255,.8);font-size:clamp(15px,2vw,18px);font-style:italic;margin-top:12px;max-width:640px;}
 
 /* ── BREADCRUMB ── */
@@ -134,11 +134,11 @@ a{color:inherit;}
 }
 .question{
   margin:18px 0 6px;padding:18px 22px;border-radius:10px;
-  background:var(--navy);color:#fff;font-family:'Playfair Display',serif;font-style:italic;
+  background:var(--navy);color:#fff;font-family:'Quicksand',serif;font-style:italic;
   font-size:1.25rem;line-height:1.35;box-shadow:var(--shadow-lg);position:relative;
 }
 .question .qlabel{
-  display:block;font-family:'Source Serif 4',serif;font-style:normal;
+  display:block;font-family:'Quicksand',serif;font-style:normal;
   font-size:10.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
   color:var(--accent);margin-bottom:8px;
 }
@@ -163,7 +163,7 @@ a{color:inherit;}
 
 /* ── BODY HEADINGS / TEXT ── */
 .section-title{
-  font-family:'Playfair Display',serif;color:var(--navy);font-weight:600;
+  font-family:'Quicksand',serif;color:var(--navy);font-weight:600;
   font-size:1.8rem;line-height:1.14;margin:44px 0 4px;text-wrap:balance;
 }
 .h-rule{height:2px;background:linear-gradient(90deg,var(--accent),transparent);margin:14px 0 22px;}
@@ -188,7 +188,7 @@ a{color:inherit;}
   border:1px solid var(--border);box-shadow:var(--shadow);
 }
 .conclusion .ttl{
-  font-family:'Playfair Display',serif;color:var(--navy);font-weight:600;font-size:1.4rem;
+  font-family:'Quicksand',serif;color:var(--navy);font-weight:600;font-size:1.4rem;
   display:flex;align-items:center;gap:12px;margin-bottom:8px;
 }
 .conclusion .ttl::before{content:"";width:26px;height:3px;background:var(--accent);border-radius:2px;}
@@ -229,7 +229,7 @@ a{color:inherit;}
 .tool-icon svg{position:relative;z-index:1;}
 .tool-body{padding:24px 28px;display:flex;flex-direction:column;justify-content:center;gap:8px;flex:1;min-width:0;}
 .tool-body .kicker{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--accent-deep);}
-.tool-body h2{font-family:'Playfair Display',serif;color:var(--navy);font-weight:600;font-size:1.5rem;line-height:1.12;}
+.tool-body h2{font-family:'Quicksand',serif;color:var(--navy);font-weight:600;font-size:1.5rem;line-height:1.12;}
 .tool-body p{color:var(--muted);font-size:15px;line-height:1.5;margin:0;}
 .tool-body .go{display:inline-flex;align-items:center;gap:8px;margin-top:6px;color:var(--blue);font-weight:600;font-size:14px;}
 .tool-card:hover .go{color:var(--blue-deep);}
@@ -244,7 +244,7 @@ footer{background:var(--navy-deep);color:rgba(255,255,255,.62);margin-top:42px;b
 }
 .foot-brand{display:flex;align-items:center;gap:13px;}
 .foot-brand img{width:38px;height:38px;border-radius:9px;}
-.foot-brand strong{color:#fff;font-family:'Playfair Display',serif;font-weight:600;font-size:15px;display:block;}
+.foot-brand strong{color:#fff;font-family:'Quicksand',serif;font-weight:600;font-size:15px;display:block;}
 .foot-brand span{font-size:12px;}
 
 /* ── RESPONSIVE ── */
