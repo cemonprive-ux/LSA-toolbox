@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Oraux BTS SIO · LSA Toolbox</title>
+<link rel="icon" type="image/png" href="assets/lsa-logo.png">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap');
+:root{
+  --navy:#1a2744;--navy-deep:#0f1a33;--navy-mid:#243260;--blue:#2d5fa6;
+  --accent:#f5b60f;--accent-deep:#c98f00;--green:#2a7a4b;
+  --bg:#f5f3ef;--surface:#ffffff;--border:#ddd5c5;--text:#2a2520;--muted:#7a7060;
+  --shadow:0 2px 14px rgba(26,39,68,.10);--shadow-lg:0 14px 40px rgba(26,39,68,.18);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Quicksand',Georgia,serif;background:var(--bg);color:var(--text);line-height:1.72;font-size:17px;-webkit-font-smoothing:antialiased;}
+a{color:inherit;}
+.topbar{background:var(--navy-deep);color:rgba(255,255,255,.7);font-size:12.5px;}
+.topbar-inner{max-width:1040px;margin:0 auto;padding:9px 28px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;}
+.topbar .place{display:inline-flex;align-items:center;gap:8px;text-transform:uppercase;letter-spacing:.12em;font-size:11px;}
+.topbar .dot{width:5px;height:5px;border-radius:50%;background:var(--accent);}
+.topbar a.back{display:inline-flex;align-items:center;gap:6px;color:rgba(255,255,255,.78);text-decoration:none;border:1px solid rgba(255,255,255,.18);border-radius:20px;padding:4px 13px;transition:all .2s;font-size:11.5px;}
+.topbar a.back:hover{background:rgba(255,255,255,.1);color:#fff;border-color:rgba(200,168,75,.6);}
+.head{position:relative;overflow:hidden;background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 60%,var(--blue) 135%);border-bottom:3px solid var(--accent);}
+.head::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 88% -10%,rgba(74,123,200,.4),transparent 55%);}
+.head-inner{position:relative;z-index:2;max-width:1040px;margin:0 auto;padding:46px 28px 40px;}
+.breadcrumb{display:flex;align-items:center;gap:9px;flex-wrap:wrap;font-size:12px;letter-spacing:.04em;color:rgba(255,255,255,.85);margin-bottom:18px;}
+.breadcrumb a{color:rgba(255,255,255,.85);text-decoration:none;border-bottom:1px solid transparent;transition:.2s;}
+.breadcrumb a:hover{color:#fff;border-bottom-color:var(--accent);}
+.breadcrumb .sep{opacity:.5;}
+.breadcrumb .tag{background:var(--blue);color:#fff;border-radius:5px;padding:2px 9px;font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;}
+.head h1{font-family:'Quicksand',serif;color:#fff;font-weight:700;font-size:clamp(2.1rem,4.6vw,3.1rem);line-height:1.05;}
+.head .sub{color:rgba(255,255,255,.78);font-size:clamp(15px,2vw,18px);font-style:italic;margin-top:12px;max-width:600px;}
+.wrap{max-width:880px;margin:0 auto;padding:48px 28px 30px;}
+.res{margin-bottom:46px;border:1px solid var(--border);border-radius:14px;background:var(--surface);box-shadow:var(--shadow);overflow:hidden;}
+.res-head{display:flex;align-items:baseline;gap:14px;padding:22px 26px 0;}
+.res-head>div{flex:1;min-width:0;}
+.res-head .idx{font-family:'Quicksand',serif;font-weight:700;color:#fff;background:var(--blue);width:36px;height:36px;flex-shrink:0;border-radius:9px;display:inline-flex;align-items:center;justify-content:center;font-size:.95rem;transform:translateY(-2px);}
+.res h2{font-family:'Quicksand',serif;color:var(--navy);font-weight:600;font-size:1.55rem;line-height:1.12;}
+.res .kicker{display:block;font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--accent-deep);margin-bottom:4px;}
+.res-body{padding:18px 26px 26px;display:flex;flex-direction:column;gap:16px;}
+.pdf-link{display:inline-flex;align-items:center;gap:10px;align-self:flex-start;background:var(--navy);color:#fff;text-decoration:none;border-radius:30px;padding:11px 22px;font-weight:600;font-size:14.5px;transition:all .2s;box-shadow:var(--shadow);}
+.pdf-link:hover{background:var(--blue);transform:translateY(-2px);box-shadow:var(--shadow-lg);}
+.video{border-radius:12px;overflow:hidden;background:var(--navy-deep);border:1px solid var(--border);box-shadow:var(--shadow-lg);position:relative;width:100%;aspect-ratio:16/9;}
+.video iframe{position:absolute;inset:0;width:100%;height:100%;border:0;}
+.empty{text-align:center;color:var(--muted);font-style:italic;padding:50px 20px;border:1px dashed var(--border);border-radius:14px;background:var(--surface);}
+.tofoot{text-align:center;margin:40px 0 10px;}
+.tofoot a{display:inline-flex;align-items:center;gap:9px;text-decoration:none;color:var(--navy);font-weight:600;font-size:15px;border:1px solid var(--border);background:var(--surface);border-radius:30px;padding:11px 24px;transition:all .2s;box-shadow:var(--shadow);}
+.tofoot a:hover{border-color:var(--accent);color:var(--accent-deep);transform:translateY(-2px);box-shadow:var(--shadow-lg);}
+footer{background:var(--navy-deep);color:rgba(255,255,255,.62);margin-top:42px;border-top:3px solid var(--accent);}
+.foot-inner{max-width:1040px;margin:0 auto;padding:30px 28px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;font-size:13px;}
+.foot-brand{display:flex;align-items:center;gap:13px;}
+.foot-brand img{width:38px;height:38px;border-radius:9px;}
+.foot-brand strong{color:#fff;font-family:'Quicksand',serif;font-weight:600;font-size:15px;display:block;}
+@media(max-width:640px){body{font-size:16px;}.wrap{padding:36px 22px 24px;}.res h2{font-size:1.3rem;}}
+</style>
+<style>.visit-count{margin-top:8px}.visit-count img{height:16px;vertical-align:middle}</style></head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <span class="place"><span class="dot"></span>Lycée Sidoine Apollinaire · Clermont-Ferrand</span>
+    <a class="back" href="index.html">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+      Retour à l'accueil
+    </a>
+  </div>
+</div>
+
+<header class="head" data-screen-label="Oraux BTS SIO · header">
+  <div class="head-inner">
+    <div class="breadcrumb">
+      <a href="index.html">Accueil</a>
+      <span class="sep">›</span>
+      <span>BTS</span>
+      <span class="tag">BTS SIO</span>
+    </div>
+    <h1>Oraux BTS SIO</h1>
+    <p class="sub">Sujets d'entraînement à l'oral : un support PDF et une vidéo pour chaque entraînement.</p>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="res">
+    <div class="res-head">
+      <span class="idx">1</span>
+      <div>
+        <span class="kicker">Entraînement oral</span>
+        <h2>AI and the job market</h2>
+      </div>
+    </div>
+    <div class="res-body">
+      <a class="pdf-link" href="https://sidoineapollinaire-my.sharepoint.com/:b:/g/personal/maxens_blanchet_sidoineapollinaire_onmicrosoft_com/IQBzloGzmHs5QrfINkdNvlanATIhqJK3mV8D0T_rh0o1_go?e=J2fmyQ" target="_blank" rel="noopener">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h11l5 5v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1Z"/><path d="M14 4v6h6M8 13h8M8 17h5"/></svg>
+        Consulter le PDF
+      </a>
+      <div class="video">
+        <iframe src="https://sidoineapollinaire-my.sharepoint.com/:v:/g/personal/maxens_blanchet_sidoineapollinaire_onmicrosoft_com/IQDd7jgbJ6O4SKos1L3cwNuJAcWsNaXJWI9-q8sSBMnKJGw?e=jLTqmn&action=embedview" title="AI and the job market" loading="lazy" allowfullscreen></iframe>
+      </div>
+    </div>
+  </section>
+
+  <div class="tofoot">
+    <a href="index.html">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+      Retour à l'accueil
+    </a>
+  </div>
+
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <div class="foot-brand">
+      <img src="assets/lsa-logo.png" alt="Logo LSA">
+      <div>
+        <strong>LSA Toolbox</strong>
+        <span>BTS SIO · Oraux · M. Blanchet</span>
+      </div>
+    </div>
+    <div>Lycée Sidoine Apollinaire — Clermont-Ferrand</div>
+  </div>
+<div class="visit-count" id="visitCount"></div></footer>
+
+<script>(function(){var k=(location.pathname.split("/").pop()||"index").replace(".html","");var e=document.getElementById("visitCount");if(e){e.innerHTML='<img src="https://api.visitorbadge.io/api/visitors?path=lsa-toolbox-'+encodeURIComponent(k)+'&label=Visites&countColor=%23c8a84b&labelColor=%230f1a33&style=flat-square" alt="compteur de visites">'}})();</script></body>
+</html>
