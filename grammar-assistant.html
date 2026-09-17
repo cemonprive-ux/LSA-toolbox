@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Grammar Assistant — B2 · LSA Toolbox</title>
+<title>Grammar Assistant, B2 · LSA Toolbox</title>
 <link rel="icon" type="image/png" href="assets/lsa-logo.png">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap');
@@ -160,7 +160,7 @@ footer a{color:rgba(255,255,255,.8)}
 <body>
 <template id="__bundler_thumbnail"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect width="200" height="200" fill="#1a2744"/><rect x="60" y="72" width="80" height="3" fill="#f5b60f"/><text x="100" y="62" font-family="Georgia,serif" font-size="46" font-weight="700" fill="#ffffff" text-anchor="middle">GA</text><text x="100" y="108" font-family="Georgia,serif" font-size="17" fill="#f5b60f" text-anchor="middle" letter-spacing="3">B2</text></svg></template>
 <div class="topbar"><div class="topbar-inner"><span class="place"><span class="dot"></span>Lycée Sidoine Apollinaire · Clermont-Ferrand</span><a class="back" href="index.html">← Retour à l'accueil</a></div></div>
-<header class="head"><div class="head-inner"><img src="assets/lsa-logo.png" alt="Logo LSA"><div><div class="kicker">Anglais · Boîte à outils</div><h1>Grammar Assistant — B2</h1></div></div></header>
+<header class="head"><div class="head-inner"><img src="assets/lsa-logo.png" alt="Logo LSA"><div><div class="kicker">Anglais · Boîte à outils</div><h1>Grammar Assistant, B2</h1></div></div></header>
 <nav class="navbar"><div class="navbar-inner"><div class="crumb" id="crumb"></div><div id="navbtns" style="display:flex;gap:8px;flex-wrap:wrap"></div></div></nav>
 <main id="app"></main>
 <footer><div class="in"><img src="assets/lsa-logo.png" alt=""><span>LSA Toolbox · outils des étudiants de M. Blanchet · <a href="index.html">accueil</a></span></div><div class="visit-count" id="visitCount"></div></footer>
@@ -225,7 +225,7 @@ function render(){nav();({home:vHome,menu:vMenu,topic:vTopic,exp:vExp,ex:vEx,res
 function vHome(){
  const worked=Object.keys(P).length;
  app.innerHTML=`<section class="card home">
-  <h2>Grammar Assistant — B2</h2><div class="rule"></div>
+  <h2>Grammar Assistant, B2</h2><div class="rule"></div>
   <p>Bienvenue dans ton assistant de grammaire anglaise. Choisis un point de grammaire, consulte les explications et entraîne-toi avec des exercices corrigés.</p>
   <button class="btn primary big" onclick="go('menu',{topic:null})">COMMENCER</button>
   <div class="stats">${Object.keys(ALL).length} points de grammaire · 7 exercices par série${worked?' · déjà travaillé : '+worked+' thème'+(worked>1?'s':''):''}</div>
@@ -364,7 +364,7 @@ function vRes(){
    <button class="btn" onclick="go('exp',{expIdx:0})">Relire la fiche</button>
    <button class="btn" onclick="go('menu',{topic:null})">Menu grammatical</button>
   </div>
-  <div class="review"><h4>Récapitulatif</h4>${S.log.map(l=>`<div><span class="m ${l.ok?'yes':'no'}">${l.ok?'✓':'✗'}</span><span>${l.ok?'':'<i>'+l.sol+'</i> — '}${l.q.replace(/<[^>]+>/g,'')}</span></div>`).join('')}</div>
+  <div class="review"><h4>Récapitulatif</h4>${S.log.map(l=>`<div><span class="m ${l.ok?'yes':'no'}">${l.ok?'✓':'✗'}</span><span>${l.ok?'':'<i>'+l.sol+'</i>, '}${l.q.replace(/<[^>]+>/g,'')}</span></div>`).join('')}</div>
  </section>`;
 }
 render();
