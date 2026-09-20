@@ -3,20 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DSCG UE12 — Structured Oral Response Trainer · Accounting &amp; Auditing</title>
+<title>DSCG UE12, Structured Oral Response Trainer · Accounting &amp; Auditing</title>
 <link rel="icon" type="image/png" href="assets/lsa-logo.png">
 <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
-  --navy: #0d1b2a; --navy-mid: #1a2f45; --navy-light: #2a4a65;
-  --gold: #c9a355; --gold-light: #e8c87a; --gold-pale: rgba(201,163,85,.1);
+  --navy: #1a2744; --navy-mid: #243260; --navy-light: #2d5fa6;
+  --gold: #f5b60f; --gold-light: #f7cd4a; --gold-pale: rgba(245,182,15,.1);
   --ice: #e8f0f5; --white: #f9f7f4; --paper: #fdfcfa; --text: #1c2b3a; --muted: #6b7f90; --border: #d4dde5;
-  --correct: #2e7d5e; --correct-bg: #e8f5ef; --wrong: #9b2335; --wrong-bg: #fce8eb; --warn: #7a5c00; --warn-bg: #fdf3d6;
-  --part1: #1a5c4a; --part1-bg: #e7f3ef; --part2: #8a2f1d; --part2-bg: #f8eae5; --part3: #3a3a6b; --part3-bg: #eceaf4;
+  --correct: #2a7a4b; --correct-bg: #e7f3ec; --wrong: #b5302b; --wrong-bg: #fbe9e8; --warn: #c98f00; --warn-bg: #fdf3d6;
+  --part1: #2a7a4b; --part1-bg: #e7f3ec; --part2: #b5302b; --part2-bg: #fbe9e8; --part3: #2d5fa6; --part3-bg: #e8eef8;
 }
 html { scroll-behavior: smooth; }
-body { background: var(--paper); color: var(--text); font-family: 'Karla', sans-serif; font-weight: 400; line-height: 1.65; min-height: 100vh; }
+body { background: var(--paper); color: var(--text); font-family: 'Quicksand', sans-serif; font-weight: 400; line-height: 1.65; min-height: 100vh; }
 a { color: inherit; }
 .topbar { background: var(--navy); color: rgba(255,255,255,.75); font-size: 12.5px; }
 .topbar-inner { max-width: 900px; margin: 0 auto; padding: 9px 2rem; display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
@@ -29,34 +29,34 @@ a { color: inherit; }
 .site-header::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
 .site-header::before { content: ''; position: absolute; top: -60px; right: -60px; width: 300px; height: 300px; border-radius: 50%; background: radial-gradient(circle, rgba(201,163,85,.12) 0%, transparent 65%); pointer-events: none; }
 .header-inner { max-width: 900px; margin: 0 auto; position: relative; }
-.badge { display: inline-block; font-family: 'DM Mono', monospace; font-size: .68rem; letter-spacing: .18em; text-transform: uppercase; color: var(--gold); border: 1px solid rgba(201,163,85,.35); padding: .2rem .75rem; border-radius: 2px; margin-bottom: 1rem; }
-.site-header h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.7rem, 4.5vw, 2.7rem); font-weight: 700; line-height: 1.15; margin-bottom: .6rem; }
+.badge { display: inline-block; font-family: 'Quicksand', sans-serif; font-size: .68rem; letter-spacing: .18em; text-transform: uppercase; color: var(--gold); border: 1px solid rgba(201,163,85,.35); padding: .2rem .75rem; border-radius: 2px; margin-bottom: 1rem; }
+.site-header h1 { font-family: 'Quicksand', sans-serif; font-size: clamp(1.7rem, 4.5vw, 2.7rem); font-weight: 700; line-height: 1.15; margin-bottom: .6rem; }
 .site-header h1 em { color: var(--gold-light); font-style: italic; }
 .site-header .lede { font-size: .92rem; color: rgba(255,255,255,.72); max-width: 640px; }
 .question-box { background: rgba(255,255,255,.06); border-left: 3px solid var(--gold); padding: .9rem 1.2rem; border-radius: 0 6px 6px 0; margin-top: 1.2rem; }
-.question-box .q-label { font-family: 'DM Mono', monospace; font-size: .68rem; letter-spacing: .12em; text-transform: uppercase; color: var(--gold); margin-bottom: .3rem; }
-.question-box .q-text { font-family: 'Cormorant Garamond', serif; font-size: 1.35rem; font-style: italic; color: #fff; }
-.source-toggle { display: inline-flex; align-items: center; gap: .45rem; background: rgba(255,255,255,.08); color: #fff; border: 1px solid rgba(255,255,255,.25); border-radius: 20px; padding: .45rem 1rem; font-family: 'DM Mono', monospace; font-size: .72rem; letter-spacing: .04em; cursor: pointer; margin-top: 1.1rem; transition: all .18s; }
+.question-box .q-label { font-family: 'Quicksand', sans-serif; font-size: .68rem; letter-spacing: .12em; text-transform: uppercase; color: var(--gold); margin-bottom: .3rem; }
+.question-box .q-text { font-family: 'Quicksand', sans-serif; font-size: 1.35rem; font-style: italic; color: #fff; }
+.source-toggle { display: inline-flex; align-items: center; gap: .45rem; background: rgba(255,255,255,.08); color: #fff; border: 1px solid rgba(255,255,255,.25); border-radius: 20px; padding: .45rem 1rem; font-family: 'Quicksand', sans-serif; font-size: .72rem; letter-spacing: .04em; cursor: pointer; margin-top: 1.1rem; transition: all .18s; }
 .source-toggle:hover { border-color: var(--gold); background: rgba(255,255,255,.14); }
 .source-backdrop { position: fixed; inset: 0; background: rgba(13,27,42,.45); z-index: 190; opacity: 0; pointer-events: none; transition: opacity .2s; }
 .source-backdrop.open { opacity: 1; pointer-events: auto; }
 .source-panel { position: fixed; top: 0; left: 0; height: 100vh; width: 380px; max-width: 90vw; background: var(--paper); z-index: 200; box-shadow: 8px 0 30px rgba(13,27,42,.25); transform: translateX(-100%); transition: transform .25s cubic-bezier(.4,0,.2,1); display: flex; flex-direction: column; }
 .source-panel.open { transform: translateX(0); }
-.source-head { background: var(--navy); color: #fff; padding: .9rem 1.1rem; display: flex; align-items: center; gap: .6rem; font-family: 'DM Mono', monospace; font-size: .72rem; letter-spacing: .05em; text-transform: uppercase; flex-shrink: 0; }
+.source-head { background: var(--navy); color: #fff; padding: .9rem 1.1rem; display: flex; align-items: center; gap: .6rem; font-family: 'Quicksand', sans-serif; font-size: .72rem; letter-spacing: .05em; text-transform: uppercase; flex-shrink: 0; }
 .source-head .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
 .source-head .sp-title { flex: 1; }
 .source-head button { background: none; border: 1px solid rgba(255,255,255,.3); color: #fff; border-radius: 6px; padding: .3rem .6rem; font-family: inherit; font-size: .68rem; cursor: pointer; }
 .source-head button:hover { border-color: var(--gold); }
 .source-body { padding: 1.2rem 1.3rem; overflow-y: auto; font-size: .87rem; line-height: 1.65; flex: 1; }
 .source-body p { margin-bottom: .85rem; }
-.source-body p.lede { font-weight: 600; color: var(--navy); font-size: .95rem; font-family: 'Cormorant Garamond', serif; }
+.source-body p.lede { font-weight: 600; color: var(--navy); font-size: .95rem; font-family: 'Quicksand', sans-serif; }
 .source-body .hl { background: linear-gradient(transparent 55%, rgba(201,163,85,.35) 55%); padding: 0 .1rem; font-weight: 500; }
 .source-body .src { font-size: .74rem; color: var(--muted); font-style: italic; border-top: 1px solid var(--border); padding-top: .7rem; margin-top: .3rem; word-break: break-all; }
 @media (max-width: 600px) { .source-panel { width: 100vw; max-width: 100vw; } }
 .step-nav-wrap { background: var(--navy-mid); position: sticky; top: 0; z-index: 60; box-shadow: 0 2px 10px rgba(0,0,0,.08); }
 .step-nav { max-width: 900px; margin: 0 auto; display: flex; overflow-x: auto; scrollbar-width: none; }
 .step-nav::-webkit-scrollbar { display: none; }
-.step-pill { flex: 1; min-width: 84px; display: flex; flex-direction: column; align-items: center; gap: .25rem; padding: .6rem .4rem; background: none; border: none; color: rgba(255,255,255,.55); cursor: pointer; font-family: 'DM Mono', monospace; font-size: .62rem; letter-spacing: .03em; text-transform: uppercase; border-bottom: 3px solid transparent; transition: all .15s; }
+.step-pill { flex: 1; min-width: 84px; display: flex; flex-direction: column; align-items: center; gap: .25rem; padding: .6rem .4rem; background: none; border: none; color: rgba(255,255,255,.55); cursor: pointer; font-family: 'Quicksand', sans-serif; font-size: .62rem; letter-spacing: .03em; text-transform: uppercase; border-bottom: 3px solid transparent; transition: all .15s; }
 .step-pill .num { width: 1.5rem; height: 1.5rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: .72rem; border: 1.5px solid rgba(255,255,255,.35); }
 .step-pill.active { color: #fff; border-bottom-color: var(--gold); }
 .step-pill.active .num { background: var(--gold); color: var(--navy); border-color: var(--gold); }
@@ -64,10 +64,10 @@ a { color: inherit; }
 .step-pill.done .num::before { content: '✓'; }
 .step-pill.done .num span { display: none; }
 .main { max-width: 900px; margin: 0 auto; padding: 2.2rem 2rem 4rem; }
-.section-title { display: flex; align-items: center; gap: .9rem; font-family: 'Cormorant Garamond', serif; font-size: 1.75rem; font-weight: 700; color: var(--navy); margin: 2.8rem 0 .4rem; }
-.section-num { font-family: 'DM Mono', monospace; font-size: .85rem; color: var(--gold); background: var(--navy); width: 2.2rem; height: 2.2rem; display: flex; align-items: center; justify-content: center; border-radius: 6px; flex-shrink: 0; }
+.section-title { display: flex; align-items: center; gap: .9rem; font-family: 'Quicksand', sans-serif; font-size: 1.75rem; font-weight: 700; color: var(--navy); margin: 2.8rem 0 .4rem; }
+.section-num { font-family: 'Quicksand', sans-serif; font-size: .85rem; color: var(--gold); background: var(--navy); width: 2.2rem; height: 2.2rem; display: flex; align-items: center; justify-content: center; border-radius: 6px; flex-shrink: 0; }
 .section-sub { color: var(--muted); font-size: .9rem; margin-bottom: 1.4rem; max-width: 680px; }
-.part-tag { display:inline-block; font-family:'DM Mono',monospace; font-size:.66rem; letter-spacing:.12em; text-transform:uppercase; padding:.2rem .6rem; border-radius:3px; margin-left:.6rem; vertical-align:middle; }
+.part-tag { display:inline-block; font-family:'Quicksand',sans-serif; font-size:.66rem; letter-spacing:.12em; text-transform:uppercase; padding:.2rem .6rem; border-radius:3px; margin-left:.6rem; vertical-align:middle; }
 .tag-1 { background: var(--part1-bg); color: var(--part1); }
 .tag-2 { background: var(--part2-bg); color: var(--part2); }
 .tag-3 { background: var(--part3-bg); color: var(--part3); }
@@ -76,11 +76,11 @@ a { color: inherit; }
 .ex-q em { font-style: italic; color: var(--gold); }
 .ex-q .sub { display: block; font-weight: 400; color: var(--muted); font-size: .84rem; margin-top: .25rem; }
 .strategy-box { background: var(--gold-pale); border: 1px dashed var(--gold); border-radius: 8px; padding: .85rem 1.1rem; margin-bottom: 1.1rem; font-size: .88rem; color: var(--navy-mid); }
-.strategy-box .lbl { font-family: 'DM Mono', monospace; font-size: .66rem; letter-spacing: .1em; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: .3rem; }
+.strategy-box .lbl { font-family: 'Quicksand', sans-serif; font-size: .66rem; letter-spacing: .1em; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: .3rem; }
 .mcq-options { display: flex; flex-direction: column; gap: .55rem; }
 .mcq-btn { text-align: left; background: var(--white); border: 1.5px solid var(--border); border-radius: 7px; padding: .75rem .9rem; font-family: inherit; font-size: .9rem; color: var(--text); cursor: pointer; transition: all .18s; display: flex; gap: .65rem; align-items: flex-start; line-height: 1.45; }
 .mcq-btn:hover:not(:disabled) { border-color: var(--gold); }
-.mcq-btn .letter { font-family: 'DM Mono', monospace; font-weight: 500; color: var(--gold); flex-shrink: 0; }
+.mcq-btn .letter { font-family: 'Quicksand', sans-serif; font-weight: 500; color: var(--gold); flex-shrink: 0; }
 .mcq-btn:disabled { cursor: default; }
 .mcq-btn.correct { border-color: var(--correct); background: var(--correct-bg); } .mcq-btn.correct .letter { color: var(--correct); }
 .mcq-btn.wrong { border-color: var(--wrong); background: var(--wrong-bg); } .mcq-btn.wrong .letter { color: var(--wrong); }
@@ -91,11 +91,11 @@ a { color: inherit; }
 .feedback strong { font-weight: 700; }
 .idea-card { background: white; border: 1.5px solid var(--border); border-radius: 8px; padding: .8rem 1rem; margin-bottom: .7rem; }
 .idea-text { font-size: .9rem; margin-bottom: .45rem; }
-.src-tag { font-family: 'DM Mono', monospace; font-size: .6rem; letter-spacing: .06em; text-transform: uppercase; padding: .15rem .5rem; border-radius: 3px; display: inline-block; margin-bottom: .5rem; }
+.src-tag { font-family: 'Quicksand', sans-serif; font-size: .6rem; letter-spacing: .06em; text-transform: uppercase; padding: .15rem .5rem; border-radius: 3px; display: inline-block; margin-bottom: .5rem; }
 .src-doc { background: var(--ice); color: var(--navy-light); }
 .src-ext { background: var(--warn-bg); color: var(--warn); }
 .idea-btns { display: flex; gap: .5rem; flex-wrap: wrap; }
-.sort-btn { font-family: 'DM Mono', monospace; font-size: .78rem; border: 1.5px solid var(--border); background: var(--white); color: var(--navy); border-radius: 5px; padding: .35rem .8rem; cursor: pointer; transition: all .15s; }
+.sort-btn { font-family: 'Quicksand', sans-serif; font-size: .78rem; border: 1.5px solid var(--border); background: var(--white); color: var(--navy); border-radius: 5px; padding: .35rem .8rem; cursor: pointer; transition: all .15s; }
 .sort-btn:hover:not(:disabled) { border-color: var(--gold); }
 .sort-btn:disabled { cursor: default; opacity: .55; }
 .sort-btn.chosen-correct { background: var(--correct); color: white; border-color: var(--correct); opacity: 1; }
@@ -106,7 +106,7 @@ a { color: inherit; }
 .field-label { font-size: .84rem; color: var(--muted); margin-bottom: .4rem; }
 textarea, input[type=text] { width: 100%; font-family: inherit; font-size: .92rem; border: 1.5px solid var(--border); border-radius: 7px; padding: .75rem .9rem; color: var(--text); background: #fff; resize: vertical; min-height: 100px; line-height: 1.6; }
 textarea:focus, input[type=text]:focus { outline: none; border-color: var(--gold); }
-.btn { font-family: 'DM Mono', monospace; font-size: .8rem; letter-spacing: .03em; background: var(--navy); color: white; border: none; border-radius: 7px; padding: .68rem 1.3rem; cursor: pointer; transition: all .18s; margin-top: .9rem; }
+.btn { font-family: 'Quicksand', sans-serif; font-size: .8rem; letter-spacing: .03em; background: var(--navy); color: white; border: none; border-radius: 7px; padding: .68rem 1.3rem; cursor: pointer; transition: all .18s; margin-top: .9rem; }
 .btn:hover { background: var(--navy-mid); }
 .btn.gold { background: var(--gold); color: var(--navy); font-weight: 600; }
 .btn.gold:hover { background: var(--gold-light); }
@@ -115,7 +115,7 @@ textarea:focus, input[type=text]:focus { outline: none; border-color: var(--gold
 .toolbar { display: flex; gap: .7rem; flex-wrap: wrap; margin-top: 1rem; }
 .fb-grid { display: grid; gap: .9rem; margin-top: 1.2rem; }
 .fb-panel { border: 1px solid var(--border); border-radius: 9px; background: white; overflow: hidden; }
-.fb-panel-head { padding: .7rem 1rem; font-family: 'DM Mono', monospace; font-size: .76rem; letter-spacing: .04em; text-transform: uppercase; display: flex; align-items: center; gap: .55rem; border-bottom: 1px solid var(--border); }
+.fb-panel-head { padding: .7rem 1rem; font-family: 'Quicksand', sans-serif; font-size: .76rem; letter-spacing: .04em; text-transform: uppercase; display: flex; align-items: center; gap: .55rem; border-bottom: 1px solid var(--border); }
 .fb-panel-head .ic { width: 1.4rem; height: 1.4rem; border-radius: 5px; display: flex; align-items: center; justify-content: center; font-size: .85rem; flex-shrink: 0; font-weight: 700; }
 .fb-panel-body { padding: .85rem 1rem; font-size: .86rem; line-height: 1.6; }
 .fb-panel-body ul { list-style: none; }
@@ -133,49 +133,49 @@ textarea:focus, input[type=text]:focus { outline: none; border-color: var(--gold
 .model-box.t1 { border-top: 4px solid var(--part1); }
 .model-box.t2 { border-top: 4px solid var(--part2); }
 .model-box.t3 { border-top: 4px solid var(--part3); }
-.model-box h4 { font-family: 'Cormorant Garamond', serif; color: var(--gold-light); font-size: 1.2rem; margin-bottom: .7rem; }
+.model-box h4 { font-family: 'Quicksand', sans-serif; color: var(--gold-light); font-size: 1.2rem; margin-bottom: .7rem; }
 .model-box p { font-size: .9rem; line-height: 1.7; color: rgba(255,255,255,.88); margin-bottom: .6rem; }
 .model-box em { color: var(--gold-light); font-style: italic; }
 .model-box ul { list-style: none; }
 .model-box li { padding: .35rem 0; border-bottom: 1px solid rgba(255,255,255,.1); font-size: .88rem; color: rgba(255,255,255,.9); }
 .model-box li:last-child { border-bottom: none; }
 .model-box .en { display:block; color: var(--gold-light); font-style: italic; font-size: .85rem; margin-top: .15rem; }
-.model-box .meta { font-family: 'DM Mono', monospace; font-size: .72rem; color: var(--gold); margin-top: .6rem; letter-spacing: .05em; }
+.model-box .meta { font-family: 'Quicksand', sans-serif; font-size: .72rem; color: var(--gold); margin-top: .6rem; letter-spacing: .05em; }
 .qtype-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; font-size: .82rem; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
-.qtype-grid .h { background: var(--navy); color: var(--gold-light); font-family: 'DM Mono', monospace; font-size: .68rem; letter-spacing: .06em; text-transform: uppercase; padding: .6rem .8rem; }
+.qtype-grid .h { background: var(--navy); color: var(--gold-light); font-family: 'Quicksand', sans-serif; font-size: .68rem; letter-spacing: .06em; text-transform: uppercase; padding: .6rem .8rem; }
 .qtype-grid .c { padding: .6rem .8rem; border-top: 1px solid var(--border); background: white; }
 .qtype-grid .c.active { background: var(--gold-pale); font-weight: 600; color: var(--navy); border-left: 3px solid var(--gold); }
 @media (max-width: 600px) { .qtype-grid { grid-template-columns: 1fr; } .qtype-grid .h:nth-child(2) { display: none; } }
 .scaffold { display: grid; gap: .8rem; margin-top: .6rem; }
-.scaffold-row label { font-family: 'DM Mono', monospace; font-size: .66rem; letter-spacing: .08em; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: .3rem; }
+.scaffold-row label { font-family: 'Quicksand', sans-serif; font-size: .66rem; letter-spacing: .08em; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: .3rem; }
 .scaffold-row textarea { min-height: 52px; }
 .weak-better { display: grid; gap: .6rem; margin-bottom: 1rem; }
 .wb-line { border-radius: 7px; padding: .7rem .9rem; font-size: .87rem; }
 .wb-line.weak { background: var(--wrong-bg); color: #6e1826; }
 .wb-line.better { background: var(--warn-bg); color: var(--warn); }
 .wb-line.stronger { background: var(--correct-bg); color: #1d5340; }
-.wb-line .lvl-lbl { font-family: 'DM Mono', monospace; font-size: .64rem; letter-spacing: .08em; text-transform: uppercase; display: block; margin-bottom: .25rem; opacity: .8; }
+.wb-line .lvl-lbl { font-family: 'Quicksand', sans-serif; font-size: .64rem; letter-spacing: .08em; text-transform: uppercase; display: block; margin-bottom: .25rem; opacity: .8; }
 .roadmap-part { border: 1px solid var(--border); border-radius: 9px; padding: 1rem 1.1rem; margin-bottom: .9rem; background: white; }
-.roadmap-part h5 { font-family: 'DM Mono', monospace; font-size: .74rem; letter-spacing: .06em; text-transform: uppercase; color: var(--navy); margin-bottom: .6rem; }
+.roadmap-part h5 { font-family: 'Quicksand', sans-serif; font-size: .74rem; letter-spacing: .06em; text-transform: uppercase; color: var(--navy); margin-bottom: .6rem; }
 .roadmap-fields { display: grid; gap: .6rem; }
 .roadmap-fields textarea { min-height: 44px; font-size: .86rem; }
 .note-tip { font-size: .74rem; color: var(--warn); margin-top: .25rem; display: none; }
 .note-tip.show { display: block; }
 .toolkit-cat { background: white; border: 1px solid var(--border); border-radius: 8px; margin-bottom: .6rem; overflow: hidden; }
-.toolkit-cat summary { padding: .7rem 1rem; cursor: pointer; font-family: 'DM Mono', monospace; font-size: .76rem; text-transform: uppercase; letter-spacing: .05em; color: var(--navy); background: var(--white); list-style: none; }
+.toolkit-cat summary { padding: .7rem 1rem; cursor: pointer; font-family: 'Quicksand', sans-serif; font-size: .76rem; text-transform: uppercase; letter-spacing: .05em; color: var(--navy); background: var(--white); list-style: none; }
 .toolkit-cat summary::-webkit-details-marker { display: none; }
 .toolkit-cat summary::before { content: '+ '; color: var(--gold); font-weight: 700; }
 .toolkit-cat[open] summary::before { content: '– '; }
 .toolkit-cat ul { list-style: none; padding: .3rem 1rem 1rem; }
 .toolkit-cat li { font-size: .87rem; padding: .3rem 0; font-style: italic; color: var(--text); }
 .timer-box { display: flex; align-items: center; gap: 1.2rem; margin-top: 1rem; flex-wrap: wrap; }
-.timer-display { font-family: 'DM Mono', monospace; font-size: 2.1rem; color: var(--navy); min-width: 4.5rem; }
+.timer-display { font-family: 'Quicksand', sans-serif; font-size: 2.1rem; color: var(--navy); min-width: 4.5rem; }
 .timer-display.low { color: var(--wrong); }
 .checklist { display: flex; flex-direction: column; gap: .6rem; }
 .checklist label { display: flex; gap: .65rem; align-items: flex-start; font-size: .9rem; cursor: pointer; }
 .checklist input[type=checkbox] { width: 18px; height: 18px; margin-top: .15rem; accent-color: var(--gold); flex-shrink: 0; }
 .correction-block { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 1rem; }
-.cb-head { padding: .8rem 1.1rem; font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; font-weight: 600; color: white; }
+.cb-head { padding: .8rem 1.1rem; font-family: 'Quicksand', sans-serif; font-size: 1.25rem; font-weight: 600; color: white; }
 .cb-head.h1 { background: var(--part1); } .cb-head.h2 { background: var(--part2); } .cb-head.h3 { background: var(--part3); } .cb-head.hn { background: var(--navy); }
 .cb-body { padding: 1rem 1.2rem; background: white; }
 .cb-body p { font-size: .9rem; margin-bottom: .7rem; }
@@ -184,7 +184,7 @@ textarea:focus, input[type=text]:focus { outline: none; border-color: var(--gold
 .cb-body li:last-child { border-bottom: none; }
 .cb-body li::before { content: '◆'; position: absolute; left: 0; color: var(--gold); font-size: .7rem; top: .55rem; }
 .cb-body li .en { display: block; font-style: italic; color: var(--navy-light); font-size: .86rem; margin-top: .2rem; }
-.cb-body li .src { font-family: 'DM Mono', monospace; font-size: .68rem; color: var(--muted); }
+.cb-body li .src { font-family: 'Quicksand', sans-serif; font-size: .68rem; color: var(--muted); }
 .print-only { display: none; }
 .visit-count { text-align: center; padding: .8rem 0 1.4rem; }
 .visit-count img { height: 16px; vertical-align: middle; }
@@ -225,7 +225,7 @@ textarea:focus, input[type=text]:focus { outline: none; border-color: var(--gold
 
 <header class="site-header">
   <div class="header-inner">
-    <div class="badge">DSCG — UE12 Business English · Épreuve orale, partie 2</div>
+    <div class="badge">DSCG, UE12 Business English · Épreuve orale, partie 2</div>
     <h1>Structured Oral Response Trainer<br><em>Environmental Accounting Standards</em></h1>
     <p class="lede">Cette page prépare une réponse ORALE structurée à la question posée sur le texte, pas une dissertation écrite. Vous apprenez une méthode transférable : analyser la question, construire des arguments avec le texte ET vos connaissances, préparer des notes courtes, puis parler à partir de ces notes.</p>
     <div class="question-box">
@@ -249,7 +249,7 @@ textarea:focus, input[type=text]:focus { outline: none; border-color: var(--gold
     <p>The IFRS Foundation Trustees are currently appointing a Chair and Vice-Chair(s) to the ISSB and will commence searching for members to fill the additional board positions.</p>
     <p>Given this announcement, you and your organisation should consider whether sustainability is treated as a communications process or as a core strategic risk and opportunity, and whether climate performance is given the attention it needs in this fast-paced and changing environment.</p>
     <p>The first IFRS Sustainability Disclosure Standard in climate will be a <span class="hl">game-changer</span> with the potential to fundamentally change how organisations report their risks and opportunities. Now is the time to prepare.</p>
-    <p class="src">Source: KPMG Newsroom, "New International Sustainability Standards Board is a 'game-changer'" — Adrian King, 4 November 2021.</p>
+    <p class="src">Source: KPMG Newsroom, "New International Sustainability Standards Board is a 'game-changer'", Adrian King, 4 November 2021.</p>
   </div>
 </aside>
 <div class="source-backdrop" id="sourceBackdrop" onclick="toggleSource(false)"></div>
@@ -263,7 +263,7 @@ textarea:focus, input[type=text]:focus { outline: none; border-color: var(--gold
   <div class="strategy-box"><span class="lbl">Exam strategy</span>Before looking for arguments, make sure you know exactly what the question asks.</div>
 
   <div class="ex-card" id="exInstr">
-    <div class="ex-q">What is the <em>instruction phrase</em> in this question — the part that tells you what kind of answer is expected?</div>
+    <div class="ex-q">What is the <em>instruction phrase</em> in this question, the part that tells you what kind of answer is expected?</div>
     <div class="mcq-options">
       <button class="mcq-btn" onclick="checkMCQ(this,false,'exInstr','C\'est un mot-cl\u00e9 du sujet (le domaine concern\u00e9), pas l\'instruction elle-m\u00eame.')"><span class="letter">A</span> environmental accounting standards</button>
       <button class="mcq-btn" onclick="checkMCQ(this,true,'exInstr','Exact. \u00ab To what extent \u00bb demande une r\u00e9ponse nuanc\u00e9e, par degr\u00e9s \u2014 jamais un simple oui/non.')"><span class="letter">B</span> to what extent</button>
@@ -282,14 +282,14 @@ textarea:focus, input[type=text]:focus { outline: none; border-color: var(--gold
     </div>
     <div class="fb-grid" id="exReform-fb"></div>
     <div class="reveal" id="exReform-model">
-      <div class="model-box"><h4>Modèle — reformulation</h4>
+      <div class="model-box"><h4>Modèle, reformulation</h4>
       <p>I have to decide how far new sustainability accounting standards can genuinely help reduce emissions, or whether they mainly improve information without changing companies' actual behaviour.</p>
       </div>
     </div>
   </div>
 
   <div class="section-title"><span class="section-num">02</span> Identify the Type of Question</div>
-  <p class="section-sub">Le plan dépend de la question posée — il n'existe pas un plan unique pour toutes les questions du DSCG. Voici quelques types courants :</p>
+  <p class="section-sub">Le plan dépend de la question posée, il n'existe pas un plan unique pour toutes les questions du DSCG. Voici quelques types courants :</p>
 
   <div class="ex-card">
     <div class="qtype-grid">
@@ -314,24 +314,24 @@ textarea:focus, input[type=text]:focus { outline: none; border-color: var(--gold
     <div class="feedback" id="exQtype-fb"></div>
   </div>
 
-  <div class="strategy-box"><span class="lbl">For this question</span>Part 1 — Advantages · Part 2 — Limits · Part 3 — Overall assessment. Une autre question du DSCG demanderait une autre structure : ne mémorisez jamais un plan unique.</div>
+  <div class="strategy-box"><span class="lbl">For this question</span>Part 1, Advantages · Part 2, Limits · Part 3, Overall assessment. Une autre question du DSCG demanderait une autre structure : ne mémorisez jamais un plan unique.</div>
 
   <div class="section-title"><span class="section-num">03</span> Brainstorm &amp; Sort</div>
-  <p class="section-sub">Classez chaque idée dans la bonne partie : <strong>Advantages</strong>, <strong>Limits</strong>, ou <strong>Overall assessment</strong>. Certaines viennent du texte, d'autres de vos connaissances — les deux sont nécessaires.</p>
+  <p class="section-sub">Classez chaque idée dans la bonne partie : <strong>Advantages</strong>, <strong>Limits</strong>, ou <strong>Overall assessment</strong>. Certaines viennent du texte, d'autres de vos connaissances, les deux sont nécessaires.</p>
   <div class="strategy-box"><span class="lbl">Rule</span>Do not rely only on the document. Use it as a starting point, then add relevant knowledge and examples.</div>
 
   <div id="ideaList"></div>
   <div class="feedback" id="sortSummary"></div>
 
   <div class="section-title"><span class="section-num">04</span> Connect Document and Knowledge</div>
-  <p class="section-sub">Un bon argument enrichit le document avec vos connaissances — il ne se contente pas de le paraphraser.</p>
+  <p class="section-sub">Un bon argument enrichit le document avec vos connaissances, il ne se contente pas de le paraphraser.</p>
 
   <div class="ex-card">
     <div class="ex-q">Worked example</div>
     <div class="weak-better">
       <div class="wb-line"><span class="lvl-lbl">From the document</span>The ISSB aims to give sustainability information the same rigour and comparability as financial information. <span class="src-tag src-doc">texte, §2</span></div>
       <div class="wb-line"><span class="lvl-lbl">From your knowledge</span>Financial information is already subject to statutory audit requirements to ensure its reliability. <span class="src-tag src-ext">connaissances</span></div>
-      <div class="wb-line better"><span class="lvl-lbl">Argument you can build</span>Giving sustainability data the same rigour as financial data is only meaningful if it is also audited with the same rigour — pointing to the need for assurance requirements alongside the ISSB standards.</div>
+      <div class="wb-line better"><span class="lvl-lbl">Argument you can build</span>Giving sustainability data the same rigour as financial data is only meaningful if it is also audited with the same rigour, pointing to the need for assurance requirements alongside the ISSB standards.</div>
     </div>
   </div>
 
@@ -345,7 +345,7 @@ textarea:focus, input[type=text]:focus { outline: none; border-color: var(--gold
     <div class="fb-grid" id="exConnect-fb"></div>
     <div class="reveal" id="exConnect-model">
       <div class="model-box"><h4>Exemple possible</h4>
-      <p>ISSB standards remain jurisdiction-specific and largely voluntary, but binding regional rules such as the European CSRD show that mandatory reporting achieves far more consistent adoption — suggesting that global standards work best alongside regional legislation, not instead of it.</p>
+      <p>ISSB standards remain jurisdiction-specific and largely voluntary, but binding regional rules such as the European CSRD show that mandatory reporting achieves far more consistent adoption, suggesting that global standards work best alongside regional legislation, not instead of it.</p>
       </div>
     </div>
   </div>
@@ -356,14 +356,14 @@ textarea:focus, input[type=text]:focus { outline: none; border-color: var(--gold
   <div class="ex-card">
     <div class="ex-q">Why this matters</div>
     <div class="weak-better">
-      <div class="wb-line weak"><span class="lvl-lbl">Idea only — too weak</span>New accounting standards give investors better information.</div>
-      <div class="wb-line better"><span class="lvl-lbl">+ Explain — better</span>New accounting standards give investors better information because they make climate information as rigorous and comparable as financial data.</div>
-      <div class="wb-line stronger"><span class="lvl-lbl">+ Example — stronger</span>…For example, the ISSB's first standard builds on the existing TCFD framework, which has already pushed boards to treat climate as a strategic risk rather than a communications exercise.</div>
+      <div class="wb-line weak"><span class="lvl-lbl">Idea only, too weak</span>New accounting standards give investors better information.</div>
+      <div class="wb-line better"><span class="lvl-lbl">+ Explain, better</span>New accounting standards give investors better information because they make climate information as rigorous and comparable as financial data.</div>
+      <div class="wb-line stronger"><span class="lvl-lbl">+ Example, stronger</span>…For example, the ISSB's first standard builds on the existing TCFD framework, which has already pushed boards to treat climate as a strategic risk rather than a communications exercise.</div>
     </div>
   </div>
 
   <div class="ex-card" id="exBuild1">
-    <div class="ex-q">Part 1 — Advantages <span class="part-tag tag-1">Build one argument</span></div>
+    <div class="ex-q">Part 1, Advantages <span class="part-tag tag-1">Build one argument</span></div>
     <div class="scaffold">
       <div class="scaffold-row"><label>Idea</label><textarea id="b1-idea" data-persist placeholder="New accounting standards could…"></textarea></div>
       <div class="scaffold-row"><label>Explain</label><textarea id="b1-explain" data-persist placeholder="This matters because…"></textarea></div>
@@ -376,17 +376,17 @@ textarea:focus, input[type=text]:focus { outline: none; border-color: var(--gold
     </div>
     <div class="fb-grid" id="exBuild1-fb"></div>
     <div class="reveal" id="exBuild1-model">
-      <div class="model-box t1"><h4>Modèle — Part 1</h4>
-      <p><em>Idea —</em> New standards push boards to treat climate as a core strategic risk, not just a communications exercise.</p>
-      <p><em>Explain —</em> Because the ISSB's "climate first" approach builds on the existing TCFD framework, a proven strategic-risk model that stretches planning horizons.</p>
-      <p><em>Example —</em> For example, the initiative is backed by the G20 and the Financial Stability Board, giving it real institutional weight and global scale.</p>
-      <p><em>Link —</em> This shows that, by redirecting attention and eventually capital towards climate-responsible companies, the standards can genuinely support decision-making on climate risk.</p>
+      <div class="model-box t1"><h4>Modèle, Part 1</h4>
+      <p><em>Idea ,</em> New standards push boards to treat climate as a core strategic risk, not just a communications exercise.</p>
+      <p><em>Explain ,</em> Because the ISSB's "climate first" approach builds on the existing TCFD framework, a proven strategic-risk model that stretches planning horizons.</p>
+      <p><em>Example ,</em> For example, the initiative is backed by the G20 and the Financial Stability Board, giving it real institutional weight and global scale.</p>
+      <p><em>Link ,</em> This shows that, by redirecting attention and eventually capital towards climate-responsible companies, the standards can genuinely support decision-making on climate risk.</p>
       </div>
     </div>
   </div>
 
   <div class="ex-card" id="exBuild2">
-    <div class="ex-q">Part 2 — Limits <span class="part-tag tag-2">Build one argument</span></div>
+    <div class="ex-q">Part 2, Limits <span class="part-tag tag-2">Build one argument</span></div>
     <div class="scaffold">
       <div class="scaffold-row"><label>Idea</label><textarea id="b2-idea" data-persist placeholder="New standards could also…"></textarea></div>
       <div class="scaffold-row"><label>Explain</label><textarea id="b2-explain" data-persist placeholder="This is a concern because…"></textarea></div>
@@ -399,11 +399,11 @@ textarea:focus, input[type=text]:focus { outline: none; border-color: var(--gold
     </div>
     <div class="fb-grid" id="exBuild2-fb"></div>
     <div class="reveal" id="exBuild2-model">
-      <div class="model-box t2"><h4>Modèle — Part 2</h4>
-      <p><em>Idea —</em> A disclosure standard does not, by itself, cut a single tonne of emissions.</p>
-      <p><em>Explain —</em> Because reporting only creates the information that investors could act on — it does not oblige any company to actually reduce its impact.</p>
-      <p><em>Example —</em> For example, standards remain "jurisdiction specific", so adoption is uneven across countries, and without strict auditing or penalties, companies may comply on paper only.</p>
-      <p><em>Link —</em> This shows that, on its own, disclosure is a necessary but insufficient tool in the fight against climate change.</p>
+      <div class="model-box t2"><h4>Modèle, Part 2</h4>
+      <p><em>Idea ,</em> A disclosure standard does not, by itself, cut a single tonne of emissions.</p>
+      <p><em>Explain ,</em> Because reporting only creates the information that investors could act on, it does not oblige any company to actually reduce its impact.</p>
+      <p><em>Example ,</em> For example, standards remain "jurisdiction specific", so adoption is uneven across countries, and without strict auditing or penalties, companies may comply on paper only.</p>
+      <p><em>Link ,</em> This shows that, on its own, disclosure is a necessary but insufficient tool in the fight against climate change.</p>
       </div>
     </div>
   </div>
@@ -415,10 +415,10 @@ textarea:focus, input[type=text]:focus { outline: none; border-color: var(--gold
     <div class="ex-q">Which plan is the most logical for this question?</div>
     <p class="section-sub" style="margin:-0.4rem 0 1rem">Les quatre options utilisent les mêmes idées du plan retenu. Une seule les organise dans un ordre qui construit un raisonnement.</p>
     <div class="mcq-options">
-      <button class="mcq-btn" onclick="checkMCQ(this,true,'exPlan','Exact. On établit d’abord ce que les nouvelles normes apportent, on en expose ensuite les limites, puis on peut évaluer le degré réel de leur utilité — chaque partie nourrit l’évaluation finale.')"><span class="letter">A</span> Advantages → Limits → Overall assessment</button>
-      <button class="mcq-btn" onclick="checkMCQ(this,false,'exPlan','Séduisant mais prématuré : critiquer les limites d’un dispositif avant même d’avoir montré ce qu’il apporte prive l’auditeur de repères — les avantages doivent être établis en premier.')"><span class="letter">B</span> Limits → Advantages → Overall assessment</button>
+      <button class="mcq-btn" onclick="checkMCQ(this,true,'exPlan','Exact. On établit d’abord ce que les nouvelles normes apportent, on en expose ensuite les limites, puis on peut évaluer le degré réel de leur utilité, chaque partie nourrit l’évaluation finale.')"><span class="letter">A</span> Advantages → Limits → Overall assessment</button>
+      <button class="mcq-btn" onclick="checkMCQ(this,false,'exPlan','Séduisant mais prématuré : critiquer les limites d’un dispositif avant même d’avoir montré ce qu’il apporte prive l’auditeur de repères, les avantages doivent être établis en premier.')"><span class="letter">B</span> Limits → Advantages → Overall assessment</button>
       <button class="mcq-btn" onclick="checkMCQ(this,false,'exPlan','Cela place la conclusion (l’évaluation du degré) en ouverture, ce qui revient à donner la réponse avant d’avoir pesé les arguments qui la justifient.')"><span class="letter">C</span> Overall assessment → Advantages → Limits</button>
-      <button class="mcq-btn" onclick="checkMCQ(this,false,'exPlan','Presque : mais l’évaluation globale doit tenir compte des limites, qui ne sont pas encore présentées à ce stade — l’évaluer avant de les exposer est prématuré.')"><span class="letter">D</span> Advantages → Overall assessment → Limits</button>
+      <button class="mcq-btn" onclick="checkMCQ(this,false,'exPlan','Presque : mais l’évaluation globale doit tenir compte des limites, qui ne sont pas encore présentées à ce stade, l’évaluer avant de les exposer est prématuré.')"><span class="letter">D</span> Advantages → Overall assessment → Limits</button>
     </div>
     <div class="feedback" id="exPlan-fb"></div>
   </div>
@@ -438,11 +438,11 @@ textarea:focus, input[type=text]:focus { outline: none; border-color: var(--gold
   </div>
 
   <div class="ex-card" id="exIntroBuild">
-    <div class="ex-q">Build your 3-line oral introduction<span class="sub">Une phrase par ligne. Restez court — c'est ce que vous direz, pas ce que vous lirez.</span></div>
+    <div class="ex-q">Build your 3-line oral introduction<span class="sub">Une phrase par ligne. Restez court, c'est ce que vous direz, pas ce que vous lirez.</span></div>
     <div class="scaffold">
-      <div class="scaffold-row"><label>1 — Position</label><textarea id="int-position" data-persist placeholder="New standards are likely to…, but…"></textarea></div>
-      <div class="scaffold-row"><label>2 — Main issue</label><textarea id="int-issue" data-persist placeholder="They offer real benefits, but they also…"></textarea></div>
-      <div class="scaffold-row"><label>3 — Announce structure</label><textarea id="int-plan" data-persist placeholder="I will first consider… before examining…"></textarea></div>
+      <div class="scaffold-row"><label>1, Position</label><textarea id="int-position" data-persist placeholder="New standards are likely to…, but…"></textarea></div>
+      <div class="scaffold-row"><label>2, Main issue</label><textarea id="int-issue" data-persist placeholder="They offer real benefits, but they also…"></textarea></div>
+      <div class="scaffold-row"><label>3, Announce structure</label><textarea id="int-plan" data-persist placeholder="I will first consider… before examining…"></textarea></div>
     </div>
     <div class="toolbar">
       <button class="btn gold" onclick="analyzeIntroBuild()">Analyser mon introduction</button>
@@ -450,7 +450,7 @@ textarea:focus, input[type=text]:focus { outline: none; border-color: var(--gold
     </div>
     <div class="fb-grid" id="exIntroBuild-fb"></div>
     <div class="reveal" id="exIntroBuild-model">
-      <div class="model-box"><h4>Modèle — introduction orale</h4>
+      <div class="model-box"><h4>Modèle, introduction orale</h4>
       <p>New environmental accounting standards are a genuine step forward, but I do not think they can fight climate change on their own.</p>
       <p>They give investors and boards much better information, but information alone does not reduce emissions.</p>
       <p>I will first consider their main advantages before examining their limits and assessing their overall impact.</p>
@@ -477,42 +477,42 @@ textarea:focus, input[type=text]:focus { outline: none; border-color: var(--gold
     </div>
     <div class="fb-grid" id="exNuance-fb"></div>
     <div class="reveal" id="exNuance-model">
-      <div class="model-box"><h4>Modèle — nuance</h4>
+      <div class="model-box"><h4>Modèle, nuance</h4>
       <p>Sustainability reporting standards can help address the climate crisis to some extent, but this largely depends on whether investors act on the disclosed information and whether binding regulation and auditing accompany the standards.</p>
       </div>
     </div>
   </div>
 
   <div class="section-title"><span class="section-num">09</span> Build Your Oral Roadmap</div>
-  <p class="section-sub">Do not write your full answer. Use keywords and short notes — you should speak from your notes, not read them.</p>
+  <p class="section-sub">Do not write your full answer. Use keywords and short notes, you should speak from your notes, not read them.</p>
 
   <div class="roadmap-part">
     <h5>My position</h5>
     <div class="roadmap-fields"><textarea id="rm-position" data-persist oninput="checkNoteLength(this)" placeholder="keywords only"></textarea><div class="note-tip" id="tip-rm-position">Keep your notes short. You should speak from your notes, not read them.</div></div>
     <div class="toolbar"><button class="btn ghost" onclick="reveal('rm-position-model')">Possible answer</button></div>
-    <div class="reveal" id="rm-position-model"><div class="model-box"><p>genuine step forward — but not enough alone</p></div></div>
+    <div class="reveal" id="rm-position-model"><div class="model-box"><p>genuine step forward, but not enough alone</p></div></div>
   </div>
   <div class="roadmap-part">
     <h5>Introduction</h5>
     <div class="roadmap-fields"><textarea id="rm-intro" data-persist oninput="checkNoteLength(this)" placeholder="keywords only"></textarea><div class="note-tip" id="tip-rm-intro">Keep your notes short. You should speak from your notes, not read them.</div></div>
     <div class="toolbar"><button class="btn ghost" onclick="reveal('rm-intro-model')">Possible answer</button></div>
-    <div class="reveal" id="rm-intro-model"><div class="model-box"><p>info vs action — plan: advantages / limits / assessment</p></div></div>
+    <div class="reveal" id="rm-intro-model"><div class="model-box"><p>info vs action, plan: advantages / limits / assessment</p></div></div>
   </div>
   <div class="roadmap-part">
-    <h5>Part 1 — Advantages <span class="part-tag tag-1">argument · example</span></h5>
-    <div class="roadmap-fields"><textarea id="rm-p1" data-persist oninput="checkNoteLength(this)" placeholder="argument — example"></textarea><div class="note-tip" id="tip-rm-p1">Keep your notes short. You should speak from your notes, not read them.</div></div>
+    <h5>Part 1, Advantages <span class="part-tag tag-1">argument · example</span></h5>
+    <div class="roadmap-fields"><textarea id="rm-p1" data-persist oninput="checkNoteLength(this)" placeholder="argument, example"></textarea><div class="note-tip" id="tip-rm-p1">Keep your notes short. You should speak from your notes, not read them.</div></div>
     <div class="toolbar"><button class="btn ghost" onclick="reveal('rm-p1-model')">Possible answer</button></div>
-    <div class="reveal" id="rm-p1-model"><div class="model-box t1"><p>same rigour as financial data, strategic risk — e.g. TCFD, G20 backing</p></div></div>
+    <div class="reveal" id="rm-p1-model"><div class="model-box t1"><p>same rigour as financial data, strategic risk, e.g. TCFD, G20 backing</p></div></div>
   </div>
   <div class="roadmap-part">
-    <h5>Part 2 — Limits <span class="part-tag tag-2">argument · example</span></h5>
-    <div class="roadmap-fields"><textarea id="rm-p2" data-persist oninput="checkNoteLength(this)" placeholder="argument — example"></textarea><div class="note-tip" id="tip-rm-p2">Keep your notes short. You should speak from your notes, not read them.</div></div>
+    <h5>Part 2, Limits <span class="part-tag tag-2">argument · example</span></h5>
+    <div class="roadmap-fields"><textarea id="rm-p2" data-persist oninput="checkNoteLength(this)" placeholder="argument, example"></textarea><div class="note-tip" id="tip-rm-p2">Keep your notes short. You should speak from your notes, not read them.</div></div>
     <div class="toolbar"><button class="btn ghost" onclick="reveal('rm-p2-model')">Possible answer</button></div>
-    <div class="reveal" id="rm-p2-model"><div class="model-box t2"><p>no automatic emission cuts, uneven adoption — e.g. jurisdiction specific, greenwashing risk</p></div></div>
+    <div class="reveal" id="rm-p2-model"><div class="model-box t2"><p>no automatic emission cuts, uneven adoption, e.g. jurisdiction specific, greenwashing risk</p></div></div>
   </div>
   <div class="roadmap-part">
-    <h5>Part 3 — Overall assessment <span class="part-tag tag-3">optional</span></h5>
-    <div class="roadmap-fields"><textarea id="rm-p3" data-persist oninput="checkNoteLength(this)" placeholder="argument — example"></textarea><div class="note-tip" id="tip-rm-p3">Keep your notes short. You should speak from your notes, not read them.</div></div>
+    <h5>Part 3, Overall assessment <span class="part-tag tag-3">optional</span></h5>
+    <div class="roadmap-fields"><textarea id="rm-p3" data-persist oninput="checkNoteLength(this)" placeholder="argument, example"></textarea><div class="note-tip" id="tip-rm-p3">Keep your notes short. You should speak from your notes, not read them.</div></div>
     <div class="toolbar"><button class="btn ghost" onclick="reveal('rm-p3-model')">Possible answer</button></div>
     <div class="reveal" id="rm-p3-model"><div class="model-box t3"><p>coexist with binding rules (CSRD), audit needed against greenwashing</p></div></div>
   </div>
@@ -520,7 +520,7 @@ textarea:focus, input[type=text]:focus { outline: none; border-color: var(--gold
     <h5>Conclusion</h5>
     <div class="roadmap-fields"><textarea id="rm-concl" data-persist oninput="checkNoteLength(this)" placeholder="final answer / nuance / condition"></textarea><div class="note-tip" id="tip-rm-concl">Keep your notes short. You should speak from your notes, not read them.</div></div>
     <div class="toolbar"><button class="btn ghost" onclick="reveal('rm-concl-model')">Possible answer</button></div>
-    <div class="reveal" id="rm-concl-model"><div class="model-box"><p>can support the fight, cannot win it alone — depends on regulation, audit, trust</p></div></div>
+    <div class="reveal" id="rm-concl-model"><div class="model-box"><p>can support the fight, cannot win it alone, depends on regulation, audit, trust</p></div></div>
   </div>
   <div class="toolbar"><button class="btn gold" onclick="checkRoadmap()">Vérifier mes notes</button></div>
   <div class="feedback" id="roadmap-fb"></div>
@@ -589,7 +589,7 @@ textarea:focus, input[type=text]:focus { outline: none; border-color: var(--gold
   </div>
 
   <div class="section-title"><span class="section-num">★</span> Possible Oral Version</div>
-  <p class="section-sub">Un exemple de contenu possible, présenté en notes courtes — pas un texte à lire, mais une base à reformuler à voix haute.</p>
+  <p class="section-sub">Un exemple de contenu possible, présenté en notes courtes, pas un texte à lire, mais une base à reformuler à voix haute.</p>
 
   <div class="toolbar" style="margin-bottom:1rem">
     <button class="btn gold" onclick="reveal('fullCorrection')">Show a possible oral version</button>
@@ -636,15 +636,15 @@ textarea:focus, input[type=text]:focus { outline: none; border-color: var(--gold
 
     <div class="correction-block">
       <div class="cb-head hn">Conclusion</div>
-      <div class="cb-body"><p>Overall, new environmental accounting standards can support the fight against climate change, but they cannot win it alone. They give investors and boards climate information as rigorous as financial data, and push companies to treat climate as a strategic risk — but a reporting standard cannot force any company to actually cut its emissions. The best outcome combines these standards with binding regulation, rigorous auditing and genuine political will.</p></div>
+      <div class="cb-body"><p>Overall, new environmental accounting standards can support the fight against climate change, but they cannot win it alone. They give investors and boards climate information as rigorous as financial data, and push companies to treat climate as a strategic risk, but a reporting standard cannot force any company to actually cut its emissions. The best outcome combines these standards with binding regulation, rigorous auditing and genuine political will.</p></div>
     </div>
   </div>
 
 </main>
 
 <div class="print-only">
-  <h2 style="font-family:'Cormorant Garamond',serif;color:#0d1b2a;font-size:1.6rem">DSCG UE12 — Oral outline : Environmental Accounting Standards</h2>
-  <p style="font-style:italic;color:#555">Lycée Sidoine Apollinaire — support de révision, pas un texte à lire</p>
+  <h2 style="font-family:'Quicksand',sans-serif;color:#1a2744;font-size:1.6rem">DSCG UE12, Oral outline : Environmental Accounting Standards</h2>
+  <p style="font-style:italic;color:#555">Lycée Sidoine Apollinaire, support de révision, pas un texte à lire</p>
 </div>
 
 <div class="visit-count" id="visitCount"></div>
@@ -777,7 +777,7 @@ function analyzeReform(){
   let lvl='ok';
   const oneWord = /^(yes|no|oui|non)\b/i.test(raw);
   if(oneWord){ lvl='bad'; items.push(['bad','Une question « to what extent » n\'accepte jamais un simple oui/non.']); }
-  else items.push(['good','Vous ne répondez pas par un simple oui/non — bien.']);
+  else items.push(['good','Vous ne répondez pas par un simple oui/non, bien.']);
   const degreeWords=['extent','how far','how much','likely','depend','whether','degree'];
   const hasDegree = degreeWords.some(k=>low.includes(k));
   if(hasDegree) items.push(['good','La notion de degré est présente dans votre reformulation.']);
@@ -869,7 +869,7 @@ function checkRoadmap(){
   const tooLong=ids.filter(id=>wordCount(document.getElementById(id).value)>15);
   const fb=document.getElementById('roadmap-fb');
   if(filled.length<5){ fb.className='feedback show no'; fb.innerHTML='<strong>Roadmap incomplète.</strong> Remplissez au moins Position, Introduction, Part 1, Part 2 et Conclusion.'; return; }
-  if(tooLong.length){ fb.className='feedback show no'; fb.innerHTML='<strong>Certaines notes sont trop longues.</strong> Keep your notes short — you should speak from your notes, not read them.'; return; }
+  if(tooLong.length){ fb.className='feedback show no'; fb.innerHTML='<strong>Certaines notes sont trop longues.</strong> Keep your notes short, you should speak from your notes, not read them.'; return; }
   fb.className='feedback show ok'; fb.innerHTML='<strong>Roadmap prête.</strong> Passez à l\'Oral Challenge : parlez à partir de ces notes, sans les lire.';
   mark('roadmap');
 }

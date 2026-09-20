@@ -3,20 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DSCG UE6 — Structured Oral Response Trainer · Green Revolution</title>
+<title>DSCG UE6, Structured Oral Response Trainer · Green Revolution</title>
 <link rel="icon" type="image/png" href="assets/lsa-logo.png">
 <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
-  --navy: #0d1b2a; --navy-mid: #1a2f45; --navy-light: #2a4a65;
-  --gold: #c9a355; --gold-light: #e8c87a; --gold-pale: rgba(201,163,85,.1);
+  --navy: #1a2744; --navy-mid: #243260; --navy-light: #2d5fa6;
+  --gold: #f5b60f; --gold-light: #f7cd4a; --gold-pale: rgba(245,182,15,.1);
   --ice: #e8f0f5; --white: #f9f7f4; --paper: #fdfcfa; --text: #1c2b3a; --muted: #6b7f90; --border: #d4dde5;
-  --correct: #2e7d5e; --correct-bg: #e8f5ef; --wrong: #9b2335; --wrong-bg: #fce8eb; --warn: #7a5c00; --warn-bg: #fdf3d6;
-  --part1: #1a5c4a; --part1-bg: #e7f3ef; --part2: #8a2f1d; --part2-bg: #f8eae5; --part3: #3a3a6b; --part3-bg: #eceaf4;
+  --correct: #2a7a4b; --correct-bg: #e7f3ec; --wrong: #b5302b; --wrong-bg: #fbe9e8; --warn: #c98f00; --warn-bg: #fdf3d6;
+  --part1: #2a7a4b; --part1-bg: #e7f3ec; --part2: #b5302b; --part2-bg: #fbe9e8; --part3: #2d5fa6; --part3-bg: #e8eef8;
 }
 html { scroll-behavior: smooth; }
-body { background: var(--paper); color: var(--text); font-family: 'Karla', sans-serif; font-weight: 400; line-height: 1.65; min-height: 100vh; }
+body { background: var(--paper); color: var(--text); font-family: 'Quicksand', sans-serif; font-weight: 400; line-height: 1.65; min-height: 100vh; }
 a { color: inherit; }
 .topbar { background: var(--navy); color: rgba(255,255,255,.75); font-size: 12.5px; }
 .topbar-inner { max-width: 900px; margin: 0 auto; padding: 9px 2rem; display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
@@ -29,34 +29,34 @@ a { color: inherit; }
 .site-header::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
 .site-header::before { content: ''; position: absolute; top: -60px; right: -60px; width: 300px; height: 300px; border-radius: 50%; background: radial-gradient(circle, rgba(201,163,85,.12) 0%, transparent 65%); pointer-events: none; }
 .header-inner { max-width: 900px; margin: 0 auto; position: relative; }
-.badge { display: inline-block; font-family: 'DM Mono', monospace; font-size: .68rem; letter-spacing: .18em; text-transform: uppercase; color: var(--gold); border: 1px solid rgba(201,163,85,.35); padding: .2rem .75rem; border-radius: 2px; margin-bottom: 1rem; }
-.site-header h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.7rem, 4.5vw, 2.7rem); font-weight: 700; line-height: 1.15; margin-bottom: .6rem; }
+.badge { display: inline-block; font-family: 'Quicksand', sans-serif; font-size: .68rem; letter-spacing: .18em; text-transform: uppercase; color: var(--gold); border: 1px solid rgba(201,163,85,.35); padding: .2rem .75rem; border-radius: 2px; margin-bottom: 1rem; }
+.site-header h1 { font-family: 'Quicksand', sans-serif; font-size: clamp(1.7rem, 4.5vw, 2.7rem); font-weight: 700; line-height: 1.15; margin-bottom: .6rem; }
 .site-header h1 em { color: var(--gold-light); font-style: italic; }
 .site-header .lede { font-size: .92rem; color: rgba(255,255,255,.72); max-width: 640px; }
 .question-box { background: rgba(255,255,255,.06); border-left: 3px solid var(--gold); padding: .9rem 1.2rem; border-radius: 0 6px 6px 0; margin-top: 1.2rem; }
-.question-box .q-label { font-family: 'DM Mono', monospace; font-size: .68rem; letter-spacing: .12em; text-transform: uppercase; color: var(--gold); margin-bottom: .3rem; }
-.question-box .q-text { font-family: 'Cormorant Garamond', serif; font-size: 1.35rem; font-style: italic; color: #fff; }
-.source-toggle { display: inline-flex; align-items: center; gap: .45rem; background: rgba(255,255,255,.08); color: #fff; border: 1px solid rgba(255,255,255,.25); border-radius: 20px; padding: .45rem 1rem; font-family: 'DM Mono', monospace; font-size: .72rem; letter-spacing: .04em; cursor: pointer; margin-top: 1.1rem; transition: all .18s; }
+.question-box .q-label { font-family: 'Quicksand', sans-serif; font-size: .68rem; letter-spacing: .12em; text-transform: uppercase; color: var(--gold); margin-bottom: .3rem; }
+.question-box .q-text { font-family: 'Quicksand', sans-serif; font-size: 1.35rem; font-style: italic; color: #fff; }
+.source-toggle { display: inline-flex; align-items: center; gap: .45rem; background: rgba(255,255,255,.08); color: #fff; border: 1px solid rgba(255,255,255,.25); border-radius: 20px; padding: .45rem 1rem; font-family: 'Quicksand', sans-serif; font-size: .72rem; letter-spacing: .04em; cursor: pointer; margin-top: 1.1rem; transition: all .18s; }
 .source-toggle:hover { border-color: var(--gold); background: rgba(255,255,255,.14); }
 .source-backdrop { position: fixed; inset: 0; background: rgba(13,27,42,.45); z-index: 190; opacity: 0; pointer-events: none; transition: opacity .2s; }
 .source-backdrop.open { opacity: 1; pointer-events: auto; }
 .source-panel { position: fixed; top: 0; left: 0; height: 100vh; width: 380px; max-width: 90vw; background: var(--paper); z-index: 200; box-shadow: 8px 0 30px rgba(13,27,42,.25); transform: translateX(-100%); transition: transform .25s cubic-bezier(.4,0,.2,1); display: flex; flex-direction: column; }
 .source-panel.open { transform: translateX(0); }
-.source-head { background: var(--navy); color: #fff; padding: .9rem 1.1rem; display: flex; align-items: center; gap: .6rem; font-family: 'DM Mono', monospace; font-size: .72rem; letter-spacing: .05em; text-transform: uppercase; flex-shrink: 0; }
+.source-head { background: var(--navy); color: #fff; padding: .9rem 1.1rem; display: flex; align-items: center; gap: .6rem; font-family: 'Quicksand', sans-serif; font-size: .72rem; letter-spacing: .05em; text-transform: uppercase; flex-shrink: 0; }
 .source-head .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
 .source-head .sp-title { flex: 1; }
 .source-head button { background: none; border: 1px solid rgba(255,255,255,.3); color: #fff; border-radius: 6px; padding: .3rem .6rem; font-family: inherit; font-size: .68rem; cursor: pointer; }
 .source-head button:hover { border-color: var(--gold); }
 .source-body { padding: 1.2rem 1.3rem; overflow-y: auto; font-size: .87rem; line-height: 1.65; flex: 1; }
 .source-body p { margin-bottom: .85rem; }
-.source-body p.lede { font-weight: 600; color: var(--navy); font-size: .95rem; font-family: 'Cormorant Garamond', serif; }
+.source-body p.lede { font-weight: 600; color: var(--navy); font-size: .95rem; font-family: 'Quicksand', sans-serif; }
 .source-body .hl { background: var(--gold-pale); padding: 0 .15rem; }
 .source-body .src { font-size: .74rem; color: var(--muted); font-style: italic; border-top: 1px solid var(--border); padding-top: .7rem; margin-top: .3rem; word-break: break-all; }
 @media (max-width: 600px) { .source-panel { width: 100vw; max-width: 100vw; } }
 .step-nav-wrap { background: var(--navy-mid); position: sticky; top: 0; z-index: 60; box-shadow: 0 2px 10px rgba(0,0,0,.08); }
 .step-nav { max-width: 900px; margin: 0 auto; display: flex; overflow-x: auto; scrollbar-width: none; }
 .step-nav::-webkit-scrollbar { display: none; }
-.step-pill { flex: 1; min-width: 84px; display: flex; flex-direction: column; align-items: center; gap: .25rem; padding: .6rem .4rem; background: none; border: none; color: rgba(255,255,255,.55); cursor: pointer; font-family: 'DM Mono', monospace; font-size: .62rem; letter-spacing: .03em; text-transform: uppercase; border-bottom: 3px solid transparent; transition: all .15s; }
+.step-pill { flex: 1; min-width: 84px; display: flex; flex-direction: column; align-items: center; gap: .25rem; padding: .6rem .4rem; background: none; border: none; color: rgba(255,255,255,.55); cursor: pointer; font-family: 'Quicksand', sans-serif; font-size: .62rem; letter-spacing: .03em; text-transform: uppercase; border-bottom: 3px solid transparent; transition: all .15s; }
 .step-pill .num { width: 1.5rem; height: 1.5rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: .72rem; border: 1.5px solid rgba(255,255,255,.35); }
 .step-pill.active { color: #fff; border-bottom-color: var(--gold); }
 .step-pill.active .num { background: var(--gold); color: var(--navy); border-color: var(--gold); }
@@ -64,10 +64,10 @@ a { color: inherit; }
 .step-pill.done .num::before { content: '✓'; }
 .step-pill.done .num span { display: none; }
 .main { max-width: 900px; margin: 0 auto; padding: 2.2rem 2rem 4rem; }
-.section-title { display: flex; align-items: center; gap: .9rem; font-family: 'Cormorant Garamond', serif; font-size: 1.75rem; font-weight: 700; color: var(--navy); margin: 2.8rem 0 .4rem; }
-.section-num { font-family: 'DM Mono', monospace; font-size: .85rem; color: var(--gold); background: var(--navy); width: 2.2rem; height: 2.2rem; display: flex; align-items: center; justify-content: center; border-radius: 6px; flex-shrink: 0; }
+.section-title { display: flex; align-items: center; gap: .9rem; font-family: 'Quicksand', sans-serif; font-size: 1.75rem; font-weight: 700; color: var(--navy); margin: 2.8rem 0 .4rem; }
+.section-num { font-family: 'Quicksand', sans-serif; font-size: .85rem; color: var(--gold); background: var(--navy); width: 2.2rem; height: 2.2rem; display: flex; align-items: center; justify-content: center; border-radius: 6px; flex-shrink: 0; }
 .section-sub { color: var(--muted); font-size: .9rem; margin-bottom: 1.4rem; max-width: 680px; }
-.part-tag { display:inline-block; font-family:'DM Mono',monospace; font-size:.66rem; letter-spacing:.12em; text-transform:uppercase; padding:.2rem .6rem; border-radius:3px; margin-left:.6rem; vertical-align:middle; }
+.part-tag { display:inline-block; font-family:'Quicksand',sans-serif; font-size:.66rem; letter-spacing:.12em; text-transform:uppercase; padding:.2rem .6rem; border-radius:3px; margin-left:.6rem; vertical-align:middle; }
 .tag-1 { background: var(--part1-bg); color: var(--part1); }
 .tag-2 { background: var(--part2-bg); color: var(--part2); }
 .tag-3 { background: var(--part3-bg); color: var(--part3); }
@@ -76,11 +76,11 @@ a { color: inherit; }
 .ex-q em { font-style: italic; color: var(--gold); }
 .ex-q .sub { display: block; font-weight: 400; color: var(--muted); font-size: .84rem; margin-top: .25rem; }
 .strategy-box { background: var(--gold-pale); border: 1px dashed var(--gold); border-radius: 8px; padding: .85rem 1.1rem; margin-bottom: 1.1rem; font-size: .88rem; color: var(--navy-mid); }
-.strategy-box .lbl { font-family: 'DM Mono', monospace; font-size: .66rem; letter-spacing: .1em; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: .3rem; }
+.strategy-box .lbl { font-family: 'Quicksand', sans-serif; font-size: .66rem; letter-spacing: .1em; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: .3rem; }
 .mcq-options { display: flex; flex-direction: column; gap: .55rem; }
 .mcq-btn { text-align: left; background: var(--white); border: 1.5px solid var(--border); border-radius: 7px; padding: .75rem .9rem; font-family: inherit; font-size: .9rem; color: var(--text); cursor: pointer; transition: all .18s; display: flex; gap: .65rem; align-items: flex-start; line-height: 1.45; }
 .mcq-btn:hover:not(:disabled) { border-color: var(--gold); }
-.mcq-btn .letter { font-family: 'DM Mono', monospace; font-weight: 500; color: var(--gold); flex-shrink: 0; }
+.mcq-btn .letter { font-family: 'Quicksand', sans-serif; font-weight: 500; color: var(--gold); flex-shrink: 0; }
 .mcq-btn:disabled { cursor: default; }
 .mcq-btn.correct { border-color: var(--correct); background: var(--correct-bg); } .mcq-btn.correct .letter { color: var(--correct); }
 .mcq-btn.wrong { border-color: var(--wrong); background: var(--wrong-bg); } .mcq-btn.wrong .letter { color: var(--wrong); }
@@ -91,11 +91,11 @@ a { color: inherit; }
 .feedback strong { font-weight: 700; }
 .idea-card { background: white; border: 1.5px solid var(--border); border-radius: 8px; padding: .8rem 1rem; margin-bottom: .7rem; }
 .idea-text { font-size: .9rem; margin-bottom: .45rem; }
-.src-tag { font-family: 'DM Mono', monospace; font-size: .6rem; letter-spacing: .06em; text-transform: uppercase; padding: .15rem .5rem; border-radius: 3px; display: inline-block; margin-bottom: .5rem; }
+.src-tag { font-family: 'Quicksand', sans-serif; font-size: .6rem; letter-spacing: .06em; text-transform: uppercase; padding: .15rem .5rem; border-radius: 3px; display: inline-block; margin-bottom: .5rem; }
 .src-doc { background: var(--ice); color: var(--navy-light); }
 .src-ext { background: var(--warn-bg); color: var(--warn); }
 .idea-btns { display: flex; gap: .5rem; flex-wrap: wrap; }
-.sort-btn { font-family: 'DM Mono', monospace; font-size: .78rem; border: 1.5px solid var(--border); background: var(--white); color: var(--navy); border-radius: 5px; padding: .35rem .8rem; cursor: pointer; transition: all .15s; }
+.sort-btn { font-family: 'Quicksand', sans-serif; font-size: .78rem; border: 1.5px solid var(--border); background: var(--white); color: var(--navy); border-radius: 5px; padding: .35rem .8rem; cursor: pointer; transition: all .15s; }
 .sort-btn:hover:not(:disabled) { border-color: var(--gold); }
 .sort-btn:disabled { cursor: default; opacity: .55; }
 .sort-btn.chosen-correct { background: var(--correct); color: white; border-color: var(--correct); opacity: 1; }
@@ -106,7 +106,7 @@ a { color: inherit; }
 .field-label { font-size: .84rem; color: var(--muted); margin-bottom: .4rem; }
 textarea, input[type=text] { width: 100%; font-family: inherit; font-size: .92rem; border: 1.5px solid var(--border); border-radius: 7px; padding: .75rem .9rem; color: var(--text); background: #fff; resize: vertical; min-height: 100px; line-height: 1.6; }
 textarea:focus, input[type=text]:focus { outline: none; border-color: var(--gold); }
-.btn { font-family: 'DM Mono', monospace; font-size: .8rem; letter-spacing: .03em; background: var(--navy); color: white; border: none; border-radius: 7px; padding: .68rem 1.3rem; cursor: pointer; transition: all .18s; margin-top: .9rem; }
+.btn { font-family: 'Quicksand', sans-serif; font-size: .8rem; letter-spacing: .03em; background: var(--navy); color: white; border: none; border-radius: 7px; padding: .68rem 1.3rem; cursor: pointer; transition: all .18s; margin-top: .9rem; }
 .btn:hover { background: var(--navy-mid); }
 .btn.gold { background: var(--gold); color: var(--navy); font-weight: 600; }
 .btn.gold:hover { background: var(--gold-light); }
@@ -115,7 +115,7 @@ textarea:focus, input[type=text]:focus { outline: none; border-color: var(--gold
 .toolbar { display: flex; gap: .7rem; flex-wrap: wrap; margin-top: 1rem; }
 .fb-grid { display: grid; gap: .9rem; margin-top: 1.2rem; }
 .fb-panel { border: 1px solid var(--border); border-radius: 9px; background: white; overflow: hidden; }
-.fb-panel-head { padding: .7rem 1rem; font-family: 'DM Mono', monospace; font-size: .76rem; letter-spacing: .04em; text-transform: uppercase; display: flex; align-items: center; gap: .55rem; border-bottom: 1px solid var(--border); }
+.fb-panel-head { padding: .7rem 1rem; font-family: 'Quicksand', sans-serif; font-size: .76rem; letter-spacing: .04em; text-transform: uppercase; display: flex; align-items: center; gap: .55rem; border-bottom: 1px solid var(--border); }
 .fb-panel-head .ic { width: 1.4rem; height: 1.4rem; border-radius: 5px; display: flex; align-items: center; justify-content: center; font-size: .85rem; flex-shrink: 0; font-weight: 700; }
 .fb-panel-body { padding: .85rem 1rem; font-size: .86rem; line-height: 1.6; }
 .fb-panel-body ul { list-style: none; }
@@ -133,43 +133,43 @@ textarea:focus, input[type=text]:focus { outline: none; border-color: var(--gold
 .model-box.t1 { border-top: 4px solid var(--part1); }
 .model-box.t2 { border-top: 4px solid var(--part2); }
 .model-box.t3 { border-top: 4px solid var(--part3); }
-.model-box h4 { font-family: 'Cormorant Garamond', serif; color: var(--gold-light); font-size: 1.2rem; margin-bottom: .7rem; }
+.model-box h4 { font-family: 'Quicksand', sans-serif; color: var(--gold-light); font-size: 1.2rem; margin-bottom: .7rem; }
 .model-box p { font-size: .9rem; line-height: 1.7; color: rgba(255,255,255,.88); margin-bottom: .6rem; }
 .model-box em { color: var(--gold-light); font-style: italic; }
 .qtype-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; font-size: .82rem; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
-.qtype-grid .h { background: var(--navy); color: var(--gold-light); font-family: 'DM Mono', monospace; font-size: .68rem; letter-spacing: .06em; text-transform: uppercase; padding: .6rem .8rem; }
+.qtype-grid .h { background: var(--navy); color: var(--gold-light); font-family: 'Quicksand', sans-serif; font-size: .68rem; letter-spacing: .06em; text-transform: uppercase; padding: .6rem .8rem; }
 .qtype-grid .c { padding: .6rem .8rem; border-top: 1px solid var(--border); background: white; }
 .qtype-grid .c.active { background: var(--gold-pale); font-weight: 600; color: var(--navy); border-left: 3px solid var(--gold); }
 @media (max-width: 600px) { .qtype-grid { grid-template-columns: 1fr; } .qtype-grid .h:nth-child(2) { display: none; } }
 .scaffold { display: grid; gap: .8rem; margin-top: .6rem; }
-.scaffold-row label { font-family: 'DM Mono', monospace; font-size: .66rem; letter-spacing: .08em; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: .3rem; }
+.scaffold-row label { font-family: 'Quicksand', sans-serif; font-size: .66rem; letter-spacing: .08em; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: .3rem; }
 .scaffold-row textarea { min-height: 52px; }
 .weak-better { display: grid; gap: .6rem; margin-bottom: 1rem; }
 .wb-line { border-radius: 7px; padding: .7rem .9rem; font-size: .87rem; }
 .wb-line.weak { background: var(--wrong-bg); color: #6e1826; }
 .wb-line.better { background: var(--warn-bg); color: var(--warn); }
 .wb-line.stronger { background: var(--correct-bg); color: #1d5340; }
-.wb-line .lvl-lbl { font-family: 'DM Mono', monospace; font-size: .64rem; letter-spacing: .08em; text-transform: uppercase; display: block; margin-bottom: .25rem; opacity: .8; }
+.wb-line .lvl-lbl { font-family: 'Quicksand', sans-serif; font-size: .64rem; letter-spacing: .08em; text-transform: uppercase; display: block; margin-bottom: .25rem; opacity: .8; }
 .roadmap-part { border: 1px solid var(--border); border-radius: 9px; padding: 1rem 1.1rem; margin-bottom: .9rem; background: white; }
-.roadmap-part h5 { font-family: 'DM Mono', monospace; font-size: .74rem; letter-spacing: .06em; text-transform: uppercase; color: var(--navy); margin-bottom: .6rem; }
+.roadmap-part h5 { font-family: 'Quicksand', sans-serif; font-size: .74rem; letter-spacing: .06em; text-transform: uppercase; color: var(--navy); margin-bottom: .6rem; }
 .roadmap-fields { display: grid; gap: .6rem; }
 .roadmap-fields textarea { min-height: 44px; font-size: .86rem; }
 .note-tip { font-size: .74rem; color: var(--warn); margin-top: .25rem; display: none; }
 .note-tip.show { display: block; }
 .toolkit-cat { background: white; border: 1px solid var(--border); border-radius: 8px; margin-bottom: .6rem; overflow: hidden; }
-.toolkit-cat summary { padding: .7rem 1rem; cursor: pointer; font-family: 'DM Mono', monospace; font-size: .76rem; text-transform: uppercase; letter-spacing: .05em; color: var(--navy); background: var(--white); list-style: none; }
+.toolkit-cat summary { padding: .7rem 1rem; cursor: pointer; font-family: 'Quicksand', sans-serif; font-size: .76rem; text-transform: uppercase; letter-spacing: .05em; color: var(--navy); background: var(--white); list-style: none; }
 .toolkit-cat summary::-webkit-details-marker { display: none; }
 .toolkit-cat summary::before { content: '+ '; color: var(--gold); font-weight: 700; }
 .toolkit-cat[open] summary::before { content: '– '; }
 .toolkit-cat ul { list-style: none; padding: .3rem 1rem 1rem; }
 .toolkit-cat li { font-size: .87rem; padding: .3rem 0; font-style: italic; color: var(--text); }
 .timer-box { display: flex; align-items: center; gap: 1.2rem; margin-top: 1rem; flex-wrap: wrap; }
-.timer-display { font-family: 'DM Mono', monospace; font-size: 2.1rem; color: var(--navy); min-width: 4.5rem; }
+.timer-display { font-family: 'Quicksand', sans-serif; font-size: 2.1rem; color: var(--navy); min-width: 4.5rem; }
 .checklist { display: flex; flex-direction: column; gap: .6rem; }
 .checklist label { display: flex; gap: .65rem; align-items: flex-start; font-size: .9rem; cursor: pointer; }
 .checklist input[type=checkbox] { width: 18px; height: 18px; margin-top: .15rem; accent-color: var(--gold); flex-shrink: 0; }
 .correction-block { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 1rem; }
-.cb-head { padding: .8rem 1.1rem; font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; font-weight: 600; color: white; }
+.cb-head { padding: .8rem 1.1rem; font-family: 'Quicksand', sans-serif; font-size: 1.25rem; font-weight: 600; color: white; }
 .cb-head.h1 { background: var(--part1); } .cb-head.h2 { background: var(--part2); } .cb-head.h3 { background: var(--part3); } .cb-head.hn { background: var(--navy); }
 .cb-body { padding: 1rem 1.2rem; background: white; }
 .cb-body p { font-size: .9rem; margin-bottom: .7rem; }
@@ -177,7 +177,7 @@ textarea:focus, input[type=text]:focus { outline: none; border-color: var(--gold
 .cb-body li { padding: .45rem 0 .45rem 1.3rem; position: relative; border-bottom: 1px solid var(--ice); font-size: .9rem; }
 .cb-body li:last-child { border-bottom: none; }
 .cb-body li::before { content: '◆'; position: absolute; left: 0; color: var(--gold); font-size: .7rem; top: .55rem; }
-.cb-body li .src { font-family: 'DM Mono', monospace; font-size: .68rem; color: var(--muted); }
+.cb-body li .src { font-family: 'Quicksand', sans-serif; font-size: .68rem; color: var(--muted); }
 .print-only { display: none; }
 .visit-count { text-align: center; padding: .8rem 0 1.4rem; }
 .visit-count img { height: 16px; vertical-align: middle; }
@@ -222,7 +222,7 @@ textarea:focus, input[type=text]:focus { outline: none; border-color: var(--gold
 
 <header class="site-header">
   <div class="header-inner">
-    <div class="badge">DSCG — UE6 Business English · Épreuve orale, partie 2</div>
+    <div class="badge">DSCG, UE6 Business English · Épreuve orale, partie 2</div>
     <h1>Structured Oral Response Trainer<br><em>Green Revolution</em></h1>
     <p class="lede">Cette page prépare une réponse ORALE structurée à la question posée sur le texte, pas une dissertation écrite. Vous apprenez une méthode transférable : analyser la question, construire des arguments avec le texte ET vos connaissances, préparer des notes courtes, puis parler à partir de ces notes.</p>
     <div class="question-box">
@@ -244,7 +244,7 @@ textarea:focus, input[type=text]:focus { outline: none; border-color: var(--gold
     <p>Commenting on the findings, managing director of 3 Sided Cube, Richard Strachan, said: "Reprimanding people doesn't work if we want to reach a mass audience. We have to 'nudge' consumer and brand behaviour towards greener choices. Technology is one of the best tools we have to make this happen."</p>
     <p>Among some of the key issues that consumers are concerned about includes <span class="hl">non-recyclable packaging</span> and complex recycling rules. From the businesses' perspective, the report finds that while they recognise their responsibility to take climate action, the <span class="hl">"lack of government financial support"</span> and guidance remain key barriers to making sustainable changes.</p>
     <p>Recommendations include showing consumers that sustainable lifestyles are "increasing in popularity every day", because shoppers have indicated a greater likelihood to follow through with actions if they believe they are part of a broad trend made up of many individuals.</p>
-    <p class="src">Source: 3 Sided Cube, "Igniting A Green Revolution" report — cited 8 March.</p>
+    <p class="src">Source: 3 Sided Cube, "Igniting A Green Revolution" report, cited 8 March.</p>
   </div>
 </aside>
 <div class="source-backdrop" id="sourceBackdrop" onclick="toggleSource(false)"></div>
@@ -258,7 +258,7 @@ textarea:focus, input[type=text]:focus { outline: none; border-color: var(--gold
   <div class="strategy-box"><span class="lbl">Exam strategy</span>Before looking for arguments, make sure you know exactly what the question asks.</div>
 
   <div class="ex-card" id="exInstr">
-    <div class="ex-q">What is the <em>instruction phrase</em> in this question — the part that tells you what kind of answer is expected?</div>
+    <div class="ex-q">What is the <em>instruction phrase</em> in this question, the part that tells you what kind of answer is expected?</div>
     <div class="mcq-options">
       <button class="mcq-btn" onclick="checkMCQ(this,false,'exInstr','C\'est le sujet (topic), pas l\'instruction : il vous dit DE QUOI on parle, pas COMMENT r\u00e9pondre.')"><span class="letter">A</span> sustainable change</button>
       <button class="mcq-btn" onclick="checkMCQ(this,true,'exInstr','Exact. \u00ab How can \u00bb demande des moyens concrets \u2014 pas un simple jugement pour/contre.')"><span class="letter">B</span> how can</button>
@@ -277,14 +277,14 @@ textarea:focus, input[type=text]:focus { outline: none; border-color: var(--gold
     </div>
     <div class="fb-grid" id="exReform-fb"></div>
     <div class="reveal" id="exReform-model">
-      <div class="model-box"><h4>Modèle — reformulation</h4>
+      <div class="model-box"><h4>Modèle, reformulation</h4>
       <p>I have to explain which concrete methods can push companies towards more sustainable practices, and how effective these methods really are.</p>
       </div>
     </div>
   </div>
 
   <div class="section-title"><span class="section-num">02</span> Identify the Type of Question</div>
-  <p class="section-sub">Le plan dépend de la question posée — il n'existe pas un plan unique pour toutes les questions du DSCG. Voici quelques types courants :</p>
+  <p class="section-sub">Le plan dépend de la question posée, il n'existe pas un plan unique pour toutes les questions du DSCG. Voici quelques types courants :</p>
 
   <div class="ex-card">
     <div class="qtype-grid">
@@ -309,17 +309,17 @@ textarea:focus, input[type=text]:focus { outline: none; border-color: var(--gold
     <div class="feedback" id="exQtype-fb"></div>
   </div>
 
-  <div class="strategy-box"><span class="lbl">For this question</span>Part 1 — Problem · Part 2 — Possible solutions · Part 3 — Limitations. Une autre question du DSCG demanderait une autre structure : ne mémorisez jamais un plan unique.</div>
+  <div class="strategy-box"><span class="lbl">For this question</span>Part 1, Problem · Part 2, Possible solutions · Part 3, Limitations. Une autre question du DSCG demanderait une autre structure : ne mémorisez jamais un plan unique.</div>
 
   <div class="section-title"><span class="section-num">03</span> Brainstorm &amp; Sort</div>
-  <p class="section-sub">Classez chaque idée dans la bonne partie : <strong>Problem</strong>, <strong>Possible solutions</strong>, ou <strong>Limitations</strong>. Certaines viennent du texte, d'autres de vos connaissances — les deux sont nécessaires.</p>
+  <p class="section-sub">Classez chaque idée dans la bonne partie : <strong>Problem</strong>, <strong>Possible solutions</strong>, ou <strong>Limitations</strong>. Certaines viennent du texte, d'autres de vos connaissances, les deux sont nécessaires.</p>
   <div class="strategy-box"><span class="lbl">Rule</span>Do not rely only on the document. Use it as a starting point, then add relevant knowledge and examples.</div>
 
   <div id="ideaList"></div>
   <div class="feedback" id="sortSummary"></div>
 
   <div class="section-title"><span class="section-num">04</span> Connect Document and Knowledge</div>
-  <p class="section-sub">Un bon argument enrichit le document avec vos connaissances — il ne se contente pas de le paraphraser.</p>
+  <p class="section-sub">Un bon argument enrichit le document avec vos connaissances, il ne se contente pas de le paraphraser.</p>
 
   <div class="ex-card">
     <div class="ex-q">Worked example</div>
@@ -340,7 +340,7 @@ textarea:focus, input[type=text]:focus { outline: none; border-color: var(--gold
     <div class="fb-grid" id="exConnect-fb"></div>
     <div class="reveal" id="exConnect-model">
       <div class="model-box"><h4>Exemple possible</h4>
-      <p>Brand peer pressure works because reputation matters, and this is reinforced by rules such as the EU's CSRD, which force companies to disclose their environmental impact publicly — making it harder to lag behind competitors without consequences.</p>
+      <p>Brand peer pressure works because reputation matters, and this is reinforced by rules such as the EU's CSRD, which force companies to disclose their environmental impact publicly, making it harder to lag behind competitors without consequences.</p>
       </div>
     </div>
   </div>
@@ -351,14 +351,14 @@ textarea:focus, input[type=text]:focus { outline: none; border-color: var(--gold
   <div class="ex-card">
     <div class="ex-q">Why this matters</div>
     <div class="weak-better">
-      <div class="wb-line weak"><span class="lvl-lbl">Idea only — too weak</span>Businesses find it hard to change.</div>
-      <div class="wb-line better"><span class="lvl-lbl">+ Explain — better</span>Businesses find it hard to change because sustainable initiatives often raise costs without a clear or immediate financial return.</div>
-      <div class="wb-line stronger"><span class="lvl-lbl">+ Example — stronger</span>…For example, the report notes that a lack of government financial support and guidance remains a key barrier for many companies.</div>
+      <div class="wb-line weak"><span class="lvl-lbl">Idea only, too weak</span>Businesses find it hard to change.</div>
+      <div class="wb-line better"><span class="lvl-lbl">+ Explain, better</span>Businesses find it hard to change because sustainable initiatives often raise costs without a clear or immediate financial return.</div>
+      <div class="wb-line stronger"><span class="lvl-lbl">+ Example, stronger</span>…For example, the report notes that a lack of government financial support and guidance remains a key barrier for many companies.</div>
     </div>
   </div>
 
   <div class="ex-card" id="exBuild1">
-    <div class="ex-q">Part 1 — Problem <span class="part-tag tag-1">Build one argument</span></div>
+    <div class="ex-q">Part 1, Problem <span class="part-tag tag-1">Build one argument</span></div>
     <div class="scaffold">
       <div class="scaffold-row"><label>Idea</label><textarea id="b1-idea" data-persist placeholder="Businesses struggle to…"></textarea></div>
       <div class="scaffold-row"><label>Explain</label><textarea id="b1-explain" data-persist placeholder="This happens because…"></textarea></div>
@@ -371,17 +371,17 @@ textarea:focus, input[type=text]:focus { outline: none; border-color: var(--gold
     </div>
     <div class="fb-grid" id="exBuild1-fb"></div>
     <div class="reveal" id="exBuild1-model">
-      <div class="model-box t1"><h4>Modèle — Part 1</h4>
-      <p><em>Idea —</em> Telling businesses to behave responsibly is not enough to change their behaviour.</p>
-      <p><em>Explain —</em> Because moral appeals alone rarely outweigh the cost concerns companies face when investing in sustainability.</p>
-      <p><em>Example —</em> For example, the report's managing director states that "reprimanding people doesn't work if we want to reach a mass audience", and that the lack of government financial support remains a key barrier.</p>
-      <p><em>Link —</em> This shows that driving sustainable change requires more than good intentions — it needs real incentives.</p>
+      <div class="model-box t1"><h4>Modèle, Part 1</h4>
+      <p><em>Idea ,</em> Telling businesses to behave responsibly is not enough to change their behaviour.</p>
+      <p><em>Explain ,</em> Because moral appeals alone rarely outweigh the cost concerns companies face when investing in sustainability.</p>
+      <p><em>Example ,</em> For example, the report's managing director states that "reprimanding people doesn't work if we want to reach a mass audience", and that the lack of government financial support remains a key barrier.</p>
+      <p><em>Link ,</em> This shows that driving sustainable change requires more than good intentions, it needs real incentives.</p>
       </div>
     </div>
   </div>
 
   <div class="ex-card" id="exBuild2">
-    <div class="ex-q">Part 2 — Possible solutions <span class="part-tag tag-2">Build one argument</span></div>
+    <div class="ex-q">Part 2, Possible solutions <span class="part-tag tag-2">Build one argument</span></div>
     <div class="scaffold">
       <div class="scaffold-row"><label>Idea</label><textarea id="b2-idea" data-persist placeholder="One effective lever is…"></textarea></div>
       <div class="scaffold-row"><label>Explain</label><textarea id="b2-explain" data-persist placeholder="This works because…"></textarea></div>
@@ -394,11 +394,11 @@ textarea:focus, input[type=text]:focus { outline: none; border-color: var(--gold
     </div>
     <div class="fb-grid" id="exBuild2-fb"></div>
     <div class="reveal" id="exBuild2-model">
-      <div class="model-box t2"><h4>Modèle — Part 2</h4>
-      <p><em>Idea —</em> Brand peer pressure can push companies to green their operations faster than regulation alone.</p>
-      <p><em>Explain —</em> Because reputation and rivalry matter to businesses — no company wants to be seen lagging behind its competitors on climate action.</p>
-      <p><em>Example —</em> For example, the report explains that when waste-reduction and emission campaigns are publicly celebrated, companies are more likely to "wake up to their responsibilities".</p>
-      <p><em>Link —</em> This shows that social and reputational pressure can be as powerful as financial incentives in driving change.</p>
+      <div class="model-box t2"><h4>Modèle, Part 2</h4>
+      <p><em>Idea ,</em> Brand peer pressure can push companies to green their operations faster than regulation alone.</p>
+      <p><em>Explain ,</em> Because reputation and rivalry matter to businesses, no company wants to be seen lagging behind its competitors on climate action.</p>
+      <p><em>Example ,</em> For example, the report explains that when waste-reduction and emission campaigns are publicly celebrated, companies are more likely to "wake up to their responsibilities".</p>
+      <p><em>Link ,</em> This shows that social and reputational pressure can be as powerful as financial incentives in driving change.</p>
       </div>
     </div>
   </div>
@@ -410,10 +410,10 @@ textarea:focus, input[type=text]:focus { outline: none; border-color: var(--gold
     <div class="ex-q">Which plan is the most logical for this question?</div>
     <p class="section-sub" style="margin:-0.4rem 0 1rem">Les quatre options utilisent les mêmes idées du plan retenu. Une seule les organise dans un ordre qui construit un raisonnement.</p>
     <div class="mcq-options">
-      <button class="mcq-btn" onclick="checkMCQ(this,true,'exPlan','Exact. On part de ce qui bloque le changement, on propose ensuite des leviers concrets, puis on évalue jusqu’où ces leviers peuvent vraiment fonctionner — chaque partie s’appuie sur la précédente.')"><span class="letter">A</span> Problem → possible solutions → limitations</button>
+      <button class="mcq-btn" onclick="checkMCQ(this,true,'exPlan','Exact. On part de ce qui bloque le changement, on propose ensuite des leviers concrets, puis on évalue jusqu’où ces leviers peuvent vraiment fonctionner, chaque partie s’appuie sur la précédente.')"><span class="letter">A</span> Problem → possible solutions → limitations</button>
       <button class="mcq-btn" onclick="checkMCQ(this,false,'exPlan','Séduisant mais prématuré : proposer des solutions avant d’avoir identifié le problème qu’elles sont censées résoudre ne permet pas de juger si elles sont pertinentes.')"><span class="letter">B</span> Possible solutions → problem → limitations</button>
-      <button class="mcq-btn" onclick="checkMCQ(this,false,'exPlan','Cela évoque les limites d’un levier avant même de l’avoir présenté — le lecteur ne sait pas encore de quoi il est question.')"><span class="letter">C</span> Problem → limitations → possible solutions</button>
-      <button class="mcq-btn" onclick="checkMCQ(this,false,'exPlan','Cela place les limites en ouverture, avant même d’avoir défini le problème ou les solutions envisagées — l’ordre logique est inversé de bout en bout.')"><span class="letter">D</span> Limitations → problem → possible solutions</button>
+      <button class="mcq-btn" onclick="checkMCQ(this,false,'exPlan','Cela évoque les limites d’un levier avant même de l’avoir présenté, le lecteur ne sait pas encore de quoi il est question.')"><span class="letter">C</span> Problem → limitations → possible solutions</button>
+      <button class="mcq-btn" onclick="checkMCQ(this,false,'exPlan','Cela place les limites en ouverture, avant même d’avoir défini le problème ou les solutions envisagées, l’ordre logique est inversé de bout en bout.')"><span class="letter">D</span> Limitations → problem → possible solutions</button>
     </div>
     <div class="feedback" id="exPlan-fb"></div>
   </div>
@@ -433,11 +433,11 @@ textarea:focus, input[type=text]:focus { outline: none; border-color: var(--gold
   </div>
 
   <div class="ex-card" id="exIntroBuild">
-    <div class="ex-q">Build your 3-line oral introduction<span class="sub">Une phrase par ligne. Restez court — c'est ce que vous direz, pas ce que vous lirez.</span></div>
+    <div class="ex-q">Build your 3-line oral introduction<span class="sub">Une phrase par ligne. Restez court, c'est ce que vous direz, pas ce que vous lirez.</span></div>
     <div class="scaffold">
-      <div class="scaffold-row"><label>1 — Position</label><textarea id="int-position" data-persist placeholder="Businesses can drive sustainable change through…, but…"></textarea></div>
-      <div class="scaffold-row"><label>2 — Main issue</label><textarea id="int-issue" data-persist placeholder="These tools are promising, but they also face…"></textarea></div>
-      <div class="scaffold-row"><label>3 — Announce structure</label><textarea id="int-plan" data-persist placeholder="I will first consider… before examining…"></textarea></div>
+      <div class="scaffold-row"><label>1, Position</label><textarea id="int-position" data-persist placeholder="Businesses can drive sustainable change through…, but…"></textarea></div>
+      <div class="scaffold-row"><label>2, Main issue</label><textarea id="int-issue" data-persist placeholder="These tools are promising, but they also face…"></textarea></div>
+      <div class="scaffold-row"><label>3, Announce structure</label><textarea id="int-plan" data-persist placeholder="I will first consider… before examining…"></textarea></div>
     </div>
     <div class="toolbar">
       <button class="btn gold" onclick="analyzeIntroBuild()">Analyser mon introduction</button>
@@ -445,7 +445,7 @@ textarea:focus, input[type=text]:focus { outline: none; border-color: var(--gold
     </div>
     <div class="fb-grid" id="exIntroBuild-fb"></div>
     <div class="reveal" id="exIntroBuild-model">
-      <div class="model-box"><h4>Modèle — introduction orale</h4>
+      <div class="model-box"><h4>Modèle, introduction orale</h4>
       <p>Businesses can drive sustainable change through peer pressure and technology, but neither works on its own.</p>
       <p>These levers are promising, but they also face real barriers such as cost and a lack of government support.</p>
       <p>I will first consider why change is difficult before examining possible solutions and their limits.</p>
@@ -472,42 +472,42 @@ textarea:focus, input[type=text]:focus { outline: none; border-color: var(--gold
     </div>
     <div class="fb-grid" id="exNuance-fb"></div>
     <div class="reveal" id="exNuance-model">
-      <div class="model-box"><h4>Modèle — nuance</h4>
+      <div class="model-box"><h4>Modèle, nuance</h4>
       <p>Brand peer pressure can encourage companies to act, but it is unlikely to be enough on its own unless it is backed by financial incentives and clearer government guidance.</p>
       </div>
     </div>
   </div>
 
   <div class="section-title"><span class="section-num">09</span> Build Your Oral Roadmap</div>
-  <p class="section-sub">Do not write your full answer. Use keywords and short notes — you should speak from your notes, not read them.</p>
+  <p class="section-sub">Do not write your full answer. Use keywords and short notes, you should speak from your notes, not read them.</p>
 
   <div class="roadmap-part">
     <h5>My position</h5>
     <div class="roadmap-fields"><textarea id="rm-position" data-persist oninput="checkNoteLength(this)" placeholder="keywords only"></textarea><div class="note-tip" id="tip-rm-position">Keep your notes short. You should speak from your notes, not read them.</div></div>
     <div class="toolbar"><button class="btn ghost" onclick="reveal('rm-position-model')">Possible answer</button></div>
-    <div class="reveal" id="rm-position-model"><div class="model-box"><p>combine pressure + tech — but limits remain</p></div></div>
+    <div class="reveal" id="rm-position-model"><div class="model-box"><p>combine pressure + tech, but limits remain</p></div></div>
   </div>
   <div class="roadmap-part">
     <h5>Introduction</h5>
     <div class="roadmap-fields"><textarea id="rm-intro" data-persist oninput="checkNoteLength(this)" placeholder="keywords only"></textarea><div class="note-tip" id="tip-rm-intro">Keep your notes short. You should speak from your notes, not read them.</div></div>
     <div class="toolbar"><button class="btn ghost" onclick="reveal('rm-intro-model')">Possible answer</button></div>
-    <div class="reveal" id="rm-intro-model"><div class="model-box"><p>growing pressure to act — plan: problem / solutions / limits</p></div></div>
+    <div class="reveal" id="rm-intro-model"><div class="model-box"><p>growing pressure to act, plan: problem / solutions / limits</p></div></div>
   </div>
   <div class="roadmap-part">
-    <h5>Part 1 — Problem <span class="part-tag tag-1">argument · example</span></h5>
-    <div class="roadmap-fields"><textarea id="rm-p1" data-persist oninput="checkNoteLength(this)" placeholder="argument — example"></textarea><div class="note-tip" id="tip-rm-p1">Keep your notes short. You should speak from your notes, not read them.</div></div>
+    <h5>Part 1, Problem <span class="part-tag tag-1">argument · example</span></h5>
+    <div class="roadmap-fields"><textarea id="rm-p1" data-persist oninput="checkNoteLength(this)" placeholder="argument, example"></textarea><div class="note-tip" id="tip-rm-p1">Keep your notes short. You should speak from your notes, not read them.</div></div>
     <div class="toolbar"><button class="btn ghost" onclick="reveal('rm-p1-model')">Possible answer</button></div>
-    <div class="reveal" id="rm-p1-model"><div class="model-box t1"><p>reprimanding doesn't work, cost fears, no gov support — e.g. §5 &amp; §6</p></div></div>
+    <div class="reveal" id="rm-p1-model"><div class="model-box t1"><p>reprimanding doesn't work, cost fears, no gov support, e.g. §5 &amp; §6</p></div></div>
   </div>
   <div class="roadmap-part">
-    <h5>Part 2 — Possible solutions <span class="part-tag tag-2">argument · example</span></h5>
-    <div class="roadmap-fields"><textarea id="rm-p2" data-persist oninput="checkNoteLength(this)" placeholder="argument — example"></textarea><div class="note-tip" id="tip-rm-p2">Keep your notes short. You should speak from your notes, not read them.</div></div>
+    <h5>Part 2, Possible solutions <span class="part-tag tag-2">argument · example</span></h5>
+    <div class="roadmap-fields"><textarea id="rm-p2" data-persist oninput="checkNoteLength(this)" placeholder="argument, example"></textarea><div class="note-tip" id="tip-rm-p2">Keep your notes short. You should speak from your notes, not read them.</div></div>
     <div class="toolbar"><button class="btn ghost" onclick="reveal('rm-p2-model')">Possible answer</button></div>
-    <div class="reveal" id="rm-p2-model"><div class="model-box t2"><p>peer pressure, tech/apps, nudging — e.g. Too Good To Go, IKEA take-back</p></div></div>
+    <div class="reveal" id="rm-p2-model"><div class="model-box t2"><p>peer pressure, tech/apps, nudging, e.g. Too Good To Go, IKEA take-back</p></div></div>
   </div>
   <div class="roadmap-part">
-    <h5>Part 3 — Limitations <span class="part-tag tag-3">optional</span></h5>
-    <div class="roadmap-fields"><textarea id="rm-p3" data-persist oninput="checkNoteLength(this)" placeholder="argument — example"></textarea><div class="note-tip" id="tip-rm-p3">Keep your notes short. You should speak from your notes, not read them.</div></div>
+    <h5>Part 3, Limitations <span class="part-tag tag-3">optional</span></h5>
+    <div class="roadmap-fields"><textarea id="rm-p3" data-persist oninput="checkNoteLength(this)" placeholder="argument, example"></textarea><div class="note-tip" id="tip-rm-p3">Keep your notes short. You should speak from your notes, not read them.</div></div>
     <div class="toolbar"><button class="btn ghost" onclick="reveal('rm-p3-model')">Possible answer</button></div>
     <div class="reveal" id="rm-p3-model"><div class="model-box t3"><p>greenwashing risk, packaging still complex, needs gov support too</p></div></div>
   </div>
@@ -515,7 +515,7 @@ textarea:focus, input[type=text]:focus { outline: none; border-color: var(--gold
     <h5>Conclusion</h5>
     <div class="roadmap-fields"><textarea id="rm-concl" data-persist oninput="checkNoteLength(this)" placeholder="final answer / nuance / condition"></textarea><div class="note-tip" id="tip-rm-concl">Keep your notes short. You should speak from your notes, not read them.</div></div>
     <div class="toolbar"><button class="btn ghost" onclick="reveal('rm-concl-model')">Possible answer</button></div>
-    <div class="reveal" id="rm-concl-model"><div class="model-box"><p>combination of levers needed, not one tool alone — depends on support &amp; trust</p></div></div>
+    <div class="reveal" id="rm-concl-model"><div class="model-box"><p>combination of levers needed, not one tool alone, depends on support &amp; trust</p></div></div>
   </div>
   <div class="toolbar"><button class="btn gold" onclick="checkRoadmap()">Vérifier mes notes</button></div>
   <div class="feedback" id="roadmap-fb"></div>
@@ -584,7 +584,7 @@ textarea:focus, input[type=text]:focus { outline: none; border-color: var(--gold
   </div>
 
   <div class="section-title"><span class="section-num">★</span> Possible Oral Version</div>
-  <p class="section-sub">Un exemple de contenu possible, présenté en notes courtes — pas un texte à lire, mais une base à reformuler à voix haute.</p>
+  <p class="section-sub">Un exemple de contenu possible, présenté en notes courtes, pas un texte à lire, mais une base à reformuler à voix haute.</p>
 
   <div class="toolbar" style="margin-bottom:1rem">
     <button class="btn gold" onclick="reveal('fullCorrection')">Show a possible oral version</button>
@@ -611,7 +611,7 @@ textarea:focus, input[type=text]:focus { outline: none; border-color: var(--gold
       <div class="cb-body"><ul>
         <li>Brand peer pressure pushes companies to act, especially when rivals' climate initiatives are publicly celebrated.<span class="src">Source : texte, §3</span></li>
         <li>Technology is a "crucial tool" that helps consumers make "smarter, greener decisions".<span class="src">Source : texte, §4</span></li>
-        <li>Companies such as IKEA and Patagonia use circular-economy schemes — repair, resale, take-back — to embed sustainability in their model.<span class="src">Source : connaissances</span></li>
+        <li>Companies such as IKEA and Patagonia use circular-economy schemes, repair, resale, take-back, to embed sustainability in their model.<span class="src">Source : connaissances</span></li>
         <li>Reporting frameworks such as the EU's CSRD force disclosure of environmental impact, adding external pressure.<span class="src">Source : connaissances</span></li>
       </ul></div>
     </div>
@@ -620,7 +620,7 @@ textarea:focus, input[type=text]:focus { outline: none; border-color: var(--gold
       <div class="cb-head h3">Part 3. Limitations</div>
       <div class="cb-body"><ul>
         <li>Nudges and technology cannot fix packaging and recycling systems that remain genuinely complex.<span class="src">Source : texte, §6</span></li>
-        <li>Disclosure rules create pressure, but do not guarantee real change — there is a risk of greenwashing.<span class="src">Source : connaissances</span></li>
+        <li>Disclosure rules create pressure, but do not guarantee real change, there is a risk of greenwashing.<span class="src">Source : connaissances</span></li>
         <li>Showing that sustainable lifestyles are "increasing in popularity every day" only works if consumers trust the claim.<span class="src">Source : texte, §7</span></li>
         <li>Without financial support from governments, even willing businesses may lack the means to act.<span class="src">Source : texte, §6</span></li>
       </ul></div>
@@ -628,15 +628,15 @@ textarea:focus, input[type=text]:focus { outline: none; border-color: var(--gold
 
     <div class="correction-block">
       <div class="cb-head hn">Conclusion</div>
-      <div class="cb-body"><p>Overall, businesses can drive sustainable change by combining reputational pressure, technology and genuine financial incentives — no single lever is sufficient on its own. Peer pressure and digital tools can nudge behaviour, but they need to be backed by government support and honest communication to avoid becoming a superficial gesture. The extent of the change will depend on how far these levers are combined and sustained over time.</p></div>
+      <div class="cb-body"><p>Overall, businesses can drive sustainable change by combining reputational pressure, technology and genuine financial incentives, no single lever is sufficient on its own. Peer pressure and digital tools can nudge behaviour, but they need to be backed by government support and honest communication to avoid becoming a superficial gesture. The extent of the change will depend on how far these levers are combined and sustained over time.</p></div>
     </div>
   </div>
 
 </main>
 
 <div class="print-only">
-  <h2 style="font-family:'Cormorant Garamond',serif;color:#0d1b2a;font-size:1.6rem">DSCG UE6 — Oral outline : Green Revolution</h2>
-  <p style="font-style:italic;color:#555">Lycée Sidoine Apollinaire — support de révision, pas un texte à lire</p>
+  <h2 style="font-family:'Quicksand',sans-serif;color:#1a2744;font-size:1.6rem">DSCG UE6, Oral outline : Green Revolution</h2>
+  <p style="font-style:italic;color:#555">Lycée Sidoine Apollinaire, support de révision, pas un texte à lire</p>
 </div>
 
 <div class="visit-count" id="visitCount"></div>
@@ -650,7 +650,7 @@ const IDEAS = [
   {t:"Many companies fear that sustainable initiatives increase costs without a clear return on investment.", a:'1', src:'ext'},
   {t:"Brand peer pressure pushes companies to green their operations, especially when rivals' climate action is publicly celebrated.", a:'2', src:'doc'},
   {t:"Technology is described as a 'crucial tool', helping consumers make 'smarter, greener decisions'.", a:'2', src:'doc'},
-  {t:"Companies such as Patagonia and IKEA use circular-economy schemes — repair, resale, take-back — to build sustainability into their business model.", a:'2', src:'ext'},
+  {t:"Companies such as Patagonia and IKEA use circular-economy schemes, repair, resale, take-back, to build sustainability into their business model.", a:'2', src:'ext'},
   {t:"Even nudges and technology cannot fix packaging and recycling systems that remain complex for consumers.", a:'3', src:'doc'},
   {t:"Reporting frameworks such as the EU's CSRD create pressure to disclose impact, but disclosure alone does not guarantee real change.", a:'3', src:'ext'},
   {t:"Showing that sustainable lifestyles are 'increasing in popularity every day' only works if consumers trust that claim.", a:'3', src:'doc'}
@@ -768,7 +768,7 @@ function analyzeReform(){
   let lvl='ok';
   const oneWord = /^(yes|no|oui|non)\b/i.test(raw);
   if(oneWord){ lvl='bad'; items.push(['bad','Une question « how can » n\'accepte jamais un simple oui/non.']); }
-  else items.push(['good','Vous ne répondez pas par un simple oui/non — bien.']);
+  else items.push(['good','Vous ne répondez pas par un simple oui/non, bien.']);
   const meansWords=['method','tool','lever','way','how','solution','mean','strateg'];
   const hasMeans = meansWords.some(k=>low.includes(k));
   if(hasMeans) items.push(['good','La notion de moyen concret est présente dans votre reformulation.']);
@@ -860,7 +860,7 @@ function checkRoadmap(){
   const tooLong=ids.filter(id=>wordCount(document.getElementById(id).value)>15);
   const fb=document.getElementById('roadmap-fb');
   if(filled.length<5){ fb.className='feedback show no'; fb.innerHTML='<strong>Roadmap incomplète.</strong> Remplissez au moins Position, Introduction, Part 1, Part 2 et Conclusion.'; return; }
-  if(tooLong.length){ fb.className='feedback show no'; fb.innerHTML='<strong>Certaines notes sont trop longues.</strong> Keep your notes short — you should speak from your notes, not read them.'; return; }
+  if(tooLong.length){ fb.className='feedback show no'; fb.innerHTML='<strong>Certaines notes sont trop longues.</strong> Keep your notes short, you should speak from your notes, not read them.'; return; }
   fb.className='feedback show ok'; fb.innerHTML='<strong>Roadmap prête.</strong> Passez à l\'Oral Challenge : parlez à partir de ces notes, sans les lire.';
   mark('roadmap');
 }

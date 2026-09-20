@@ -5,16 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Méthodologie de la synthèse · DCG UE 12</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap');
 
 :root {
   --navy: #1a2744;
   --navy-mid: #243260;
   --blue: #2d5fa6;
   --blue-light: #4a7bc8;
-  --accent: #c8a84b;
-  --accent-soft: #f5eed8;
-  --red: #b83232;
+  --accent: #f5b60f;
+  --accent-soft: #fdf0d3;
+  --red: #b5302b;
   --green: #2a7a4b;
   --green-soft: #e0f2ea;
   --red-soft: #fce8e8;
@@ -30,7 +30,7 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-  font-family: 'Source Serif 4', Georgia, serif;
+  font-family: 'Quicksand', sans-serif;
   background: var(--bg);
   color: var(--text);
   line-height: 1.7;
@@ -66,7 +66,7 @@ header {
 }
 .badge.session { background: var(--accent); color: var(--navy); border-color: var(--accent); }
 header h1 {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Quicksand', sans-serif;
   font-size: 1.55rem;
   font-weight: 700;
   line-height: 1.25;
@@ -104,7 +104,7 @@ header .sub {
   background: transparent;
   border: none;
   color: rgba(255,255,255,.45);
-  font-family: 'Source Serif 4', serif;
+  font-family: 'Quicksand', sans-serif;
   font-size: 11.5px;
   font-weight: 700;
   letter-spacing: .07em;
@@ -141,7 +141,7 @@ main { max-width: 900px; margin: 0 auto; padding: 28px 22px 70px; }
   border-bottom: 1px solid var(--border);
 }
 .panel-icon { font-size: 2rem; line-height: 1; flex-shrink: 0; margin-top: 3px; }
-.panel-title { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; color: var(--navy); }
+.panel-title { font-family: 'Quicksand', sans-serif; font-size: 1.3rem; font-weight: 700; color: var(--navy); }
 .panel-desc { font-size: 13.5px; color: var(--muted); margin-top: 4px; line-height: 1.5; }
 
 /* CARDS */
@@ -154,14 +154,14 @@ main { max-width: 900px; margin: 0 auto; padding: 28px 22px 70px; }
   box-shadow: var(--shadow);
 }
 .card-title {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Quicksand', sans-serif;
   font-size: 1rem; font-weight: 500; color: var(--navy);
   margin-bottom: 12px;
   display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
 }
 .step-badge {
   background: var(--navy); color: #fff;
-  font-family: 'Source Serif 4', serif;
+  font-family: 'Quicksand', sans-serif;
   font-size: 10px; font-weight: 700; letter-spacing: .1em;
   padding: 2px 9px; border-radius: 20px; text-transform: uppercase;
   flex-shrink: 0;
@@ -222,7 +222,7 @@ textarea.input-field {
   background: #faf9f6;
   border: 1.5px solid var(--border);
   border-radius: 6px;
-  font-family: 'Source Serif 4', serif;
+  font-family: 'Quicksand', sans-serif;
   font-size: 14px; line-height: 1.65; color: var(--text);
   padding: 11px 13px; resize: vertical;
   transition: border-color .2s;
@@ -233,7 +233,7 @@ textarea.input-field::placeholder { color: #b0a898; font-style: italic; }
 input[type="text"].field-short {
   width: 100%; background: #faf9f6;
   border: 1.5px solid var(--border); border-radius: 6px;
-  font-family: 'Source Serif 4', serif; font-size: 14px;
+  font-family: 'Quicksand', sans-serif; font-size: 14px;
   color: var(--text); padding: 9px 12px; transition: border-color .2s;
 }
 input[type="text"].field-short:focus { outline: none; border-color: var(--blue); }
@@ -254,7 +254,7 @@ input[type="text"].field-short:focus { outline: none; border-color: var(--blue);
 .btn {
   display: inline-flex; align-items: center; gap: 6px;
   padding: 9px 20px; border: none; border-radius: 6px;
-  font-family: 'Source Serif 4', serif; font-size: 13px; font-weight: 600;
+  font-family: 'Quicksand', sans-serif; font-size: 13px; font-weight: 600;
   cursor: pointer; transition: all .2s; letter-spacing: .03em;
 }
 .btn-primary { background: var(--navy); color: #fff; }
@@ -327,7 +327,7 @@ input[type="text"].field-short:focus { outline: none; border-color: var(--blue);
 
 /* PLAN AXIS */
 .plan-axis { border: 1.5px solid var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 14px; }
-.plan-axis-header { background: var(--navy); color: var(--accent); font-family: 'Playfair Display', serif; font-size: .95rem; padding: 10px 16px; display: flex; align-items: center; gap: 10px; }
+.plan-axis-header { background: var(--navy); color: var(--accent); font-family: 'Quicksand', sans-serif; font-size: .95rem; padding: 10px 16px; display: flex; align-items: center; gap: 10px; }
 .plan-axis-body { padding: 14px 16px; background: var(--surface); }
 
 /* SCORE BOX */
@@ -338,7 +338,7 @@ input[type="text"].field-short:focus { outline: none; border-color: var(--blue);
 .score-circle {
   width: 60px; height: 60px; border-radius: 50%; border: 3px solid var(--accent);
   display: flex; align-items: center; justify-content: center;
-  font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700; color: var(--accent); flex-shrink: 0;
+  font-family: 'Quicksand', sans-serif; font-size: 1.4rem; font-weight: 700; color: var(--accent); flex-shrink: 0;
 }
 
 /* COMPARE */
@@ -349,7 +349,7 @@ input[type="text"].field-short:focus { outline: none; border-color: var(--blue);
 .compare-box-header.student { background: var(--blue); color: #fff; }
 .compare-box-header.corrige { background: var(--navy); color: var(--accent); }
 .compare-box-body { padding: 12px 14px; }
-.compare-box-body textarea { width: 100%; border: none; background: transparent; font-family: 'Source Serif 4', serif; font-size: 13.5px; line-height: 1.65; resize: vertical; min-height: 100px; }
+.compare-box-body textarea { width: 100%; border: none; background: transparent; font-family: 'Quicksand', sans-serif; font-size: 13.5px; line-height: 1.65; resize: vertical; min-height: 100px; }
 .compare-box-body textarea:focus { outline: none; }
 
 /* RICH TABLE */
@@ -358,7 +358,7 @@ input[type="text"].field-short:focus { outline: none; border-color: var(--blue);
 .rich-table td { padding: 7px 10px; border-bottom: 1px solid #f0ece4; vertical-align: top; }
 .rich-table td:first-child { font-weight: 600; color: var(--navy); }
 .rich-table select { border: 1px solid var(--border); padding: 4px 6px; border-radius: 4px; font-size: 12px; background: #faf9f6; width: 100%; }
-.rich-table input[type="text"] { border: 1px solid var(--border); padding: 5px 8px; border-radius: 4px; font-size: 13px; width: 100%; background: #faf9f6; font-family: 'Source Serif 4', serif; }
+.rich-table input[type="text"] { border: 1px solid var(--border); padding: 5px 8px; border-radius: 4px; font-size: 13px; width: 100%; background: #faf9f6; font-family: 'Quicksand', sans-serif; }
 
 /* DOC PILLS */
 .doc-pill {
@@ -376,7 +376,7 @@ input[type="text"].field-short:focus { outline: none; border-color: var(--blue);
 .nav-arrow {
   display: inline-flex; align-items: center; gap: 7px;
   background: transparent; border: 1.5px solid var(--border); color: var(--navy);
-  font-family: 'Source Serif 4', serif; font-size: 12px; font-weight: 700; letter-spacing: .04em;
+  font-family: 'Quicksand', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: .04em;
   padding: 8px 18px; border-radius: 6px; cursor: pointer; transition: all .2s;
 }
 .nav-arrow:hover { background: var(--navy); color: #fff; border-color: var(--navy); }
@@ -1671,12 +1671,12 @@ function printTab(n) {
   const w = window.open('','_blank','width=800,height=700');
   w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Méthodologie de la synthèse · ${tabNames[n]}</title>
   <style>
-    body { font-family: Georgia, serif; font-size: 13px; line-height: 1.6; color: #222; padding: 20px 30px; }
+    body { font-family: 'Quicksand', sans-serif; font-size: 13px; line-height: 1.6; color: #222; padding: 20px 30px; }
     h2 { font-size: 1.1rem; border-bottom: 2px solid #1a2744; padding-bottom: 6px; margin-bottom: 14px; color: #1a2744; }
-    textarea, input[type="text"] { width: 100%; border: 1px solid #ccc; padding: 6px 8px; font-family: Georgia, serif; font-size: 12px; margin-bottom: 8px; resize: none; background: #fafaf8; }
+    textarea, input[type="text"] { width: 100%; border: 1px solid #ccc; padding: 6px 8px; font-family: 'Quicksand', sans-serif; font-size: 12px; margin-bottom: 8px; resize: none; background: #fafaf8; }
     .card { border: 1px solid #ccc; border-radius: 6px; padding: 12px 14px; margin-bottom: 14px; }
-    .consigne { background: #fef9ec; border-left: 3px solid #c8a84b; padding: 7px 10px; font-size: 12px; margin-bottom: 8px; }
-    .alerte { background: #fce8e8; border-left: 3px solid #b83232; padding: 7px 10px; font-size: 12px; margin-bottom: 8px; }
+    .consigne { background: #fdf0d3; border-left: 3px solid #f5b60f; padding: 7px 10px; font-size: 12px; margin-bottom: 8px; }
+    .alerte { background: #fce8e8; border-left: 3px solid #b5302b; padding: 7px 10px; font-size: 12px; margin-bottom: 8px; }
     .btn, .nav-arrow, .feedback-box, .btn-group, .wc-bar, .doc-pill, .toolbox, .info-box { display: none !important; }
     .step-badge { background: #1a2744; color: #fff; font-size: 10px; padding: 2px 7px; border-radius: 10px; }
     @media print { @page { margin: 1.5cm; } }
