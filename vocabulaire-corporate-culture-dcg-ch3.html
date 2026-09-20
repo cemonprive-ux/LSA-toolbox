@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vocabulaire · Chapitre 5 Management, HR and Strategy · LSA Toolbox</title>
+<title>Vocabulaire · Corporate Culture and Working Conditions · LSA Toolbox</title>
 <link rel="icon" type="image/png" href="assets/lsa-logo.png">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap');
@@ -150,25 +150,25 @@ footer{background:var(--navy-deep);color:rgba(255,255,255,.62);margin-top:42px;b
   </div>
 </div>
 
-<header class="head" data-screen-label="Vocabulaire Management HR · en-tête">
+<header class="head" data-screen-label="Vocabulaire Corporate Culture · en-tête">
   <div class="head-inner">
     <div class="breadcrumb">
       <a href="index.html">Accueil</a>
       <span class="sep">›</span>
-      <span>DSCG</span>
+      <span>DCG</span>
       <span class="sep">›</span>
       <span>Vocabulaire</span>
-      <span class="tag">Chapitre 5 · Management, HR</span>
+      <span class="tag">Chapitre 3 · Corporate Culture</span>
     </div>
-    <h1>Vocabulaire : Management, Human Resources and Strategy</h1>
-    <p class="sub">Vocabulaire du management, des ressources humaines et de la stratégie du chapitre 5.</p>
+    <h1>Vocabulaire : Corporate Culture and Working Conditions</h1>
+    <p class="sub">Vocabulaire de la culture d'entreprise et des conditions de travail, chapitre 3 du programme DCG.</p>
   </div>
 </header>
 
 <main>
 
   <section id="screen-menu" data-screen-label="Menu des exercices">
-    <p class="menu-lede">49 mots et expressions de management et RH. Choisissez un exercice pour vous entraîner.</p>
+    <p class="menu-lede">74 mots et expressions de culture d'entreprise. Choisissez un exercice pour vous entraîner.</p>
     <div class="menu-cards">
       <button class="menu-card" onclick="goTo('flash')">
         <span class="m-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="14" height="10" rx="2"/><path d="M21 8v8"/></svg></span>
@@ -198,7 +198,7 @@ footer{background:var(--navy-deep);color:rgba(255,255,255,.62);margin-top:42px;b
       <span class="score">Bonnes réponses : <b id="flash-score">0</b> / <span id="flash-total">0</span></span>
     </div>
     <h2 class="ex-heading">Flashcards <span class="count" id="flash-heading-count"></span></h2>
-    <p class="progress" id="flash-progress">Carte 1 / 49</p>
+    <p class="progress" id="flash-progress">Carte 1 / 74</p>
     <div class="flash-row">
       <button class="flash-arrow" id="flash-prev" onclick="flashNav(-1)" aria-label="Mot précédent"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18 9 12l6-6"/></svg></button>
       <div class="card-wrap">
@@ -229,7 +229,7 @@ footer{background:var(--navy-deep);color:rgba(255,255,255,.62);margin-top:42px;b
       <button class="ex-back" onclick="goTo('menu')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg> Liste des exercices</button>
       <span class="score">Bonnes réponses : <b id="mcq-score">0</b> / <span id="mcq-total">0</span></span>
     </div>
-    <p class="progress" id="mcq-progress">Question 1 / 49</p>
+    <p class="progress" id="mcq-progress">Question 1 / 74</p>
     <div class="ex-card">
       <div class="fr-prompt">Mot français</div>
       <button class="help-btn" id="mcq-help-btn" onclick="toggleHelp('mcq')">J'ai besoin d'aide</button>
@@ -254,7 +254,7 @@ footer{background:var(--navy-deep);color:rgba(255,255,255,.62);margin-top:42px;b
       <button class="ex-back" onclick="goTo('menu')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg> Liste des exercices</button>
       <span class="score">Bonnes réponses : <b id="type-score">0</b> / <span id="type-total">0</span></span>
     </div>
-    <p class="progress" id="type-progress">Phrase 1 / 49</p>
+    <p class="progress" id="type-progress">Phrase 1 / 74</p>
     <div class="ex-card">
       <div class="fr-prompt">Mot français</div>
       <button class="help-btn" id="type-help-btn" onclick="toggleHelp('type')">J'ai besoin d'aide</button>
@@ -276,7 +276,7 @@ footer{background:var(--navy-deep);color:rgba(255,255,255,.62);margin-top:42px;b
   <div class="foot-inner">
     <div class="foot-brand">
       <img src="assets/lsa-logo.png" alt="Logo LSA">
-      <div><strong>LSA Toolbox</strong><span>DSCG · Vocabulaire · Chapitre 5 Management, HR · M. Blanchet</span></div>
+      <div><strong>LSA Toolbox</strong><span>DCG · Vocabulaire · Chapitre 3 Corporate Culture · M. Blanchet</span></div>
     </div>
     <div>Lycée Sidoine Apollinaire, Clermont-Ferrand</div>
   </div>
@@ -284,55 +284,82 @@ footer{background:var(--navy-deep);color:rgba(255,255,255,.62);margin-top:42px;b
 
 <script>
 const VOCAB=[
-{fr:"gestion",en:"management",enHTML:"<u>man</u>agement",sentence:"Good ___ keeps every project running smoothly."},
-{fr:"gestionnaire",en:"manager",enHTML:"<u>man</u>ager",sentence:"The ___ approved the new marketing budget."},
-{fr:"leadership",en:"leadership",enHTML:"<u>lead</u>ership",sentence:"Strong ___ inspired the team during the crisis."},
-{fr:"chef de file",en:"leader",enHTML:"<u>lead</u>er",sentence:"She became a respected ___ within two years."},
-{fr:"prise de décision",en:"decision-making",enHTML:"de<u>ci</u>sion-<u>mak</u>ing",sentence:"Fast ___ helped the company avoid losses."},
-{fr:"délégation",en:"delegation",enHTML:"dele<u>ga</u>tion",sentence:"Effective ___ frees managers for bigger decisions."},
-{fr:"supervision",en:"supervision",enHTML:"super<u>vi</u>sion",sentence:"New staff need close ___ at first."},
-{fr:"motivation",en:"motivation",enHTML:"moti<u>va</u>tion",sentence:"Low ___ often leads to poor performance."},
-{fr:"travail d'équipe",en:"teamwork",enHTML:"<u>team</u>work",sentence:"The project succeeded because of great ___."},
-{fr:"communication",en:"communication",enHTML:"communi<u>ca</u>tion",sentence:"Clear ___ prevents most workplace misunderstandings."},
-{fr:"négociation",en:"negotiation",enHTML:"negoti<u>a</u>tion",sentence:"The ___ lasted three hours before agreement."},
-{fr:"résolution de conflit",en:"conflict resolution",enHTML:"<u>con</u>flict reso<u>lu</u>tion",sentence:"Managers receive training in ___ techniques."},
-{fr:"structure organisationnelle",en:"organizational structure",enHTML:"organi<u>za</u>tional <u>struc</u>ture",sentence:"The company simplified its ___ last year."},
-{fr:"hiérarchie",en:"hierarchy",enHTML:"<u>hi</u>erarchy",sentence:"The firm has a strict corporate ___."},
-{fr:"service / département",en:"department",enHTML:"de<u>part</u>ment",sentence:"Every ___ reports directly to the CEO."},
-{fr:"fiche de poste",en:"job description",enHTML:"job de<u>scrip</u>tion",sentence:"Read the ___ carefully before applying."},
-{fr:"recrutement",en:"recruitment",enHTML:"re<u>cruit</u>ment",sentence:"___ costs rose sharply this year."},
-{fr:"embauche",en:"hiring",enHTML:"<u>hir</u>ing",sentence:"The company froze ___ during the recession."},
-{fr:"entretien",en:"interview",enHTML:"<u>in</u>terview",sentence:"She prepared thoroughly for the job ___."},
-{fr:"curriculum vitae",en:"resume",enHTML:"<u>re</u>sume",sentence:"Send your updated ___ by Friday."},
-{fr:"lettre de motivation",en:"cover letter",enHTML:"<u>cov</u>er <u>let</u>ter",sentence:"Attach a short ___ to your application."},
-{fr:"formation",en:"training",enHTML:"<u>train</u>ing",sentence:"New employees complete two weeks of ___."},
-{fr:"développement de carrière",en:"career development",enHTML:"ca<u>reer</u> de<u>vel</u>opment",sentence:"The firm invests in employee ___ programs."},
-{fr:"promotion",en:"promotion",enHTML:"pro<u>mo</u>tion",sentence:"He earned a ___ after two strong years."},
-{fr:"évaluation des performances",en:"performance appraisal",enHTML:"per<u>for</u>mance ap<u>prai</u>sal",sentence:"Managers conduct a ___ every six months."},
-{fr:"rémunération",en:"compensation",enHTML:"compen<u>sa</u>tion",sentence:"Total ___ includes salary, bonus, and benefits."},
-{fr:"salaire",en:"salary",enHTML:"<u>sal</u>ary",sentence:"Her ___ increased after the promotion."},
-{fr:"prime",en:"bonus",enHTML:"<u>bo</u>nus",sentence:"Employees received a year-end ___ this time."},
-{fr:"avantages",en:"benefits",enHTML:"<u>ben</u>efits",sentence:"The company offers generous health ___."},
-{fr:"équilibre vie professionnelle / personnelle",en:"work-life balance",enHTML:"work-life <u>bal</u>ance",sentence:"Remote work improved employees' ___ significantly."},
-{fr:"télétravail",en:"telecommuting",enHTML:"telecom<u>mut</u>ing",sentence:"___ became common after the pandemic."},
-{fr:"licenciement",en:"layoff",enHTML:"<u>lay</u>off",sentence:"The ___ affected nearly two hundred workers."},
-{fr:"démission",en:"resignation",enHTML:"resig<u>na</u>tion",sentence:"She submitted her ___ after ten years."},
-{fr:"rotation du personnel",en:"employee turnover",enHTML:"emplo<u>yee</u> <u>turn</u>over",sentence:"High ___ increases recruitment and training costs."},
-{fr:"ressources humaines",en:"HR",enHTML:"HR",sentence:"___ handled the complaint quickly and fairly."},
-{fr:"responsable RH",en:"HR manager",enHTML:"HR <u>man</u>ager",sentence:"The ___ scheduled interviews for next week."},
-{fr:"diversité",en:"diversity",enHTML:"di<u>ver</u>sity",sentence:"The company improved workplace ___ significantly."},
-{fr:"inclusion",en:"inclusion",enHTML:"in<u>clu</u>sion",sentence:"___ policies welcome employees of every background."},
 {fr:"culture d'entreprise",en:"corporate culture",enHTML:"<u>cor</u>porate <u>cul</u>ture",sentence:"A strong ___ improves employee retention."},
-{fr:"stratégie",en:"strategy",enHTML:"<u>strat</u>egy",sentence:"The board approved a new five-year ___."},
-{fr:"planification stratégique",en:"strategic planning",enHTML:"stra<u>te</u>gic <u>plan</u>ning",sentence:"___ helps companies prepare for future challenges."},
-{fr:"analyse SWOT",en:"SWOT analysis",enHTML:"SWOT a<u>nal</u>ysis",sentence:"The team ran a ___ before launching."},
-{fr:"avantage concurrentiel",en:"competitive advantage",enHTML:"com<u>pet</u>itive ad<u>van</u>tage",sentence:"Innovation gave the firm a clear ___."},
-{fr:"modèle économique",en:"business model",enHTML:"<u>bus</u>iness <u>mod</u>el",sentence:"The startup changed its ___ twice."},
-{fr:"stratégie de croissance",en:"growth strategy",enHTML:"growth <u>strat</u>egy",sentence:"Their ___ focuses on international markets."},
-{fr:"réduction des effectifs",en:"downsizing",enHTML:"<u>down</u>sizing",sentence:"The ___ reduced the workforce by ten percent."},
-{fr:"fusion",en:"merger",enHTML:"<u>merg</u>er",sentence:"The ___ created one of the largest banks."},
-{fr:"acquisition",en:"acquisition",enHTML:"acqui<u>si</u>tion",sentence:"The ___ expanded the company's product range."},
-{fr:"gestion du changement",en:"change management",enHTML:"change <u>man</u>agement",sentence:"___ helped staff adapt to the new system."}
+{fr:"valeurs d'entreprise",en:"corporate values",enHTML:"<u>cor</u>porate <u>val</u>ues",sentence:"Employees are expected to respect ___."},
+{fr:"identité d'entreprise",en:"corporate identity",enHTML:"<u>cor</u>porate i<u>den</u>tity",sentence:"The logo reflects the company's ___."},
+{fr:"image de marque",en:"brand image",enHTML:"brand <u>im</u>age",sentence:"The scandal damaged the company's ___."},
+{fr:"réputation",en:"reputation",enHTML:"repu<u>ta</u>tion",sentence:"A good ___ attracts top talent."},
+{fr:"symbole",en:"symbol",enHTML:"<u>sym</u>bol",sentence:"The logo is a powerful ___ of the brand."},
+{fr:"rituel",en:"ritual",enHTML:"<u>rit</u>ual",sentence:"The morning meeting became a daily ___."},
+{fr:"norme comportementale",en:"behavioral norm",enHTML:"be<u>ha</u>vioral norm",sentence:"New hires quickly learn the office's ___."},
+{fr:"management",en:"management",enHTML:"<u>man</u>agement",sentence:"Senior ___ approved the new policy."},
+{fr:"style de management",en:"management style",enHTML:"<u>man</u>agement style",sentence:"Her ___ encouraged open discussion."},
+{fr:"leadership",en:"leadership",enHTML:"<u>lead</u>ership",sentence:"Strong ___ guided the team through change."},
+{fr:"manager",en:"manager",enHTML:"<u>man</u>ager",sentence:"The ___ organized weekly feedback sessions."},
+{fr:"collaborateur",en:"team member",enHTML:"team <u>mem</u>ber",sentence:"Each ___ contributed ideas during the meeting."},
+{fr:"conditions de travail",en:"working conditions",enHTML:"<u>work</u>ing con<u>di</u>tions",sentence:"Unions demanded better ___ in the factory."},
+{fr:"environnement de travail",en:"work environment",enHTML:"work en<u>vi</u>ronment",sentence:"A positive ___ boosts productivity."},
+{fr:"qualité de vie au travail",en:"quality of work life",enHTML:"<u>qual</u>ity of work life",sentence:"The company invested in ___ programs."},
+{fr:"engagement des employés",en:"employees engagement",enHTML:"emplo<u>yees</u> en<u>gage</u>ment",sentence:"Surveys measure ___ across departments."},
+{fr:"satisfaction au travail",en:"job satisfaction",enHTML:"job satis<u>fac</u>tion",sentence:"Flexible hours improved overall ___."},
+{fr:"bien-être au travail",en:"well-being at work",enHTML:"<u>well</u>-being at work",sentence:"The firm launched a ___ initiative."},
+{fr:"stress professionnel",en:"work-related stress",enHTML:"work-re<u>lat</u>ed stress",sentence:"___ increased during the busy season."},
+{fr:"syndrôme d'épuisement professionnel",en:"burnout",enHTML:"<u>burn</u>out",sentence:"Heavy workloads led to employee ___."},
+{fr:"harcèlement moral",en:"psychological harassment",enHTML:"psycho<u>log</u>ical ha<u>rass</u>ment",sentence:"The company has a strict policy against ___."},
+{fr:"harcèlement sexuel",en:"sexual harassment",enHTML:"<u>sex</u>ual ha<u>rass</u>ment",sentence:"Training helps staff recognize ___."},
+{fr:"parité hommes-femmes",en:"gender equality",enHTML:"<u>gen</u>der e<u>qual</u>ity",sentence:"The board promotes ___ at every level."},
+{fr:"télétravail",en:"remote work",enHTML:"re<u>mote</u> work",sentence:"___ became common after the pandemic."},
+{fr:"travail hybride",en:"hybrid work",enHTML:"<u>hy</u>brid work",sentence:"Many employees now prefer ___ arrangements."},
+{fr:"flexibilité",en:"flexibility",enHTML:"flexi<u>bil</u>ity",sentence:"Employees value ___ in their schedules."},
+{fr:"équilibre vie professionnelle / vie privée",en:"work-life balance",enHTML:"work-life <u>bal</u>ance",sentence:"Remote work improved employees' ___."},
+{fr:"rémunération",en:"compensation",enHTML:"compen<u>sa</u>tion",sentence:"Total ___ includes salary and bonuses."},
+{fr:"salaire",en:"salary",enHTML:"<u>sal</u>ary",sentence:"Her ___ increased after the promotion."},
+{fr:"avantages sociaux",en:"fringe benefits",enHTML:"fringe <u>ben</u>efits",sentence:"The company offers generous ___."},
+{fr:"formation professionnelle",en:"vocational training",enHTML:"vo<u>ca</u>tional <u>train</u>ing",sentence:"___ helps workers gain new skills."},
+{fr:"mobilité interne",en:"internal mobility",enHTML:"in<u>ter</u>nal mo<u>bil</u>ity",sentence:"The firm encourages ___ between departments."},
+{fr:"gestion des talents",en:"talent management",enHTML:"<u>tal</u>ent <u>man</u>agement",sentence:"___ ensures the company keeps its best staff."},
+{fr:"diversité",en:"diversity",enHTML:"di<u>ver</u>sity",sentence:"The company improved workplace ___."},
+{fr:"intégration",en:"onboarding",enHTML:"<u>on</u>boarding",sentence:"A good ___ program helps new hires settle in."},
+{fr:"cohésion d'équipe",en:"team cohesion",enHTML:"team co<u>he</u>sion",sentence:"Team-building events strengthen ___."},
+{fr:"coopération",en:"teamwork",enHTML:"<u>team</u>work",sentence:"The project succeeded because of great ___."},
+{fr:"communication interne",en:"internal communication",enHTML:"in<u>ter</u>nal communi<u>ca</u>tion",sentence:"Weak ___ caused confusion about the new policy."},
+{fr:"convention collective",en:"collective agreement",enHTML:"col<u>lec</u>tive a<u>gree</u>ment",sentence:"The union signed a new ___ this year."},
+{fr:"motiver",en:"to motivate",enHTML:"to <u>mo</u>tivate",sentence:"Managers try to ___ their teams daily."},
+{fr:"fidéliser les employés",en:"to retain employees",enHTML:"to re<u>tain</u> emplo<u>yees</u>",sentence:"Good benefits help ___ effectively."},
+{fr:"recruter",en:"to recruit",enHTML:"to re<u>cruit</u>",sentence:"The firm plans to ___ ten new engineers."},
+{fr:"former",en:"to train",enHTML:"to train",sentence:"The company will ___ all new staff members."},
+{fr:"évaluer les performances",en:"to appraise performance",enHTML:"to ap<u>praise</u> per<u>for</u>mance",sentence:"Managers ___ every six months."},
+{fr:"récompenser",en:"to reward",enHTML:"to re<u>ward</u>",sentence:"The firm decided to ___ top performers."},
+{fr:"promouvoir",en:"to promote",enHTML:"to pro<u>mote</u>",sentence:"The board chose to ___ her to director."},
+{fr:"déléguer",en:"to delegate",enHTML:"to <u>del</u>egate",sentence:"Good managers know how to ___ tasks."},
+{fr:"responsabiliser",en:"to empower",enHTML:"to em<u>pow</u>er",sentence:"The company aims to ___ its employees."},
+{fr:"s'adapter à",en:"to adapt to",enHTML:"to a<u>dapt</u> to",sentence:"Staff had to ___ the new software quickly."},
+{fr:"collaborer",en:"to collaborate",enHTML:"to col<u>lab</u>orate",sentence:"Teams ___ across different offices."},
+{fr:"innover",en:"to innovate",enHTML:"to <u>in</u>novate",sentence:"The company must ___ to stay competitive."},
+{fr:"communiquer",en:"to communicate",enHTML:"to com<u>mu</u>nicate",sentence:"Leaders should ___ clearly during change."},
+{fr:"négocier un accord",en:"to negotiate an agreement",enHTML:"to ne<u>go</u>tiate an a<u>gree</u>ment",sentence:"Both sides met ___ on pay."},
+{fr:"intégrer de nouveaux employés",en:"to onboard new employees",enHTML:"to <u>on</u>board new emplo<u>yees</u>",sentence:"HR helps ___ smoothly."},
+{fr:"partagé",en:"shared",enHTML:"shared",sentence:"They work toward a ___ goal."},
+{fr:"inclusif",en:"inclusive",enHTML:"in<u>clu</u>sive",sentence:"The company promotes an ___ workplace."},
+{fr:"bienveillant",en:"supportive",enHTML:"sup<u>por</u>tive",sentence:"Her manager was always ___ and patient."},
+{fr:"participatif",en:"participatory",enHTML:"par<u>tic</u>ipatory",sentence:"The team adopted a ___ decision process."},
+{fr:"autoritaire",en:"authoritarian",enHTML:"autho<u>ri</u>tarian",sentence:"His ___ style discouraged open feedback."},
+{fr:"autonome",en:"autonomous",enHTML:"au<u>ton</u>omous",sentence:"She works in a fully ___ role."},
+{fr:"qualifié",en:"skilled",enHTML:"skilled",sentence:"The factory needs more ___ workers."},
+{fr:"motivé",en:"motivated",enHTML:"<u>mo</u>tivated",sentence:"A ___ team delivers better results."},
+{fr:"productif",en:"productive",enHTML:"pro<u>duc</u>tive",sentence:"Remote work made her more ___."},
+{fr:"compétent",en:"competent",enHTML:"<u>com</u>petent",sentence:"The new hire proved highly ___."},
+{fr:"épanoui",en:"thriving",enHTML:"<u>thriv</u>ing",sentence:"Employees feel ___ in a supportive culture."},
+{fr:"souple",en:"flexible",enHTML:"<u>flex</u>ible",sentence:"The company offers ___ working hours."},
+{fr:"collectif",en:"collective",enHTML:"col<u>lec</u>tive",sentence:"The team celebrated their ___ success."},
+{fr:"individuel",en:"individual",enHTML:"indi<u>vid</u>ual",sentence:"Each ___ goal supports the team's mission."},
+{fr:"diversifié",en:"diverse",enHTML:"di<u>verse</u>",sentence:"The company has a ___ workforce."},
+{fr:"paritaire",en:"gender-balanced",enHTML:"<u>gen</u>der-<u>bal</u>anced",sentence:"The board is now fully ___."},
+{fr:"en équipe",en:"collectively",enHTML:"col<u>lec</u>tively",sentence:"The project was completed ___ by the team."},
+{fr:"à distance",en:"remotely",enHTML:"re<u>mote</u>ly",sentence:"Many employees now work ___ full-time."},
+{fr:"sur site",en:"on-site",enHTML:"on-site",sentence:"Some staff still work ___ every day."},
+{fr:"dans l'entreprise",en:"within the company",enHTML:"with<u>in</u> the <u>com</u>pany",sentence:"Promotions happen frequently ___."},
+{fr:"au sein de",en:"within",enHTML:"with<u>in</u>",sentence:"Trust grows ___ a strong team."}
 ];
 
 function goTo(name){

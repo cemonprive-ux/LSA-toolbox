@@ -6,19 +6,19 @@
 <title>Business English · Vocabulaire SIO · LSA Toolbox</title>
 <link rel="icon" type="image/png" href="assets/lsa-logo.png">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Serif+4:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap');
 :root{
   --navy:#1a2744;--navy-deep:#0f1a33;--navy-mid:#243260;--blue:#2d5fa6;
-  --accent:#c8a84b;--accent-deep:#a4863a;--green:#2a7a4b;--red:#b5302b;
+  --accent:#f5b60f;--accent-deep:#c98f00;--green:#2a7a4b;--red:#b5302b;
   --bg:#f5f3ef;--surface:#ffffff;--border:#ddd5c5;--text:#2a2520;--muted:#7a7060;
   --shadow:0 2px 14px rgba(26,39,68,.10);--shadow-lg:0 14px 40px rgba(26,39,68,.18);
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
-body{font-family:'Source Serif 4',serif;background:var(--bg);color:var(--text);line-height:1.6;font-size:17px;-webkit-font-smoothing:antialiased;}
+body{font-family:'Quicksand',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;font-size:17px;-webkit-font-smoothing:antialiased;}
 a{color:var(--blue);text-decoration:none;}
 a:hover{color:var(--navy);}
-h1,h2,h3{font-family:'Playfair Display',serif;}
+h1,h2,h3{font-family:'Quicksand',sans-serif;}
 .topbar{background:var(--navy-deep);color:rgba(255,255,255,.7);font-size:12.5px;}
 .topbar-inner{max-width:1040px;margin:0 auto;padding:9px 28px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;}
 .topbar .place{display:inline-flex;align-items:center;gap:8px;text-transform:uppercase;letter-spacing:.12em;font-size:11px;}
@@ -55,6 +55,8 @@ main{max-width:900px;margin:0 auto;padding:44px 28px 30px;}
 .score{font-size:13.5px;font-weight:600;color:var(--navy);background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:6px 15px;}
 .score b{color:var(--green);}
 .progress{text-align:center;color:var(--muted);font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:18px;}
+.ex-heading{text-align:center;color:var(--navy);font-size:1.3rem;margin-bottom:4px;}
+.ex-heading .count{font-size:.8rem;font-weight:400;color:var(--muted);}
 
 /* ─── FLASHCARD ─── */
 .flash-row{display:flex;align-items:center;justify-content:center;gap:18px;}
@@ -70,8 +72,10 @@ main{max-width:900px;margin:0 auto;padding:44px 28px 30px;}
 .card.flipped .card-back{transform:rotateY(360deg);}
 .card-fr{font-size:1.7rem;font-weight:600;color:var(--navy);text-align:center;text-wrap:balance;}
 .card-hint{margin-top:14px;font-size:12px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;}
-.card-en{font-size:1.6rem;font-weight:700;color:#fff;text-align:center;text-wrap:balance;font-family:'Playfair Display',serif;}
+.card-en{font-size:1.6rem;font-weight:700;color:#fff;text-align:center;text-wrap:balance;font-family:'Quicksand',sans-serif;}
 .card-en u{text-decoration:none;border-bottom:3px solid var(--accent);}
+.card-index{position:absolute;top:14px;left:16px;font-size:11px;letter-spacing:.06em;font-weight:700;color:var(--muted);}
+.card-back .card-index{color:rgba(255,255,255,.6);}
 .speaker{position:absolute;top:14px;right:14px;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.14);border:none;color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .18s;}
 .speaker:hover{background:rgba(255,255,255,.28);}
 .self-assess{display:flex;justify-content:center;gap:12px;margin-top:20px;opacity:0;transition:opacity .25s;}
@@ -86,6 +90,9 @@ main{max-width:900px;margin:0 auto;padding:44px 28px 30px;}
 .ex-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow);padding:32px 34px;max-width:560px;margin:0 auto;}
 .fr-prompt{text-align:center;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-deep);font-weight:700;margin-bottom:6px;}
 .fr-word{text-align:center;font-size:1.5rem;font-weight:600;color:var(--navy);margin-bottom:22px;text-wrap:balance;}
+.fr-word.hidden{display:none;}
+.help-btn{display:block;margin:0 auto 16px;font-family:inherit;font-size:13px;font-weight:600;color:var(--blue);background:none;border:1px solid var(--border);border-radius:20px;padding:7px 16px;cursor:pointer;transition:all .18s;}
+.help-btn:hover{border-color:var(--blue);background:color-mix(in srgb,var(--blue) 8%,#fff);}
 .sentence{text-align:center;font-size:1.15rem;line-height:1.6;color:var(--text);margin-bottom:26px;font-style:italic;}
 .blank{display:inline-block;min-width:110px;border-bottom:2px solid var(--blue);color:var(--blue);font-weight:700;font-style:normal;padding:0 4px;}
 
@@ -190,16 +197,19 @@ footer{background:var(--navy-deep);color:rgba(255,255,255,.62);margin-top:42px;b
       <button class="ex-back" onclick="goTo('menu')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg> Liste des exercices</button>
       <span class="score">Bonnes réponses : <b id="flash-score">0</b> / <span id="flash-total">0</span></span>
     </div>
+    <h2 class="ex-heading">Flashcards <span class="count" id="flash-heading-count"></span></h2>
     <p class="progress" id="flash-progress">Carte 1 / 35</p>
     <div class="flash-row">
       <button class="flash-arrow" id="flash-prev" onclick="flashNav(-1)" aria-label="Mot précédent"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18 9 12l6-6"/></svg></button>
       <div class="card-wrap">
         <div class="card" id="flash-card" onclick="flipCard()">
           <div class="card-face card-front">
+            <div class="card-index" id="flash-index-front"></div>
             <div class="card-fr" id="flash-fr"></div>
             <div class="card-hint">Appuyez pour retourner</div>
           </div>
           <div class="card-face card-back">
+            <div class="card-index" id="flash-index-back"></div>
             <button class="speaker" onclick="event.stopPropagation();speak(flashCurrentTerm())" aria-label="Écouter la prononciation"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="M16 9a4 4 0 0 1 0 6M19 6.5a7.5 7.5 0 0 1 0 11"/></svg></button>
             <div class="card-en" id="flash-en"></div>
           </div>
@@ -222,7 +232,8 @@ footer{background:var(--navy-deep);color:rgba(255,255,255,.62);margin-top:42px;b
     <p class="progress" id="mcq-progress">Question 1 / 35</p>
     <div class="ex-card">
       <div class="fr-prompt">Mot français</div>
-      <div class="fr-word" id="mcq-fr"></div>
+      <button class="help-btn" id="mcq-help-btn" onclick="toggleHelp('mcq')">J'ai besoin d'aide</button>
+      <div class="fr-word hidden" id="mcq-fr"></div>
       <div class="sentence" id="mcq-sentence"></div>
       <div class="dd" id="mcq-dd">
         <button class="dd-btn" id="mcq-dd-btn" onclick="toggleDD()">Choisissez une traduction<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>
@@ -246,7 +257,8 @@ footer{background:var(--navy-deep);color:rgba(255,255,255,.62);margin-top:42px;b
     <p class="progress" id="type-progress">Phrase 1 / 35</p>
     <div class="ex-card">
       <div class="fr-prompt">Mot français</div>
-      <div class="fr-word" id="type-fr"></div>
+      <button class="help-btn" id="type-help-btn" onclick="toggleHelp('type')">J'ai besoin d'aide</button>
+      <div class="fr-word hidden" id="type-fr"></div>
       <div class="sentence" id="type-sentence"></div>
       <input type="text" class="type-input" id="type-input" placeholder="Tapez le mot en anglais" autocomplete="off">
       <button class="verify-btn" id="type-verify" onclick="typeVerify()">Vérifier</button>
@@ -277,33 +289,33 @@ const VOCAB=[
 {fr:"présélectionner, filtrer",en:"to screen",enHTML:"to <u>screen</u>",sentence:"Recruiters ___ every resume before interviews."},
 {fr:"candidat",en:"candidate",enHTML:"<u>can</u>didate",sentence:"Only one ___ impressed the whole panel."},
 {fr:"candidat, postulant",en:"applicant",enHTML:"<u>ap</u>plicant",sentence:"Each ___ must submit two references."},
-{fr:"écarter de la sélection",en:"to eliminate from consideration",enHTML:"to e<u>lim</u>inate from consideration",sentence:"A single typo can ___ instantly."},
+{fr:"écarter de la sélection",en:"to eliminate from consideration",enHTML:"to e<u>lim</u>inate from conside<u>ra</u>tion",sentence:"A single typo can ___ instantly."},
 {fr:"descriptif de poste",en:"job description",enHTML:"job de<u>scrip</u>tion",sentence:"Read the ___ carefully before applying."},
 {fr:"embaucher",en:"to hire",enHTML:"to <u>hire</u>",sentence:"We plan ___ three new interns."},
 {fr:"vivier de compétences, talents",en:"talent",enHTML:"<u>tal</u>ent",sentence:"This company attracts a lot of ___."},
-{fr:"évaluation des candidats",en:"vetting candidates",enHTML:"<u>vet</u>ting candidates",sentence:"HR spends weeks ___ for this role."},
-{fr:"ciblage par mots-clés",en:"keyword-targeting",enHTML:"<u>key</u>word-targeting",sentence:"Her resume uses smart ___ for ATS systems."},
-{fr:"professionnalisme",en:"professionalism",enHTML:"profes<u>sion</u>alism",sentence:"He greeted everyone with real ___."},
-{fr:"réputation en ligne",en:"online reputation",enHTML:"online repu<u>ta</u>tion",sentence:"Employers always check your ___ first."},
-{fr:"présence en ligne",en:"online presence",enHTML:"online <u>pres</u>ence",sentence:"A strong ___ helps you get noticed."},
-{fr:"image professionnelle",en:"professional image",enHTML:"pro<u>fes</u>sional image",sentence:"Dress well to protect your ___."},
+{fr:"évaluation des candidats",en:"vetting candidates",enHTML:"<u>vet</u>ting <u>can</u>didates",sentence:"HR spends weeks ___ for this role."},
+{fr:"ciblage par mots-clés",en:"keyword-targeting",enHTML:"<u>key</u>word-<u>tar</u>geting",sentence:"Her resume uses smart ___ for ATS systems."},
+{fr:"professionnalisme",en:"professionalism",enHTML:"pro<u>fes</u>sionalism",sentence:"He greeted everyone with real ___."},
+{fr:"réputation en ligne",en:"online reputation",enHTML:"<u>on</u>line repu<u>ta</u>tion",sentence:"Employers always check your ___ first."},
+{fr:"présence en ligne",en:"online presence",enHTML:"<u>on</u>line <u>pres</u>ence",sentence:"A strong ___ helps you get noticed."},
+{fr:"image professionnelle",en:"professional image",enHTML:"pro<u>fes</u>sional <u>im</u>age",sentence:"Dress well to protect your ___."},
 {fr:"signaux d'alerte",en:"red flags",enHTML:"<u>red</u> flags",sentence:"Gaps in a resume can be ___."},
 {fr:"se présenter sous son meilleur jour",en:"to put your best foot forward",enHTML:"to put your best foot <u>for</u>ward",sentence:"Interviews are your chance ___."},
 {fr:"être en adéquation avec la culture d'entreprise",en:"to be a fit for the culture",enHTML:"to be a fit for the <u>cul</u>ture",sentence:"They hired her because she seemed ___."},
-{fr:"profils institutionnels sur les réseaux sociaux",en:"corporate social media profiles",enHTML:"corporate social media <u>pro</u>files",sentence:"Recruiters often browse ___ before calling."},
+{fr:"profils institutionnels sur les réseaux sociaux",en:"corporate social media profiles",enHTML:"<u>cor</u>porate <u>so</u>cial <u>me</u>dia <u>pro</u>files",sentence:"Recruiters often browse ___ before calling."},
 {fr:"cohérence",en:"consistency",enHTML:"con<u>sis</u>tency",sentence:"Recruiters value ___ across your whole resume."},
 {fr:"première impression",en:"first impression",enHTML:"first im<u>pres</u>sion",sentence:"Your resume creates the ___ instantly."},
 {fr:"entretien",en:"interview",enHTML:"<u>in</u>terview",sentence:"She prepared all week for the ___."},
-{fr:"intérêt de l'employeur",en:"employer's best interests",enHTML:"em<u>ploy</u>er's best interests",sentence:"This policy protects the ___."},
+{fr:"intérêt de l'employeur",en:"employer's best interests",enHTML:"em<u>ploy</u>er's best <u>in</u>terests",sentence:"This policy protects the ___."},
 {fr:"prendre la décision",en:"to make the call",enHTML:"to make the <u>call</u>",sentence:"The manager will ___ by Monday."},
 {fr:"se voir proposer le poste",en:"to be offered the job",enHTML:"to be <u>of</u>fered the job",sentence:"She was thrilled ___ so quickly."},
-{fr:"qualifications",en:"qualifications",enHTML:"quali<u>fi</u>cations",sentence:"List your ___ at the top."},
+{fr:"qualifications",en:"qualifications",enHTML:"qualifi<u>ca</u>tions",sentence:"List your ___ at the top."},
 {fr:"intitulés de poste",en:"job titles",enHTML:"job <u>ti</u>tles",sentence:"Old ___ can confuse modern recruiters."},
 {fr:"expérience",en:"experience",enHTML:"ex<u>pe</u>rience",sentence:"Five years of ___ is required."},
-{fr:"adhésions, affiliations professionnelles",en:"associations",enHTML:"asso<u>ci</u>ations",sentence:"He listed two professional ___ on his resume."},
-{fr:"mots-clés sectoriels",en:"industry keywords",enHTML:"<u>in</u>dustry keywords",sentence:"Use ___ that match the listing."},
+{fr:"adhésions, affiliations professionnelles",en:"associations",enHTML:"associ<u>a</u>tions",sentence:"He listed two professional ___ on his resume."},
+{fr:"mots-clés sectoriels",en:"industry keywords",enHTML:"<u>in</u>dustry <u>key</u>words",sentence:"Use ___ that match the listing."},
 {fr:"compétences et centres d'intérêt",en:"skills and interests",enHTML:"skills and <u>in</u>terests",sentence:"The resume ends with ___."},
-{fr:"personne avant-gardiste",en:"trend-forward thinker",enHTML:"trend-forward <u>think</u>er",sentence:"They wanted someone described as a ___."},
+{fr:"personne avant-gardiste",en:"trend-forward thinker",enHTML:"trend-<u>for</u>ward <u>think</u>er",sentence:"They wanted someone described as a ___."},
 {fr:"publicité payante",en:"paid advertising",enHTML:"paid <u>ad</u>vertising",sentence:"The company relies on ___ to recruit."},
 {fr:"opportunités professionnelles",en:"job opportunities",enHTML:"job oppor<u>tu</u>nities",sentence:"New ___ open up every month."},
 {fr:"organisations, entreprises",en:"organizations",enHTML:"organi<u>za</u>tions",sentence:"Many ___ now recruit through social media."}
@@ -318,6 +330,10 @@ function goTo(name){
   if(name==='type') typeRender();
 }
 
+function toggleHelp(kind){
+  document.getElementById(kind+'-fr').classList.remove('hidden');
+  document.getElementById(kind+'-help-btn').style.display='none';
+}
 function speak(text){
   if(!('speechSynthesis' in window)) return;
   const u=new SpeechSynthesisUtterance(text.replace(/^to\s+/,''));
@@ -329,10 +345,13 @@ function speak(text){
 /* ─── FLASHCARDS ─── */
 let flashIdx=0,flashFlipped=false,flashScore=0,flashAnswered=0;
 function flashCurrentTerm(){return VOCAB[flashIdx].en;}
+document.getElementById('flash-heading-count').textContent='('+VOCAB.length+' mots)';
 function flashRender(){
   document.getElementById('flash-fr').textContent=VOCAB[flashIdx].fr;
   document.getElementById('flash-en').innerHTML=VOCAB[flashIdx].enHTML;
   document.getElementById('flash-progress').textContent='Carte '+(flashIdx+1)+' / '+VOCAB.length;
+  document.getElementById('flash-index-front').textContent=(flashIdx+1)+'/'+VOCAB.length;
+  document.getElementById('flash-index-back').textContent=(flashIdx+1)+'/'+VOCAB.length;
   document.getElementById('flash-card').classList.remove('flipped');
   document.getElementById('flash-assess').classList.remove('show');
   flashFlipped=false;
@@ -372,6 +391,8 @@ function mcqBuildOptions(i){
 function mcqRender(){
   const item=VOCAB[MCQ_ORDER[mcqIdx]];
   document.getElementById('mcq-fr').textContent=item.fr;
+  document.getElementById('mcq-fr').classList.add('hidden');
+  document.getElementById('mcq-help-btn').style.display='';
   document.getElementById('mcq-sentence').innerHTML=item.sentence.replace('___','<span class="blank">?</span>');
   document.getElementById('mcq-progress').textContent='Question '+(mcqIdx+1)+' / '+VOCAB.length;
   mcqOptions=mcqBuildOptions(MCQ_ORDER[mcqIdx]);
@@ -421,6 +442,8 @@ let typeIdx=0,typeScore=0,typeAnswered=0,typeLocked=false;
 function typeRender(){
   const item=VOCAB[TYPE_ORDER[typeIdx]];
   document.getElementById('type-fr').textContent=item.fr;
+  document.getElementById('type-fr').classList.add('hidden');
+  document.getElementById('type-help-btn').style.display='';
   document.getElementById('type-sentence').innerHTML=item.sentence.replace('___','<span class="blank">______</span>');
   document.getElementById('type-progress').textContent='Phrase '+(typeIdx+1)+' / '+VOCAB.length;
   document.getElementById('type-input').value='';
