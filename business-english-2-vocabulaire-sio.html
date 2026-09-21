@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vocabulaire · Chapitre 6 Production · LSA Toolbox</title>
+<title>Business English 2 · Vocabulaire SIO · LSA Toolbox</title>
 <link rel="icon" type="image/png" href="assets/lsa-logo.png">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap');
@@ -32,7 +32,7 @@ h1,h2,h3{font-family:'Quicksand',sans-serif;}
 .breadcrumb a{color:rgba(255,255,255,.85);border-bottom:1px solid transparent;transition:.2s;}
 .breadcrumb a:hover{color:#fff;border-bottom-color:var(--accent);}
 .breadcrumb .sep{opacity:.5;}
-.breadcrumb .tag{background:var(--green);color:#fff;border-radius:5px;padding:2px 9px;font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;}
+.breadcrumb .tag{background:var(--blue);color:#fff;border-radius:5px;padding:2px 9px;font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;}
 .head h1{color:var(--accent);font-weight:700;font-size:clamp(2rem,4.2vw,2.9rem);line-height:1.05;}
 .head .sub{color:rgba(255,255,255,.78);font-size:clamp(14px,1.8vw,16.5px);font-style:italic;margin-top:10px;max-width:600px;}
 main{max-width:900px;margin:0 auto;padding:44px 28px 30px;}
@@ -40,12 +40,12 @@ main{max-width:900px;margin:0 auto;padding:44px 28px 30px;}
 /* ─── MENU ─── */
 #screen-menu .menu-lede{text-align:center;color:var(--muted);max-width:560px;margin:0 auto 34px;}
 .menu-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
-.menu-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:26px 22px;box-shadow:var(--shadow);cursor:pointer;font-family:inherit;text-align:left;transition:all .2s;border-top:4px solid var(--green);display:flex;flex-direction:column;gap:12px;}
-.menu-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-3px);border-color:var(--green);}
-.menu-card .m-ico{width:44px;height:44px;border-radius:10px;background:color-mix(in srgb,var(--green) 13%,#fff);color:var(--green);display:flex;align-items:center;justify-content:center;}
+.menu-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:26px 22px;box-shadow:var(--shadow);cursor:pointer;font-family:inherit;text-align:left;transition:all .2s;border-top:4px solid var(--blue);display:flex;flex-direction:column;gap:12px;}
+.menu-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-3px);border-color:var(--blue);}
+.menu-card .m-ico{width:44px;height:44px;border-radius:10px;background:color-mix(in srgb,var(--blue) 13%,#fff);color:var(--blue);display:flex;align-items:center;justify-content:center;}
 .menu-card h3{color:var(--navy);font-size:1.2rem;}
 .menu-card p{color:var(--muted);font-size:14px;line-height:1.5;}
-.menu-card .go{color:var(--green);font-weight:600;font-size:13.5px;display:inline-flex;align-items:center;gap:6px;margin-top:auto;}
+.menu-card .go{color:var(--blue);font-weight:600;font-size:13.5px;display:inline-flex;align-items:center;gap:6px;margin-top:auto;}
 .list-actions{display:flex;justify-content:center;margin-bottom:22px;}
 .download-btn{display:inline-flex;align-items:center;gap:8px;font-family:inherit;font-weight:600;font-size:14px;background:var(--navy);color:#fff;border:none;border-radius:24px;padding:11px 24px;cursor:pointer;transition:all .2s;}
 .download-btn:hover{background:var(--navy-mid);}
@@ -76,7 +76,7 @@ main{max-width:900px;margin:0 auto;padding:44px 28px 30px;}
 /* ─── FLASHCARD ─── */
 .flash-row{display:flex;align-items:center;justify-content:center;gap:18px;}
 .flash-arrow{flex-shrink:0;width:44px;height:44px;border-radius:50%;border:1px solid var(--border);background:var(--surface);color:var(--navy);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .18s;box-shadow:var(--shadow);}
-.flash-arrow:hover{border-color:var(--green);color:var(--green);transform:translateY(-2px);}
+.flash-arrow:hover{border-color:var(--blue);color:var(--blue);transform:translateY(-2px);}
 .flash-arrow:disabled{opacity:.35;cursor:default;transform:none;}
 .card-wrap{width:100%;max-width:440px;perspective:1400px;}
 .card{position:relative;height:230px;cursor:pointer;}
@@ -106,10 +106,10 @@ main{max-width:900px;margin:0 auto;padding:44px 28px 30px;}
 .fr-prompt{text-align:center;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-deep);font-weight:700;margin-bottom:6px;}
 .fr-word{text-align:center;font-size:1.5rem;font-weight:600;color:var(--navy);margin-bottom:22px;text-wrap:balance;}
 .fr-word.hidden{display:none;}
-.help-btn{display:block;margin:0 auto 16px;font-family:inherit;font-size:13px;font-weight:600;color:var(--green);background:none;border:1px solid var(--border);border-radius:20px;padding:7px 16px;cursor:pointer;transition:all .18s;}
-.help-btn:hover{border-color:var(--green);background:color-mix(in srgb,var(--green) 8%,#fff);}
+.help-btn{display:block;margin:0 auto 16px;font-family:inherit;font-size:13px;font-weight:600;color:var(--blue);background:none;border:1px solid var(--border);border-radius:20px;padding:7px 16px;cursor:pointer;transition:all .18s;}
+.help-btn:hover{border-color:var(--blue);background:color-mix(in srgb,var(--blue) 8%,#fff);}
 .sentence{text-align:center;font-size:1.15rem;line-height:1.6;color:var(--text);margin-bottom:26px;font-style:italic;}
-.blank{display:inline-block;min-width:110px;border-bottom:2px solid var(--green);color:var(--green);font-weight:700;font-style:normal;padding:0 4px;}
+.blank{display:inline-block;min-width:110px;border-bottom:2px solid var(--blue);color:var(--blue);font-weight:700;font-style:normal;padding:0 4px;}
 
 /* dropdown */
 .dd{position:relative;margin:0 auto 18px;max-width:360px;}
@@ -121,14 +121,14 @@ main{max-width:900px;margin:0 auto;padding:44px 28px 30px;}
 .dd-opt:last-child{border-bottom:none;}
 .dd-opt:hover{background:var(--bg);}
 .dd-opt u{text-decoration:none;border-bottom:2px solid var(--accent-deep);}
-.dd-opt .speaker-mini{width:26px;height:26px;border-radius:50%;background:color-mix(in srgb,var(--green) 12%,#fff);color:var(--green);border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;}
-.dd-opt .speaker-mini:hover{background:var(--green);color:#fff;}
+.dd-opt .speaker-mini{width:26px;height:26px;border-radius:50%;background:color-mix(in srgb,var(--blue) 12%,#fff);color:var(--blue);border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;}
+.dd-opt .speaker-mini:hover{background:var(--blue);color:#fff;}
 
 .type-input{display:block;width:100%;max-width:320px;margin:0 auto 18px;font-family:inherit;font-size:16px;padding:12px 16px;border:1px solid var(--border);border-radius:10px;text-align:center;}
-.type-input:focus{outline:none;border-color:var(--green);box-shadow:0 0 0 3px rgba(42,122,75,.15);}
+.type-input:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(45,95,166,.15);}
 
 .verify-btn{display:block;margin:0 auto;font-family:inherit;font-weight:600;font-size:14.5px;background:var(--navy);color:#fff;border:none;border-radius:24px;padding:11px 28px;cursor:pointer;transition:all .2s;}
-.verify-btn:hover{background:var(--green);}
+.verify-btn:hover{background:var(--blue);}
 .verify-btn:disabled{opacity:.4;cursor:default;}
 .feedback{text-align:center;margin-top:16px;font-weight:600;font-size:14.5px;min-height:20px;}
 .feedback.ok{color:var(--green);}
@@ -165,25 +165,25 @@ footer{background:var(--navy-deep);color:rgba(255,255,255,.62);margin-top:42px;b
   </div>
 </div>
 
-<header class="head" data-screen-label="Vocabulaire Production · en-tête">
+<header class="head" data-screen-label="Business English 2 · en-tête">
   <div class="head-inner">
     <div class="breadcrumb">
       <a href="index.html">Accueil</a>
       <span class="sep">›</span>
-      <span>DSCG</span>
+      <span>BTS</span>
       <span class="sep">›</span>
-      <span>Vocabulaire</span>
-      <span class="tag">Chapitre 6 · Production</span>
+      <span>Vocabulaire SIO</span>
+      <span class="tag">Business English 2</span>
     </div>
-    <h1>Vocabulaire : Production</h1>
-    <p class="sub">Vocabulaire de la production et de la chaîne d'approvisionnement du chapitre 6.</p>
+    <h1>Business English 2</h1>
+    <p class="sub">Vocabulaire du monde du travail : bien-être, diversité, flexibilité et transformation des entreprises.</p>
   </div>
 </header>
 
 <main>
 
   <section id="screen-menu" data-screen-label="Menu des exercices">
-    <p class="menu-lede">50 mots et expressions de production. Choisissez un exercice pour vous entraîner.</p>
+    <p class="menu-lede">36 mots et expressions autour du monde du travail. Choisissez un exercice pour vous entraîner.</p>
     <div class="menu-cards">
       <button class="menu-card" onclick="goTo('list')">
         <span class="m-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg></span>
@@ -231,7 +231,7 @@ footer{background:var(--navy-deep);color:rgba(255,255,255,.62);margin-top:42px;b
       <span class="score">Bonnes réponses : <b id="flash-score">0</b> / <span id="flash-total">0</span></span>
     </div>
     <h2 class="ex-heading">Flashcards <span class="count" id="flash-heading-count"></span></h2>
-    <p class="progress" id="flash-progress">Carte 1 / 50</p>
+    <p class="progress" id="flash-progress">Carte 1 / 36</p>
     <div class="flash-row">
       <button class="flash-arrow" id="flash-prev" onclick="flashNav(-1)" aria-label="Mot précédent"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18 9 12l6-6"/></svg></button>
       <div class="card-wrap">
@@ -262,7 +262,7 @@ footer{background:var(--navy-deep);color:rgba(255,255,255,.62);margin-top:42px;b
       <button class="ex-back" onclick="goTo('menu')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg> Liste des exercices</button>
       <span class="score">Bonnes réponses : <b id="mcq-score">0</b> / <span id="mcq-total">0</span></span>
     </div>
-    <p class="progress" id="mcq-progress">Question 1 / 50</p>
+    <p class="progress" id="mcq-progress">Question 1 / 36</p>
     <div class="ex-card">
       <div class="fr-prompt">Mot français</div>
       <button class="help-btn" id="mcq-help-btn" onclick="toggleHelp('mcq')">J'ai besoin d'aide</button>
@@ -287,7 +287,7 @@ footer{background:var(--navy-deep);color:rgba(255,255,255,.62);margin-top:42px;b
       <button class="ex-back" onclick="goTo('menu')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg> Liste des exercices</button>
       <span class="score">Bonnes réponses : <b id="type-score">0</b> / <span id="type-total">0</span></span>
     </div>
-    <p class="progress" id="type-progress">Phrase 1 / 50</p>
+    <p class="progress" id="type-progress">Phrase 1 / 36</p>
     <div class="ex-card">
       <div class="fr-prompt">Mot français</div>
       <button class="help-btn" id="type-help-btn" onclick="toggleHelp('type')">J'ai besoin d'aide</button>
@@ -309,7 +309,7 @@ footer{background:var(--navy-deep);color:rgba(255,255,255,.62);margin-top:42px;b
   <div class="foot-inner">
     <div class="foot-brand">
       <img src="assets/lsa-logo.png" alt="Logo LSA">
-      <div><strong>LSA Toolbox</strong><span>DSCG · Vocabulaire · Chapitre 6 Production · M. Blanchet</span></div>
+      <div><strong>LSA Toolbox</strong><span>BTS SIO · Vocabulaire · M. Blanchet</span></div>
     </div>
     <div>Lycée Sidoine Apollinaire, Clermont-Ferrand</div>
   </div>
@@ -317,56 +317,42 @@ footer{background:var(--navy-deep);color:rgba(255,255,255,.62);margin-top:42px;b
 
 <script>
 const VOCAB=[
-{fr:"production",en:"production",enHTML:"pro<u>duc</u>tion",sentence:"The factory increased ___ during the summer months."},
-{fr:"ligne de production",en:"production line",enHTML:"pro<u>duc</u>tion line",sentence:"Workers inspected every item on the ___."},
-{fr:"fabrication",en:"manufacturing",enHTML:"manu<u>fac</u>turing",sentence:"Chinese ___ supplies parts to companies worldwide."},
-{fr:"processus de fabrication",en:"manufacturing process",enHTML:"manu<u>fac</u>turing <u>pro</u>cess",sentence:"The new ___ reduced waste significantly."},
-{fr:"production allégée",en:"lean manufacturing",enHTML:"lean manu<u>fac</u>turing",sentence:"___ eliminates waste throughout the production process."},
-{fr:"production de masse",en:"mass production",enHTML:"mass pro<u>duc</u>tion",sentence:"___ lowered the cost of each car."},
-{fr:"personnalisation",en:"customization",enHTML:"customi<u>za</u>tion",sentence:"Customers now expect more product ___."},
-{fr:"stock",en:"inventory",enHTML:"<u>in</u>ventory",sentence:"The warehouse tracked its ___ using new software."},
-{fr:"gestion des stocks",en:"inventory management",enHTML:"<u>in</u>ventory <u>man</u>agement",sentence:"Poor ___ caused frequent stockouts last year."},
-{fr:"rupture de stock",en:"stockout",enHTML:"<u>stock</u>out",sentence:"The ___ delayed several customer orders."},
-{fr:"chaîne d'approvisionnement",en:"supply chain",enHTML:"sup<u>ply</u> chain",sentence:"The pandemic disrupted the global ___."},
-{fr:"fournisseur",en:"supplier",enHTML:"sup<u>pli</u>er",sentence:"The company switched to a cheaper ___."},
-{fr:"approvisionnement",en:"procurement",enHTML:"pro<u>cure</u>ment",sentence:"The ___ team negotiated better prices this year."},
-{fr:"juste-à-temps",en:"just-in-time",enHTML:"just-in-<u>time</u>",sentence:"The factory uses a ___ delivery system."},
-{fr:"logistique",en:"logistics",enHTML:"lo<u>gis</u>tics",sentence:"___ costs rose sharply due to fuel prices."},
-{fr:"entrepôt",en:"warehouse",enHTML:"<u>ware</u>house",sentence:"The company built a new ___ near the port."},
-{fr:"stockage",en:"storage",enHTML:"<u>stor</u>age",sentence:"Cold ___ keeps perishable goods fresh longer."},
-{fr:"capacité",en:"capacity",enHTML:"ca<u>pac</u>ity",sentence:"The plant reached full production ___ this month."},
-{fr:"production / rendement",en:"output",enHTML:"<u>out</u>put",sentence:"Factory ___ dropped during the strike."},
-{fr:"productivité",en:"productivity",enHTML:"produc<u>tiv</u>ity",sentence:"New machines improved worker ___ significantly."},
-{fr:"efficacité",en:"efficiency",enHTML:"ef<u>fi</u>ciency",sentence:"The new process improved factory ___ greatly."},
-{fr:"qualité",en:"quality",enHTML:"<u>qual</u>ity",sentence:"Customers expect consistent product ___ every time."},
-{fr:"contrôle qualité",en:"quality control",enHTML:"<u>qual</u>ity con<u>trol</u>",sentence:"___ inspectors checked every finished item."},
-{fr:"défaut",en:"defect",enHTML:"<u>de</u>fect",sentence:"The recall was caused by a manufacturing ___."},
-{fr:"temps d'arrêt",en:"downtime",enHTML:"<u>down</u>time",sentence:"Unplanned ___ cost the factory thousands of euros."},
-{fr:"matières premières",en:"raw materials",enHTML:"raw ma<u>te</u>rials",sentence:"The factory imports most of its ___."},
-{fr:"produits finis",en:"finished goods",enHTML:"<u>fin</u>ished goods",sentence:"___ are stored before being shipped out."},
-{fr:"en-cours de production",en:"work in progress",enHTML:"work in <u>prog</u>ress",sentence:"The report only counted current ___."},
-{fr:"chaîne de montage",en:"assembly line",enHTML:"as<u>sem</u>bly line",sentence:"Robots now handle most of the ___."},
-{fr:"production par lots",en:"batch production",enHTML:"batch pro<u>duc</u>tion",sentence:"The bakery uses ___ for its bread."},
-{fr:"production continue",en:"continuous production",enHTML:"con<u>tin</u>uous pro<u>duc</u>tion",sentence:"The plant runs ___ around the clock."},
-{fr:"goulot d’étranglement",en:"bottleneck",enHTML:"<u>bot</u>tleneck",sentence:"A single machine caused the whole ___."},
-{fr:"délai de production",en:"lead time",enHTML:"<u>lead</u> time",sentence:"Longer ___ frustrated several major customers."},
-{fr:"temps de cycle",en:"cycle time",enHTML:"<u>cy</u>cle time",sentence:"Shorter ___ helped the factory produce more."},
-{fr:"débit de production",en:"throughput",enHTML:"<u>through</u>put",sentence:"New software increased the factory’s daily ___."},
-{fr:"surproduction",en:"overproduction",enHTML:"overpro<u>duc</u>tion",sentence:"___ led to unsold stock piling up."},
-{fr:"gaspillage",en:"waste",enHTML:"waste",sentence:"The new process cut material ___ significantly."},
-{fr:"rebut",en:"scrap",enHTML:"scrap",sentence:"Metal ___ is recycled at the plant."},
-{fr:"rendement",en:"yield",enHTML:"yield",sentence:"The process improved crop ___ this season."},
-{fr:"économies d’échelle",en:"economies of scale",enHTML:"e<u>con</u>omies of scale",sentence:"___ lowered the cost per unit produced."},
-{fr:"externalisation",en:"outsourcing",enHTML:"<u>out</u>sourcing",sentence:"The company considered ___ its packaging work."},
-{fr:"délocalisation",en:"offshoring",enHTML:"<u>off</u>shoring",sentence:"___ reduced labour costs but raised delays."},
-{fr:"relocalisation",en:"reshoring",enHTML:"<u>re</u>shoring",sentence:"___ brought production back closer to customers."},
-{fr:"sous-traitance",en:"subcontracting",enHTML:"sub<u>con</u>tracting",sentence:"The firm relies on ___ for peak demand."},
-{fr:"maintenance",en:"maintenance",enHTML:"<u>main</u>tenance",sentence:"Regular ___ keeps machines running smoothly."},
-{fr:"maintenance préventive",en:"preventive maintenance",enHTML:"pre<u>ven</u>tive <u>main</u>tenance",sentence:"___ reduces the risk of sudden breakdowns."},
-{fr:"panne",en:"breakdown",enHTML:"<u>break</u>down",sentence:"A machine ___ halted production for hours."},
-{fr:"stock de sécurité",en:"safety stock",enHTML:"<u>safe</u>ty stock",sentence:"The warehouse keeps ___ for emergencies."},
-{fr:"gestion de la qualité totale",en:"total quality management",enHTML:"<u>to</u>tal <u>qual</u>ity <u>man</u>agement",sentence:"___ involves every employee in quality goals."},
-{fr:"normalisation",en:"standardization",enHTML:"standardi<u>za</u>tion",sentence:"___ made parts interchangeable across factories."}
+{fr:"donner la priorité à",en:"to prioritize",enHTML:"to pri<u>or</u>itize",sentence:"Managers must ___ safety over speed."},
+{fr:"bien-être",en:"well-being",enHTML:"well-<u>be</u>ing",sentence:"The company invests in employee ___."},
+{fr:"main-d'œuvre, effectif",en:"workforce",enHTML:"<u>work</u>force",sentence:"Automation is changing the modern ___."},
+{fr:"attirer, fidéliser et retenir les talents",en:"to attract, engage and retain talent",enHTML:"to at<u>tract</u>, en<u>gage</u> and re<u>tain</u> <u>tal</u>ent",sentence:"The plan aims to ___ across departments."},
+{fr:"travailler pour vivre / vivre pour travailler",en:"to work to live / to live to work",enHTML:"to <u>work</u> to <u>live</u> / to <u>live</u> to <u>work</u>",sentence:"The seminar debated whether we ___."},
+{fr:"diversité, équité et inclusion (DEI)",en:"diversity, equity and inclusion (DEI)",enHTML:"di<u>ver</u>sity, <u>eq</u>uity and in<u>clu</u>sion (DEI)",sentence:"The firm created a new ___ policy."},
+{fr:"candidat(e)s à l'embauche",en:"job seekers",enHTML:"job <u>seek</u>ers",sentence:"Many ___ struggled during the recession."},
+{fr:"groupes de ressources",en:"resource groups",enHTML:"<u>re</u>source groups",sentence:"Employees can join internal ___."},
+{fr:"sentiment d'appartenance",en:"sense of belonging",enHTML:"sense of be<u>long</u>ing",sentence:"New hires need a strong ___."},
+{fr:"employés sous-représentés",en:"underrepresented employees",enHTML:"underrepre<u>sent</u>ed em<u>ploy</u>ees",sentence:"The program supports ___ across teams."},
+{fr:"prise de décision",en:"decision-making",enHTML:"de<u>ci</u>sion-<u>mak</u>ing",sentence:"Data improves the company's ___ process."},
+{fr:"natifs du numérique",en:"digital natives",enHTML:"<u>dig</u>ital <u>na</u>tives",sentence:"Young employees are often called ___."},
+{fr:"expérience employé",en:"employee experience",enHTML:"employ<u>ee</u> ex<u>pe</u>rience",sentence:"HR teams now focus on ___."},
+{fr:"rationaliser",en:"to streamline",enHTML:"to <u>stream</u>line",sentence:"This tool helps managers ___ tasks."},
+{fr:"accélérer",en:"to expedite",enHTML:"to <u>ex</u>pedite",sentence:"The team worked hard to ___ delivery."},
+{fr:"flexibilité et mobilité",en:"flexibility and mobility",enHTML:"flexi<u>bil</u>ity and mo<u>bil</u>ity",sentence:"Younger workers often value ___ most."},
+{fr:"éléments non négociables",en:"non-negotiables",enHTML:"non-ne<u>go</u>tiables",sentence:"Fair pay is one of her ___."},
+{fr:"travail à distance",en:"remote working",enHTML:"re<u>mote</u> <u>work</u>ing",sentence:"The pandemic made ___ more common."},
+{fr:"démission silencieuse",en:"quiet quitting",enHTML:"<u>qui</u>et <u>quit</u>ting",sentence:"Some employees describe burnout as ___."},
+{fr:"confiance",en:"confidence",enHTML:"<u>con</u>fidence",sentence:"Praise from managers builds employee ___."},
+{fr:"valeurs",en:"values",enHTML:"<u>val</u>ues",sentence:"The company's ___ guide every decision."},
+{fr:"équilibre vie professionnelle/vie personnelle",en:"work-life balance",enHTML:"work-life <u>bal</u>ance",sentence:"Remote jobs often improve ___."},
+{fr:"semaine de travail de quatre jours",en:"four-day work week",enHTML:"<u>four</u>-day work <u>week</u>",sentence:"Some firms now offer a ___."},
+{fr:"horaires flexibles",en:"flex hours",enHTML:"<u>flex</u> hours",sentence:"Parents often appreciate ___ at work."},
+{fr:"socialement engagé(e)",en:"socially conscious",enHTML:"<u>so</u>cially <u>con</u>scious",sentence:"Younger consumers prefer ___ companies."},
+{fr:"responsabilité sociétale des entreprises (RSE)",en:"corporate social responsibility (CSR)",enHTML:"<u>cor</u>porate <u>so</u>cial responsi<u>bil</u>ity (CSR)",sentence:"The report highlighted the firm's ___."},
+{fr:"formation et développement",en:"learning and development",enHTML:"<u>learn</u>ing and de<u>vel</u>opment",sentence:"The budget for ___ increased sharply."},
+{fr:"subventionné(e)",en:"subsidized",enHTML:"<u>sub</u>sidized",sentence:"Lunch is fully ___ for interns."},
+{fr:"membres de l'équipe",en:"team members",enHTML:"team <u>mem</u>bers",sentence:"She thanked all her ___ personally."},
+{fr:"perturber",en:"to disrupt",enHTML:"to dis<u>rupt</u>",sentence:"New startups often ___ old industries."},
+{fr:"dépasser",en:"to overtake",enHTML:"to over<u>take</u>",sentence:"This brand may soon ___ its rival."},
+{fr:"signal d'alarme",en:"wake-up call",enHTML:"<u>wake</u>-up call",sentence:"The scandal was a real ___."},
+{fr:"s'adapter",en:"to adapt",enHTML:"to a<u>dapt</u>",sentence:"Companies must ___ quickly to change."},
+{fr:"entreprise durable",en:"sustainable business",enHTML:"sus<u>tain</u>able <u>bus</u>iness",sentence:"Investors increasingly favor a ___ model."},
+{fr:"meilleurs talents",en:"top talent",enHTML:"top <u>tal</u>ent",sentence:"Every firm competes for ___ today."},
+{fr:"marché de l'emploi",en:"job market",enHTML:"job <u>mar</u>ket",sentence:"The local ___ improved this year."}
 ];
 
 function goTo(name){

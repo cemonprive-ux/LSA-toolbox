@@ -39,13 +39,28 @@ main{max-width:900px;margin:0 auto;padding:44px 28px 30px;}
 
 /* ─── MENU ─── */
 #screen-menu .menu-lede{text-align:center;color:var(--muted);max-width:560px;margin:0 auto 34px;}
-.menu-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+.menu-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
 .menu-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:26px 22px;box-shadow:var(--shadow);cursor:pointer;font-family:inherit;text-align:left;transition:all .2s;border-top:4px solid var(--green);display:flex;flex-direction:column;gap:12px;}
 .menu-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-3px);border-color:var(--green);}
 .menu-card .m-ico{width:44px;height:44px;border-radius:10px;background:color-mix(in srgb,var(--green) 13%,#fff);color:var(--green);display:flex;align-items:center;justify-content:center;}
 .menu-card h3{color:var(--navy);font-size:1.2rem;}
 .menu-card p{color:var(--muted);font-size:14px;line-height:1.5;}
 .menu-card .go{color:var(--green);font-weight:600;font-size:13.5px;display:inline-flex;align-items:center;gap:6px;margin-top:auto;}
+.list-actions{display:flex;justify-content:center;margin-bottom:22px;}
+.download-btn{display:inline-flex;align-items:center;gap:8px;font-family:inherit;font-weight:600;font-size:14px;background:var(--navy);color:#fff;border:none;border-radius:24px;padding:11px 24px;cursor:pointer;transition:all .2s;}
+.download-btn:hover{background:var(--navy-mid);}
+.vocab-list{max-width:640px;margin:0 auto;background:var(--surface);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow);padding:8px 0;}
+.list-row{display:flex;justify-content:space-between;gap:16px;padding:12px 26px;border-bottom:1px solid var(--border);font-size:15px;}
+.list-row:last-child{border-bottom:none;}
+.list-fr{color:var(--navy);font-weight:600;}
+.list-sep{color:var(--muted);}
+.list-en{color:var(--text);text-align:right;}
+@media print{
+  .topbar,footer,.ex-top,.list-actions,main>section:not(#screen-list){display:none!important;}
+  #screen-list{display:block!important;}
+  body{background:#fff;}
+}
+
 
 /* ─── EXERCISE SHELL ─── */
 .ex-screen{display:none;}
@@ -170,6 +185,12 @@ footer{background:var(--navy-deep);color:rgba(255,255,255,.62);margin-top:42px;b
   <section id="screen-menu" data-screen-label="Menu des exercices">
     <p class="menu-lede">50 mots et expressions de finance et de banque. Choisissez un exercice pour vous entraîner.</p>
     <div class="menu-cards">
+      <button class="menu-card" onclick="goTo('list')">
+        <span class="m-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg></span>
+        <h3>Consulter la liste</h3>
+        <p>Affichez tous les mots de la liste et téléchargez-les au format PDF.</p>
+        <span class="go">Consulter <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </button>
       <button class="menu-card" onclick="goTo('flash')">
         <span class="m-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="14" height="10" rx="2"/><path d="M21 8v8"/></svg></span>
         <h3>Flashcards</h3>
@@ -189,6 +210,18 @@ footer{background:var(--navy-deep);color:rgba(255,255,255,.62);margin-top:42px;b
         <span class="go">Commencer <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
       </button>
     </div>
+  </section>
+
+  <!-- LIST -->
+  <section class="ex-screen" id="screen-list" data-screen-label="Exercice · Consulter la liste">
+    <div class="ex-top">
+      <button class="ex-back" onclick="goTo('menu')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg> Liste des exercices</button>
+    </div>
+    <h2 class="ex-heading">Liste complète <span class="count" id="list-heading-count"></span></h2>
+    <div class="list-actions">
+      <button class="download-btn" onclick="downloadList()"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0-5-5m5 5 5-5M4 21h16"/></svg> Télécharger la liste (PDF)</button>
+    </div>
+    <div class="vocab-list" id="vocab-list"></div>
   </section>
 
   <!-- FLASHCARDS -->
@@ -341,6 +374,7 @@ function goTo(name){
   document.getElementById('screen-menu').style.display=name==='menu'?'':'none';
   if(name!=='menu') document.getElementById('screen-'+name).style.display='block';
   if(name==='flash') flashRender();
+  if(name==='list') listRender();
   if(name==='mcq') mcqRender();
   if(name==='type') typeRender();
 }
@@ -361,6 +395,9 @@ function speak(text){
 let flashIdx=0,flashFlipped=false,flashScore=0,flashAnswered=0;
 function flashCurrentTerm(){return VOCAB[flashIdx].en;}
 document.getElementById('flash-heading-count').textContent='('+VOCAB.length+' mots)';
+document.getElementById('list-heading-count').textContent='('+VOCAB.length+' mots)';
+function listRender(){document.getElementById('vocab-list').innerHTML=VOCAB.map(v=>'<div class="list-row"><span class="list-fr">'+v.fr+'</span><span class="list-sep">-</span><span class="list-en">'+v.en+'</span></div>').join('');}
+function downloadList(){window.print();}
 function flashRender(){
   document.getElementById('flash-fr').textContent=VOCAB[flashIdx].fr;
   document.getElementById('flash-en').innerHTML=VOCAB[flashIdx].enHTML;
@@ -459,7 +496,7 @@ function typeRender(){
   document.getElementById('type-fr').textContent=item.fr;
   document.getElementById('type-fr').classList.add('hidden');
   document.getElementById('type-help-btn').style.display='';
-  document.getElementById('type-sentence').innerHTML=item.sentence.replace('___','<span class="blank">______</span>');
+  document.getElementById('type-sentence').innerHTML=item.sentence.replace('___','<span class="blank">'+blankMask(item.en)+'</span>');
   document.getElementById('type-progress').textContent='Phrase '+(typeIdx+1)+' / '+VOCAB.length;
   document.getElementById('type-input').value='';
   document.getElementById('type-input').disabled=false;
@@ -469,6 +506,7 @@ function typeRender(){
   document.getElementById('type-input').focus();
 }
 function normalize(s){return s.trim().toLowerCase().replace(/^to\s+/,'').replace(/\s+/g,' ');}
+function blankMask(en){return en.replace(/^to\s+/,'').replace(/[A-Za-z]/g,'-');}
 function typeVerify(){
   if(typeLocked) return;
   const val=document.getElementById('type-input').value;
