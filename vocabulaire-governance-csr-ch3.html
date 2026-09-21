@@ -387,23 +387,25 @@ function speak(text){
 }
 
 /* ─── FLASHCARDS ─── */
-let flashIdx=0,flashFlipped=false,flashScore=0,flashAnswered=0;
-function flashCurrentTerm(){return VOCAB[flashIdx].en;}
+let flashQueue=VOCAB.map((_,i)=>i),flashPos=0,flashFlipped=false,flashScore=0,flashAnswered=0;
+function flashCurrentIdx(){return flashQueue[flashPos];}
+function flashCurrentTerm(){return VOCAB[flashCurrentIdx()].en;}
 document.getElementById('flash-heading-count').textContent='('+VOCAB.length+' mots)';
 document.getElementById('list-heading-count').textContent='('+VOCAB.length+' mots)';
 function listRender(){document.getElementById('vocab-list').innerHTML=VOCAB.map(v=>'<div class="list-row"><span class="list-fr">'+v.fr+'</span><span class="list-sep">-</span><span class="list-en">'+v.en+'</span></div>').join('');}
 function downloadList(){window.print();}
 function flashRender(){
-  document.getElementById('flash-fr').textContent=VOCAB[flashIdx].fr;
-  document.getElementById('flash-en').innerHTML=VOCAB[flashIdx].enHTML;
-  document.getElementById('flash-progress').textContent='Carte '+(flashIdx+1)+' / '+VOCAB.length;
-  document.getElementById('flash-index-front').textContent=(flashIdx+1)+'/'+VOCAB.length;
-  document.getElementById('flash-index-back').textContent=(flashIdx+1)+'/'+VOCAB.length;
+  const item=VOCAB[flashCurrentIdx()];
+  document.getElementById('flash-fr').textContent=item.fr;
+  document.getElementById('flash-en').innerHTML=item.enHTML;
+  document.getElementById('flash-progress').textContent='Carte '+(flashPos+1)+' / '+flashQueue.length;
+  document.getElementById('flash-index-front').textContent=(flashPos+1)+'/'+flashQueue.length;
+  document.getElementById('flash-index-back').textContent=(flashPos+1)+'/'+flashQueue.length;
   document.getElementById('flash-card').classList.remove('flipped');
   document.getElementById('flash-assess').classList.remove('show');
   flashFlipped=false;
-  document.getElementById('flash-prev').disabled=flashIdx===0;
-  document.getElementById('flash-next').disabled=flashIdx===VOCAB.length-1;
+  document.getElementById('flash-prev').disabled=flashPos===0;
+  document.getElementById('flash-next').disabled=flashPos===flashQueue.length-1;
 }
 function flipCard(){
   flashFlipped=!flashFlipped;
@@ -411,16 +413,22 @@ function flipCard(){
   document.getElementById('flash-assess').classList.toggle('show',flashFlipped);
 }
 function flashNav(d){
-  const n=flashIdx+d;
-  if(n<0||n>=VOCAB.length) return;
-  flashIdx=n;flashRender();
+  const n=flashPos+d;
+  if(n<0||n>=flashQueue.length) return;
+  flashPos=n;flashRender();
 }
 function flashAssess(known){
   flashAnswered++;
-  if(known) flashScore++;
+  if(known){
+    flashScore++;
+  } else {
+    const idx=flashQueue[flashPos];
+    const insertAt=Math.min(flashPos+4,flashQueue.length);
+    flashQueue.splice(insertAt,0,idx);
+  }
   document.getElementById('flash-score').textContent=flashScore;
   document.getElementById('flash-total').textContent=flashAnswered;
-  if(flashIdx<VOCAB.length-1){ flashIdx++; }
+  if(flashPos<flashQueue.length-1){ flashPos++; }
   flashRender();
 }
 
