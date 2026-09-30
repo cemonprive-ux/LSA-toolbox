@@ -235,6 +235,7 @@ main{max-width:1140px;margin:0 auto;padding:54px 28px 40px;}
 .tool-desc{color:var(--muted);font-size:13px;margin-top:3px;line-height:1.4;}
 .tool-arrow{align-self:center;color:var(--c);opacity:0;transform:translateX(-4px);transition:all .18s;flex-shrink:0;}
 .tool:hover .tool-arrow{opacity:1;transform:translateX(0);}
+.tool-info{cursor:pointer;}.tool-msg{display:none;color:var(--ink,#1a2744);font-size:13.5px;margin-top:6px;line-height:1.5;}.tool-info.open .tool-msg{display:block;}.tool-msg a{color:#2d5fa6;font-weight:700;text-decoration:underline;}.tool-msg a:hover{color:#c98f00;}
 
 /* SOON */
 .tool.soon{background:#f6f4ef;border-style:dashed;cursor:default;}
@@ -506,7 +507,7 @@ footer{
         </span>
         <span class="cat-name">DCG</span>
         <span class="cat-full">Diplôme de Comptabilité et de Gestion</span>
-        <span class="count">2 outils</span>
+        <span class="count">4 outils</span>
       </button>
       <div class="cat-panel"><div class="cat-panel-inner">
         <div class="tool-list">
@@ -523,7 +524,7 @@ footer{
           <button class="sub-head" aria-expanded="false">
             <span class="sub-ico"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="14" height="10" rx="2"/><path d="M21 8v8"/></svg></span>
             <span class="sub-title">Vocabulaire</span>
-            <span class="sub-count">1 fiche</span>
+            <span class="sub-count">3 fiches</span>
             <svg class="sub-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
           </button>
           <div class="sub-panel"><div class="sub-panel-inner"><div class="sub-list">
@@ -535,6 +536,21 @@ footer{
             </div>
             <svg class="tool-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           </a>
+          <a class="tool" href="link-words-vocabulaire-dcg.html" data-text="dcg link words mots de liaison connecteurs logiques linking words moreover however therefore flashcards qcm entraînement mots anglais">
+            <span class="tool-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="14" height="10" rx="2"/><path d="M21 8v8"/></svg></span>
+            <div class="tool-body">
+              <div class="tool-title">Link words</div>
+              <div class="tool-desc">Les mots de liaison pour structurer un discours : flashcards, QCM en contexte et phrases à compléter.</div>
+            </div>
+            <svg class="tool-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <div class="tool tool-info" role="button" tabindex="0" aria-expanded="false" data-text="dcg vocabulaire chiffres nombres dates unités de mesure numbers 1cours1bot">
+            <span class="tool-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h16M4 15h16M10 3 8 21M16 3l-2 18"/></svg></span>
+            <div class="tool-body">
+              <div class="tool-title">Chiffres et nombres</div>
+              <div class="tool-msg">Chiffres, nombres, dates, unités de mesures, etc, reportez-vous à l'assistant <strong>CHIFFRES ET NOMBRES</strong> sur 1cours1bot <a href="https://www.1cours1bot.fr" target="_blank" rel="noopener">ici</a>.</div>
+            </div>
+          </div>
             </div></div></div>
         </div>
       </div></div>
@@ -754,6 +770,12 @@ footer{
       const open = sub.classList.toggle('open');
       h.setAttribute('aria-expanded', open ? 'true' : 'false');
     });
+  });
+
+  document.querySelectorAll('.tool-info').forEach(t=>{
+    const tg=ev=>{if(ev.target.closest('a'))return;const o=t.classList.toggle('open');t.setAttribute('aria-expanded',o?'true':'false');};
+    t.addEventListener('click',tg);
+    t.addEventListener('keydown',ev=>{if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();tg(ev);}});
   });
 
   // ── Search / filter ──
