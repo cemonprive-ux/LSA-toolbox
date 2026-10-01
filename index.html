@@ -211,6 +211,7 @@ main{max-width:1140px;margin:0 auto;padding:54px 28px 40px;}
 .sub-panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows .34s cubic-bezier(.4,0,.2,1);}
 .subcat.open .sub-panel{grid-template-rows:1fr;}
 .sub-panel-inner{overflow:hidden;}
+.bts-tabs{display:flex;gap:6px;padding:4px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);}.bts-tab{flex:1;font-family:inherit;font-weight:700;font-size:.92rem;letter-spacing:.02em;padding:10px 12px;border:none;border-radius:7px;background:transparent;color:var(--navy);cursor:pointer;transition:background .2s,color .2s;}.bts-tab:hover{background:rgba(45,95,166,.10);}.bts-tab.active{background:var(--navy);color:#fff;box-shadow:inset 0 -3px 0 var(--accent);}.bts-pane{display:flex;flex-direction:column;gap:10px;}.bts-pane[hidden]{display:none;}.bts-pane-label{display:none;font-weight:700;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:4px 2px 0;}.cat.searching .bts-tabs{display:none;}.cat.searching .bts-pane{display:flex;}.cat.searching .bts-pane.empty{display:none;}.cat.searching .bts-pane-label{display:block;}
 .sub-list{padding:2px 11px 12px;display:flex;flex-direction:column;gap:8px;}
 
 .tool{
@@ -396,36 +397,16 @@ footer{
         </span>
         <span class="cat-name">BTS</span>
         <span class="cat-full">Classes de M. Blanchet &amp; Mme Huet</span>
-        <span class="count">9 outils</span>
+        <span class="count">10 outils</span>
       </button>
       <div class="cat-panel"><div class="cat-panel-inner">
         <div class="tool-list">
-          <div class="subcat">
-            <button class="sub-head" aria-expanded="false">
-              <span class="sub-ico"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="M16 9a4 4 0 0 1 0 6M19 6.5a7.5 7.5 0 0 1 0 11"/></svg></span>
-              <span class="sub-title">M2-Phonologie</span>
-              <span class="sub-count">2 fiches</span>
-              <svg class="sub-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-            </button>
-            <div class="sub-panel"><div class="sub-panel-inner"><div class="sub-list">
-          <a class="tool" href="M2%20-%20Phonologie%20Code%20Couleur%20-%20presentation.html" data-text="bts m2 phonologie code couleur presentation présentation sonore prononciation voyelles accentuées sons anglais méthode diaporama entreprise">
-            <span class="tool-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="M16 9a4 4 0 0 1 0 6M19 6.5a7.5 7.5 0 0 1 0 11"/></svg></span>
-            <div class="tool-body">
-              <div class="tool-title">Phonologie : mode d'emploi</div>
-              <div class="tool-desc">Anglais, présentation sonore du code couleur : les 18 sons voyelles, avec exemples à écouter.</div>
-            </div>
-            <svg class="tool-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          </a>
-          <a class="tool" href="m2-phonologie-code-couleur.html" data-text="bts anglais phonologie code couleur prononciation voyelles accentuées entreprise monde du travail business autonome m2">
-            <span class="tool-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 1 0 0 18h1.5a2.5 2.5 0 0 0 0-5H13a2 2 0 0 1 0-4h4a4 4 0 0 0 4-4 5 5 0 0 0-5-5Z"/><circle cx="7.5" cy="11.5" r="1.1"/><circle cx="10.5" cy="7.5" r="1.1"/><circle cx="15" cy="7" r="1.1"/></svg></span>
-            <div class="tool-body">
-              <div class="tool-title">M2 : Phonologie Code Couleur</div>
-              <div class="tool-desc">Anglais, code couleur des sons voyelles accentués, vocabulaire de l'entreprise et du monde du travail.</div>
-            </div>
-            <svg class="tool-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          </a>
-            </div></div></div>
+          <div class="bts-tabs" role="tablist">
+            <button class="bts-tab active" role="tab" aria-selected="true" data-tab="sio">BTS SIO</button>
+            <button class="bts-tab" role="tab" aria-selected="false" data-tab="mco">BTS MCO</button>
           </div>
+          <div class="bts-pane" data-pane="sio">
+          <div class="bts-pane-label">BTS SIO</div>
           <div class="subcat">
             <button class="sub-head" aria-expanded="false">
               <span class="sub-ico"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h11l5 5v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1Z"/><path d="M14 4v6h6M8 13h8M8 17h5"/></svg></span>
@@ -434,7 +415,7 @@ footer{
               <svg class="sub-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
             </button>
             <div class="sub-panel"><div class="sub-panel-inner"><div class="sub-list">
-          <a class="tool" href="ai-interviews-compte-rendu.html" data-text="bts anglais compte rendu pas à pas méthode m3 résumé synthèse français ai interviews awkward humiliating guardian entraînement guidé 5 étapes">
+          <a class="tool" href="ai-interviews-compte-rendu.html" data-text="bts sio anglais compte rendu pas à pas méthode m3 résumé synthèse français ai interviews awkward humiliating guardian entraînement guidé 5 étapes">
             <span class="tool-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h11l5 5v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1Z"/><path d="M14 4v6h6M8 13h8M8 17h5"/></svg></span>
             <div class="tool-body">
               <div class="tool-title">1-Méthode CR pas à pas : 'Awkward and humiliating'…</div>
@@ -442,7 +423,7 @@ footer{
             </div>
             <svg class="tool-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           </a>
-          <a class="tool" href="anxious-generation-compte-rendu.html" data-text="bts anglais compte rendu pas à pas méthode m3 anxious generation jeunes travail neets milburn guardian mai 2026 entraînement guidé 6 étapes">
+          <a class="tool" href="anxious-generation-compte-rendu.html" data-text="bts sio anglais compte rendu pas à pas méthode m3 anxious generation jeunes travail neets milburn guardian mai 2026 entraînement guidé 6 étapes">
             <span class="tool-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h11l5 5v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1Z"/><path d="M14 4v6h6M8 13h8M8 17h5"/></svg></span>
             <div class="tool-body">
               <div class="tool-title">2-Méthode CR pas à pas : UK's 'anxious generation'…</div>
@@ -450,7 +431,7 @@ footer{
             </div>
             <svg class="tool-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           </a>
-          <a class="tool" href="compte-rendu-pas-a-pas.html" data-text="bts anglais compte rendu pas à pas méthode m3 résumé synthèse français four day week less stress more energy semaine quatre jours entraînement guidé">
+          <a class="tool" href="compte-rendu-pas-a-pas.html" data-text="bts sio anglais compte rendu pas à pas méthode m3 résumé synthèse français four day week less stress more energy semaine quatre jours entraînement guidé">
             <span class="tool-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h11l5 5v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1Z"/><path d="M14 4v6h6M8 13h8M8 17h5"/></svg></span>
             <div class="tool-body">
               <div class="tool-title">3-Méthode CR pas à pas : "Less stress, more energy"…</div>
@@ -460,10 +441,10 @@ footer{
           </a>
             </div></div></div>
           </div>
-          <a class="tool" href="oraux-bts-sio.html" data-text="bts sio oraux entraînement oral pdf vidéo sujets">
+          <a class="tool" href="oraux-bts-sio.html" data-text="bts sio épreuves orales oraux entraînement oral pdf vidéo sujets">
             <span class="tool-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v4M8 23h8"/></svg></span>
             <div class="tool-body">
-              <div class="tool-title">Oraux BTS SIO</div>
+              <div class="tool-title">Épreuves orales</div>
               <div class="tool-desc">Sujets d'entraînement à l'oral, PDF et vidéo pour chaque entraînement.</div>
             </div>
             <svg class="tool-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
@@ -471,7 +452,7 @@ footer{
           <div class="subcat">
             <button class="sub-head" aria-expanded="false">
               <span class="sub-ico"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="14" height="10" rx="2"/><path d="M21 8v8"/></svg></span>
-              <span class="sub-title">Vocabulaire SIO</span>
+              <span class="sub-title">Vocabulaire</span>
               <span class="sub-count">3 fiches</span>
               <svg class="sub-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
             </button>
@@ -502,6 +483,36 @@ footer{
           </a>
             </div></div></div>
           </div>
+          </div>
+          <div class="bts-pane" data-pane="mco" hidden>
+          <div class="bts-pane-label">BTS MCO</div>
+          <div class="subcat">
+            <button class="sub-head" aria-expanded="false">
+              <span class="sub-ico"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="M16 9a4 4 0 0 1 0 6M19 6.5a7.5 7.5 0 0 1 0 11"/></svg></span>
+              <span class="sub-title">M2-Phonologie</span>
+              <span class="sub-count">2 fiches</span>
+              <svg class="sub-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+            <div class="sub-panel"><div class="sub-panel-inner"><div class="sub-list">
+          <a class="tool" href="M2%20-%20Phonologie%20Code%20Couleur%20-%20presentation.html" data-text="bts mco m2 phonologie code couleur presentation présentation sonore prononciation voyelles accentuées sons anglais méthode diaporama entreprise">
+            <span class="tool-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="M16 9a4 4 0 0 1 0 6M19 6.5a7.5 7.5 0 0 1 0 11"/></svg></span>
+            <div class="tool-body">
+              <div class="tool-title">Phonologie : mode d'emploi</div>
+              <div class="tool-desc">Anglais, présentation sonore du code couleur : les 18 sons voyelles, avec exemples à écouter.</div>
+            </div>
+            <svg class="tool-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <a class="tool" href="m2-phonologie-code-couleur.html" data-text="bts mco anglais phonologie code couleur prononciation voyelles accentuées entreprise monde du travail business autonome m2">
+            <span class="tool-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 1 0 0 18h1.5a2.5 2.5 0 0 0 0-5H13a2 2 0 0 1 0-4h4a4 4 0 0 0 4-4 5 5 0 0 0-5-5Z"/><circle cx="7.5" cy="11.5" r="1.1"/><circle cx="10.5" cy="7.5" r="1.1"/><circle cx="15" cy="7" r="1.1"/></svg></span>
+            <div class="tool-body">
+              <div class="tool-title">M2 : Phonologie Code Couleur</div>
+              <div class="tool-desc">Anglais, code couleur des sons voyelles accentués, vocabulaire de l'entreprise et du monde du travail.</div>
+            </div>
+            <svg class="tool-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+            </div></div></div>
+          </div>
+          
           <a class="tool" href="connecteurs-logiques-vocabulaire-mco.html" data-text="bts mco vocabulaire m5 connecteurs logiques link words mots de liaison however therefore although flashcards qcm pdf">
             <span class="tool-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></svg></span>
             <div class="tool-body">
@@ -510,6 +521,41 @@ footer{
             </div>
             <svg class="tool-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           </a>
+          <div class="subcat">
+            <button class="sub-head" aria-expanded="false">
+              <span class="sub-ico"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h11l5 5v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1Z"/><path d="M14 4v6h6M8 13h8M8 17h5"/></svg></span>
+              <span class="sub-title">Le CR pas à pas</span>
+              <span class="sub-count">3 fiches</span>
+              <svg class="sub-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+            <div class="sub-panel"><div class="sub-panel-inner"><div class="sub-list">
+          <a class="tool" href="ai-interviews-compte-rendu.html" data-text="bts mco anglais compte rendu pas à pas méthode m3 résumé synthèse français ai interviews awkward humiliating guardian entraînement guidé 5 étapes">
+            <span class="tool-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h11l5 5v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1Z"/><path d="M14 4v6h6M8 13h8M8 17h5"/></svg></span>
+            <div class="tool-body">
+              <div class="tool-title">1-Méthode CR pas à pas : 'Awkward and humiliating'…</div>
+              <div class="tool-desc">Anglais, entraînement guidé en 5 étapes pour rédiger en français le compte rendu d'un article (The Guardian, mai 2026).</div>
+            </div>
+            <svg class="tool-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <a class="tool" href="anxious-generation-compte-rendu.html" data-text="bts mco anglais compte rendu pas à pas méthode m3 anxious generation jeunes travail neets milburn guardian mai 2026 entraînement guidé 6 étapes">
+            <span class="tool-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h11l5 5v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1Z"/><path d="M14 4v6h6M8 13h8M8 17h5"/></svg></span>
+            <div class="tool-body">
+              <div class="tool-title">2-Méthode CR pas à pas : UK's 'anxious generation'…</div>
+              <div class="tool-desc">Anglais, entraînement guidé en 6 étapes pour rédiger en français le compte rendu d'un article (The Guardian, mai 2026).</div>
+            </div>
+            <svg class="tool-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <a class="tool" href="compte-rendu-pas-a-pas.html" data-text="bts mco anglais compte rendu pas à pas méthode m3 résumé synthèse français four day week less stress more energy semaine quatre jours entraînement guidé">
+            <span class="tool-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h11l5 5v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1Z"/><path d="M14 4v6h6M8 13h8M8 17h5"/></svg></span>
+            <div class="tool-body">
+              <div class="tool-title">3-Méthode CR pas à pas : "Less stress, more energy"…</div>
+              <div class="tool-desc">Anglais, entraînement guidé en 5 étapes pour rédiger en français le compte rendu d'un article (The Sunday Times).</div>
+            </div>
+            <svg class="tool-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+            </div></div></div>
+          </div>
+          </div>
         </div>
       </div></div>
     </article>
@@ -794,6 +840,14 @@ footer{
     t.addEventListener('keydown',ev=>{if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();tg(ev);}});
   });
 
+  document.querySelectorAll('.bts-tabs').forEach(bar=>{
+    const root=bar.parentElement;
+    bar.querySelectorAll('.bts-tab').forEach(b=>b.addEventListener('click',()=>{
+      bar.querySelectorAll('.bts-tab').forEach(x=>{const on=x===b;x.classList.toggle('active',on);x.setAttribute('aria-selected',on?'true':'false');});
+      root.querySelectorAll('.bts-pane').forEach(p=>p.hidden=p.dataset.pane!==b.dataset.tab);
+    }));
+  });
+
   // ── Search / filter ──
   const input = document.getElementById('search');
   const noresult = document.getElementById('noresult');
@@ -815,7 +869,8 @@ footer{
       if(q === ''){
         tools.forEach(t=>t.style.display='');
         cat.querySelectorAll('.subcat').forEach(s=>{s.style.display='';s.classList.remove('open');s.querySelector('.sub-head').setAttribute('aria-expanded','false')});
-        cat.classList.remove('hidden','open');
+        cat.classList.remove('hidden','open','searching');
+        cat.querySelectorAll('.bts-pane').forEach(p=>p.classList.remove('empty'));
         head.setAttribute('aria-expanded','false');
         return;
       }
@@ -833,6 +888,9 @@ footer{
         s.classList.toggle('open', visible);
         s.querySelector('.sub-head').setAttribute('aria-expanded', visible ? 'true' : 'false');
       });
+
+      cat.classList.add('searching');
+      cat.querySelectorAll('.bts-pane').forEach(p=>p.classList.toggle('empty',!Array.from(p.querySelectorAll('.tool')).some(t=>t.style.display!=='none')));
 
       if(matchInCat){
         cat.classList.remove('hidden');
