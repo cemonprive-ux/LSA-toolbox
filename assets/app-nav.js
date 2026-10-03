@@ -16,7 +16,7 @@ var P={
 "management-hr-fil-rouge.html":"management-hr.html","Management-hr-summary-trainer.html":"management-hr.html","Management-hr-essay-trainer.html":"management-hr.html",
 "production-fil-rouge.html":"production.html","Production-summary-trainer.html":"production.html","Production-essay-trainer.html":"production.html",
 "marketing-fil-rouge.html":"marketing.html","Marketing-summary-trainer.html":"marketing.html","Marketing-essay-trainer.html":"marketing.html",
-"brexit.html":"general-knowledge.html"
+"brexit.html":"general-knowledge.html","financial-crises.html":"general-knowledge.html"
 };
 
 /* Accueil : mémoriser / restaurer les rubriques ouvertes */
