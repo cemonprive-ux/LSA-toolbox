@@ -54,7 +54,7 @@ a{color:var(--blue);}a:hover{color:var(--accent-deep);}
 .meter i{display:block;height:100%;width:0;background:var(--red);transition:width .1s linear;}
 .status{text-align:center;font-size:14px;color:var(--muted);min-height:1.5em;margin-top:10px;}
 .result{display:none;margin-top:20px;border-top:1px solid var(--border);padding-top:18px;}
-.verdicts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;}
+.verdicts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;}.heard{font-size:14px;color:var(--muted);margin-bottom:10px;text-align:center;}
 .v{border-radius:10px;padding:12px 14px;border:1px solid var(--border);background:#fcfbf8;}
 .v .k{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);}
 .v .val{font-weight:700;font-size:16px;margin-top:2px;}
@@ -75,13 +75,13 @@ footer{background:var(--navy-deep);color:rgba(255,255,255,.62);margin-top:42px;b
 .foot-brand img{width:38px;height:38px;border-radius:9px;}
 .foot-brand strong{color:#fff;font-weight:600;font-size:15px;display:block;}
 .visit-count{margin-top:8px}.visit-count img{height:16px;vertical-align:middle}
-@media(max-width:640px){.wrap{padding:26px 16px 24px;}.howto{grid-template-columns:1fr;}.card{padding:18px 16px 22px;}.verdicts{grid-template-columns:1fr;}.btn{padding:0 14px;font-size:14.5px;}}
+@media(max-width:820px){.verdicts{grid-template-columns:1fr;}}@media(max-width:640px){.wrap{padding:26px 16px 24px;}.howto{grid-template-columns:1fr;}.card{padding:18px 16px 22px;}.verdicts{grid-template-columns:1fr;}.btn{padding:0 14px;font-size:14.5px;}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
 </style>
 </head>
 <body>
 <div class="topbar"><div class="topbar-inner"><span class="place"><span class="dot"></span>Lycée Sidoine Apollinaire · Clermont-Ferrand</span><a class="back" href="index.html"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"></path></svg>Retour à l'accueil</a></div></div>
-<header class="head"><div class="head-inner"><div class="breadcrumb"><a href="index.html">Accueil</a><span class="sep">›</span><span>M2-Phonologie</span></div><h1>Prononciation, retour de l'IA</h1><p class="sub">Prononce un mot, l'IA te dit s'il est reconnu, si l'accent tombe sur la bonne syllabe et quels sons travailler.</p></div></header>
+<header class="head"><div class="head-inner"><div class="breadcrumb"><a href="index.html">Accueil</a><span class="sep">›</span><span>M2-Phonologie</span></div><h1>Prononciation, retour de l'IA</h1><p class="sub">Prononce un mot, l'IA évalue trois points : le placement de l'accent, les phonèmes et les plosives.</p></div></header>
 <main class="wrap">
 <div class="howto"><div><b>1</b><span>Lis le mot, repère où tu places l'accent.</span></div><div><b>2</b><span>Enregistre-toi (4 secondes max).</span></div><div><b>3</b><span>Envoie à l'IA puis compare au modèle.</span></div></div>
 <section class="card" data-screen-label="Prononciation IA">
@@ -100,7 +100,7 @@ footer{background:var(--navy-deep);color:rgba(255,255,255,.62);margin-top:42px;b
 <div class="meter"><i id="meter"></i></div>
 <div class="status" id="status" aria-live="polite"></div>
 <div class="result" id="result" aria-live="polite">
-<div class="verdicts"><div class="v" id="vMot"><div class="k">Mot reconnu</div><div class="val"></div><div class="det"></div></div><div class="v" id="vAcc"><div class="k">Accent</div><div class="val"></div><div class="det"></div></div></div>
+<div class="heard" id="heard"></div><div class="verdicts"><div class="v" id="vAcc"><div class="k">Accent</div><div class="val"></div><div class="det"></div></div><div class="v" id="vPho"><div class="k">Phonèmes</div><div class="val"></div><div class="det"></div></div><div class="v" id="vPlo"><div class="k">Plosives</div><div class="val"></div><div class="det"></div></div></div>
 <div class="fb" id="fb"></div>
 <div class="reveal"><button class="btn btn-ghost" id="model"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5Z"></path><path d="M16 9a4 4 0 0 1 0 6"></path></svg>Écouter le modèle</button><button class="btn btn-ghost" id="again">Recommencer</button></div>
 </div>
@@ -165,13 +165,15 @@ $("send").onclick=async function(){
   if(!j)throw new Error("L'IA n'a pas réussi à analyser cet enregistrement. Réessaie en parlant près du micro.");
   $("word").innerHTML=marked(w);$("ipa").textContent=w[2];$("result").style.display="block";$("status").textContent="";
   {
-   setV("vMot",j.reconnu,j.reconnu?"Oui":"Non",j.entendu?"Entendu : « "+j.entendu+" »":"");
-   var acc=j.reconnu?j.accent_ok:null;
-   setV("vAcc",acc,acc===true?"Bien placé":acc===false?"Mal placé":"Non évalué",j.syllabe_entendue?"Tu as accentué : « "+j.syllabe_entendue+" »":"");
-   if(acc!=null){tried++;if(acc)ok++;$("score").textContent="Accent juste : "+ok+" / "+tried;}
+   var lab=function(c,okT,koT){return c&&c.ok===true?okT:c&&c.ok===false?koT:"Non évalué"};
+   $("heard").textContent=j.reconnu?(j.entendu?"Mot entendu : « "+j.entendu+" »":""):"Mot non reconnu"+(j.entendu?" (entendu : « "+j.entendu+" »)":"")+", réessaie plus près du micro.";
+   var A=j.reconnu?j.accent:null,Ph=j.reconnu?j.phonemes:null,Pl=j.reconnu?j.plosives:null;
+   setV("vAcc",A?A.ok:null,lab(A,"Bien placé","Mal placé"),A?((A.syllabe_entendue?"Syllabe accentuée : « "+A.syllabe_entendue+" ». ":"")+(A.remarque||"")):"");
+   setV("vPho",Ph?Ph.ok:null,lab(Ph,"Corrects","À revoir"),Ph?Ph.remarque||"":"");
+   setV("vPlo",Pl?Pl.ok:null,Pl&&Pl.ok==null?"Non concerné":lab(Pl,"Correctes","À revoir"),Pl?Pl.remarque||"":"");
+   if(A&&A.ok!=null){tried++;if(A.ok)ok++;$("score").textContent="Accent juste : "+ok+" / "+tried;}
    var h="";if(j.niveau)h+='<p class="lvl">'+esc(j.niveau)+"</p>";
-   if(j.sons&&j.sons.length)h+="<p>Point à travailler :</p><ul>"+j.sons.map(function(s){return "<li><strong>"+esc(s.son)+"</strong> : "+esc(s.conseil)+"</li>"}).join("")+"</ul>";
-   if(j.conseil)h+="<p style=\"margin-top:.5rem\">"+esc(j.conseil)+"</p>";
+   if(j.conseil)h+="<p style=\"margin-top:.4rem\">"+esc(j.conseil)+"</p>";
    $("fb").innerHTML=h||"<p>Rien à signaler.</p>";
   }
  }catch(e){$("status").textContent=e.message&&!/fetch/i.test(e.message)?e.message:"Impossible de joindre l'IA. Vérifie ta connexion et réessaie.";}
