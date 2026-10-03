@@ -6,7 +6,7 @@ var isIndex=file==="index.html";
 var standalone=(window.matchMedia&&matchMedia("(display-mode: standalone)").matches)||window.navigator.standalone===true||/[?&]app=1/.test(location.search);
 
 /* Page parente explicite (sinon : accueil) */
-var H={"digital-currency.html":"1-Finance","accounting-auditing.html":"2-Accounting","governance-csr.html":"3-Governance","information-systems.html":"4-Information Systems","management-hr.html":"5-Management","production.html":"6-Production","marketing.html":"7-Marketing","green-revolution.html":"Green Revolution","general-knowledge.html":"General Knowledge"};
+var H={"digital-currency.html":"1-Finance","accounting-auditing.html":"2-Accounting","governance-csr.html":"3-Governance","information-systems.html":"4-Information Systems","management-hr.html":"5-Management","production.html":"6-Production","marketing.html":"7-Marketing","green-revolution.html":"Green Revolution","general-knowledge.html":"General Knowledge","general-knowledge-dcg.html":"General Knowledge"};
 var P={
 "finance-fil-rouge.html":"digital-currency.html","cryptocurrencies.html":"digital-currency.html","Digital-currency-summary-trainer.html":"digital-currency.html","Digital-currency-essay-trainer.html":"digital-currency.html",
 "accounting-auditing-fil-rouge.html":"accounting-auditing.html","Accounting-auditing-summary-trainer.html":"accounting-auditing.html","Accounting-auditing-essay-trainer.html":"accounting-auditing.html",
@@ -43,6 +43,7 @@ var CSS=".lsa-appnav{position:fixed;left:0;right:0;bottom:0;z-index:2147483000;d
 
 function build(){
 var parent=P[file]||"index.html";
+if(/[?&]from=dcg/.test(location.search)&&parent==="general-knowledge.html")parent="general-knowledge-dcg.html";
 var label=parent==="index.html"?"Accueil":(H[parent]||"Retour");
 var bar=document.createElement("nav");
 bar.className="lsa-appnav";bar.setAttribute("aria-label","Navigation de l'application");
