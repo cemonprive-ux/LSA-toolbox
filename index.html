@@ -145,7 +145,7 @@ main{max-width:1140px;margin:0 auto;padding:54px 28px 40px;}
 
 /* CATEGORY GRID */
 .cats{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:22px;align-items:start;
+  display:flex;flex-direction:column;gap:16px;max-width:760px;margin:0 auto;
 }
 .cat{
   background:var(--surface);
@@ -255,6 +255,33 @@ main{max-width:1140px;margin:0 auto;padding:54px 28px 40px;}
 }
 .cat.hidden{display:none;}
 
+
+/* MASTER-DETAIL (bureau) : rubriques centrées à l'arrivée, puis à gauche avec contenu à droite */
+.cat-empty{display:none;}
+@media(min-width:901px){
+.cats:not(.is-search){--ease:cubic-bezier(.65,0,.35,1);display:grid;grid-template-columns:minmax(0,760px) 0fr;grid-template-rows:repeat(4,auto) 1fr;column-gap:0;row-gap:16px;max-width:760px;align-items:start;transition:grid-template-columns .6s var(--ease),max-width .6s var(--ease),column-gap .6s var(--ease),row-gap .6s var(--ease);}
+.cats:not(.is-search):has(.cat.open){grid-template-columns:minmax(0,300px) 1fr;max-width:1140px;column-gap:26px;row-gap:12px;}
+.cats:not(.is-search) .cat{display:contents;}
+.cats:not(.is-search) .cat-head{grid-column:1;min-width:0;background:var(--surface);border:1px solid var(--border);border-top:4px solid var(--c);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px 24px 20px;transition:padding .6s var(--ease),box-shadow .25s,transform .25s,border-color .25s,background .25s;}
+.cats:not(.is-search):has(.cat.open) .cat-head{padding:14px 18px;}
+.cats:not(.is-search) .cat-head:hover{box-shadow:var(--shadow-lg);transform:translateX(3px);}
+.cats:not(.is-search) .cat.open .cat-head{border-color:var(--c);background:color-mix(in srgb,var(--c) 7%,#fff);box-shadow:var(--shadow-lg);}
+.cats:not(.is-search) .mono{transition:width .6s var(--ease),height .6s var(--ease),font-size .6s var(--ease);}
+.cats:not(.is-search):has(.cat.open) .mono{width:40px;height:40px;font-size:12px;}
+.cats:not(.is-search) .cat-name{transition:font-size .6s var(--ease);}
+.cats:not(.is-search):has(.cat.open) .cat-name{font-size:1.2rem;}
+.cats:not(.is-search) .cat-full{overflow:hidden;max-height:3em;transition:max-height .6s var(--ease),opacity .4s;}
+.cats:not(.is-search):has(.cat.open) .cat-full{max-height:0;opacity:0;margin-top:-8px;}
+.cats:not(.is-search) .chev{transform:rotate(-90deg);}
+.cats:not(.is-search) .cat-panel{grid-column:2;grid-row:1/-1;display:none;min-width:0;background:var(--surface);border:1px solid var(--c);border-top:4px solid var(--c);border-radius:var(--radius);box-shadow:var(--shadow-lg);transition:none;}
+.cats:not(.is-search) .cat.open .cat-panel{display:block;animation:panelIn .45s var(--ease) both;}
+.cats.entering .cat.open .cat-panel{animation-delay:.45s;}
+.cats:not(.is-search) .cat-panel-inner{overflow:visible;}
+.cats:not(.is-search) .tool-list{padding:18px;}
+}
+@keyframes panelIn{from{opacity:0;transform:translateX(14px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.cats,.cats *{transition:none!important;animation:none!important;}}
+
 /* ───────── FOOTER ───────── */
 footer{
   background:var(--navy-deep);color:rgba(255,255,255,.62);margin-top:42px;
@@ -279,7 +306,7 @@ footer{
 
 /* ───────── RESPONSIVE ───────── */
 @media(max-width:900px){
-  .cats{grid-template-columns:1fr;max-width:600px;margin:0 auto;}
+  .cats{max-width:600px;}
   .hero{grid-template-columns:1fr;}
   .hero-photo{min-height:180px;order:2;}
   .hero-photo::after{background:linear-gradient(0deg,rgba(36,50,96,.15),transparent 50%);}
@@ -569,7 +596,7 @@ footer{
         </span>
         <span class="cat-name">DCG</span>
         <span class="cat-full">Diplôme de Comptabilité et de Gestion</span>
-        <span class="count">4 outils</span>
+        <span class="count">5 outils</span>
       </button>
       <div class="cat-panel"><div class="cat-panel-inner">
         <div class="tool-list">
@@ -578,6 +605,14 @@ footer{
             <div class="tool-body">
               <div class="tool-title">UE 12 · Méthodologie de la synthèse</div>
               <div class="tool-desc">Anglais des affaires, entraînement guidé en 8 étapes à la synthèse de documents.</div>
+            </div>
+            <svg class="tool-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <a class="tool" href="general-knowledge-dcg.html" data-text="dcg general knowledge culture générale brexit gb uk fifty states podcast états-unis vidéos ressources">
+            <span class="tool-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg></span>
+            <div class="tool-body">
+              <div class="tool-title">General knowledge</div>
+              <div class="tool-desc">Culture générale, vidéo GB vs UK, podcast Fifty States et l'article « Brexit ».</div>
             </div>
             <svg class="tool-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           </a>
@@ -771,11 +806,11 @@ footer{
             </div>
             <svg class="tool-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           </a>
-          <a class="tool" href="general-knowledge.html" data-text="dscg general knowledge culture générale brexit gb uk bitcoin vidéos ressources">
+          <a class="tool" href="general-knowledge.html" data-text="dscg general knowledge culture générale brexit gb uk bitcoin enron fifty states podcast vidéos ressources">
             <span class="tool-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg></span>
             <div class="tool-body">
               <div class="tool-title">General knowledge</div>
-              <div class="tool-desc">Culture générale, vidéos (GB vs UK, bitcoin) et l'article « Brexit ».</div>
+              <div class="tool-desc">Culture générale, vidéos (GB vs UK, bitcoin, Enron), podcast Fifty States et l'article « Brexit ».</div>
             </div>
             <svg class="tool-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           </a>
@@ -824,6 +859,19 @@ footer{
     });
   });
 
+
+  // Bureau : une seule rubrique ouverte ; transition centré → gauche
+  const catsBox=document.getElementById('cats');
+  const wide=()=>window.matchMedia('(min-width:901px)').matches&&!catsBox.classList.contains('is-search');
+  cats.forEach(cat=>cat.querySelector('.cat-head').addEventListener('click',()=>{
+    if(!wide()||!cat.classList.contains('open'))return;
+    const wasOpen=cats.some(c=>c!==cat&&c.classList.contains('open'));
+    catsBox.classList.toggle('entering',!wasOpen);
+    if(!wasOpen)setTimeout(()=>catsBox.classList.remove('entering'),1000);
+    cats.forEach(c=>{if(c!==cat&&c.classList.contains('open')){c.classList.remove('open');c.querySelector('.cat-head').setAttribute('aria-expanded','false');}});
+  }));
+  document.addEventListener('DOMContentLoaded',()=>{if(!wide())return;let seen=false;cats.forEach(c=>{if(c.classList.contains('open')){if(seen){c.classList.remove('open');c.querySelector('.cat-head').setAttribute('aria-expanded','false');}seen=true;}});});
+
   // Sub-accordions (groupes de fiches)
   const subs = Array.from(document.querySelectorAll('.subcat'));
   subs.forEach(sub=>{
@@ -859,6 +907,7 @@ footer{
   input.addEventListener('input', ()=>{
     const q = norm(input.value.trim());
     let anyVisible = false;
+    catsBox.classList.toggle('is-search', q !== '');
 
     cats.forEach(cat=>{
       const head = cat.querySelector('.cat-head');
