@@ -410,6 +410,7 @@ textarea:focus, input[type=text]:focus { outline: none; border-color: var(--gold
       <button class="btn ghost" onclick="reveal('exConnect-model')">Voir un exemple</button>
     </div>
     <div class="fb-grid" id="exConnect-fb"></div>
+    <div class="ia-box" data-ia="argument" data-ia-texte="#connectText" data-ia-ctx="Question=.q-text|Document source=#sourcePanel .source-body|Exercice=#exConnect .ex-q" data-ia-min="15"></div>
     <div class="reveal" id="exConnect-model">
       <div class="model-box"><h4>Exemple possible</h4>
       <p>A cashless society could exclude vulnerable people, but mobile-money systems such as M-Pesa in Kenya show that digital tools can also improve financial inclusion when they are designed for accessibility rather than convenience alone.</p>
@@ -443,6 +444,7 @@ textarea:focus, input[type=text]:focus { outline: none; border-color: var(--gold
       <button class="btn ghost" onclick="reveal('exBuild1-model')">Voir un modèle</button>
     </div>
     <div class="fb-grid" id="exBuild1-fb"></div>
+    <div class="ia-box" data-ia="argument" data-ia-texte="Idea=#b1-idea|Explain=#b1-explain|Example=#b1-example|Link to the question=#b1-link" data-ia-ctx="Question=.q-text|Document source=#sourcePanel .source-body|Partie=#exBuild1 .ex-q" data-ia-min="15"></div>
     <div class="reveal" id="exBuild1-model">
       <div class="model-box t1"><h4>Modèle, Part 1</h4>
       <p><em>Idea ,</em> Digital currency could make everyday payments faster and more efficient.</p>
@@ -466,6 +468,7 @@ textarea:focus, input[type=text]:focus { outline: none; border-color: var(--gold
       <button class="btn ghost" onclick="reveal('exBuild2-model')">Voir un modèle</button>
     </div>
     <div class="fb-grid" id="exBuild2-fb"></div>
+    <div class="ia-box" data-ia="argument" data-ia-texte="Idea=#b2-idea|Explain=#b2-explain|Example=#b2-example|Link to the question=#b2-link" data-ia-ctx="Question=.q-text|Document source=#sourcePanel .source-body|Partie=#exBuild2 .ex-q" data-ia-min="15"></div>
     <div class="reveal" id="exBuild2-model">
       <div class="model-box t2"><h4>Modèle, Part 2</h4>
       <p><em>Idea ,</em> Digital currency could increase surveillance of ordinary spending.</p>
@@ -596,6 +599,7 @@ textarea:focus, input[type=text]:focus { outline: none; border-color: var(--gold
   </div>
   <div class="toolbar"><button class="btn gold" onclick="checkRoadmap()">Vérifier mes notes</button></div>
   <div class="feedback" id="roadmap-fb"></div>
+  <div class="ia-box" data-ia="plan-oral" data-ia-titre="Retour de l'IA sur mes notes" data-ia-texte="Position=#rm-position|Introduction=#rm-intro|Partie 1=#rm-p1|Partie 2=#rm-p2|Partie 3=#rm-p3|Conclusion=#rm-concl" data-ia-ctx="Question=.q-text|Document source=#sourcePanel .source-body" data-ia-min="10"></div>
 
   <!-- ═══ STEP 10, ORAL LANGUAGE TOOLKIT ═══ -->
   <div class="section-title"><span class="section-num">10</span> Oral Language Toolkit</div>
@@ -994,5 +998,6 @@ renderNav();
 onCheck();
 </script>
 <script>(function(){var k=(location.pathname.split("/").pop()||"index").replace(".html","");var e=document.getElementById("visitCount");if(e){e.innerHTML='<img src="https://api.visitorbadge.io/api/visitors?path=lsa-toolbox-'+encodeURIComponent(k)+'&label=Visites&countColor=%23c8a84b&labelColor=%230f1a33&style=flat-square" alt="compteur de visites">'}})();</script>
+<script src="assets/ia.js"></script>
 </body>
 </html>

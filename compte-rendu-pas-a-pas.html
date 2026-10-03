@@ -626,6 +626,7 @@ footer{background:var(--navy-deep);color:rgba(255,255,255,.62);margin-top:42px;b
         <textarea class="lg" data-save="e5body" placeholder="Rédigez ici votre compte rendu, en paragraphes aérés…"></textarea>
       </div>
       <div class="counter" id="cnt5"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7V4h16v3M9 20h6M12 4v16"/></svg> Compte rendu&nbsp;: <b>0</b> mots <span id="cnt5msg" style="margin-left:4px;"></span></div>
+      <div class="ia-box" data-ia="compte-rendu" data-ia-texte="Introduction=textarea[data-save=e5intro]|Développement=textarea[data-save=e5body]" data-ia-ctx="Article source=#article" data-ia-min="40"></div>
       <ul class="check" id="checklist" style="margin-top:20px;">
         <li><input type="checkbox" id="c1" data-save="c1"><label for="c1">J'ai indiqué le nombre exact de mots à la fin.</label></li>
         <li><input type="checkbox" id="c2" data-save="c2"><label for="c2">J'ai respecté la longueur demandée.</label></li>
@@ -805,5 +806,6 @@ footer{background:var(--navy-deep);color:rgba(255,255,255,.62);margin-top:42px;b
   updateAll();
 })();
 </script>
-<script>(function(){var k=(location.pathname.split("/").pop()||"index").replace(".html","");var e=document.getElementById("visitCount");if(e){e.innerHTML='<img src="https://api.visitorbadge.io/api/visitors?path=lsa-toolbox-'+encodeURIComponent(k)+'&label=Visites&countColor=%23c8a84b&labelColor=%230f1a33&style=flat-square" alt="compteur de visites">'}})();</script></body>
+<script>(function(){var k=(location.pathname.split("/").pop()||"index").replace(".html","");var e=document.getElementById("visitCount");if(e){e.innerHTML='<img src="https://api.visitorbadge.io/api/visitors?path=lsa-toolbox-'+encodeURIComponent(k)+'&label=Visites&countColor=%23c8a84b&labelColor=%230f1a33&style=flat-square" alt="compteur de visites">'}})();</script><script src="assets/ia.js"></script>
+</body>
 </html>
