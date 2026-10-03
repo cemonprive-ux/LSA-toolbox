@@ -157,14 +157,14 @@ async function toWav(b){
 function esc(t){return String(t==null?"":t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
 function setV(id,state,val,det){var e=$(id);e.className="v"+(state===true?" ok":state===false?" ko":"");e.querySelector(".val").textContent=val;e.querySelector(".det").textContent=det||"";}
 $("send").onclick=async function(){
- if(!wav64||busy)return;var w=W[idx];busy=true;$("send").disabled=true;$("rec").disabled=true;$("status").textContent="L'IA écoute ton enregistrement…";
+ if(!wav64||busy)return;var w=W[idx];busy=true;$("send").disabled=true;$("rec").disabled=true;$("status").textContent="L'IA écoute ton enregistrement, cela peut prendre une dizaine de secondes…";
  try{
   var r=await fetch(URL_IA,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({outil:"prononciation",mot:plain(w),ref:"syllabes : "+w[0].replace(/·/g," · ")+" ; syllabe accentuée : "+w[0].split("·")[w[1]]+" ; API : "+w[2],audio:wav64})});
   var d=await r.json();if(!d.reponse)throw new Error(d.error||"Réponse vide.");
   var m=d.reponse.match(/\{[\s\S]*\}/),j=null;try{j=m&&JSON.parse(m[0])}catch(e){}
+  if(!j)throw new Error("L'IA n'a pas réussi à analyser cet enregistrement. Réessaie en parlant près du micro.");
   $("word").innerHTML=marked(w);$("ipa").textContent=w[2];$("result").style.display="block";$("status").textContent="";
-  if(!j){setV("vMot",null,"?","");setV("vAcc",null,"?","");$("fb").innerHTML="<p>"+esc(d.reponse)+"</p>";}
-  else{
+  {
    setV("vMot",j.reconnu,j.reconnu?"Oui":"Non",j.entendu?"Entendu : « "+j.entendu+" »":"");
    var acc=j.reconnu?j.accent_ok:null;
    setV("vAcc",acc,acc===true?"Bien placé":acc===false?"Mal placé":"Non évalué",j.syllabe_entendue?"Tu as accentué : « "+j.syllabe_entendue+" »":"");
