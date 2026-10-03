@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0f1a33"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="LSA Toolbox"><meta name="apple-mobile-web-app-status-bar-style" content="default"><link rel="apple-touch-icon" href="assets/icon-180.png"><script src="assets/app-nav.js"></script>
 <title>3-Méthode CR pas à pas : "Less stress, more energy"… · BTS, LSA Toolbox</title>
 <link rel="icon" type="image/png" href="assets/lsa-logo.png">
 <style>
@@ -626,7 +626,6 @@ footer{background:var(--navy-deep);color:rgba(255,255,255,.62);margin-top:42px;b
         <textarea class="lg" data-save="e5body" placeholder="Rédigez ici votre compte rendu, en paragraphes aérés…"></textarea>
       </div>
       <div class="counter" id="cnt5"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7V4h16v3M9 20h6M12 4v16"/></svg> Compte rendu&nbsp;: <b>0</b> mots <span id="cnt5msg" style="margin-left:4px;"></span></div>
-      <div class="ia-box" data-ia="compte-rendu" data-ia-texte="Introduction=textarea[data-save=e5intro]|Développement=textarea[data-save=e5body]" data-ia-ctx="Article source=#article" data-ia-min="40"></div>
       <ul class="check" id="checklist" style="margin-top:20px;">
         <li><input type="checkbox" id="c1" data-save="c1"><label for="c1">J'ai indiqué le nombre exact de mots à la fin.</label></li>
         <li><input type="checkbox" id="c2" data-save="c2"><label for="c2">J'ai respecté la longueur demandée.</label></li>
@@ -651,6 +650,7 @@ footer{background:var(--navy-deep);color:rgba(255,255,255,.62);margin-top:42px;b
       </details>
     </div>
   </section>
+  <div class="ia-box" data-ia="compte-rendu" data-ia-titre="Retour de l'IA sur mon compte rendu" data-ia-texte="Introduction=textarea[data-save=e5intro]|Développement=textarea[data-save=e5body]" data-ia-ctx="Article source=#article" data-ia-min="40"></div>
 
   <!-- ── ACTIONS ── -->
   <div class="actions">
