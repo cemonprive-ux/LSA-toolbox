@@ -170,7 +170,7 @@ $("send").onclick=async function(){
    setV("vAcc",acc,acc===true?"Bien placé":acc===false?"Mal placé":"Non évalué",j.syllabe_entendue?"Tu as accentué : « "+j.syllabe_entendue+" »":"");
    if(acc!=null){tried++;if(acc)ok++;$("score").textContent="Accent juste : "+ok+" / "+tried;}
    var h="";if(j.niveau)h+='<p class="lvl">'+esc(j.niveau)+"</p>";
-   if(j.sons&&j.sons.length)h+="<p>Sons à travailler :</p><ul>"+j.sons.map(function(s){return "<li><strong>"+esc(s.son)+"</strong> : "+esc(s.conseil)+"</li>"}).join("")+"</ul>";
+   if(j.sons&&j.sons.length)h+="<p>Point à travailler :</p><ul>"+j.sons.map(function(s){return "<li><strong>"+esc(s.son)+"</strong> : "+esc(s.conseil)+"</li>"}).join("")+"</ul>";
    if(j.conseil)h+="<p style=\"margin-top:.5rem\">"+esc(j.conseil)+"</p>";
    $("fb").innerHTML=h||"<p>Rien à signaler.</p>";
   }
