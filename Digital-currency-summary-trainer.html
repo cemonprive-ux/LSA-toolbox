@@ -476,6 +476,12 @@ textarea{min-height:80px}
         <button class="btn ghost" onclick="goStep(5)">✏ Edit my summary</button>
         <div class="fb-grid" id="checkGrid" style="margin-top:1rem"></div>
       </div>
+      <div class="card" id="aiCard">
+        <h3 style="margin-bottom:.4rem">Retour de l'IA</h3>
+        <p style="font-size:.85rem;color:var(--muted);margin-bottom:.8rem">Une IA évalue ton résumé par rapport au document source. Ses remarques sont indicatives, elles ne remplacent pas la correction de ton professeur.</p>
+        <button class="btn gold" id="aiBtn" onclick="askAI()">Obtenir un retour de l'IA</button>
+        <div id="aiOut" style="display:none;margin-top:1rem;background:var(--ice);border-left:3px solid var(--gold);border-radius:8px;padding:1rem 1.1rem;font-size:.9rem;line-height:1.6"></div>
+      </div>
       <div class="card">
         <button class="btn ghost" id="compareBtn" onclick="revealModel()" disabled>Compare with a model answer</button>
         <div class="reveal" id="modelReveal" style="display:none">
@@ -755,6 +761,20 @@ if(STEPS[state.cur]==='write')fillWriteRecap();
 if(STEPS[state.cur]==='check'){fillCheckPreview();if(state.check.analyzed)document.getElementById('compareBtn').disabled=false;}
 </script>
 <div class="visit-count" id="visitCount" style="text-align:center;padding:.8rem 0 1.4rem"></div>
-<script>(function(){var k=(location.pathname.split("/").pop()||"index").replace(".html","");var e=document.getElementById("visitCount");if(e){e.innerHTML='<img src="https://api.visitorbadge.io/api/visitors?path=lsa-toolbox-'+encodeURIComponent(k)+'&label=Visites&countColor=%23c8a84b&labelColor=%230f1a33&style=flat-square" alt="compteur de visites">'}})();</script>
+<script>(function(){var k=(location.pathname.split("/").pop()||"index").replace(".html","");var e=document.getElementById("visitCount");if(e){e.innerHTML='<img src="https://api.visitorbadge.io/api/visitors?path=lsa-toolbox-'+encodeURIComponent(k)+'&label=Visites&countColor=%23c8a84b&labelColor=%230f1a33&style=flat-square" alt="compteur de visites">'}})();
+const AI_URL='https://lsa-ia.cemonprive.workers.dev';
+function aiFormat(t){t=t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');t=t.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/^#{1,4}\s*(.+)$/gm,'<strong>$1</strong>');return t.split(/\n{2,}/).map(p=>{const l=p.split('\n');if(l.every(x=>/^\s*([-*•]|\d+[.)])\s+/.test(x)))return '<ul style="margin:.3rem 0 .6rem 1.2rem">'+l.map(x=>'<li>'+x.replace(/^\s*([-*•]|\d+[.)])\s+/,'')+'</li>').join('')+'</ul>';return '<p style="margin-bottom:.6rem">'+l.join('<br>')+'</p>'}).join('')}
+async function askAI(){
+  const txt=(state.write.text||'').trim();const out=document.getElementById('aiOut');const b=document.getElementById('aiBtn');
+  out.style.display='block';
+  if(txt.split(/\s+/).filter(Boolean).length<30){out.innerHTML='Écris au moins 30 mots avant de demander un retour.';return}
+  b.disabled=true;b.textContent='Analyse en cours…';out.innerHTML='<em>L\'IA lit ton résumé, cela prend quelques secondes…</em>';
+  const src=document.querySelector('#sourcePane .source-body').innerText.trim();
+  try{const r=await fetch(AI_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({outil:'summary',contexte:'Consigne : résumé de 130 à 180 mots en anglais.\n\nDOCUMENT SOURCE :\n'+src,texte:txt})});
+    const d=await r.json();out.innerHTML=d.reponse?aiFormat(d.reponse):(d.error||'Réponse vide.');}
+  catch(e){out.innerHTML='Impossible de joindre l\'IA. Vérifie ta connexion et réessaie.'}
+  setTimeout(()=>{b.disabled=false;b.textContent='Obtenir un nouveau retour'},20000);b.textContent='Patiente quelques secondes…';
+}
+</script>
 </body>
 </html>
