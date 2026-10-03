@@ -166,7 +166,7 @@ $("send").onclick=async function(){
   $("word").innerHTML=marked(w);$("ipa").textContent=w[2];$("result").style.display="block";$("status").textContent="";
   {
    var lab=function(c,okT,koT){return c&&c.ok===true?okT:c&&c.ok===false?koT:"Non évalué"};
-   $("heard").textContent=j.reconnu?(j.entendu?"Mot entendu : « "+j.entendu+" »":""):"Mot non reconnu"+(j.entendu?" (entendu : « "+j.entendu+" »)":"")+", réessaie plus près du micro.";
+   $("heard").textContent=j.reconnu?((j.entendu?"Mot entendu : « "+j.entendu+" »":"")+(typeof j.score==="number"?(j.entendu?" · ":"")+"Score de prononciation : "+j.score+"/100":"")):"Mot non reconnu"+(j.entendu?" (entendu : « "+j.entendu+" »)":"")+", réessaie plus près du micro.";
    var A=j.reconnu?j.accent:null,Ph=j.reconnu?j.phonemes:null,Pl=j.reconnu?j.plosives:null;
    setV("vAcc",A?A.ok:null,lab(A,"Bien placé","Mal placé"),A?((A.syllabe_entendue?"Syllabe accentuée : « "+A.syllabe_entendue+" ». ":"")+(A.remarque||"")):"");
    setV("vPho",Ph?Ph.ok:null,lab(Ph,"Corrects","À revoir"),Ph?Ph.remarque||"":"");
