@@ -123,6 +123,7 @@ $("send").onclick=async function(){
  try{
   var body={outil:"phono-cible",mode:EX.mode,mot:plain(w)+(EX.mode==="paire"?" / "+w.w2.replace(/[\[\]]/g,""):""),ipa:w.ipa+(EX.mode==="paire"?" / "+w.ipa2:""),critere:critere(w),audio:wav64};
   if(w.s){body.syllabes=w.s;body.accent=w.a;}
+  if(/Voyelle|Diphtongue/.test(EX.crit)){body.voyelle=true;body.cible=String(w.son||"").replace(/\//g,"");if(EX.mode==="paire")body.cible2=String(w.son2||"").replace(/\//g,"");}
   var r=await fetch(URL_IA,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});
   var d=await r.json();if(!d.reponse)throw new Error(d.error||"Réponse vide.");
   var m=d.reponse.match(/\{[\s\S]*\}/),j=null;try{j=m&&JSON.parse(m[0])}catch(e){}
