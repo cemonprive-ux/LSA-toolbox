@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0f1a33"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="LSA Toolbox"><meta name="apple-mobile-web-app-status-bar-style" content="default"><link rel="apple-touch-icon" href="assets/icon-180.png"><script src="assets/app-nav.js"></script>
+<title>Phonologie avec retour de l'IA · LSA Toolbox</title>
+<link rel="icon" type="image/png" href="assets/lsa-logo.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="assets/phono-ia.css">
+<script src="assets/phono-ia-data.js"></script>
+<style id="lsa-h1-or">h1,h1 em,h1 span{color:#f5b60f!important}</style></head>
+<body>
+<div class="topbar"><div class="topbar-inner"><span class="place"><span class="dot"></span>Lycée Sidoine Apollinaire · Clermont-Ferrand</span><span style="display:flex;gap:8px;flex-wrap:wrap"><a class="back" href="phonologie-ia-terminale.html"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"></path></svg>Phonologie IA</a><a class="back" href="index.html">Accueil</a></span></div></div>
+<header class="head"><div class="head-inner"><div class="breadcrumb"><a href="index.html">Accueil</a><span class="sep">›</span><span>Terminale</span><span class="sep">›</span><a href="phonologie-ia-terminale.html">Phonologie avec retour de l'IA</a></div><h1 id="titre">Exercice</h1><p class="sub" id="soustitre"></p></div></header>
+<main class="wrap">
+<p class="consigne" id="consigne"></p>
+<section class="card" data-screen-label="Exercice phonologie IA">
+<div class="card-top"><span id="pos">1/1</span><span id="score">Réussis : 0 / 0</span></div>
+<div class="chip-row"><span class="chip" id="chip"></span></div>
+<div class="word" id="word" style="margin-top:14px">word</div>
+<div class="partner" id="partner"></div>
+<div class="ipa" id="ipa"></div>
+<div class="nav-row">
+<button class="arrow" id="prev" aria-label="Mot précédent"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"></path></svg></button>
+<div class="ctrls">
+<button class="btn btn-rec" id="rec"><span class="rdot"></span><span id="recLbl">Enregistrer</span></button>
+<button class="btn btn-ghost" id="play" disabled><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M7 5v14l12-7z"></path></svg>Réécouter</button>
+<button class="btn btn-send" id="send" disabled>Envoyer à l'IA</button>
+</div>
+<button class="arrow" id="next" aria-label="Mot suivant"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"></path></svg></button>
+</div>
+<div class="meter"><i id="meter"></i></div>
+<div class="status" id="status" aria-live="polite"></div>
+<div class="result" id="result" aria-live="polite">
+<div class="heard" id="heard"></div>
+<div class="verdicts one" id="verdicts"></div>
+<div class="fb" id="fb"></div>
+<div class="reveal"><button class="btn btn-ghost" id="model"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5Z"></path><path d="M16 9a4 4 0 0 1 0 6"></path></svg>Écouter le corrigé</button><button class="btn btn-ghost" id="again">Recommencer</button></div>
+</div>
+<p class="note">Ton enregistrement est envoyé à l'IA pour l'analyse, il n'est pas conservé. Les remarques de l'IA sont indicatives, elles ne remplacent pas l'avis de ton professeur.</p>
+</section>
+<div class="tofoot"><a href="phonologie-ia-terminale.html"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"></path></svg>Retour aux exercices</a></div>
+</main>
+<footer><div class="foot-inner"><div class="foot-brand"><img src="assets/lsa-logo.png" alt="Logo LSA"><div><strong>LSA Toolbox</strong><span>Terminale · Phonologie avec retour de l'IA</span></div></div><div>Lycée Sidoine Apollinaire, Clermont-Ferrand</div></div><div class="visit-count" id="visitCount" style="text-align:center;padding:.8rem 0 1.4rem"></div></footer>
+<script>
+(function(){
+var URL_IA="https://lsa-ia.cemonprive.workers.dev",MAX_MS=4000;var COOLDOWN=8000;
+var key=(location.search.match(/[?&]ex=([a-z]+)/)||[])[1],EX=window.PHONO&&window.PHONO[key];
+if(!EX||EX.href){location.replace(EX&&EX.href?EX.href:"phonologie-ia-terminale.html");return;}
+var $=function(id){return document.getElementById(id)};
+document.title=EX.titre+" · Phonologie IA · LSA Toolbox";
+$("titre").textContent=EX.titre;$("soustitre").textContent=EX.desc;$("consigne").textContent=EX.consigne;if(EX.mode==="paire")MAX_MS=6500;
+var W=EX.items.slice();
+if(EX.shuffle)for(var i=W.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=W[i];W[i]=W[j];W[j]=t;}
+var idx=0,blob=null,wav64=null,rec=null,stream=null,timer=null,t0=0,busy=false,ok=0,tried=0;
+function esc(t){return String(t==null?"":t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
+function plain(w){return w.w.replace(/[\[\]]/g,"")}
+function focus(w){var m=w.w.match(/\[([^\]]+)\]/);return m?m[1]:""}
+function sylls(w,mark){return w.s.split("·").map(function(s,k){return (mark&&k===w.a)?"<u>"+esc(s)+"</u>":esc(s)}).join('<span class="dot">·</span>')}
+function mk(t){return esc(t).replace(/\[([^\]]+)\]/g,"<mark>$1</mark>")}
+function display(w,done){
+ if(EX.mode==="paire")return '<span class="pw"><span>'+mk(w.w)+'</span><span class="neq">≠</span><span>'+mk(w.w2)+'</span></span>';
+ if(EX.mode==="accent")return sylls(w,true);
+ if(EX.mode==="reduction")return sylls(w,true);
+ return mk(w.w);
+}
+function chip(w){
+ if(EX.mode==="accent"){var c=window.PHONO_COULEURS[w.v]||["",""];return {html:'Syllabe star : « '+esc(w.s.split("·")[w.a])+' » · <span class="cdot" style="background:'+c[1]+'"></span>'+c[0]+' /'+esc(w.v)+'/'};}
+ if(EX.mode==="reduction")return "Réduis les gardes du corps";
+ return w.note||("Son "+w.son);
+}
+function show(){var w=W[idx];$("word").innerHTML=display(w,false);var ch=chip(w);if(ch&&ch.html)$("chip").innerHTML=ch.html;else $("chip").textContent=ch;
+ $("partner").innerHTML=EX.mode==="paire"?"Prononce les deux mots dans l'ordre : <b>1.</b> "+esc(w.lab)+", <b>2.</b> "+esc(w.lab2):"";
+ $("ipa").textContent="";$("pos").textContent=(idx+1)+"/"+W.length;resetRec();$("result").style.display="none";$("status").textContent="";}
+function resetRec(){blob=null;wav64=null;$("play").disabled=true;$("send").disabled=true;$("meter").style.width="0";}
+function speak(list){if(!("speechSynthesis" in window))return;speechSynthesis.cancel();var v=speechSynthesis.getVoices().filter(function(x){return /en[-_]GB/i.test(x.lang)})[0];
+ list.forEach(function(txt){var u=new SpeechSynthesisUtterance(txt);u.lang="en-GB";u.rate=.8;if(v)u.voice=v;speechSynthesis.speak(u);});}
+$("model").onclick=function(){var w=W[idx];speak(EX.mode==="paire"?[plain(w),w.w2.replace(/[\[\]]/g,"")]:[plain(w)]);};
+$("prev").onclick=function(){if(rec)return;idx=(idx-1+W.length)%W.length;show();};
+$("next").onclick=function(){if(rec)return;idx=(idx+1)%W.length;show();};
+$("again").onclick=function(){show();};
+$("play").onclick=function(){if(blob)new Audio(URL.createObjectURL(blob)).play();};
+$("rec").onclick=async function(){
+ if(rec){stop();return;}
+ if(!navigator.mediaDevices||!window.MediaRecorder){$("status").textContent="Ton navigateur ne permet pas l'enregistrement. Essaie avec Chrome, Safari ou Firefox à jour.";return;}
+ try{stream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true}});}
+ catch(e){$("status").textContent="Accès au micro refusé. Autorise le micro dans les réglages du navigateur.";return;}
+ resetRec();$("result").style.display="none";
+ var chunks=[];rec=new MediaRecorder(stream);
+ rec.ondataavailable=function(e){if(e.data.size)chunks.push(e.data)};
+ rec.onstop=async function(){stream.getTracks().forEach(function(t){t.stop()});blob=new Blob(chunks,{type:rec.mimeType||"audio/webm"});rec=null;
+  $("rec").classList.remove("on");$("recLbl").textContent="Recommencer l'enregistrement";$("status").textContent="Préparation de l'enregistrement…";
+  try{wav64=await toWav(blob);$("play").disabled=false;$("send").disabled=busy;$("status").textContent="Réécoute-toi si tu veux, puis envoie à l'IA.";}
+  catch(e){$("status").textContent="L'enregistrement n'a pas pu être lu. Réessaie.";}
+ };
+ rec.start();t0=Date.now();$("rec").classList.add("on");$("recLbl").textContent="Arrêter";$("status").textContent="Parle maintenant…";
+ timer=setInterval(function(){var p=Math.min(1,(Date.now()-t0)/MAX_MS);$("meter").style.width=(p*100)+"%";if(p>=1)stop();},80);
+};
+function stop(){clearInterval(timer);if(rec&&rec.state!=="inactive")rec.stop();}
+async function toWav(b){
+ var buf=await b.arrayBuffer(),AC=window.AudioContext||window.webkitAudioContext,ac=new AC();
+ var audio=await new Promise(function(res,rej){ac.decodeAudioData(buf,res,rej)});ac.close&&ac.close();
+ var rate=16000,len=Math.min(Math.ceil(audio.duration*rate),rate*8),off=new OfflineAudioContext(1,len,rate),src=off.createBufferSource();
+ src.buffer=audio;src.connect(off.destination);src.start(0);var r=await off.startRendering(),d=r.getChannelData(0);
+ var out=new DataView(new ArrayBuffer(44+d.length*2)),ws=function(o,s){for(var i=0;i<s.length;i++)out.setUint8(o+i,s.charCodeAt(i))};
+ ws(0,"RIFF");out.setUint32(4,36+d.length*2,true);ws(8,"WAVE");ws(12,"fmt ");out.setUint32(16,16,true);out.setUint16(20,1,true);out.setUint16(22,1,true);out.setUint32(24,rate,true);out.setUint32(28,rate*2,true);out.setUint16(32,2,true);out.setUint16(34,16,true);ws(36,"data");out.setUint32(40,d.length*2,true);
+ for(var i=0;i<d.length;i++){var s=Math.max(-1,Math.min(1,d[i]));out.setInt16(44+i*2,s<0?s*0x8000:s*0x7fff,true);}
+ var bytes=new Uint8Array(out.buffer),bin="";for(var k=0;k<bytes.length;k+=0x8000)bin+=String.fromCharCode.apply(null,bytes.subarray(k,k+0x8000));return btoa(bin);
+}
+function critere(w){
+ var f=focus(w);
+ if(EX.mode==="son")return "Son cible : "+w.son+(f?", sur les lettres « "+f+" »":"")+". "+(w.regle||EX.regle||"");
+ if(EX.mode==="paire"){var f2=(w.w2.match(/\[([^\]]+)\]/)||[])[1]||"";return "L'élève prononce DEUX mots, dans cet ordre. MOT 1 : « "+plain(w)+" » "+w.ipa+", son cible "+w.son+(f?" (lettres « "+f+" »)":"")+", à ne pas confondre avec "+w.son2+". MOT 2 : « "+w.w2.replace(/[\[\]]/g,"")+" » "+w.ipa2+", son cible "+w.son2+(f2?" (lettres « "+f2+" »)":"")+", à ne pas confondre avec "+w.son+". "+(EX.regle||"");}
+ var s=w.s.split("·");
+ if(EX.mode==="accent")return "Syllabes : "+s.join(" · ")+". Syllabe accentuée attendue : « "+s[w.a]+" ».";
+ return "Syllabes : "+s.join(" · ")+". Syllabe accentuée (non jugée) : « "+s[w.a]+" ». Syllabes non accentuées à réduire : "+w.note+".";
+}
+function box(lbl,state,val,det){return '<div class="v'+(state===true?" ok":state===false?" ko":"")+'"><div class="k">'+esc(lbl)+'</div><div class="val">'+esc(val)+'</div>'+(det?'<div class="det">'+det+'</div>':"")+'</div>';}
+function lab(s){return s===true?OKL[0]:s===false?OKL[1]:"Non évalué"}
+var OKL={son:["Réussi","À revoir"],paire:["Bien distingué","À revoir"],accent:["Bien placé","Mal placé"],reduction:["Bien réduites","À revoir"]}[EX.mode];
+$("send").onclick=async function(){
+ if(!wav64||busy)return;var w=W[idx];busy=true;$("send").disabled=true;$("rec").disabled=true;$("status").textContent="L'IA écoute ton enregistrement, cela peut prendre une dizaine de secondes…";
+ try{
+  var body={outil:"phono-cible",mode:EX.mode,mot:plain(w)+(EX.mode==="paire"?" / "+w.w2.replace(/[\[\]]/g,""):""),ipa:w.ipa+(EX.mode==="paire"?" / "+w.ipa2:""),critere:critere(w),audio:wav64};
+  if(w.s){body.syllabes=w.s;body.accent=w.a;}
+  var r=await fetch(URL_IA,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});
+  var d=await r.json();if(!d.reponse)throw new Error(d.error||"Réponse vide.");
+  var m=d.reponse.match(/\{[\s\S]*\}/),j=null;try{j=m&&JSON.parse(m[0])}catch(e){}
+  if(!j)throw new Error("L'IA n'a pas réussi à analyser cet enregistrement. Réessaie en parlant près du micro.");
+  $("word").innerHTML=display(w,true);$("ipa").textContent=EX.mode==="paire"?w.ipa+" ≠ "+w.ipa2:w.ipa+(EX.mode==="reduction"?" · "+w.note:"");$("result").style.display="block";$("status").textContent="";
+  if(j.reconnu){
+   $("heard").textContent=j.entendu?"Mot entendu : « "+j.entendu+" »":"";
+   var V=$("verdicts"),h="";
+   if(EX.mode==="paire"){var m1=j.mot1||{},m2=j.mot2||{},se=function(m){return (m.son_entendu?"Son entendu : "+esc(m.son_entendu)+". ":"")+esc(m.remarque||"")};
+    h=box("Mot 1 · "+plain(w)+" · "+w.son,m1.ok,lab(m1.ok),se(m1))+box("Mot 2 · "+w.w2.replace(/[\[\]]/g,"")+" · "+w.son2,m2.ok,lab(m2.ok),se(m2));V.className="verdicts two";}
+   else if(EX.mode==="reduction"){var L=(j.syllabes||[]).map(function(s){return '<li class="'+(s.ok?"sy-ok":"sy-ko")+'"><b>'+esc(s.syllabe)+'</b> : '+(s.ok?"réduite":"à réduire")+(s.remarque?", "+esc(s.remarque):"")+'</li>'}).join("");
+    h=box(EX.crit,j.ok,lab(j.ok),(L?'<ul class="sy">'+L+'</ul>':"")+esc(j.remarque||""));V.className="verdicts one";}
+   else{h=box(EX.crit,j.ok,lab(j.ok),(j.son_entendu?(EX.mode==="accent"?"Syllabe la plus marquée : « "+esc(j.son_entendu)+" ». ":"Son entendu : "+esc(j.son_entendu)+". "):"")+esc(j.remarque||""));V.className="verdicts one";}
+   V.innerHTML=h;
+   if(j.ok!=null){tried++;if(j.ok)ok++;$("score").textContent="Réussis : "+ok+" / "+tried;}
+  }else{
+   $("heard").textContent="Mot non reconnu"+(j.entendu?" (entendu : « "+j.entendu+" »)":"")+", réessaie plus près du micro.";
+   $("verdicts").innerHTML=box(EX.crit,null,"Non évalué","");
+  }
+  $("fb").innerHTML=j.conseil?"<p>"+esc(j.conseil)+"</p>":"<p>Écoute le corrigé et compare.</p>";
+ }catch(e){$("status").textContent=e.message&&!/fetch/i.test(e.message)?e.message:"Impossible de joindre l'IA. Vérifie ta connexion et réessaie.";}
+ $("rec").disabled=false;setTimeout(function(){busy=false;if(wav64)$("send").disabled=false;},COOLDOWN);
+};
+if("speechSynthesis" in window){speechSynthesis.getVoices();speechSynthesis.onvoiceschanged=function(){};}
+show();
+})();
+</script>
+<script>(function(){var k=(location.pathname.split("/").pop()||"index").replace(".html","");var e=document.getElementById("visitCount");if(e){e.innerHTML='<img src="https://api.visitorbadge.io/api/visitors?path=lsa-toolbox-'+encodeURIComponent(k)+'&label=Visites&countColor=%23f5b60f&labelColor=%230f1a33&style=flat-square" alt="compteur de visites">'}})();</script>
+</body>
+</html>
