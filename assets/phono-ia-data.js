@@ -5,8 +5,8 @@ function V(son,couleur,list){return list.map(function(x){return {w:x[0],ipa:x[1]
 function P(a,b,la,lb,pairs){return pairs.map(function(p){return {w:p[0],ipa:p[1],son:a,lab:la,w2:p[2],ipa2:p[3],son2:b,lab2:lb,note:la+" ≠ "+lb}});}
 function A(list){return list.map(function(x){return {s:x[0],a:x[1],ipa:x[2],w:x[0].replace(/·/g,""),note:x[3]||""}});}
 
-var TH_S="/θ/ (th sourd) : pointe de la langue entre les dents, on souffle sans voix. Erreurs à sanctionner : /s/, /f/, /t/ ou /z/ à la place.";
-var TH_D="/ð/ (th voisé) : pointe de la langue entre les dents, avec la voix (ça vibre). Erreurs à sanctionner : /z/, /d/ ou /v/ à la place.";
+var TH_S="/θ/ (th sourd) : pointe de la langue entre les dents, on souffle sans voix. Critère SOUPLE : toute friction dentale ou interdentale est juste, même légère, brève, un peu sifflante ou imparfaite, ainsi qu'un th légèrement voisé (/ð/). ok = false SEULEMENT si l'on entend nettement un /s/ ou un /f/ français franc, ou un /t/ net, à la place. Dans le doute, ok = true.";
+var TH_D="/ð/ (th voisé) : pointe de la langue entre les dents, avec la voix (ça vibre). Critère SOUPLE : toute friction dentale ou interdentale est juste, même légère, peu voisée ou imparfaite, ainsi qu'un th sourd (/θ/). ok = false SEULEMENT si l'on entend nettement un /z/ ou un /v/ français franc, ou un /d/ net, à la place. Dans le doute, ok = true.";
 var R1="R en début de mot : il doit être prononcé à l'anglaise /r/, langue recourbée vers l'arrière sans toucher le palais, lèvres légèrement arrondies. Erreur à sanctionner : r français guttural (frottement dans la gorge).";
 var R2="R entre deux voyelles : il est prononcé, à l'anglaise /r/, langue recourbée sans toucher le palais. Erreur à sanctionner : r français guttural, ou r supprimé.";
 var R3="R final ou devant consonne : muet en anglais britannique. ok = true si le r ne s'entend pas (la voyelle qui précède est simplement allongée ou devient /ə/). Un r américain léger est toléré, signale-le dans la remarque. ok = false si un r français guttural est prononcé.";
