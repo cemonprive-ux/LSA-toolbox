@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0f1a33"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="LSA Toolbox"><meta name="apple-mobile-web-app-status-bar-style" content="default"><link rel="apple-touch-icon" href="assets/icon-180.png"><script src="assets/app-nav.js"></script>
+<title>M2-Phonologie avec retour de l'IA · BTS MCO · LSA Toolbox</title>
+<link rel="icon" type="image/png" href="assets/lsa-logo.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="assets/phono-ia.css">
+<script src="assets/phono-ia-data-mco.js"></script>
+<style id="lsa-h1-or">h1,h1 em,h1 span{color:#f5b60f!important}</style></head>
+<body>
+<div class="topbar"><div class="topbar-inner"><span class="place"><span class="dot"></span>Lycée Sidoine Apollinaire · Clermont-Ferrand</span><a class="back" href="index.html"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"></path></svg>Retour à l'accueil</a></div></div>
+<header class="head"><div class="head-inner"><div class="breadcrumb"><a href="index.html">Accueil</a><span class="sep">›</span><span>BTS MCO</span><span class="sep">›</span><span>M2-Phonologie</span></div><h1>M2-Phonologie avec retour de l'IA</h1><p class="sub">Enregistre-toi sur des mots du business English. Dans chaque exercice, l'IA ne juge qu'un seul point, puis tu écoutes le corrigé.</p></div></header>
+<main class="wrap" id="hub"></main>
+<footer><div class="foot-inner"><div class="foot-brand"><img src="assets/lsa-logo.png" alt="Logo LSA"><div><strong>LSA Toolbox</strong><span>BTS MCO · M2-Phonologie avec retour de l'IA</span></div></div><div>Lycée Sidoine Apollinaire, Clermont-Ferrand</div></div><div class="visit-count" id="visitCount" style="text-align:center;padding:.8rem 0 1.4rem"></div></footer>
+<script>
+(function(){
+var arrow='<svg class="ex-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>';
+function esc(t){return String(t).replace(/&/g,"&amp;").replace(/</g,"&lt;")}
+document.getElementById("hub").innerHTML=PHONO_SECTIONS.map(function(s){
+ return '<section class="sec"><button class="sec-h" aria-expanded="false"><span class="sec-n">'+s.n+'</span><h2>'+esc(s.titre)+'</h2><span class="sec-c">'+s.ex.length+(s.ex.length>1?' exercices':' exercice')+'</span><svg class="sec-chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg></button><div class="sec-p"><div><div class="ex-list">'+s.ex.map(function(k,i){var e=PHONO[k];
+  return '<a class="ex" href="'+(e.href||"phono-ia-mco.html?ex="+k)+'"><span class="ex-k">'+(s.ex.length>1?"abcde".charAt(i):"★")+'</span><span class="ex-b"><b>'+esc(e.titre)+'</b><span>'+esc(e.desc)+(e.items?" · "+(e.mode==="paire"?e.items.length+" paires, "+e.items.length*2+" mots":e.items.length+" mots"):"")+'</span></span>'+arrow+'</a>';}).join("")+'</div></div></div></section>';
+}).join("")+'<div class="tofoot"><a href="index.html"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"></path></svg>Retour à l\'accueil</a></div>';
+var secs=[].slice.call(document.querySelectorAll(".sec")),st=[];try{st=JSON.parse(sessionStorage.getItem("lsa-phono-mco-open")||"[]")}catch(e){}
+secs.forEach(function(s,i){var b=s.querySelector(".sec-h");if(st.indexOf(i)>=0){s.classList.add("open");b.setAttribute("aria-expanded","true")}
+ b.addEventListener("click",function(){var o=s.classList.toggle("open");b.setAttribute("aria-expanded",o?"true":"false");try{sessionStorage.setItem("lsa-phono-mco-open",JSON.stringify(secs.map(function(x,k){return x.classList.contains("open")?k:-1}).filter(function(k){return k>=0})))}catch(e){}});});
+})();
+</script>
+<script>(function(){var k=(location.pathname.split("/").pop()||"index").replace(".html","");var e=document.getElementById("visitCount");if(e){e.innerHTML='<img src="https://api.visitorbadge.io/api/visitors?path=lsa-toolbox-'+encodeURIComponent(k)+'&label=Visites&countColor=%23f5b60f&labelColor=%230f1a33&style=flat-square" alt="compteur de visites">'}})();</script>
+</body>
+</html>
