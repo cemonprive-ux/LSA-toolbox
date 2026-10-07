@@ -62,7 +62,37 @@ document.documentElement.classList.add("lsa-app");
 if(!document.getElementById("lsa-appnav-css")){var st=document.createElement("style");st.id="lsa-appnav-css";st.textContent=CSS;(document.head||document.documentElement).appendChild(st)}
 if(document.body&&!document.querySelector(".lsa-appnav"))document.body.appendChild(build());
 }
+
+/* Mode appli : notification de mise à jour (compare version.json à la version mémorisée) */
+var UCSS=".lsa-update{position:fixed;left:12px;right:12px;top:calc(12px + env(safe-area-inset-top));z-index:2147483001;max-width:520px;margin:0 auto;display:flex;align-items:center;gap:12px;padding:12px 14px;background:#0f1a33;color:#fff;border-bottom:3px solid #f5b60f;border-radius:12px;box-shadow:0 10px 30px rgba(15,26,51,.35);font-family:'Quicksand',sans-serif;animation:lsaUpd .35s ease both}"+
+".lsa-update .lsa-u-txt{flex:1;min-width:0;font-size:14px;line-height:1.35}.lsa-update strong{display:block;color:#f5b60f;font-size:15px}"+
+".lsa-update button{font-family:inherit;font-weight:700;font-size:14px;min-height:44px;padding:0 14px;border:none;border-radius:10px;cursor:pointer;flex-shrink:0}"+
+".lsa-update .lsa-u-go{background:#f5b60f;color:#0f1a33}.lsa-update .lsa-u-x{background:transparent;color:#fff;padding:0 8px;font-size:20px}"+
+"@keyframes lsaUpd{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:none}}@media print{.lsa-update{display:none!important}}";
+var KEY="lsa-version",shown=false;
+function showUpdate(v,note){
+if(shown||document.querySelector(".lsa-update"))return;shown=true;
+if(!document.getElementById("lsa-update-css")){var st=document.createElement("style");st.id="lsa-update-css";st.textContent=UCSS;(document.head||document.documentElement).appendChild(st)}
+var d=document.createElement("div");d.className="lsa-update";d.setAttribute("role","alert");
+d.innerHTML='<div class="lsa-u-txt"><strong>Mise à jour disponible</strong>'+(note?note.replace(/</g,"&lt;"):"Le site a été mis à jour.")+'</div><button class="lsa-u-go" type="button">Mettre à jour</button><button class="lsa-u-x" type="button" aria-label="Plus tard">×</button>';
+d.querySelector(".lsa-u-go").addEventListener("click",function(){try{localStorage.setItem(KEY,v)}catch(e){}var u=location.pathname+(location.search?location.search.replace(/([?&])_v=[^&]*&?/,"$1").replace(/[?&]$/,""):"");u+=(u.indexOf("?")>-1?"&":"?")+"_v="+encodeURIComponent(v)+location.hash;location.replace(u)});
+d.querySelector(".lsa-u-x").addEventListener("click",function(){d.remove();shown=false;try{sessionStorage.setItem("lsa-update-later",v)}catch(e){}});
+document.body.appendChild(d);
+}
+function checkUpdate(){
+if(!standalone||!window.fetch)return;
+fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.ok?r.json():null}).then(function(j){
+if(!j||!j.version)return;var v=String(j.version),cur=null;
+try{cur=localStorage.getItem(KEY)}catch(e){}
+if(!cur){try{localStorage.setItem(KEY,v)}catch(e){}return}
+if(cur===v)return;
+try{if(sessionStorage.getItem("lsa-update-later")===v)return}catch(e){}
+showUpdate(v,j.note||"");
+}).catch(function(){});
+}
 function init(){
+checkUpdate();
+document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible")checkUpdate()});
 if(isIndex){indexState();return}
 if(!standalone)return;
 ensure();
