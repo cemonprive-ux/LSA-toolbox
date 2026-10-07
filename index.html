@@ -319,6 +319,16 @@ footer{
   .cat-head{padding:18px 16px 18px 16px;}
   .foot-inner{flex-direction:column;align-items:flex-start;}
 }
+@media(max-width:640px){
+.cats:not(.is-search){display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;grid-auto-flow:row dense;}
+.cats:not(.is-search) .cat.open{grid-column:1/-1;}
+.cats:not(.is-search) .cat:not(.open) .cat-head{aspect-ratio:1/1;justify-content:center;align-items:center;text-align:center;gap:8px;padding:14px 10px;}
+.cats:not(.is-search) .cat:not(.open) .head-top{justify-content:center;}
+.cats:not(.is-search) .cat:not(.open) .chev,.cats:not(.is-search) .cat:not(.open) .cat-full{display:none;}
+.cats:not(.is-search) .cat:not(.open) .cat-name{font-size:1.25rem;}
+.cats:not(.is-search) .cat:not(.open) .count{font-size:9.5px;padding:3px 9px;}
+.cats:not(.is-search) .cat:hover{transform:none;}
+}
 </style>
 <style>.visit-count{margin-top:8px}.visit-count img{height:16px;vertical-align:middle}</style><style id="lsa-h1-or">h1,h1 em,h1 span{color:#f5b60f!important}</style></head>
 <body>
@@ -903,6 +913,12 @@ footer{
   // Bureau : une seule rubrique ouverte ; transition centré → gauche
   const catsBox=document.getElementById('cats');
   const wide=()=>window.matchMedia('(min-width:901px)').matches&&!catsBox.classList.contains('is-search');
+  const tiles=()=>window.matchMedia('(max-width:640px)').matches&&!catsBox.classList.contains('is-search');
+  cats.forEach(cat=>cat.querySelector('.cat-head').addEventListener('click',()=>{
+    if(!tiles()||!cat.classList.contains('open'))return;
+    cats.forEach(c=>{if(c!==cat&&c.classList.contains('open')){c.classList.remove('open');c.querySelector('.cat-head').setAttribute('aria-expanded','false');}});
+    requestAnimationFrame(()=>{const y=cat.getBoundingClientRect().top+window.scrollY-12;window.scrollTo({top:y,behavior:'smooth'});});
+  }));
   cats.forEach(cat=>cat.querySelector('.cat-head').addEventListener('click',()=>{
     if(!wide()||!cat.classList.contains('open'))return;
     const wasOpen=cats.some(c=>c!==cat&&c.classList.contains('open'));
