@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0f1a33"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="LSA Toolbox"><meta name="apple-mobile-web-app-status-bar-style" content="default"><link rel="apple-touch-icon" href="assets/icon-180.png"><script src="assets/app-nav.js"></script>
+<title>Progression 2029 · LSA Toolbox, DCG</title>
+<link rel="icon" type="image/png" href="assets/lsa-logo.png">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap');
+:root{--navy:#1a2744;--navy-deep:#0f1a33;--navy-mid:#243260;--blue:#2d5fa6;--accent:#f5b60f;--accent-deep:#c98f00;--green:#2a7a4b;--bg:#f5f3ef;--surface:#ffffff;--border:#ddd5c5;--text:#2a2520;--muted:#7a7060;--shadow:0 2px 14px rgba(26,39,68,.10);--shadow-lg:0 14px 40px rgba(26,39,68,.18)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Quicksand',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;font-size:17px;-webkit-font-smoothing:antialiased}
+a{color:var(--blue)}a:hover{color:var(--accent-deep)}
+.topbar{background:var(--navy-deep);color:rgba(255,255,255,.7);font-size:12.5px}
+.topbar-inner{max-width:1040px;margin:0 auto;padding:9px 28px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+.topbar .place{display:inline-flex;align-items:center;gap:8px;text-transform:uppercase;letter-spacing:.12em;font-size:11px}
+.topbar .dot{width:5px;height:5px;border-radius:50%;background:var(--accent)}
+.topbar a.back{display:inline-flex;align-items:center;gap:6px;color:rgba(255,255,255,.78);text-decoration:none;border:1px solid rgba(255,255,255,.18);border-radius:20px;padding:4px 13px;transition:all .2s;font-size:11.5px}
+.topbar a.back:hover{background:rgba(255,255,255,.1);color:#fff;border-color:rgba(245,182,15,.6)}
+.head{position:relative;overflow:hidden;background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 60%,var(--blue) 135%);border-bottom:3px solid var(--accent)}
+.head-inner{position:relative;max-width:1040px;margin:0 auto;padding:46px 28px 40px}
+.breadcrumb{display:flex;align-items:center;gap:9px;flex-wrap:wrap;font-size:12px;letter-spacing:.04em;color:rgba(255,255,255,.85);margin-bottom:18px}
+.breadcrumb a{color:rgba(255,255,255,.85);text-decoration:none}.breadcrumb a:hover{color:#fff}
+.breadcrumb .sep{opacity:.5}
+.breadcrumb .tag{background:var(--green);color:#fff;border-radius:5px;padding:2px 9px;font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+.head h1{font-weight:700;font-size:clamp(2.1rem,4.6vw,3.1rem);line-height:1.05}
+.head .sub{color:rgba(255,255,255,.78);font-size:clamp(15px,2vw,18px);margin-top:12px;max-width:600px}
+.wrap{max-width:880px;margin:0 auto;padding:40px 28px 30px}
+.summary{display:flex;flex-direction:column;gap:12px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px 22px;box-shadow:var(--shadow);margin-bottom:22px}
+.summary-top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.summary-top strong{color:var(--navy);font-size:1.05rem}
+.summary-top span{color:var(--muted);font-size:14px}
+.bar{height:10px;border-radius:10px;background:#e4e2de;overflow:hidden;display:flex}
+.bar i{display:block;height:100%}.bar .b-done{background:var(--green)}.bar .b-cur{background:var(--accent)}
+.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:13px;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:7px}
+.legend i{width:11px;height:11px;border-radius:3px;display:inline-block}
+.theme{margin-top:34px}
+.theme-head{display:flex;align-items:center;gap:12px;margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid var(--navy)}
+.theme-head h2{font-size:1.15rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--navy)}
+.theme-head .cnt{font-size:12px;font-weight:700;color:#fff;background:var(--navy);border-radius:20px;padding:2px 10px}
+.chaps{display:flex;flex-direction:column;gap:14px}
+.chap{background:var(--surface);border:1px solid var(--border);border-left:6px solid #c9c5bd;border-radius:12px;box-shadow:var(--shadow);overflow:hidden}
+.chap>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:14px;padding:16px 18px}
+.chap>summary::-webkit-details-marker{display:none}
+.chap .num{width:36px;height:36px;flex-shrink:0;border-radius:9px;display:inline-flex;align-items:center;justify-content:center;font-weight:700;color:#fff;background:#a9a49b}
+.chap .ttl{flex:1;min-width:0;font-weight:700;color:var(--navy);font-size:1.12rem;line-height:1.25}
+.chap .badge{flex-shrink:0;font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;border-radius:20px;padding:4px 11px;background:#e4e2de;color:#5f5a52}
+.chap .chev{flex-shrink:0;color:var(--navy);transition:transform .25s}
+.chap[open] .chev{transform:rotate(180deg)}
+.chap.s-done{border-left-color:var(--green)}.chap.s-done .num{background:var(--green)}.chap.s-done .badge{background:var(--green);color:#fff}
+.chap.s-cur{border-left-color:var(--accent);box-shadow:0 0 0 2px rgba(245,182,15,.35),var(--shadow-lg)}.chap.s-cur .num{background:var(--accent);color:var(--navy)}.chap.s-cur .badge{background:var(--accent);color:var(--navy)}
+.chap.s-todo{background:#f0eee9}.chap.s-todo .ttl{color:#6e685f}
+.chap-body{padding:4px 18px 20px 68px;display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:18px 26px}
+.blk h3{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--accent-deep);margin-bottom:6px}
+.blk ul{list-style:none;display:flex;flex-direction:column;gap:5px}
+.blk li{position:relative;padding-left:16px;font-size:15.5px;line-height:1.45;text-wrap:pretty}
+.blk li::before{content:"";position:absolute;left:0;top:.6em;width:6px;height:6px;border-radius:50%;background:var(--blue)}
+.blk .empty{font-size:14.5px;color:var(--muted);font-style:italic}
+.blk.voc p{font-size:15.5px;font-weight:600;color:var(--navy)}
+.state{text-align:center;color:var(--muted);padding:40px 10px}
+.actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin:40px 0 10px}
+.actions a,.actions button{display:inline-flex;align-items:center;gap:9px;text-decoration:none;color:var(--navy);font:600 15px 'Quicksand',sans-serif;border:1px solid var(--border);background:var(--surface);border-radius:30px;padding:11px 24px;cursor:pointer;transition:all .2s;box-shadow:var(--shadow)}
+.actions a:hover,.actions button:hover{border-color:var(--accent);color:var(--accent-deep);transform:translateY(-2px)}
+footer{background:var(--navy-deep);color:rgba(255,255,255,.62);margin-top:42px;border-top:3px solid var(--accent)}
+.foot-inner{max-width:1040px;margin:0 auto;padding:30px 28px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;font-size:13px}
+.foot-brand{display:flex;align-items:center;gap:13px}
+.foot-brand img{width:38px;height:38px;border-radius:9px}
+.foot-brand strong{color:#fff;font-weight:600;font-size:15px;display:block}
+.foot-brand span{font-size:12px}
+@media(max-width:640px){body{font-size:16px}.wrap{padding:28px 18px 24px}.chap>summary{padding:14px;gap:11px}.chap .ttl{font-size:1rem}.chap-body{grid-template-columns:minmax(0,1fr);padding:2px 16px 18px 16px}.chap .badge{font-size:10.5px;padding:3px 9px}}
+@media print{.topbar,.actions,footer,.chev{display:none}.head{background:none;border-bottom:2px solid #000}.head h1{color:#000!important}.head .sub,.breadcrumb{color:#333}.chap{box-shadow:none;break-inside:avoid}.chap-body{display:grid!important}}
+</style>
+<style>.visit-count{margin-top:8px}.visit-count img{height:16px;vertical-align:middle}</style><style id="lsa-h1-or">h1,h1 em,h1 span{color:#f5b60f!important}</style></head>
+<body>
+<div class="topbar"><div class="topbar-inner"><span class="place"><span class="dot"></span>Lycée Sidoine Apollinaire · Clermont-Ferrand</span><a class="back" href="index.html"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"></path></svg>Retour à l'accueil</a></div></div>
+<header class="head" data-screen-label="Progression · header"><div class="head-inner"><div class="breadcrumb"><a href="index.html">Accueil</a><span class="sep">›</span><span>DCG</span><span class="tag">DCG</span></div><h1>Progression 2029</h1><p class="sub">Chapitres du programme d'anglais, documents étudiés et points de langue, mis à jour au fil de l'année.</p></div></header>
+<main class="wrap">
+<div id="prog"><p class="state">Chargement de la progression…</p></div>
+<div class="actions"><button type="button" onclick="window.print()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V3h12v6M6 18H4a1 1 0 0 1-1-1v-6a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1h-2"></path><rect x="6" y="14" width="12" height="7"></rect></svg>Imprimer</button><a href="index.html"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"></path></svg>Retour à l'accueil</a></div>
+</main>
+<footer><div class="foot-inner"><div class="foot-brand"><img src="assets/lsa-logo.png" alt="Logo LSA"><div><strong>LSA Toolbox</strong><span>DCG · Progression 2029 · M. Blanchet</span></div></div><div>Lycée Sidoine Apollinaire, Clermont-Ferrand</div></div><div class="visit-count" id="visitCount"></div></footer>
+<script>
+(function(){
+var CSV="https://docs.google.com/spreadsheets/d/e/2PACX-1vRFs3lDakx4-yQBKiItZPeUCxOV1bVmFPloJtOexDxiiUs3ZLgaCmHynim9BZmYRQ/pub?output=csv";
+var box=document.getElementById("prog");
+function parse(t){var rows=[],row=[],f="",q=false;for(var i=0;i<t.length;i++){var c=t[i];if(q){if(c=='"'){if(t[i+1]=='"'){f+='"';i++}else q=false}else f+=c}else if(c=='"')q=true;else if(c==','){row.push(f);f=""}else if(c=='\n'||c=='\r'){if(c=='\r'&&t[i+1]=='\n')i++;row.push(f);rows.push(row);row=[];f=""}else f+=c}if(f!==""||row.length){row.push(f);rows.push(row)}return rows}
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
+function norm(s){return(s||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").trim()}
+function lines(s){return(s||"").split(/\n/).map(function(x){return x.trim()}).filter(Boolean)}
+function status(s){s=norm(s);if(s.indexOf("etudi")===0)return"done";if(s.indexOf("en cours")===0)return"cur";return"todo"}
+var LBL={done:"Étudié",cur:"En cours",todo:"À venir"};
+var CHEV='<svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg>';
+function list(a,empty){return a.length?"<ul>"+a.map(function(x){return"<li>"+esc(x)+"</li>"}).join("")+"</ul>":'<p class="empty">'+empty+"</p>"}
+function render(rows){
+ var h=rows.shift().map(norm),ix=function(k){for(var i=0;i<h.length;i++)if(h[i].indexOf(k)===0)return i;return -1};
+ var cT=ix("theme"),cN=ix("n"),cC=ix("chapitre"),cS=ix("statut"),cD=ix("document"),cG=ix("grammaire"),cV=ix("vocab");
+ var themes=[],cur=null,theme="";
+ rows.forEach(function(r){var g=function(i){return i<0?"":(r[i]||"").trim()};
+  if(g(cT))theme=g(cT);
+  if(g(cC)){var t=themes[themes.length-1];if(!t||t.name!==theme){t={name:theme,chaps:[]};themes.push(t)}cur={n:g(cN),title:g(cC),st:status(g(cS)),docs:[],gram:[],voc:g(cV)};t.chaps.push(cur)}
+  else if(cur&&g(cV)&&!cur.voc)cur.voc=g(cV);
+  if(cur){cur.docs=cur.docs.concat(lines(g(cD)));cur.gram=cur.gram.concat(lines(g(cG)))}
+ });
+ var all=[];themes.forEach(function(t){all=all.concat(t.chaps)});
+ if(!all.length){box.innerHTML='<p class="state">Aucun chapitre pour le moment.</p>';return}
+ var nd=all.filter(function(c){return c.st=="done"}).length,nc=all.filter(function(c){return c.st=="cur"}).length,N=all.length;
+ var html='<div class="summary"><div class="summary-top"><strong>'+nd+" / "+N+" chapitre"+(N>1?"s":"")+" étudié"+(nd>1?"s":"")+"</strong>"+(nc?"<span>"+nc+" en cours</span>":"")+'</div><div class="bar"><i class="b-done" style="width:'+(nd/N*100)+'%"></i><i class="b-cur" style="width:'+(nc/N*100)+'%"></i></div><div class="legend"><span><i style="background:#2a7a4b"></i>Étudié</span><span><i style="background:#f5b60f"></i>En cours</span><span><i style="background:#c9c5bd"></i>À venir</span></div></div>';
+ themes.forEach(function(t){
+  html+='<section class="theme"><div class="theme-head"><h2>'+esc(t.name||"Programme")+'</h2><span class="cnt">'+t.chaps.length+'</span></div><div class="chaps">';
+  t.chaps.forEach(function(c){
+   html+='<details class="chap s-'+c.st+'"'+(c.st=="cur"?" open":"")+'><summary><span class="num">'+esc(c.n)+'</span><span class="ttl">'+esc(c.title)+'</span><span class="badge">'+LBL[c.st]+"</span>"+CHEV+'</summary><div class="chap-body"><div class="blk"><h3>Documents</h3>'+list(c.docs,c.st=="todo"?"Pas encore commencé":"Aucun document pour le moment")+'</div><div class="blk"><h3>Grammaire / Méthodo</h3>'+list(c.gram,"Rien pour le moment")+"</div>"+(c.voc?'<div class="blk voc"><h3>Vocabulaire</h3><p>'+esc(c.voc)+"</p></div>":"")+"</div></details>";
+  });
+  html+="</div></section>";
+ });
+ box.innerHTML=html;
+}
+fetch(CSV,{cache:"no-store"}).then(function(r){if(!r.ok)throw 0;return r.text()}).then(function(t){render(parse(t))}).catch(function(){box.innerHTML='<p class="state">Impossible de charger la progression pour le moment. Vérifiez votre connexion et rechargez la page.</p>'});
+})();
+</script>
+<script>(function(){var k=(location.pathname.split("/").pop()||"index").replace(".html","");var e=document.getElementById("visitCount");if(e){e.innerHTML='<img src="https://api.visitorbadge.io/api/visitors?path=lsa-toolbox-'+encodeURIComponent(k)+'&label=Visites&countColor=%23f5b60f&labelColor=%230f1a33&style=flat-square" alt="compteur de visites">'}})();</script>
+</body>
+</html>
