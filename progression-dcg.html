@@ -98,9 +98,8 @@ function render(rows){
  var themes=[],cur=null,theme="";
  rows.forEach(function(r){var g=function(i){return i<0?"":(r[i]||"").trim()};
   if(g(cT))theme=g(cT);
-  if(g(cC)){var t=themes[themes.length-1];if(!t||t.name!==theme){t={name:theme,chaps:[]};themes.push(t)}cur={n:g(cN),title:g(cC),st:status(g(cS)),docs:[],gram:[],voc:g(cV)};t.chaps.push(cur)}
-  else if(cur&&g(cV)&&!cur.voc)cur.voc=g(cV);
-  if(cur){cur.docs=cur.docs.concat(lines(g(cD)));cur.gram=cur.gram.concat(lines(g(cG)))}
+  if(g(cC)){var t=themes[themes.length-1];if(!t||t.name!==theme){t={name:theme,chaps:[]};themes.push(t)}cur={n:g(cN),title:g(cC),st:status(g(cS)),docs:[],gram:[],voc:[]};t.chaps.push(cur)}
+  if(cur){cur.docs=cur.docs.concat(lines(g(cD)));cur.gram=cur.gram.concat(lines(g(cG)));cur.voc=cur.voc.concat(lines(g(cV)))}
  });
  var all=[];themes.forEach(function(t){all=all.concat(t.chaps)});
  if(!all.length){box.innerHTML='<p class="state">Aucun chapitre pour le moment.</p>';return}
@@ -109,7 +108,7 @@ function render(rows){
  themes.forEach(function(t){
   html+='<section class="theme"><div class="theme-head"><h2>'+esc(t.name||"Programme")+'</h2><span class="cnt">'+t.chaps.length+'</span></div><div class="chaps">';
   t.chaps.forEach(function(c){
-   html+='<details class="chap s-'+c.st+'"'+(c.st=="cur"?" open":"")+'><summary><span class="num">'+esc(c.n)+'</span><span class="ttl">'+esc(c.title)+'</span><span class="badge">'+LBL[c.st]+"</span>"+CHEV+'</summary><div class="chap-body"><div class="blk"><h3>Documents</h3>'+list(c.docs,c.st=="todo"?"Pas encore commencé":"Aucun document pour le moment")+'</div><div class="blk"><h3>Grammaire / Méthodo</h3>'+list(c.gram,"Rien pour le moment")+"</div>"+(c.voc?'<div class="blk voc"><h3>Vocabulaire</h3><p>'+esc(c.voc)+"</p></div>":"")+"</div></details>";
+   html+='<details class="chap s-'+c.st+'"'+(c.st=="cur"?" open":"")+'><summary><span class="num">'+esc(c.n)+'</span><span class="ttl">'+esc(c.title)+'</span><span class="badge">'+LBL[c.st]+"</span>"+CHEV+'</summary><div class="chap-body"><div class="blk"><h3>Documents</h3>'+list(c.docs,c.st=="todo"?"Pas encore commencé":"Aucun document pour le moment")+'</div><div class="blk"><h3>Grammaire / Méthodo</h3>'+list(c.gram,"Rien pour le moment")+"</div>"+(c.voc.length?'<div class="blk voc"><h3>Vocabulaire</h3>'+c.voc.map(function(v){return"<p>"+esc(v)+"</p>"}).join("")+"</div>":"")+"</div></details>";
   });
   html+="</div></section>";
  });
