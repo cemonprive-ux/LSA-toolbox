@@ -9,8 +9,7 @@
 <style>
 :root{--navy:#1a2744;--navy-deep:#0f1a33;--blue:#2d5fa6;--accent:#f5b60f;--pink:#b5487f;--cream:#f5f3ef;--muted:#6b7280;--border:#e3ded4}
 *{margin:0;padding:0;box-sizing:border-box}
-html,body{height:100%}
-body{font-family:'Quicksand',Georgia,serif;background:var(--cream);color:var(--navy);display:flex;flex-direction:column}
+body{min-height:100vh;font-family:'Quicksand',Georgia,serif;background:var(--cream);color:var(--navy);display:flex;flex-direction:column}
 a{color:var(--blue)}a:hover{color:var(--pink)}
 .topbar{background:var(--navy);color:#fff;font-size:12.5px}
 .topbar-inner{max-width:1180px;margin:0 auto;padding:9px 22px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
@@ -27,13 +26,13 @@ h1{font-family:'Quicksand',serif;font-size:1.6rem;font-weight:600;line-height:1.
 .crumb{width:100%;max-width:1180px;margin:0 auto;padding:11px 22px;font-size:12.5px;color:var(--muted);display:flex;gap:8px;flex-wrap:wrap}
 .crumb a{text-decoration:none}.crumb a:hover{text-decoration:underline}
 .crumb span{color:var(--border)}
-.frame-wrap{flex:1;min-height:560px;padding:0 14px 14px;max-width:1180px;width:100%;margin:0 auto}
-iframe{width:100%;height:100%;border:1px solid var(--border);border-radius:12px;background:#fff;box-shadow:0 2px 14px rgba(26,39,68,.09)}
+.frame-wrap{flex:1 0 auto;padding:0 14px 14px;max-width:1180px;width:100%;margin:0 auto}
+iframe{display:block;width:100%;height:calc(100vh - 230px);border:1px solid var(--border);border-radius:12px;background:#fff;box-shadow:0 2px 14px rgba(26,39,68,.09)}
 footer{background:var(--navy);color:#cdd6e6;font-size:12.5px}
 .foot-inner{max-width:1180px;margin:0 auto;padding:16px 22px;display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
 footer a{color:#fff;text-decoration:none;font-weight:600}
 footer a:hover{color:var(--accent)}
-@media(max-width:640px){h1{font-size:1.18rem}.head-inner{padding:15px 14px 14px;gap:12px}.head-inner img{height:34px}.sub{font-size:12.5px}.topbar-inner{padding:8px 14px;font-size:11.5px}.crumb{padding:9px 14px;font-size:11.5px}.frame-wrap{padding:0 8px 10px;min-height:70vh}iframe{border-radius:9px}.foot-inner{padding:13px 14px;font-size:11.5px}}
+@media(max-width:640px){h1{font-size:1.18rem}.head-inner{padding:15px 14px 14px;gap:12px}.head-inner img{height:34px}.sub{font-size:12.5px}.topbar-inner{padding:8px 14px;font-size:11.5px}.crumb{padding:9px 14px;font-size:11.5px}.frame-wrap{padding:0 8px 10px}iframe{border-radius:9px}.foot-inner{padding:13px 14px;font-size:11.5px}}
 </style>
 <style>.visit-count{margin-top:8px}.visit-count img{height:16px;vertical-align:middle}</style><style id="lsa-h1-or">h1,h1 em,h1 span{color:#f5b60f!important}</style></head>
 <body>
@@ -55,5 +54,5 @@ footer a:hover{color:var(--accent)}
   <span>LSA Toolbox · Lycée Sidoine Apollinaire</span>
   <a href="index.html">Toutes les rubriques</a>
 </div><div class="visit-count" id="visitCount"></div></footer>
-<script>(function(){var k=(location.pathname.split("/").pop()||"index").replace(".html","");var e=document.getElementById("visitCount");if(e){e.innerHTML='<img src="https://api.visitorbadge.io/api/visitors?path=lsa-toolbox-'+encodeURIComponent(k)+'&label=Visites&countColor=%23c8a84b&labelColor=%230f1a33&style=flat-square" alt="compteur de visites">'}})();</script></body>
+<script>(function(){var k=(location.pathname.split("/").pop()||"index").replace(".html","");var e=document.getElementById("visitCount");if(e){e.innerHTML='<img src="https://api.visitorbadge.io/api/visitors?path=lsa-toolbox-'+encodeURIComponent(k)+'&label=Visites&countColor=%23c8a84b&labelColor=%230f1a33&style=flat-square" alt="compteur de visites">'}})();</script><script src="assets/frame-fit.js"></script></body>
 </html>

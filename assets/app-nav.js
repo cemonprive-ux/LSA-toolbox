@@ -91,6 +91,13 @@ showUpdate(v,j.note||"");
 }).catch(function(){});
 }
 function init(){
+var framed=false;try{framed=window.self!==window.top}catch(e){framed=true}
+if(framed){
+/* Page du site chargée dans un cadre du site (même origine) : on en sort, sauf pour les outils prévus pour être encadrés (*-outil.html) */
+if(!/-outil\.html$/.test(file)){try{if(window.parent.location.origin===location.origin){window.top.location.replace(location.href)}}catch(e){}}
+/* Un seul écran, une seule barre : celle de la page parente (ni barre « Accueil / Haut », ni bandeau de mise à jour dans le cadre) */
+return;
+}
 checkUpdate();
 document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible")checkUpdate()});
 if(isIndex){indexState();return}
