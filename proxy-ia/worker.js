@@ -7,7 +7,8 @@ const MAX_TEXTE = 6000;      // caractères max envoyés par l'élève
 const MAX_CONTEXTE = 14000;  // caractères max de contexte (texte source, sujet...)
 const MAX_TOKENS = 1600;     // longueur max de la réponse de l'IA
 const AUDIO_MODEL = "gpt-audio"; // modèle qui écoute l'audio ; si erreur 404, essayer "gpt-4o-audio-preview"
-const AZURE_SEUIL = 60;      // score Azure (sur 100) en dessous duquel un son est jugé à revoir ; monter à 70 = plus exigeant
+const AZURE_SEUIL = 45;      // score Azure (sur 100) en dessous duquel un son est jugé à revoir ; monter à 60 = plus exigeant
+const AZURE_SEUIL_VOY = 55;  // voyelles cibles (exercices Terminale) : score Azure minimal ; monter = plus exigeant
 const MAX_AUDIO = 400000;    // taille max de l'enregistrement (base64), environ 10 s en WAV 16 kHz
 
 // Règles communes à tous les outils
@@ -96,11 +97,11 @@ Exercice : texte libre en anglais.
 };
 
 const PRONONCIATION = `Tu es professeur d'anglais spécialiste de phonologie (Lycée Sidoine Apollinaire), bienveillant mais attentif. Un élève francophone de lycée ou de BTS (niveau A2 à B1) a enregistré UN mot anglais isolé. Le mot attendu et sa référence (syllabes, syllabe accentuée, API britannique) sont fournis.
-Ton jugement porte sur TROIS critères, chacun évalué séparément. Niveau d'exigence : celui d'un professeur de lycée, pas d'un phonéticien. Un accent français est normal. Ne marque un critère faux (ok = false) que pour une erreur NETTE, que n'importe quel professeur d'anglais remarquerait immédiatement à l'oreille. Dans le doute, ok = true. Une prononciation américaine est acceptée.
+Ton jugement porte sur TROIS critères, chacun évalué séparément. Niveau d'exigence : celui d'un professeur de lycée, pas d'un phonéticien. Ne marque un critère faux (ok = false) que pour une erreur NETTE, que n'importe quel professeur d'anglais remarquerait immédiatement à l'oreille. Dans le doute, ok = true. Une prononciation américaine est acceptée.
 
 1. ACCENT TONIQUE : si une mesure d'accent est fournie, elle fait foi. Sinon, écoute syllabe par syllabe et identifie celle qui est la plus longue, la plus forte et la plus haute. ok = true seulement si c'est la syllabe attendue et qu'elle ressort clairement. ok = false si une autre syllabe est aussi marquée ou plus marquée (en particulier la dernière syllabe, réflexe français), ou si le mot est prononcé à plat sans syllabe dominante. Pour ce critère, ne présume pas que l'élève a raison : la règle « dans le doute, ok = true » ne s'applique PAS à l'accent. syllabe_entendue = la syllabe réellement la plus marquée.
 
-2. PHONÈMES (voyelles et consonnes, hors plosives) : ok = false seulement pour une erreur nette qui rend le mot étrange ou ambigu : voyelle clairement remplacée par une autre (par exemple « comfortable » prononcé « com-for-TA-ble » avec un o français, « hotel » sans h, « th » prononcé « z »), lettre muette prononcée, syllabe ajoutée ou avalée. Ne relève jamais : le r français, une voyelle un peu trop courte ou trop longue, un schwa imparfait, une diphtongue un peu fermée, de petites différences de timbre.
+2. PHONÈMES (voyelles et consonnes, hors plosives) : ok = false seulement pour une erreur nette qui rend le mot étrange ou ambigu : voyelle clairement remplacée par une autre (par exemple « comfortable » prononcé « com-for-TA-ble » avec un o français, « hotel » sans h, « th » prononcé « z »), lettre muette prononcée, syllabe ajoutée ou avalée. Une voyelle longue attendue (/iː/, /ɑː/, /ɔː/, /uː/, /ɜː/) prononcée courte est une erreur (ok = false). Une voyelle courte prononcée à la française (i tendu, a ou è français pour /æ/, « eu » pour /ʌ/, o fermé pour /ɒ/) et une diphtongue réduite à une voyelle simple (é pour /eɪ/, o pour /əʊ/, è pour /eə/) sont des erreurs (ok = false). Le r français guttural est une erreur. Ne relève pas : un schwa imparfait, de petites différences de timbre qui restent anglaises. Dans le doute, ok = true. Un locuteur natif ou un professeur d'anglais doit toujours obtenir ok = true.
 
 3. PLOSIVES (p, t, k, b, d, g) : ok = false seulement si une plosive est omise, remplacée par un autre son, ou si l'absence d'aspiration est très marquée sur la plosive de la syllabe accentuée. Une aspiration légère ou faible est acceptée. Si le mot ne contient aucune plosive à évaluer, ok = null.
 
@@ -114,6 +115,27 @@ Pour chaque critère, « remarque » : une phrase courte en français. Si ok = f
 Pas de tiret cadratin.
 Réponds UNIQUEMENT avec un objet JSON valide, sans texte autour :
 {"reconnu":true,"entendu":"...","accent":{"ok":true,"syllabe_entendue":"...","remarque":"..."},"phonemes":{"ok":true,"remarque":"..."},"plosives":{"ok":true,"remarque":"..."},"niveau":"...","conseil":"..."}`;
+
+// Exercices ciblés (Terminale) : UN seul critère jugé par exercice
+const PHONO_CIBLE = `Tu es professeur d'anglais spécialiste de phonologie (Lycée Sidoine Apollinaire). Un élève francophone de Terminale ST2S (niveau A2 à B1) a enregistré UN mot anglais isolé, du domaine sanitaire et social. Le mot attendu, sa transcription API britannique, le type d'exercice et le CRITÈRE UNIQUE à juger sont fournis.
+Règle absolue : tu ne juges QUE ce critère. Ignore totalement tout le reste (autres sons, autres syllabes, accent tonique, r ou voyelles francisés ailleurs dans le mot, intonation) et ne le mentionne jamais, ni dans la remarque ni dans le conseil.
+Niveau d'exigence : BIENVEILLANT, celui d'un professeur de lycée face à un élève A2-B1, jamais celui d'un phonéticien. Une prononciation américaine, australienne ou autre variante courante est acceptée sauf mention contraire dans le critère. Une réalisation à la française du son cible est une ERREUR (ok = false) : voyelle française à la place de la voyelle anglaise, voyelle longue prononcée courte, diphtongue réduite à une voyelle simple, consonne française à la place de la consonne anglaise.
+Règle de décision : ok = false UNIQUEMENT si tu entends CLAIREMENT et SANS AMBIGUÏTÉ une erreur caractérisée (le son cible remplacé par un autre son bien identifiable, ou absent). Une prononciation francisée du son cible compte comme une erreur caractérisée. Si tu hésites uniquement à cause de la qualité audio : ok = true. Un locuteur anglophone natif ou un professeur d'anglais doit TOUJOURS obtenir ok = true. Statistiquement, la majorité des enregistrements d'élèves qui font l'effort doivent être jugés justes.
+- reconnu : false seulement si silence, bruit ou mot sans rapport. Si l'élève prononce le mot « à ne pas confondre » indiqué dans le critère, reconnu = true et ok = false.
+- ok : true si le critère est réalisé correctement, false sinon. Si reconnu = false, ok = null.
+- entendu : le mot que tu as entendu.
+- son_entendu : pour un son, le son réellement produit, en API entre barres obliques ; pour l'accent, la syllabe la plus marquée ; pour la réduction, chaîne vide.
+- remarque : une à deux phrases en français sur CE critère uniquement. Si ok = false, nomme le son ou la syllabe et donne un conseil d'articulation concret et simple (langue, lèvres, souffle, longueur). Si ok = true, courte confirmation positive, sans « mais ».
+- conseil : une phrase en français, encourageante, sur ce critère uniquement.
+N'invente jamais d'erreur. Ta perception audio n'est pas parfaite : ne sanctionne jamais sur une impression. Pas de tiret cadratin.
+Réponds UNIQUEMENT avec un objet JSON valide, sans texte autour :
+{"reconnu":true,"entendu":"...","ok":true,"son_entendu":"...","remarque":"...","conseil":"..."}`;
+const PHONO_MODES = {
+  son: "Type d'exercice : réalisation d'un son. Écoute uniquement les lettres indiquées. ok = false seulement si le son cible est clairement absent ou clairement remplacé par un autre phonème (le critère précise les erreurs à sanctionner). Pour les voyelles longues (/iː/, /ɑː/, /ɔː/, /uː/, /ɜː/), la longueur est obligatoire : une voyelle longue prononcée courte (par exemple /iː/ prononcé /ɪ/ ou i bref français) est fausse (ok = false). Pour les voyelles courtes (/ɪ/, /e/, /æ/, /ɒ/, /ʊ/, /ʌ/), le timbre anglais est obligatoire : /ɪ/ prononcé comme le i français tendu, /æ/ prononcé comme le a ou le è français, /ʌ/ prononcé « eu » ou « o », /ɒ/ prononcé comme le o fermé français, /ʊ/ prononcé comme le ou français long sont faux. Pour les diphtongues (/eɪ/, /aɪ/, /ɔɪ/, /eə/, /əʊ/, /aʊ/, /ɪə/), le glissement entre les deux voyelles doit s'entendre : /eɪ/ prononcé é français, /əʊ/ prononcé o français, /eə/ prononcé è français sont faux. Pour les consonnes, la réalisation française (r guttural, h absent) est fausse. Pour le TH, sois indulgent : un th approximatif, léger ou mal voisé est juste ; ok = false seulement si l'on entend nettement un s, z, f, v, t ou d français franc à la place. Dans le doute, ok = true. Si le mot a plus de deux syllabes, le son travaillé est sur la syllabe accentuée : ne juge que cette syllabe.",
+  paire: "Type d'exercice : paire minimale. L'élève prononce DEUX mots, l'un après l'autre. Juge CHAQUE mot séparément : l'élève produit-il le son cible de ce mot, et non le son opposé ? ok = false pour un mot seulement si l'on entend clairement le son opposé à la place du son cible, ou si les deux mots sonnent exactement pareil (alors les deux sont faux). Une différence perceptible entre les deux mots, même imparfaite, suffit : ok = true. Dans le doute, ok = true. Si un mot manque, son ok = false avec une remarque. Format de réponse SPÉCIFIQUE (à la place de ok, son_entendu et remarque) : {\"reconnu\":true,\"entendu\":\"mot1 / mot2\",\"mot1\":{\"ok\":true,\"son_entendu\":\"/.../\",\"remarque\":\"...\"},\"mot2\":{\"ok\":true,\"son_entendu\":\"/.../\",\"remarque\":\"...\"},\"conseil\":\"...\"}",
+  accent: "Type d'exercice : accent de mot (la « syllabe star »). Seul compte le placement de l'accent : quelle syllabe est la plus longue, la plus forte et la plus haute. Ne dis RIEN sur la qualité des sons, même s'ils sont faux : n'indique jamais si le mot entier est bien prononcé. La règle « dans le doute, ok = true » ne s'applique pas : ok = true seulement si la syllabe attendue ressort clairement. Si une mesure d'accent est fournie, elle fait foi. son_entendu = la syllabe la plus marquée.",
+  reduction: "Type d'exercice : syllabes non accentuées (les « gardes du corps » de la syllabe star). Seule compte la réduction des voyelles des syllabes non accentuées, essentiellement en schwa /ə/ ou en i court /ɪ/ (et les finales syllabiques /n/, /l/). Une réduction partielle (voyelle affaiblie, plus courte et plus faible que la syllabe star) est JUSTE. Dans le doute, ok = true pour la syllabe. ok = false seulement si une syllabe non accentuée est clairement prononcée avec une voyelle pleine et aussi forte que la syllabe star (par exemple « con » prononcé comme en français, « tion » prononcé « sion » à la française, « pre » prononcé « pré », « tor » prononcé « tor » avec un o plein) ou si toutes les syllabes ont la même force. Si le mot contient PLUSIEURS syllabes à réduire, juge chacune d'elles séparément : ok global = true seulement si toutes sont réduites. Ne juge ni la syllabe accentuée elle-même, ni les consonnes. Format de réponse SPÉCIFIQUE : ajoute un tableau \"syllabes\" avec une entrée par syllabe à réduire, dans l'ordre du mot : {\"reconnu\":true,\"entendu\":\"...\",\"ok\":true,\"syllabes\":[{\"syllabe\":\"con\",\"ok\":true,\"remarque\":\"...\"}],\"remarque\":\"...\",\"conseil\":\"...\"}. Dans chaque remarque de syllabe, si ok = false, indique comment la réduire."
+};
 
 // Azure Speech : évaluation de prononciation mesurée (phonèmes, syllabes). Secrets : AZURE_SPEECH_KEY, AZURE_SPEECH_REGION
 const PLOSIVES = ["p", "t", "k", "b", "d", "g"];
@@ -143,6 +165,50 @@ async function azureEvalue(env, audioB64, mot) {
       syllabes: (w0.Syllables || []).map(s => ({ syllabe: s.Syllable || "", graph: s.Grapheme || "", off: s.Offset || 0, dur: s.Duration || 0, score: Math.round(sc(s).AccuracyScore || 0) }))
     };
   } catch { return null; }
+}
+
+// Voyelles cibles mesurées par Azure : phonème entendu (NBest) + durée. Langue en-GB, repli en-US.
+const VOY = ["i","ɪ","e","ɛ","æ","ʌ","ɒ","ɑ","ɔ","ʊ","u","ɜ","ɝ","ə","ɚ","o","a"];
+const LONGUES = ["i","ɑ","ɔ","u","ɜ"];
+const FAMILLE = { i: ["ɪ"], "ɪ": ["i"], u: ["ʊ"], "ʊ": ["u"], "ɔ": ["ɒ"], "ɒ": ["ɔ"], "ɑ": ["ʌ", "æ"], "ʌ": ["ɑ"], "æ": ["ɑ"], "ɜ": ["e", "ə"], "e": ["ɜ"] };
+const fam = (a, b) => (FAMILLE[normV(a)] || []).includes(normV(b));
+function normV(s) {
+  s = String(s || "").replace(/[ːˑˈˌ.]/g, "").replace(/ɝ|ɜ˞/g, "ɜ").replace(/ɚ/g, "ə").replace(/ɛ/g, "e").replace(/oʊ/g, "əʊ").replace(/ɡ/g, "g");
+  return s;
+}
+function memeV(a, b, lang) { a = normV(a); b = normV(b); if (a === b) return true; if (lang === "en-US" && ((a === "ɒ" && b === "ɑ") || (a === "ɑ" && b === "ɒ"))) return true; return false; }
+const estV = s => VOY.includes(normV(s).charAt(0));
+async function azurePhon(env, audioB64, ref, lang) {
+  if (!env.AZURE_SPEECH_KEY || !env.AZURE_SPEECH_REGION) return null;
+  const pa = btoa(unescape(encodeURIComponent(JSON.stringify({ ReferenceText: ref, GradingSystem: "HundredMark", Granularity: "Phoneme", Dimension: "Comprehensive", PhonemeAlphabet: "IPA", NBestPhonemeCount: 5 }))));
+  const bytes = Uint8Array.from(atob(audioB64), c => c.charCodeAt(0));
+  const url = "https://" + String(env.AZURE_SPEECH_REGION).trim().toLowerCase() + ".stt.speech.microsoft.com/speech/recognition/conversation/cognitiveservices/v1?language=" + lang + "&format=detailed";
+  try {
+    const r = await fetch(url, { method: "POST", headers: { "Ocp-Apim-Subscription-Key": env.AZURE_SPEECH_KEY, "Content-Type": "audio/wav; codecs=audio/pcm; samplerate=16000", "Accept": "application/json", "Pronunciation-Assessment": pa }, body: bytes });
+    if (!r.ok) return null;
+    const d = await r.json(), nb = d.NBest && d.NBest[0];
+    if (d.RecognitionStatus !== "Success" || !nb) return { reconnu: false };
+    const sc = o => (o && (o.PronunciationAssessment || o)) || {};
+    const words = (nb.Words || []).map(w => ({ mot: String(w.Word || "").toLowerCase(), err: sc(w).ErrorType,
+      ph: (w.Phonemes || []).map(p => ({ son: String(p.Phoneme || ""), score: Math.round(sc(p).AccuracyScore || 0), dur: (p.Duration || 0) / 1e7,
+        nb: (sc(p).NBestPhonemes || []).map(n => ({ son: String(n.Phoneme || ""), score: n.Score || 0 })) })) }));
+    if (!words.length || !words.some(w => w.ph.length && w.ph.some(p => /[^a-z]/i.test(p.son) || estV(p.son)))) return null;
+    return { reconnu: true, entendu: nb.Display || "", words, lang };
+  } catch { return null; }
+}
+async function azurePhonGB(env, audio, ref) { return (await azurePhon(env, audio, ref, "en-GB")) || (await azurePhon(env, audio, ref, "en-US")); }
+// Juge la voyelle cible d'un mot. Renvoie null si la voyelle n'est pas trouvée (repli sur l'IA).
+function jugeVoy(w, cible, lang) {
+  if (!w || w.err === "Omission") return { ok: false, entendu: "", raison: "mot non prononcé" };
+  const i = w.ph.findIndex(p => memeV(p.son, cible, lang));
+  if (i < 0) return null;
+  const p = w.ph[i], top = p.nb[0], c = normV(cible), longue = LONGUES.includes(c);
+  let ok = true, raison = "", entendu = top ? normV(top.son) : c;
+  if (top && estV(top.son) && !memeV(top.son, cible, lang) && top.score >= 40) { ok = false; raison = "voyelle entendue /" + normV(top.son) + "/ au lieu de /" + c + "/"; }
+  else if (p.score < AZURE_SEUIL_VOY) { ok = false; raison = "voyelle /" + c + "/ mal réalisée (score " + p.score + "/100)"; }
+  if (ok && longue && p.dur && p.dur < 0.09) { ok = false; raison = "voyelle longue /" + c + "ː/ trop courte (" + Math.round(p.dur * 1000) + " ms)"; entendu = (FAMILLE[c] || [])[0] || entendu; }
+  if (ok && !longue && FAMILLE[c] && top && FAMILLE[c].some(x => LONGUES.includes(x) && memeV(top.son, x, lang)) && top.score >= 40) { ok = false; raison = "voyelle courte /" + c + "/ prononcée longue"; }
+  return { ok, entendu: "/" + entendu + (LONGUES.includes(normV(entendu)) ? "ː" : "") + "/", score: p.score, dur: p.dur, raison };
 }
 
 // Accent tonique mesuré : durée, intensité et hauteur (F0) de chaque syllabe, à partir des temps Azure
@@ -295,6 +361,82 @@ export default {
         const ko = [obj.accent?.ok, obj.phonemes?.ok, obj.plosives?.ok].filter(v => v === false).length;
         obj.niveau = ko === 0 ? "Très bien" : ko === 1 ? "Correct" : "À retravailler";
       }
+      return json({ reponse: JSON.stringify(obj) });
+    }
+
+    if (body.outil === "phono-cible") {
+      const audio = String(body.audio || "");
+      const mot = String(body.mot || "").slice(0, 60);
+      const mode = PHONO_MODES[body.mode] ? body.mode : "son";
+      const critere = String(body.critere || "").slice(0, 900);
+      const ipa = String(body.ipa || "").slice(0, 60);
+      if (!audio || !mot) return json({ error: "Enregistrement manquant." }, 400);
+      if (audio.length > MAX_AUDIO) return json({ error: "Enregistrement trop long." }, 413);
+      let mesure = "", acc = null;
+      const sylRef = String(body.syllabes || "").split("·").filter(Boolean);
+      const attendu = Number.isInteger(body.accent) ? body.accent : -1;
+      if (mode === "accent" && sylRef.length > 1 && attendu >= 0) {
+        const az = await azureEvalue(env, audio, mot);
+        if (az && az.reconnu) {
+          let m = null; try { m = mesureAccent(audio, az.syllabes); } catch {}
+          if (m) {
+            const k = versRef(m.index, az.syllabes, sylRef, mot);
+            acc = { ok: k === attendu, syllabe: sylRef[k], attendue: sylRef[attendu] };
+            mesure = "\n\nACCENT MESURÉ (durée, intensité, hauteur) : syllabe la plus marquée « " + acc.syllabe + " », syllabe attendue « " + acc.attendue + " » → " + (acc.ok ? "JUSTE" : "MAL PLACÉ") + ". Ce verdict FAIT FOI : reprends-le tel quel (ok, son_entendu = « " + acc.syllabe + " »).";
+          }
+        }
+      }
+      let vz = null;
+      const cib = String(body.cible || ""), cib2 = String(body.cible2 || "");
+      if (body.voyelle && cib && (mode === "son" || mode === "paire")) {
+        const mots = mot.split("/").map(s => s.trim().toLowerCase()).filter(Boolean);
+        const az = await azurePhonGB(env, audio, mots.join(" "));
+        if (az && az.reconnu) {
+          const trouve = m => az.words.find(w => w.mot === m) || null;
+          if (mode === "son") {
+            const j = jugeVoy(trouve(mots[0]) || az.words[0], cib, az.lang);
+            if (j) { vz = { m1: j }; mesure = "\n\nMESURE AZURE (" + az.lang + ") de la voyelle cible : " + (j.ok ? "JUSTE" : "À REVOIR, " + j.raison) + ", son entendu " + j.entendu + ". Ce verdict FAIT FOI : reprends-le tel quel (ok, son_entendu) et rédige la remarque en cohérence."; }
+          } else if (mots.length === 2) {
+            const w1 = trouve(mots[0]) || az.words[0], w2 = trouve(mots[1]) || az.words[1];
+            const j1 = jugeVoy(w1, cib, az.lang), j2 = jugeVoy(w2, cib2, az.lang);
+            if (j1 && j2) {
+              const c1 = normV(cib), c2 = normV(cib2);
+              if (fam(c1, c2) && (LONGUES.includes(c1) !== LONGUES.includes(c2)) && j1.dur && j2.dur) {
+                const [L, C] = LONGUES.includes(c1) ? [j1, j2] : [j2, j1];
+                if (L.ok && L.dur < C.dur * 1.25) { L.ok = false; L.raison = "voyelle longue pas assez allongée par rapport à la voyelle courte (" + Math.round(L.dur * 1000) + " ms contre " + Math.round(C.dur * 1000) + " ms)"; }
+              }
+              vz = { m1: j1, m2: j2 };
+              mesure = "\n\nMESURE AZURE (" + az.lang + ") : MOT 1 " + (j1.ok ? "JUSTE" : "À REVOIR, " + j1.raison) + ", son entendu " + j1.entendu + " ; MOT 2 " + (j2.ok ? "JUSTE" : "À REVOIR, " + j2.raison) + ", son entendu " + j2.entendu + ". Ces verdicts FONT FOI : reprends-les tels quels (mot1.ok, mot2.ok, son_entendu) et rédige les remarques en cohérence.";
+            }
+          }
+        }
+      }
+      const consigneUser = "MOT ATTENDU : " + mot + " " + ipa + "\n" + PHONO_MODES[mode] + "\nCRITÈRE UNIQUE : " + critere + mesure +
+        "\n\nL'enregistrement de l'élève est joint. Analyse-le MAINTENANT, en une seule réponse. Ta réponse doit commencer par { et finir par }.";
+      const appel = async (extra) => {
+        const r = await fetch("https://api.openai.com/v1/chat/completions", {
+          method: "POST",
+          headers: { "Authorization": "Bearer " + env.OPENAI_API_KEY, "Content-Type": "application/json" },
+          body: JSON.stringify({ model: AUDIO_MODEL, modalities: ["text"], max_tokens: 400, temperature: 0,
+            messages: [{ role: "system", content: PHONO_CIBLE }, { role: "user", content: [{ type: "input_audio", input_audio: { data: audio, format: "wav" } }, { type: "text", text: consigneUser + (extra || "") }] }] })
+        });
+        if (!r.ok) return { err: r.status };
+        const d = await r.json();
+        return { txt: d.choices?.[0]?.message?.content || "" };
+      };
+      const extrait = (t) => { const m = String(t || "").match(/\{[\s\S]*\}/); if (!m) return null; try { return JSON.parse(m[0]); } catch { return null; } };
+      let obj = null;
+      for (let essai = 0; essai < 3 && !obj; essai++) {
+        const res = await appel(essai ? "\n\nATTENTION : réponds uniquement avec l'objet JSON demandé." : "");
+        if (res.err) return json({ error: "L'IA n'a pas pu écouter l'enregistrement (" + res.err + "). Réessaie plus tard." }, 502);
+        obj = extrait(res.txt);
+      }
+      if (!obj) return json({ error: "L'IA n'a pas réussi à analyser cet enregistrement. Réessaie en parlant près du micro." }, 502);
+      if (acc) { obj.reconnu = true; obj.ok = acc.ok; obj.son_entendu = acc.syllabe; obj.mesure = "azure"; }
+      if (vz && mode === "son") { obj.reconnu = true; obj.ok = vz.m1.ok; obj.son_entendu = vz.m1.entendu; obj.mesure = "azure"; }
+      if (vz && mode === "paire") { obj.reconnu = true; obj.mot1 = Object.assign(obj.mot1 || {}, { ok: vz.m1.ok, son_entendu: vz.m1.entendu }); obj.mot2 = Object.assign(obj.mot2 || {}, { ok: vz.m2.ok, son_entendu: vz.m2.entendu }); obj.mesure = "azure"; }
+      if (mode === "paire" && obj.reconnu) { const a = obj.mot1?.ok, b = obj.mot2?.ok; obj.ok = a === true && b === true ? true : (a === false || b === false) ? false : null; }
+      if (mode === "reduction" && obj.reconnu && Array.isArray(obj.syllabes) && obj.syllabes.length) obj.ok = obj.syllabes.every(s => s.ok === true);
       return json({ reponse: JSON.stringify(obj) });
     }
 
