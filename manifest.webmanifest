@@ -3,7 +3,7 @@
 "short_name":"LSA Toolbox",
 "description":"Boîte à outils des étudiants de M. Blanchet, Lycée Sidoine Apollinaire",
 "lang":"fr",
-"start_url":"index.html?v=2026-10-23.2",
+"start_url":"index.html?v=2026-10-23.3",
 "scope":"./",
 "display":"standalone",
 "background_color":"#f5f3ef",
