@@ -5,7 +5,7 @@
 var f=document.querySelector(".frame-wrap iframe");
 if(!f)return;
 f.setAttribute("scrolling","no");
-var CSS="html,body{height:auto!important;min-height:0!important;overflow:hidden!important}[style*='min-height: 100vh']{min-height:0!important}";
+var CSS="html,body{height:auto!important;min-height:0!important;overflow:hidden!important}[style*='min-height: 100vh']{min-height:0!important}.lsa-appnav,.lsa-update{display:none!important}html.lsa-app body{padding-bottom:0!important}";
 var last=0;
 function fit(){
 var d;
