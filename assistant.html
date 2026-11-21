@@ -487,6 +487,17 @@ button.act{font:700 .9rem var(--text);cursor:pointer}
 .lang-hero{position:absolute;top:calc(14px + env(safe-area-inset-top));right:max(14px,calc((100vw - var(--wrap))/2 + 20px));z-index:2}
 .sheet-bar .wrap{gap:12px}
 @media (max-width:640px){.hero{padding-top:calc(60px + env(safe-area-inset-top))}}
+
+/* ── Appearance effects ──────────────── */
+@media (prefers-reduced-motion:no-preference){
+  .rv{opacity:0;transform:translateY(16px);transition:opacity .55s ease,transform .6s cubic-bezier(.2,.75,.2,1);transition-delay:var(--d,0ms)}
+  .rv.in{opacity:1;transform:none}
+  .sheet.open{animation:sheetIn .42s cubic-bezier(.2,.8,.2,1)}
+  @keyframes sheetIn{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
+  .hero h1,.hero p,.hero img{animation:heroIn .7s cubic-bezier(.2,.75,.2,1) both}
+  .hero p{animation-delay:.12s}.hero img{animation-delay:.05s}
+  @keyframes heroIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+}
 </style>
 </head>
 <body>
@@ -1588,6 +1599,42 @@ button.act{font:700 .9rem var(--text);cursor:pointer}
   var saved=null; try{ saved=localStorage.getItem('lsa-lang'); }catch(e){}
   var start=saved || ((navigator.language||'').toLowerCase().indexOf('es')===0 ? 'es' : 'en');
   if(start==='es') apply('es');
+})();
+</script>
+
+<script>
+/* reveal elements as they come into view, on the page and inside each section */
+(function(){
+  if(!('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var SEL=['main section > h2','main .panel','.sheet .panel','main .tip','main .sos',
+    '.sheet .ms-head h2','.sheet .ms-head p',
+    '.area > h3','.area > .how','.area-intro','.place','.credit',
+    '.md-step > h3','.md-step > .how','.md-calls li','.md-card','.md-note',
+    '.tr-bin','.tr-help','.tr-none',
+    '.hr-live','.hr-cols h3','.hr-row',
+    '.on-list h3','.on-link','.on-app',
+    '.mo-info','.mo-list h3','.mo-list .how','.mo-op','.mo-mv','.mo-tip',
+    '.sc-list h3','.sc-list .how','.sc-p','.sc-meals','.sc-g','.sc-find','.sc-map','.sc-legend','.sc-b'].join(',');
+  var els=[].slice.call(document.querySelectorAll(SEL));
+  els.forEach(function(el){ el.classList.add('rv'); });
+  var batch=0, t=null;
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(!en.isIntersecting) return;
+      var el=en.target; el.style.setProperty('--d',Math.min(batch*55,330)+'ms'); batch++;
+      el.classList.add('in'); io.unobserve(el);
+    });
+    clearTimeout(t); t=setTimeout(function(){ batch=0; },120);
+  },{rootMargin:'0px 0px -6% 0px',threshold:0.08});
+  els.forEach(function(el){ io.observe(el); });
+  // replay the reveal each time a section is opened
+  function replay(){
+    var sh=document.querySelector('.sheet.open'); if(!sh) return;
+    sh.querySelectorAll('.rv').forEach(function(el){ el.classList.remove('in'); el.style.removeProperty('--d'); io.unobserve(el); io.observe(el); });
+  }
+  window.addEventListener('hashchange',function(){ setTimeout(replay,0); });
+  // anything still hidden after a filter or search becomes visible straight away
+  document.addEventListener('input',function(){ setTimeout(function(){ document.querySelectorAll('.rv:not(.in)').forEach(function(el){ var r=el.getBoundingClientRect(); if(r.top<innerHeight&&r.bottom>0){ el.classList.add('in'); } }); },30); });
 })();
 </script>
 </body>
