@@ -224,6 +224,9 @@ body.sheet-open{overflow:hidden}
 .area h3{display:flex;align-items:baseline;gap:10px;margin:0 0 2px 4px;font:700 1.4rem/1.15 var(--display);letter-spacing:-.01em}
 .area h3 small{font:400 .9rem var(--text);color:var(--muted)}
 .how{margin:0 0 10px 4px;color:var(--muted);font-size:.9rem}
+.area-intro{margin:0 0 12px;padding:14px 16px;border-radius:16px;background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--blue)}
+.area-intro p{margin:0;line-height:1.55;font-size:.95rem;max-width:62ch}
+.area-intro p+p{margin-top:8px}
 .place{display:grid;grid-template-columns:76px 1fr;gap:12px 14px;padding:16px 16px 16px 14px;box-shadow:0 -1px 0 var(--line)}
 @media (min-width:600px){.place{grid-template-columns:96px 1fr;gap:12px 16px}}
 .place[hidden]{display:none}
@@ -714,12 +717,16 @@ body.sheet-open{overflow:hidden}
     <section class="area" data-area="montferrand" aria-labelledby="a-montferrand">
       <h3 id="a-montferrand">Montferrand <small>4</small></h3>
       <p class="how">Tram A from the centre</p>
+      <div class="area-intro">
+        <p><strong>The old historic quarter of Clermont-Ferrand.</strong> Montferrand began as a separate town, founded around 1120 by the Counts of Auvergne as a “new town” to rival Clermont, the bishops’ city next door. It received one of the region’s earliest charters of freedoms in the late 12th century.</p>
+        <p>King Louis XIII ordered the two towns to unite in 1630 (Edict of Troyes), and Louis XV made the union effective in 1731, which gave the city its double name. Its streets still hold Gothic and Renaissance mansions, and it was one of the first protected historic districts in France.</p>
+      </div>
       <div class="panel">
         <article class="place" data-k="medieval old town quartier medieval elephant">
           <button type="button" class="thumb" data-wiki="en" data-title="Montferrand (district of Clermont-Ferrand)" aria-label="Enlarge photo of Medieval Montferrand" disabled><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" /> <circle cx="12" cy="10" r="3" /></svg></button>
           <div class="pbody">
             <h4>Medieval Montferrand</h4>
-            <p>Once a separate town, Montferrand has kept its medieval street plan and fine Renaissance mansions. Do not miss the Maison de l’Éléphant.</p>
+            <p>Stroll through the medieval street plan, past Gothic and Renaissance mansions with carved façades. Do not miss the Maison de l’Éléphant.</p>
           </div>
           <div class="acts">
             <a class="act" href="https://www.google.com/maps/search/?api=1&amp;query=Maison+de+l%27%C3%89l%C3%A9phant%2C+Montferrand%2C+Clermont-Ferrand" target="_blank" rel="noopener"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" /> <circle cx="12" cy="10" r="3" /></svg>Show on map</a>
