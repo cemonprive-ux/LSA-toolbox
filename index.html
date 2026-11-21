@@ -421,7 +421,7 @@ body.sheet-open{overflow:hidden}
 /* ── Your school in 5 minutes ────────── */
 .sc-list{padding-top:18px;padding-bottom:calc(32px + env(safe-area-inset-bottom))}
 .sc-list section{margin:0 0 30px;scroll-margin-top:130px}
-.sc-list h3{margin:0 0 10px 4px;font:700 1.35rem/1.2 var(--display)}
+.sc-list h3{scroll-margin-top:130px;margin:0 0 10px 4px;font:700 1.35rem/1.2 var(--display)}
 .sc-list .how{margin:-4px 0 12px 4px}
 .sc-j{gap:8px}.sc-j svg{width:17px;height:17px;color:var(--blue-ink)}
 .sc-people{display:grid;gap:10px}
@@ -448,7 +448,7 @@ button.act{font:700 .9rem var(--text);cursor:pointer}
 .sc-find button[aria-pressed="true"]{background:var(--blue);border-color:var(--blue);color:#fff}
 .sc-maplay{display:grid;gap:16px}
 @media (min-width:900px){.sc-maplay{grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);align-items:start}.sc-maplay .sc-map{position:sticky;top:130px}}
-.sc-map{position:relative;border-radius:18px;overflow:hidden;border:1px solid var(--line);background:var(--surface)}
+.sc-map{scroll-margin-top:140px;position:relative;border-radius:18px;overflow:hidden;border:1px solid var(--line);background:var(--surface)}
 .sc-map img{display:block;width:100%;height:auto}
 .sc-hot{position:absolute;width:13%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;border:0;background:transparent;cursor:pointer;padding:0}
 .sc-hot:focus-visible{outline:3px solid #fff;box-shadow:0 0 0 6px var(--blue)}
@@ -1511,6 +1511,7 @@ button.act{font:700 .9rem var(--text);cursor:pointer}
 <script>
 (function(){
   var sh=document.getElementById('school'), close=document.getElementById('scClose'), here=false;
+  function go(el){ var sm=!matchMedia('(prefers-reduced-motion: reduce)').matches; try{ el.scrollIntoView({behavior:sm?'smooth':'auto',block:'start'}); }catch(e){ el.scrollIntoView(true); } }
   function sync(){ var on=location.hash==='#school'; sh.classList.toggle('open',on); if(on){ sh.scrollTop=0; sh.focus({preventScroll:true}); } }
   document.querySelectorAll('a[href="#school"]').forEach(function(a){a.addEventListener('click',function(){here=true;});});
   close.addEventListener('click',function(e){ if(here){e.preventDefault(); here=false; history.back();} });
@@ -1518,7 +1519,7 @@ button.act{font:700 .9rem var(--text);cursor:pointer}
   window.addEventListener('hashchange',sync); sync();
   // in-sheet jump links scroll inside the sheet without changing the hash
   sh.querySelectorAll('.sc-j').forEach(function(a){ a.addEventListener('click',function(e){ e.preventDefault();
-    var t=document.getElementById(a.getAttribute('href').slice(1)); sh.scrollTo({top:t.getBoundingClientRect().top+sh.scrollTop-130,behavior:'smooth'}); }); });
+    go(document.getElementById(a.getAttribute('href').slice(1))); }); });
   // map ↔ directory
   var ping=document.getElementById('scPing'), finds=[].slice.call(sh.querySelectorAll('.sc-find button'));
   function show(b,label,scroll){
@@ -1531,7 +1532,7 @@ button.act{font:700 .9rem var(--text);cursor:pointer}
     if(scroll){
       var wide=matchMedia('(min-width:900px)').matches;
       var target=wide?card:sh.querySelector('.sc-map');
-      sh.scrollTo({top:target.getBoundingClientRect().top+sh.scrollTop-140,behavior:'smooth'});
+      go(target);
     }
   }
   finds.forEach(function(f){ f.addEventListener('click',function(){
@@ -1541,9 +1542,9 @@ button.act{font:700 .9rem var(--text);cursor:pointer}
     finds.forEach(function(x){x.setAttribute('aria-pressed','false');});
     show(h.dataset.b,null,false);
     var card=document.getElementById('sc-'+h.dataset.b);
-    sh.scrollTo({top:card.getBoundingClientRect().top+sh.scrollTop-140,behavior:'smooth'}); }); });
+    go(card); }); });
   sh.querySelectorAll('.sc-b').forEach(function(c){ c.addEventListener('click',function(){ show(c.dataset.b,null,false); }); });
-  sh.querySelectorAll('.sc-goto').forEach(function(g){ g.addEventListener('click',function(){ show(g.dataset.b,g.dataset.li,false); var m=sh.querySelector('.sc-map'); sh.scrollTo({top:m.getBoundingClientRect().top+sh.scrollTop-140,behavior:'smooth'}); }); });
+  sh.querySelectorAll('.sc-goto').forEach(function(g){ g.addEventListener('click',function(){ show(g.dataset.b,g.dataset.li,false); go(sh.querySelector('.sc-map')); }); });
 })();
 </script>
 <script>
