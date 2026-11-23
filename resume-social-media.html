@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Atelier résumé social media</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;800&family=Newsreader:opsz,wght@6..72,400;6..72,600&display=swap" rel="stylesheet">
+<style>
+/* VOICE everyday, learning: a calm workbench for students
+   IDEA the press clipping on the desk, marked up with two highlighters and the teacher's pen
+   PICTURE the article itself as a sheet of paper, highlighted live, beside the step in progress
+   COLOUR white paper, black ink, highlighter yellow (key ideas), cyan (illustrations), magenta pen (corrections)
+   TYPE Archivo for the tool, Newsreader for the article
+   LAYOUT laptop: yellow title band, article sheet left (sticky), workbench right; phone: band, sheet (foldable), workbench */
+:root{color-scheme:light dark;--bg:light-dark(#ffffff,#131417);--ink:light-dark(#111111,#ececec);--mute:light-dark(#5a5a5a,#a7a7a7);--line:light-dark(#e2e2e2,#2d2e33);--panel:light-dark(#f5f5f3,#1c1d21);--paper:light-dark(#ffffff,#1a1b1f);--yel:#ffe14a;--cy:#93dcff;--mag:light-dark(#c4005c,#ff62a9);--ok:light-dark(#0a7a3c,#56d68f)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.55 Archivo,system-ui,sans-serif;overflow-x:clip}
+.band{background:var(--yel);color:#111;padding:clamp(22px,3vw,40px) max(5vw,16px) 0}
+.band-in{max-width:1240px;margin:auto}
+h1{font-size:clamp(30px,4.2vw,46px);line-height:1.05;letter-spacing:-.02em;margin:0 0 8px;font-weight:800;text-wrap:balance;max-width:20ch}
+.meta{margin:0 0 20px;font-size:16px;max-width:70ch}
+.steps{display:flex;flex-wrap:wrap;gap:4px}
+.steps button{font:600 15px Archivo,sans-serif;border:0;background:transparent;color:#111;padding:12px 14px;min-height:44px;border-radius:10px 10px 0 0;cursor:pointer;display:flex;align-items:center;gap:8px}
+.steps button span{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%;border:2px solid #111;font-size:13px}
+.steps button.on{background:var(--bg);color:var(--ink)}
+.steps button.on span{border-color:var(--ink)}
+.steps button.done span{background:#111;color:var(--yel)}
+.steps button.on.done span{background:var(--ink);color:var(--bg)}
+.steps button:focus-visible{outline:3px solid #111;outline-offset:-3px}
+main{max-width:1240px;margin:auto;padding:24px max(5vw,16px) 40px;display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,1fr);gap:clamp(20px,3vw,40px);align-items:start}
+#paper{background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:clamp(18px,2.4vw,32px);box-shadow:0 1px 0 var(--line),6px 6px 0 color-mix(in srgb,var(--ink) 7%,transparent)}
+@media(min-width:900px){#paper{position:sticky;top:16px;max-height:calc(100vh - 32px);overflow:auto}}
+.src{font-size:14px;color:var(--mute);margin:0 0 4px}
+#paper h2{font:600 clamp(22px,2.4vw,28px)/1.15 Newsreader,Georgia,serif;margin:0 0 6px;letter-spacing:-.01em}
+#art{font:17px/1.7 Newsreader,Georgia,serif}
+#art p{margin:0 0 14px;position:relative}
+#art p::before{content:attr(data-n);position:absolute;left:-1.9em;top:.25em;font:600 12px Archivo,sans-serif;color:var(--mute)}
+#paper{padding-left:clamp(36px,3.6vw,48px)}
+.seg{border-radius:2px;cursor:default;-webkit-box-decoration-break:clone;box-decoration-break:clone;transition:background-color .15s}
+.pen-on .seg{cursor:pointer}
+.pen-on .seg:hover{background:color-mix(in srgb,var(--yel) 30%,transparent)}
+.seg:focus-visible{outline:2px solid var(--ink);outline-offset:1px}
+.seg.k,.pen-on .seg.k:hover{background:var(--yel);color:#111}
+.seg.e,.pen-on .seg.e:hover{background:var(--cy);color:#111}
+.seg.bad{text-decoration:underline wavy var(--mag);text-decoration-thickness:2px;text-underline-offset:5px;text-decoration-skip-ink:none}
+.seg.focus{outline:2px solid var(--mag);outline-offset:2px}
+.seg.sel{outline:2px dashed var(--ink);outline-offset:2px}
+.fold{display:none}
+@media(max-width:899px){main{grid-template-columns:minmax(0,1fr)}.fold{display:inline-flex}#paper.closed #art,#paper.closed h2{display:none}}
+.panel{display:none}.panel.on{display:block}
+.panel h3{font-size:clamp(24px,2.6vw,30px);line-height:1.1;letter-spacing:-.02em;margin:4px 0 8px}
+.lead{margin:0 0 18px;color:var(--mute);max-width:62ch}
+.box{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin:0 0 16px}
+.box h4{margin:0 0 8px;font-size:16px}
+.box ul{margin:0;padding-left:20px}
+.box li{margin:3px 0}
+.btn{font:600 15px Archivo,sans-serif;min-height:44px;padding:10px 16px;border-radius:999px;border:1.5px solid var(--ink);background:transparent;color:var(--ink);cursor:pointer}
+.btn.pri{background:var(--ink);color:var(--bg)}
+.btn:hover{background:color-mix(in srgb,var(--ink) 8%,transparent)}
+.btn.pri:hover{background:color-mix(in srgb,var(--ink) 85%,var(--bg))}
+.btn:focus-visible,.opt:focus-visible,textarea:focus-visible,.pb:focus-visible{outline:3px solid var(--mag);outline-offset:2px}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:12px 0}
+.q{margin:0 0 18px}
+.q p{margin:0 0 8px;font-weight:600}
+.opt{display:block;width:100%;text-align:left;font:15px/1.4 Archivo,sans-serif;color:var(--ink);background:var(--paper);border:1.5px solid var(--line);border-radius:10px;padding:11px 14px;margin:0 0 6px;cursor:pointer;min-height:44px}
+.opt:hover{border-color:var(--ink)}
+.opt.right{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 12%,var(--paper))}
+.opt.wrong{border-color:var(--mag);background:color-mix(in srgb,var(--mag) 10%,var(--paper))}
+.fb{font-size:15px;margin:6px 0 0;padding-left:12px;border-left:3px solid var(--ok)}
+.fb.no{border-color:var(--mag)}
+.pens{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:0 0 14px}
+.pen{display:flex;align-items:center;gap:10px;font:600 15px Archivo,sans-serif;color:var(--ink);background:var(--paper);border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;min-height:52px;cursor:pointer;text-align:left}
+.pen i{flex:none;width:26px;height:16px;border-radius:3px;transform:skewX(-12deg)}
+.pen[aria-pressed=true]{border-color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--ink)}
+.score{font-size:clamp(34px,4vw,44px);font-weight:800;line-height:1;letter-spacing:-.02em}
+.small{font-size:14px;color:var(--mute)}
+#note{min-height:72px}
+.part{display:flex;gap:12px;align-items:baseline;padding:8px 0;border-bottom:1px solid var(--line)}
+.part b{flex:none;width:28px;height:28px;display:inline-grid;place-items:center;border-radius:50%;background:var(--ink);color:var(--bg);font-size:14px}
+.card{background:var(--paper);border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;margin:0 0 10px}
+.card.right{border-color:var(--ok)}
+.card.wrong{border-color:var(--mag)}
+.card q{display:block;font:16px/1.5 Newsreader,Georgia,serif;margin:0 0 8px}
+.pbs{display:flex;gap:6px;flex-wrap:wrap}
+.pb{font:700 14px Archivo,sans-serif;width:44px;height:44px;border-radius:50%;border:1.5px solid var(--line);background:transparent;color:var(--ink);cursor:pointer}
+.pb.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+textarea{width:100%;font:16px/1.55 Archivo,sans-serif;color:var(--ink);background:var(--paper);border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;resize:vertical}
+textarea:focus{border-color:var(--ink)}
+.idea textarea{min-height:76px}
+.warn{font-size:14px;margin:6px 0 0;color:var(--mag)}
+.good{font-size:14px;margin:6px 0 0;color:var(--ok)}
+.model{font-size:15px;margin:8px 0 0;padding:10px 12px;border-radius:8px;background:color-mix(in srgb,var(--yel) 22%,var(--paper))}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 0}
+.chip{font-size:14px;padding:4px 10px;border-radius:999px;border:1px solid var(--line);background:var(--paper)}
+.chip.y{border-color:var(--ok);color:var(--ok)}
+.chip.n{color:var(--mute);border-style:dashed}
+#draft{min-height:340px;font-size:16.5px;line-height:1.65}
+.meter{position:relative;height:14px;border-radius:7px;background:var(--panel);border:1px solid var(--line);margin:14px 0 6px}
+.zone{position:absolute;top:0;bottom:0;left:69.23%;width:15.38%;background:color-mix(in srgb,var(--ok) 28%,transparent)}
+.mk{position:absolute;top:-6px;width:4px;height:24px;border-radius:2px;background:var(--ink);transition:left .2s}
+.wc{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.wc strong{font-size:clamp(28px,3.4vw,36px);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.checks{list-style:none;padding:0;margin:8px 0 0}
+.checks li{padding:8px 0 8px 30px;border-bottom:1px solid var(--line);position:relative;font-size:15px}
+.checks li::before{content:"";position:absolute;left:2px;top:11px;width:16px;height:16px;border-radius:50%;border:2px solid var(--mag)}
+.checks li.y::before{background:var(--ok);border-color:var(--ok)}
+.checks li em{font-style:normal;color:var(--mag)}
+.grid label{display:flex;gap:10px;align-items:flex-start;padding:7px 0;cursor:pointer}
+.grid input{width:20px;height:20px;margin-top:2px;accent-color:var(--ink);flex:none}
+details summary{cursor:pointer;font-weight:600;min-height:32px}
+.navrow{display:flex;justify-content:space-between;gap:8px;margin-top:20px;flex-wrap:wrap}
+footer{max-width:1240px;margin:auto;padding:0 max(5vw,16px) 28px;font-size:13px;color:var(--mute)}
+@media(max-width:600px){.steps button b{display:none}.steps button{padding:10px}.pens{grid-template-columns:minmax(0,1fr)}.pen{min-height:46px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header class="band"><div class="band-in">
+<h1>Résumer un article : garder ce qui porte le sens</h1>
+<p class="meta">Texte d'entraînement : <strong>Social media and corporate communications – a perfect combo?</strong> (Jessica Chambers, papirfly.com, octobre 2019). Objectif : un résumé en anglais d'environ 200 mots.</p>
+<nav class="steps" id="steps" aria-label="Étapes">
+<button data-s="1"><span>1</span><b>Survoler</b></button>
+<button data-s="2"><span>2</span><b>Surligner</b></button>
+<button data-s="3"><span>3</span><b>Structurer</b></button>
+<button data-s="4"><span>4</span><b>Reformuler</b></button>
+<button data-s="5"><span>5</span><b>Rédiger</b></button>
+</nav>
+</div></header>
+
+<main>
+<article id="paper">
+<div class="row" style="margin-top:0;justify-content:space-between">
+<p class="src">papirfly.com · Jessica Chambers · October 2019</p>
+<button class="btn fold" id="fold" type="button">Masquer le texte</button>
+</div>
+<h2>Social media and corporate communications – a perfect combo?</h2>
+<div id="art"></div>
+</article>
+
+<section id="bench">
+
+<div class="panel" id="p1">
+<h3>Situer le document</h3>
+<p class="lead">Avant de surligner, repérez le genre, la thèse et le tournant du texte. Ce sont les fondations de votre résumé.</p>
+<div id="qcm"></div>
+</div>
+
+<div class="panel" id="p2">
+<h3>Trier l'essentiel de l'accessoire</h3>
+<p class="lead">Choisissez un surligneur, puis cliquez sur les phrases du texte. Laissez sans couleur les transitions et les redites.</p>
+<div class="pens" role="group" aria-label="Surligneurs">
+<button class="pen" data-pen="k" aria-pressed="true" type="button"><i style="background:var(--yel)"></i>Idée clé</button>
+<button class="pen" data-pen="e" aria-pressed="false" type="button"><i style="background:var(--cy)"></i>Illustration</button>
+<button class="pen" data-pen="x" aria-pressed="false" type="button"><i style="background:var(--line)"></i>Gomme</button>
+</div>
+<div class="box"><h4>Le test de l'idée clé</h4>
+<ul><li><strong>Idée clé</strong> : ce qui reste du raisonnement si l'on retire chiffres, noms et exemples.</li>
+<li><strong>Illustration</strong> : statistique, marque, personne, cas concret. Elle prouve, mais disparaît du résumé.</li>
+<li><strong>Accessoire</strong> : phrase de transition ou idée déjà dite.</li></ul></div>
+<p class="small" id="tally"></p>
+<div class="row">
+<button class="btn pri" id="verify" type="button">Vérifier mon repérage</button>
+<button class="btn" id="showkey" type="button">Voir le corrigé</button>
+<button class="btn" id="clear" type="button">Tout effacer</button>
+</div>
+<div class="box" id="res" hidden>
+<div class="score" id="score"></div>
+<p class="small" id="scoredetail" style="margin:6px 0 10px"></p>
+<div id="note"><p class="small">Les phrases soulignées en rose sont mal classées. Cliquez sur une phrase du texte pour lire l'explication.</p></div>
+</div>
+</div>
+
+<div class="panel" id="p3">
+<h3>Retrouver le plan</h3>
+<p class="lead">Le texte avance en quatre temps. Rangez chaque idée clé dans la bonne partie : votre résumé suivra cet ordre.</p>
+<div class="box" id="parts"></div>
+<div id="cards"></div>
+<div class="row"><button class="btn pri" id="plcheck" type="button">Vérifier le plan</button><span class="small" id="plscore"></span></div>
+</div>
+
+<div class="panel" id="p4">
+<h3>Reformuler idée par idée</h3>
+<p class="lead">Réécrivez chaque idée avec vos mots, en une phrase. Sélectionner une idée l'encadre dans le texte. L'outil signale toute suite de 5 mots copiée de l'article.</p>
+<details class="box"><summary>Boîte à outils : connecteurs et verbes de compte rendu</summary>
+<p><strong>Présenter</strong> : the author argues / claims / points out / stresses / warns that… · According to the author,…</p>
+<p><strong>Ajouter</strong> : moreover, furthermore, in addition, not only… but also</p>
+<p><strong>Opposer</strong> : however, yet, nevertheless, whereas, although, on the other hand</p>
+<p><strong>Conséquence</strong> : therefore, thus, consequently, as a result, hence</p>
+<p style="margin-bottom:0"><strong>Conclure</strong> : ultimately, in conclusion, all in all</p>
+</details>
+<div id="ideas"></div>
+<div class="row"><button class="btn pri" id="todraft" type="button">Envoyer mes phrases vers le brouillon</button></div>
+</div>
+
+<div class="panel" id="p5">
+<h3>Rédiger le résumé</h3>
+<div class="box"><h4>Règles du résumé</h4>
+<ul><li>Une phrase d'ouverture situe le document (auteur, source, date) et annonce l'idée centrale.</li>
+<li>L'ordre du texte est respecté, le pivot avantages / risques est marqué.</li>
+<li>Ni chiffres, ni noms de marques, ni exemples, ni citations.</li>
+<li>Troisième personne, aucun avis personnel.</li>
+<li>Environ 200 mots (180 à 220) ; indiquez le total à la fin.</li></ul></div>
+<label for="draft" class="small">Votre résumé (enregistré automatiquement dans ce navigateur)</label>
+<textarea id="draft" placeholder="In an article published on papirfly.com in October 2019, Jessica Chambers…"></textarea>
+<div class="meter" aria-hidden="true"><div class="zone"></div><div class="mk" id="mk" style="left:0"></div></div>
+<div class="wc"><strong id="wcn">0 mot</strong><span class="small" id="wcs">Cible : 180 à 220 mots</span></div>
+<ul class="checks" id="checks"></ul>
+<p style="margin:16px 0 0;font-weight:600">Idées repérées dans votre texte</p>
+<p class="small" style="margin:2px 0 0">Repérage automatique par mots-clés, indicatif : relisez toujours vous-même.</p>
+<div class="chips" id="notions"></div>
+<div class="row"><button class="btn" id="copy" type="button">Copier mon résumé</button><span class="small" id="copied"></span></div>
+<details class="box"><summary>Grille d'auto-évaluation</summary><div class="grid" id="grid"></div></details>
+<details class="box" id="modelbox"><summary>Voir un résumé modèle</summary><div id="model"></div></details>
+</div>
+
+<div class="navrow"><button class="btn" id="prev" type="button">Étape précédente</button><button class="btn pri" id="next" type="button">Étape suivante</button></div>
+</section>
+</main>
+<footer>Outil d'entraînement DCG · Powered by Maxens Blanchet</footer>
+
+<script>
+{
+const SEG=[
+{p:0,c:'k',t:"As much as it can infuriate us sometimes, we can’t escape the influence of social media.",n:"Constat de départ : impossible d'échapper aux réseaux sociaux."},
+{p:0,c:'e',t:"Internet users spend over 30% of their time online browsing through Facebook, Twitter, LinkedIn, Instagram, and the numerous other social media platforms available to them.",n:"Chiffre (30 %) et liste de plateformes : ils prouvent le constat mais ne vont pas dans le résumé."},
+{p:0,c:'k',t:"Time that brands can harness to create a connection.",n:"Conséquence pour les marques : une occasion de créer un lien avec le public."},
+{p:1,c:'e',t:"Between January 2015 to April 2018, 64% of FTSE 100 companies used Twitter to communicate their earnings news and other prominent business news to their audiences, something that even just a couple of decades ago would probably be reserved to shareholders and an internal memo.",n:"Exemple chiffré (FTSE 100, 64 %). La phrase suivante le dit elle-même : « just one example »."},
+{p:2,c:'k',t:"This is just one example of how social media has changed the game for business communications.",n:"Idée générale tirée de l'exemple : les réseaux ont transformé la communication des entreprises."},
+{p:2,c:'k',t:"Organisations of any size, industry or reach now are compelled to employ these social-sharing platforms to inform and educate their audience, in a way that they never needed to before.",n:"Toutes les organisations sont désormais obligées d'utiliser ces plateformes."},
+{p:3,c:'k',t:"Like it or not, social media is everywhere, making it a vital component of how companies not only reach their consumers, but their employees as well.",n:"Double public : les clients et les salariés (communication externe et interne)."},
+{p:4,c:'d',t:"And that really illustrates the significance of social media in corporate communications.",n:"Phrase de transition : elle annonce la suite sans apporter d'idée."},
+{p:4,c:'k',t:"It is not primarily about promoting a company’s products or services in a sales-oriented manner; it is about aligning your brand with your audience.",n:"Idée centrale du texte : aligner la marque sur son public, pas vendre."},
+{p:5,c:'e',t:"95% of adults aged 18-34 are most likely to follow a brand through social networking.",n:"Statistique (95 % des 18-34 ans) : illustration."},
+{p:5,c:'k',t:"While many judge success on social media by the number of likes they’ve received on Facebook or the impressions on their Twitter page, in many ways its true value comes in illustrating how your followers engage with the content you’re sharing on these platforms.",n:"Le vrai indicateur de succès : l'engagement, pas le nombre de likes (Facebook et Twitter ne sont ici que des supports)."},
+{p:5,c:'k',ok:['d'],t:"That allows you to tell if your values are hitting home with your target audience.",n:"Prolongement : l'engagement montre si les valeurs touchent la cible. À fusionner avec la phrase précédente."},
+{p:6,c:'k',ok:['d'],t:"These platforms are now essential in how your customers and your employees keep up with the news and developments surrounding your organisation – the bond between social media and corporate communications is unbreakable.",n:"En partie une redite du §4 (clients et salariés). L'idée du lien « indissoluble » prépare la conclusion : à ne pas répéter deux fois."},
+{p:7,c:'k',t:"This close connection between social media and corporate communications presents numerous benefits for businesses looking for an efficient, cost-effective way to engage their customers, employees and more with their brand identity.",n:"Bilan des avantages : un moyen efficace et peu coûteux de mobiliser les publics."},
+{p:8,c:'k',t:"However, as always seems to be the case, social media acts as a double-edged sword.",n:"Pivot du texte (« However ») : une arme à double tranchant."},
+{p:8,c:'k',t:"While it has immeasurably improved how efficiently and effectively brands can engage with their internal and external audiences and build better relationships with both, it also can cause significant damage to its reputation if not handled correctly.",n:"Le risque : de graves dommages pour la réputation si l'outil est mal géré."},
+{p:9,c:'k',t:"Social media offers everyone a voice and an opinion, and that opinion might not always be favourable for your brand.",n:"La cause : chacun peut s'exprimer, y compris contre la marque."},
+{p:9,c:'k',t:"One wrong step on social media or an ill-advised campaign can spiral out of control in a hurry,",n:"Une seule erreur peut dégénérer très vite."},
+{p:9,c:'e',t:"like when Doritos’ poorly-visioned development of ‘lady-friendly’ versions of their crisps.",n:"Exemple Doritos : nom de marque, à supprimer. « like when » signale toujours un exemple."},
+{p:9,c:'e',t:"Within hours their Twitter timelines were ablaze with criticisms.",n:"Suite de l'exemple Doritos."},
+{p:10,c:'e',t:"Then there are examples like the Kendall Jenner Pepsi campaign, which was a not very well-considered attempt for the brand to be socially responsible.",n:"Exemple Pepsi et Kendall Jenner : le mot « examples » l'annonce."},
+{p:10,c:'k',t:"The combination of social media and corporate communications can be an effective way of illustrating your CSR work as a company and your commitment to causes your audience cares about.",n:"Les réseaux permettent de mettre en valeur la RSE (CSR)."},
+{p:10,c:'k',t:"But it must be authentic and executed well, otherwise it can have a severely negative impact.",n:"Condition : authenticité et bonne exécution, sinon l'effet s'inverse."},
+{p:11,c:'k',t:"Nevertheless, the ties between social media and corporate communications are too robust now to cause a break, at least for the foreseeable future.",n:"Conclusion : le lien est trop solide pour être rompu."},
+{p:11,c:'k',t:"So, it is important that your organisation accounts for this as part of your overarching corporate communication strategy in order to maximise the benefits these platforms offer your company while minimising the drawbacks.",n:"Recommandation finale : intégrer les réseaux à la stratégie globale pour maximiser les avantages et limiter les risques."}
+];
+const Q=[
+{q:"Quel est le genre de ce document ?",o:["Un article de presse d'information neutre","Un article de blog professionnel qui conseille les entreprises","Une étude universitaire"],a:1,f:"Publié sur le site d'une entreprise de gestion de marque, il s'adresse aux dirigeants (« your brand », « your organisation »). Dans votre résumé, passez à la 3e personne : the author, companies, firms."},
+{q:"Le titre est une question. Quelle réponse le texte y apporte-t-il ?",o:["Oui, sans réserve","Non, les réseaux sociaux nuisent à la communication","Oui, à condition de maîtriser les risques"],a:2,f:"Le texte présente les atouts, puis les dangers, et conclut qu'il faut intégrer les réseaux à la stratégie. C'est le fil conducteur du résumé."},
+{q:"Où se situe le tournant du texte ?",o:["§5 : « And that really illustrates… »","§9 : « However… a double-edged sword »","§12 : « Nevertheless… »"],a:1,f:"« However » fait basculer le texte des avantages vers les risques. Votre résumé doit marquer ce pivot par un connecteur d'opposition."},
+{q:"Quelle phrase résume le mieux la thèse ?",o:["Social media is mainly a way for companies to sell more products.","Social media has become an essential but risky channel that companies must manage strategically.","Companies should stay away from social media to protect their reputation."],a:1,f:"Le §5 l'écarte explicitement : il ne s'agit pas de vendre (« not primarily about promoting… ») mais d'aligner la marque sur son public, en gérant les risques."}
+];
+const PARTS=[["A","Un changement inévitable","§1 à 4"],["B","Le vrai rôle : aligner, pas vendre","§5 à 8"],["C","Une arme à double tranchant","§9 à 11"],["D","Conclusion : intégrer à la stratégie","§12"]];
+const IDEAS=[
+{q:"we can’t escape the influence of social media… Time that brands can harness to create a connection.",p:"A",s:[0,2],m:"According to the author, social networks have become impossible to ignore, which gives brands a chance to build a connection with the public."},
+{q:"social media has changed the game for business communications… Organisations of any size… are compelled to employ these platforms",p:"A",s:[4,5],m:"They have transformed business communication: organisations of every kind now have to use them to inform their audience."},
+{q:"a vital component of how companies not only reach their consumers, but their employees as well",p:"A",s:[6,12],m:"They have therefore become a key channel for reaching not only customers but also staff."},
+{q:"It is not primarily about promoting a company’s products… it is about aligning your brand with your audience.",p:"B",s:[8],m:"Their main purpose, however, is not to sell but to bring a brand's identity and values in line with its audience."},
+{q:"its true value comes in illustrating how your followers engage… if your values are hitting home",p:"B",s:[10,11],m:"True success lies less in likes than in the way followers interact with content, which shows whether a company's values resonate."},
+{q:"an efficient, cost-effective way to engage their customers, employees and more",p:"B",s:[13],m:"Used well, social media is thus an efficient and inexpensive way of engaging stakeholders."},
+{q:"social media acts as a double-edged sword… significant damage to its reputation if not handled correctly",p:"C",s:[14,15],m:"Yet it cuts both ways."},
+{q:"Social media offers everyone a voice… One wrong step… can spiral out of control in a hurry",p:"C",s:[16,17],m:"Since anyone can voice criticism, a single misjudged campaign can quickly turn into a reputational crisis,"},
+{q:"illustrating your CSR work… But it must be authentic and executed well",p:"C",s:[21,22],m:"and corporate social responsibility messages backfire unless they are genuine and well handled."},
+{q:"the ties… are too robust now to cause a break… maximise the benefits… while minimising the drawbacks",p:"D",s:[23,24],m:"Consequently, as this link is here to stay, companies must build social media into their overall communication strategy to maximise its advantages and limit its risks."}
+];
+const ORDER=[4,0,7,2,9,5,1,8,3,6];
+const MODEL=["In an article published on papirfly.com in October 2019, Jessica Chambers examines the place of social media in corporate communications and argues that it brings major opportunities as well as real risks.",
+IDEAS.slice(0,3).map(x=>x.m).join(" "),IDEAS.slice(3,6).map(x=>x.m).join(" "),IDEAS.slice(6,9).map(x=>x.m).join(" "),IDEAS[9].m];
+const GRID=["J'ai situé le document en une phrase : auteur, source, date, idée centrale.","J'ai suivi l'ordre du texte et marqué le pivot avantages / risques.","J'ai supprimé chiffres, noms de marques et exemples.","J'ai reformulé avec mes mots, sans suite copiée.","J'ai écrit à la 3e personne, sans donner mon avis.","J'ai relié mes phrases par des connecteurs logiques.","J'ai indiqué le nombre de mots à la fin."];
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const KEY='atelier-resume-sm-v1';
+let st={step:1,pen:'k',m:{},chk:false,key:false,q:{},pl:{},plc:false,r:{},open:{},d:'',g:{}};
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}};
+const load=()=>{try{const o=JSON.parse(localStorage.getItem(KEY)||'null');if(o)st=Object.assign(st,o)}catch(e){}};
+const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const norm=t=>t.toLowerCase().replace(/[’‘]/g,"'").replace(/[^a-z0-9'%\- ]+/g,' ').split(/\s+/).filter(w=>w&&w!=='-');
+const SRCW=norm(SEG.map(s=>s.t).join(' '));
+const N=5,GR=new Set();
+for(let i=0;i+N<=SRCW.length;i++)GR.add(SRCW.slice(i,i+N).join(' '));
+const WL=new Set("social media corporate communications communication and the of in a an to on with their its brand brands companies company platforms these are is be can has have it this that for as by now more not but or from your our".split(' '));
+const copies=t=>{const w=norm(t),hit=w.map(()=>false);for(let i=0;i+N<=w.length;i++){const g=w.slice(i,i+N);if(GR.has(g.join(' '))&&g.filter(x=>!WL.has(x)).length>=2)for(let j=i;j<i+N;j++)hit[j]=true}const out=[];let run=[];w.forEach((x,i)=>{if(hit[i])run.push(x);else if(run.length){out.push(run.join(' '));run=[]}});if(run.length)out.push(run.join(' '));return out};
+const wc=t=>t.trim().split(/\s+/).filter(w=>/[A-Za-z0-9]/.test(w)).length;
+const verdict=i=>{const s=SEG[i],v=st.m[i]||'d';return v===s.c||(s.ok||[]).includes(v)};
+
+/* article */
+let h='',cur=-1;
+SEG.forEach((s,i)=>{if(s.p!==cur){if(cur>=0)h+='</p>';cur=s.p;h+=`<p data-n="§${cur+1}">`}h+=`<span class="seg" data-i="${i}" tabindex="0">${esc(s.t)}</span> `});
+$('#art').innerHTML=h+'</p>';
+const paint=()=>{const segs=$$('.seg');let k=0,e=0;segs.forEach(el=>{const i=+el.dataset.i,s=SEG[i],v=st.key?(s.c==='d'?'':s.c):(st.m[i]||'');el.classList.toggle('k',v==='k');el.classList.toggle('e',v==='e');el.classList.toggle('bad',st.chk&&!st.key&&!verdict(i));if(st.m[i]==='k')k++;if(st.m[i]==='e')e++});
+$('#art').classList.toggle('pen-on',st.step===2&&!st.key);
+$('#tally').textContent=`Votre repérage : ${k} idée${k>1?'s':''} clé${k>1?'s':''}, ${e} illustration${e>1?'s':''}.`;
+$('#showkey').textContent=st.key?'Revenir à mon repérage':'Voir le corrigé';
+if(st.chk){const ok=SEG.filter((s,i)=>verdict(i)).length;const miss=SEG.filter((s,i)=>s.c==='k'&&!verdict(i)).length;const over=SEG.filter((s,i)=>s.c!=='k'&&st.m[i]==='k').length;$('#res').hidden=false;$('#score').textContent=`${ok} / ${SEG.length}`;$('#scoredetail').textContent=`${miss} idée${miss>1?'s':''} clé${miss>1?'s':''} non repérée${miss>1?'s':''} · ${over} illustration${over>1?'s':''} ou accessoire${over>1?'s':''} pris pour une idée clé`}else $('#res').hidden=true};
+const showNote=i=>{const s=SEG[i],lab={k:'Idée clé',e:'Illustration',d:'Accessoire'};const ok=verdict(i);$$('.seg.sel').forEach(x=>x.classList.remove('sel'));$(`.seg[data-i="${i}"]`).classList.add('sel');$('#note').innerHTML=`<p style="margin:0 0 4px"><strong style="color:${ok?'var(--ok)':'var(--mag)'}">${ok?'Bien classé':'À revoir'}</strong> · attendu : ${lab[s.c]}${s.ok?' (accessoire accepté)':''}</p><p style="margin:0">${esc(s.n)}</p>`};
+const hit=el=>{if(st.step!==2||st.key)return;const i=+el.dataset.i;if(st.pen==='x')delete st.m[i];else st.m[i]=st.pen;paint();if(st.chk)showNote(i);save()};
+$('#art').addEventListener('click',ev=>{const el=ev.target.closest('.seg');if(el)hit(el)});
+$('#art').addEventListener('keydown',ev=>{const el=ev.target.closest('.seg');if(el&&(ev.key==='Enter'||ev.key===' ')){ev.preventDefault();hit(el)}});
+$$('.pen').forEach(b=>b.addEventListener('click',()=>{st.pen=b.dataset.pen;$$('.pen').forEach(x=>x.setAttribute('aria-pressed',x===b));save()}));
+$('#verify').addEventListener('click',()=>{st.chk=true;st.key=false;paint();save()});
+$('#showkey').addEventListener('click',()=>{st.key=!st.key;paint();save()});
+$('#clear').addEventListener('click',()=>{st.m={};st.chk=false;st.key=false;$('#note').innerHTML='<p class="small">Les phrases soulignées en rose sont mal classées. Cliquez sur une phrase du texte pour lire l\'explication.</p>';paint();save()});
+
+/* step 1 */
+const drawQ=()=>{$('#qcm').innerHTML=Q.map((x,qi)=>{const a=st.q[qi];return `<div class="q"><p>${qi+1}. ${esc(x.q)}</p>${x.o.map((o,oi)=>`<button type="button" class="opt ${a===undefined?'':oi===x.a?(a===oi||a!==undefined?'right':''):a===oi?'wrong':''}" data-q="${qi}" data-o="${oi}">${esc(o)}</button>`).join('')}${a===undefined?'':`<p class="fb ${a===x.a?'':'no'}"><strong>${a===x.a?'Exact.':'Pas tout à fait.'}</strong> ${esc(x.f)}</p>`}</div>`}).join('')};
+$('#qcm').addEventListener('click',ev=>{const b=ev.target.closest('.opt');if(!b)return;st.q[b.dataset.q]=+b.dataset.o;drawQ();save()});
+
+/* step 3 */
+$('#parts').innerHTML=PARTS.map(p=>`<div class="part"><b>${p[0]}</b><span>${esc(p[1])} <span class="small part-r" hidden>(${p[2]})</span></span></div>`).join('');
+const drawPl=()=>{$('#cards').innerHTML=ORDER.map(i=>{const x=IDEAS[i],v=st.pl[i];const cls=st.plc&&v?(v===x.p?'right':'wrong'):'';return `<div class="card ${cls}"><q>${esc(x.q)}</q><div class="pbs">${PARTS.map(p=>`<button type="button" class="pb ${v===p[0]?'on':''}" data-c="${i}" data-p="${p[0]}" aria-label="Partie ${p[0]}" aria-pressed="${v===p[0]}">${p[0]}</button>`).join('')}${st.plc&&v&&v!==x.p?`<span class="warn" style="align-self:center">Plutôt partie ${x.p}</span>`:''}</div></div>`}).join('');
+$$('.part-r').forEach(x=>x.hidden=!st.plc);
+const ok=IDEAS.filter((x,i)=>st.pl[i]===x.p).length;$('#plscore').textContent=st.plc?`${ok} / ${IDEAS.length} bien placées`:''};
+$('#cards').addEventListener('click',ev=>{const b=ev.target.closest('.pb');if(!b)return;st.pl[b.dataset.c]=b.dataset.p;drawPl();save()});
+$('#plcheck').addEventListener('click',()=>{st.plc=true;drawPl();save()});
+
+/* step 4 */
+const fb=(t)=>{if(!t.trim())return '';const c=copies(t);return c.length?`<p class="warn">Suite copiée du texte : « ${esc(c.join(' » · « '))} ». Reformulez.</p>`:`<p class="good">Aucune suite copiée · ${wc(t)} mots</p>`};
+$('#ideas').innerHTML=IDEAS.map((x,i)=>`<div class="card idea" data-k="${i}"><p class="small" style="margin:0 0 4px">Idée ${i+1} · partie ${x.p}</p><q>${esc(x.q)}</q><label class="small" for="r${i}">Ma reformulation</label><textarea id="r${i}" data-r="${i}">${esc(st.r[i]||'')}</textarea><div class="fbk">${fb(st.r[i]||'')}</div><div class="row" style="margin:8px 0 0"><button type="button" class="btn" data-m="${i}">${st.open[i]?'Masquer':'Voir'} une proposition</button></div><p class="model" ${st.open[i]?'':'hidden'}>${esc(x.m)}</p></div>`).join('');
+$('#ideas').addEventListener('input',ev=>{const t=ev.target.closest('textarea');if(!t)return;const i=t.dataset.r;st.r[i]=t.value;t.parentElement.querySelector('.fbk').innerHTML=fb(t.value);save()});
+$('#ideas').addEventListener('click',ev=>{const b=ev.target.closest('[data-m]');if(!b)return;const i=b.dataset.m;st.open[i]=!st.open[i];b.textContent=(st.open[i]?'Masquer':'Voir')+' une proposition';b.closest('.card').querySelector('.model').hidden=!st.open[i];save()});
+$('#ideas').addEventListener('focusin',ev=>{const c=ev.target.closest('.idea');if(!c)return;const x=IDEAS[c.dataset.k];$$('.seg.focus').forEach(s=>s.classList.remove('focus'));x.s.forEach(i=>$(`.seg[data-i="${i}"]`).classList.add('focus'));if(innerWidth>=900){const el=$(`.seg[data-i="${x.s[0]}"]`),pp=$('#paper');pp.scrollTo({top:el.offsetTop-pp.offsetTop-80,behavior:'smooth'})}});
+$('#todraft').addEventListener('click',()=>{const t=IDEAS.map((x,i)=>(st.r[i]||'').trim()).filter(Boolean).join(' ');if(!t)return;st.d=(st.d.trim()?st.d.trim()+'\n\n':'')+t;$('#draft').value=st.d;go(5)});
+
+/* step 5 */
+const CONN=['however','yet','moreover','furthermore','in addition','therefore','thus','consequently','as a result','hence','although','though','whereas','since','because','nevertheless','nonetheless','according to','ultimately','in conclusion','on the other hand','not only','all in all','while'];
+const NOT=[["Réseaux incontournables",/avoid|escape|ignore|everywhere|ubiquitous|unavoidable|inescapable|omnipresent/i],["Communication transformée",/transform|chang|revolution|reshap|compel|have to|forced|oblig/i],["Clients et salariés",/employee|staff|workforce|internal/i],["Aligner, pas vendre",/align|in line|identity|not (?:to |about |primarily )?sell|rather than sell/i],["Engagement plutôt que likes",/engag|interact|resonat|likes/i],["Risque pour la réputation",/reputation|double-edged|both ways|backfire|crisis|damage/i],["RSE authentique",/\bCSR\b|social responsibility|authentic|genuine|sincere/i],["Intégrer à la stratégie",/strateg/i]];
+const analyse=()=>{const t=st.d,body=t.replace(/\(?\s*\d+\s*words?\s*\)?\s*$/i,''),n=wc(body);$('#wcn').textContent=`${n} mot${n>1?'s':''}`;$('#mk').style.left=`calc(${Math.min(n,260)/260*100}% - 2px)`;$('#wcs').textContent=n===0?'Cible : 180 à 220 mots':n<180?`Trop court : encore ${180-n} mots au minimum`:n>220?`Trop long : ${n-220} mots à supprimer`:'Dans la cible (180 à 220 mots)';
+const first=(body.trim().split(/(?<=[.!?])\s/)[0]||'');const cp=copies(body);const figs=(body.match(/\d+(?:[.,]\d+)*\s?%?/g)||[]).map(f=>f.trim());const names=[...new Set((body.match(/\b(Doritos|Pepsi|Kendall|Jenner|FTSE|Facebook|Twitter|LinkedIn|Instagram)\b/gi)||[]))];const pr=[...new Set((body.match(/\b(I|[Mm]y|[Mm]e|[Ww]e|[Oo]ur|[Uu]s|[Yy]ou|[Yy]our)\b/g)||[]))];const low=' '+body.toLowerCase().replace(/[^a-z ]+/g,' ')+' ';const cn=CONN.filter(c=>low.includes(' '+c+' '));const piv=/\b(however|yet|but|nevertheless|nonetheless|on the other hand|although|whereas)\b/i.test(body)&&/\b(risks?|danger|damage|reputation|reputational|backfire|drawbacks?|threat|harm|crisis)\b/i.test(body);
+const yrs=figs.filter(f=>!/^(19|20)\d\d$/.test(f.trim()));
+const L=[[/chambers|papirfly|article|author/i.test(first),'Phrase d\'ouverture qui situe le document',`Nommez l'auteur, la source ou l'article dès la première phrase.`],
+[n>0&&!cp.length,'Aucune suite de 5 mots copiée du texte',cp.length?`À reformuler : « ${esc(cp.slice(0,4).join(' » · « '))} »`:''],
+[n>0&&!yrs.length&&!names.length,'Ni chiffres ni noms de marques',[yrs.length?`chiffres : ${esc(yrs.join(', '))}`:'',names.length?`noms : ${esc(names.join(', '))}`:''].filter(Boolean).join(' · ')],
+[n>0&&!pr.length,'Troisième personne (ni I, we, you…)',pr.length?`Pronoms à remplacer : ${esc(pr.join(', '))}`:''],
+[piv,'Pivot avantages / risques marqué','Un connecteur d\'opposition doit introduire les risques.'],
+[cn.length>=4,`Connecteurs logiques variés (${cn.length} repérés, 4 au moins)`,cn.length?`Repérés : ${esc(cn.join(', '))}`:'']];
+$('#checks').innerHTML=n===0?'<li>Commencez à écrire : les vérifications apparaissent ici.</li>':L.map(([y,a,b])=>`<li class="${y?'y':''}">${a}${!y&&b?`<br><em>${b}</em>`:''}</li>`).join('');
+$('#notions').innerHTML=NOT.map(([l,r])=>`<span class="chip ${n&&r.test(body)?'y':'n'}">${l}</span>`).join('')};
+$('#draft').value=st.d;
+$('#draft').addEventListener('input',e=>{st.d=e.target.value;analyse();save()});
+$('#copy').addEventListener('click',()=>{const ta=$('#draft');const done=()=>{$('#copied').textContent='Copié.'};try{navigator.clipboard.writeText(ta.value).then(done,()=>{ta.select();$('#copied').textContent='Texte sélectionné : faites Ctrl+C.'})}catch(e){ta.select();$('#copied').textContent='Texte sélectionné : faites Ctrl+C.'}});
+$('#grid').innerHTML=GRID.map((g,i)=>`<label><input type="checkbox" id="g${i}" data-g="${i}" ${st.g[i]?'checked':''}><span>${esc(g)}</span></label>`).join('');
+$('#grid').addEventListener('change',e=>{st.g[e.target.dataset.g]=e.target.checked;save()});
+const mt=MODEL.join('\n\n');
+$('#model').innerHTML=MODEL.map(p=>`<p style="font:16px/1.65 Newsreader,Georgia,serif;margin:10px 0">${esc(p)}</p>`).join('')+`<p class="small" style="margin:0">${wc(mt)} words · Remarquez : ouverture qui situe le texte, ordre respecté, pivot « Yet », aucun chiffre ni nom de marque.</p>`;
+
+/* navigation */
+const go=s=>{st.step=s;$$('.panel').forEach(p=>p.classList.toggle('on',p.id==='p'+s));$$('#steps button').forEach(b=>{const k=+b.dataset.s;b.classList.toggle('on',k===s);b.classList.toggle('done',k<s);b.setAttribute('aria-current',k===s?'step':'false')});$('#prev').disabled=s===1;$('#prev').style.visibility=s===1?'hidden':'visible';$('#next').style.visibility=s===5?'hidden':'visible';if(s!==4)$$('.seg.focus').forEach(x=>x.classList.remove('focus'));paint();if(s===5)analyse();save()};
+$$('#steps button').forEach(b=>b.addEventListener('click',()=>go(+b.dataset.s)));
+$('#prev').addEventListener('click',()=>{go(Math.max(1,st.step-1));$('#bench').scrollIntoView({block:'start'})});
+$('#next').addEventListener('click',()=>{go(Math.min(5,st.step+1));$('#bench').scrollIntoView({block:'start'})});
+$('#fold').addEventListener('click',()=>{const c=$('#paper').classList.toggle('closed');$('#fold').textContent=c?'Afficher le texte':'Masquer le texte'});
+
+load();
+$$('.pen').forEach(x=>x.setAttribute('aria-pressed',x.dataset.pen===st.pen));
+$('#draft').value=st.d;
+$$('#ideas textarea').forEach(t=>{t.value=st.r[t.dataset.r]||'';t.parentElement.querySelector('.fbk').innerHTML=fb(t.value)});
+$$('#ideas .card').forEach(c=>{const i=c.dataset.k;c.querySelector('.model').hidden=!st.open[i];c.querySelector('[data-m]').textContent=(st.open[i]?'Masquer':'Voir')+' une proposition'});
+$$('#grid input').forEach(x=>x.checked=!!st.g[x.dataset.g]);
+drawQ();drawPl();go(st.step||1);
+}
+</script>
+</body>
+</html>
