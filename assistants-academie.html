@@ -1719,7 +1719,7 @@ body.sheet-open{overflow:hidden}
     var w=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT,{acceptNode:function(n){
       var p=n.parentNode&&n.parentNode.nodeName; return (p==='SCRIPT'||p==='STYLE')?NodeFilter.FILTER_REJECT:NodeFilter.FILTER_ACCEPT; }});
     var n, list=[]; while((n=w.nextNode())) list.push(n);
-    list.forEach(function(t){ var v=t.nodeValue; if(!/[A-Za-zÀ-ÿ]/.test(v)) return;
+    list.forEach(function(t){ var v=t.nodeValue; if(!/\p{L}/u.test(v)) return;
       if(t._b===undefined) t._b = lang==='en' ? v : baseOf(v);
       var o=render(t._b,l); if(o!==v) t.nodeValue=o; });
     document.querySelectorAll('[placeholder],[aria-label],[alt],[title]').forEach(function(el){
