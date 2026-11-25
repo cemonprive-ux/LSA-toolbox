@@ -353,6 +353,7 @@ body.sheet-open{overflow:hidden}
 .on-li{background:#0a66c2}
 .on-appi{background:var(--ink);color:var(--paper)}
 .on-app{padding:16px}
+.ft-acad{display:inline-block}.ft-acad::after{content:"";display:block;width:calc(100% - 3ch);height:1px;margin:7px auto 6px;background:currentColor;opacity:.55}
 .md-acts.st-acts{flex-direction:row;flex-wrap:nowrap}.md-acts.st-acts .act{flex:1 1 0;min-width:0;white-space:normal;text-align:center;height:auto;min-height:44px;padding:6px 10px;line-height:1.2}
 .fare{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin:4px 0 12px;padding:14px 16px;border-radius:14px;background:#e0822f;color:#1d1d1b}.fare strong{font-size:1.15rem;line-height:1.2;text-transform:uppercase}.fare-price{font-weight:800;font-size:1.4rem;white-space:nowrap}.fare-price small{font-size:.8rem;font-weight:600;margin-left:3px}
 .on-app-head{display:flex;align-items:center;gap:14px;margin-bottom:14px}
@@ -1895,7 +1896,7 @@ body:not(.searching) main section.collapsed>:not(h2){display:none}
 
 <footer>
   <div class="wrap">
-    Académie de Clermont-Ferrand<br>
+    <span class="ft-acad">Académie de Clermont-Ferrand</span><br>
     🚀 Powered by Marie-Hélène Léonardon &amp; Maxens Blanchet
   </div>
 </footer>
